@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
-   public class UserRoleMapping : BaseModel
+   public class UserRoleMapModel : BaseModel
     {
         [Key]
         public System.Guid ID { get; set; }
         public System.Guid USERID { get; set; }
         public System.Guid ROLEID { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
-        public virtual UserRole UserRole { get; set; }
+        public virtual UserInfoModel UserInfo { get; set; }
+        public virtual UserRoleModel UserRole { get; set; }
     }
 }

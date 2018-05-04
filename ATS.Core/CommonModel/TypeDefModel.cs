@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
-  public  class TypeDef :BaseModel
+  public  class TypeDefModel :BaseModel
     {
-        public TypeDef()
+        public TypeDefModel()
         {
-            this.UserInfo = new List<UserInfo>();
+            this.UserInfo = new List<UserInfoModel>();
         }
         [Key]
         public System.Guid TypeId { get; set; }
         public string Description { get; set; }      
         public string Value { get; set; }
         public string ParentTypeId { get; set; }
-        public virtual List<UserInfo> UserInfo { get; set; }
+        public virtual List<UserInfoModel> UserInfo { get; set; }
     }
 }

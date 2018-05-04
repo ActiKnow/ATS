@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
-  public  class UserTestHistory
+  public  class UserTestHistoryModel
     {
-        public UserTestHistory()
+        public UserTestHistoryModel()
         {
-            this.UserAttemptedHistories = new List<UserAttemptedHistory>();
+            this.UserAttemptedHistories = new List<UserAttemptHistoryModel>();
         }
         [Key]
         public System.Guid HistoryId { get; set; }
@@ -22,8 +21,8 @@ namespace ATS.Core.Model
         public System.DateTime ReusableDate { get; set; }
         public Nullable<decimal> TotalDuration { get; set; }
 
-        public virtual TestBank TestBank { get; set; }
-        public virtual List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual TestBankModel TestBank { get; set; }
+        public virtual List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
+        public virtual UserInfoModel UserInfo { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ATS.Repository.DAO
 {
-    class MapOptionRepository : BaseRepository, IMapOptionRepository
+   public class MapOptionRepository : BaseRepository, IMapOptionRepository
     {
         public bool Create(QuestionOptionMapping input)
         {
@@ -81,7 +81,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public ICollection<QuestionOptionMapping> Select(params object[] inputs)
+        public List<QuestionOptionMapping> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
@@ -99,7 +99,7 @@ namespace ATS.Repository.DAO
                         if (dataFound != null)
                         {
                             //updation start
-                            //dataFound.Description = input.Description;
+                            dataFound.Answer = input.Answer;
                             //updateion end
                             context.SaveChanges();
                             dbContextTransaction.Commit();

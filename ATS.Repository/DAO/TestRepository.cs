@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
-using System.Linq;
-
 
 namespace ATS.Repository.DAO
 {
-    public class QuestionRepository : BaseRepository, IQuestionRepository
+    public class TestRepository : BaseRepository, ITestRepository
     {
-        public bool Create(QuestionBank input)
+        public bool Create(TestBank input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -20,9 +21,9 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.QId = Guid.NewGuid();
-                            context.QuestionBank.Add(input);
+                            context.TestBank.Add(input);
                             context.SaveChanges();
+
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -35,9 +36,9 @@ namespace ATS.Repository.DAO
                 }
                 return isCreated;
             }
-        }
+        }              
 
-        public bool Delete(QuestionBank input)
+        public bool Delete(TestBank input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -46,11 +47,12 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
-                        if (dataFound != null)
+                        TestBank testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
+                        if (testBank != null)
                         {
-                            context.QuestionBank.Remove(dataFound);
+                            context.TestBank.Remove(input);
                             context.SaveChanges();
+
                             dbContextTransaction.Commit();
                             isDeleted = true;
                         }
@@ -64,30 +66,42 @@ namespace ATS.Repository.DAO
                 return isDeleted;
             }
         }
-
-        public QuestionBank Retrieve(QuestionBank input)
+       
+        public TestBank Retrieve(TestBank input)
         {
-            QuestionBank result;
+            TestBank testBank;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+                    testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
                 }
                 catch
                 {
                     throw;
                 }
-                return result;
+                return testBank;
             }
         }
 
-        public List<QuestionBank> Select(params object[] inputs)
+        public List<TestBank> Select(params object[] inputs)
         {
-            throw new NotImplementedException();
+            List<TestBank> testBank;
+            using (var context = GetConnection())
+            {
+                try
+                {
+                    testBank = context.TestBank.AsNoTracking().ToList();
+                }
+                catch
+                {
+                    throw;
+                }
+                return testBank;
+            }
         }
 
-        public bool Update(QuestionBank input)
+        public bool Update(TestBank input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -96,12 +110,21 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
-                        if (dataFound != null)
+                        var testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
+
+                        if (testBank != null)
                         {
-                            //updation start
-                            dataFound.Description = input.Description;
-                            //updateion end
+                            testBank.LastUpdatedBy = input.LastUpdatedBy;
+                            testBank.LastUpdatedDate = input.LastUpdatedDate;
+                            testBank.CategoryTypeId = input.CategoryTypeId;
+                            testBank.Description = input.Description;
+                            testBank.Duration = input.Duration;
+                            testBank.Instructions = input.Instructions;
+                            testBank.LavelTypeId = input.LavelTypeId;
+                            testBank.Status = input.Status;
+                            testBank.TestTypeId = input.TestTypeId;
+                            testBank.TotalMarks = input.TotalMarks;                            
+
                             context.SaveChanges();
                             dbContextTransaction.Commit();
                             isUpdated = true;
@@ -115,6 +138,6 @@ namespace ATS.Repository.DAO
                 }
                 return isUpdated;
             }
-        }
+        }        
     }
 }
