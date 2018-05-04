@@ -19,6 +19,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
+                            input.UserId = Guid.NewGuid();
                             context.UserInfo.Add(input);
                             context.SaveChanges();
                             

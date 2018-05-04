@@ -18,10 +18,18 @@ namespace ATS.Service.Controllers
             userRepository = new UserRepository();
         }
 
+        [HttpPost]
         public IHttpActionResult ValidateUser(UserCredential userCredential)
         {
             var guid = userRepository.ValidateUser(userCredential);
             return Ok(guid);
+        }
+        [HttpPost]
+        [Route("api/User/Create")]
+        public IHttpActionResult Create( UserInfo userCredential)
+        {
+            var result = userRepository.Create(userCredential);
+            return Ok(result);
         }
     }
 }

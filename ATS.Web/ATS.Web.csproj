@@ -155,13 +155,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\ATS.Web.dll" />
+    <Content Include="bin\ATS.Web.pdb" />
     <Content Include="Content\Backup\bootstrap.css" />
     <Content Include="Content\Backup\bootstrap.min.css" />
     <Content Include="Content\Backup\Site.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -169,7 +175,10 @@
     </Content>
     <Content Include="Scripts\Backup\bootstrap.js" />
     <Content Include="Scripts\Backup\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Type.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
@@ -216,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
