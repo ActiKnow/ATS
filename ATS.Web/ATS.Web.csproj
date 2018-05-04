@@ -147,7 +147,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\DashboardController.cs" />
-    <Compile Include="Areas\Admin\SetupController.cs" />
     <Compile Include="Areas\Candidate\DashboardController.cs" />
     <Compile Include="Areas\Employee\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -166,6 +165,37 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\Backup\bootstrap.js" />
+    <Content Include="Scripts\Backup\bootstrap.min.js" />
+    <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Backup\jquery-1.10.2.js" />
+    <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
+    <None Include="Scripts\Backup\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Backup\jquery.validate.js" />
+    <Content Include="Scripts\Backup\jquery.validate.min.js" />
+    <Content Include="Scripts\Backup\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\Backup\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Backup\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Backup\respond.js" />
+    <Content Include="Scripts\Backup\respond.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-notify.min.js" />
+    <Content Include="Scripts\plugins\chart.js" />
+    <Content Include="Scripts\plugins\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui.custom.min.js" />
+    <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\jquery.vmap.min.js" />
+    <Content Include="Scripts\plugins\jquery.vmap.sampledata.js" />
+    <Content Include="Scripts\plugins\jquery.vmap.world.js" />
+    <Content Include="Scripts\plugins\moment.min.js" />
+    <Content Include="Scripts\plugins\pace.min.js" />
+    <Content Include="Scripts\plugins\select2.min.js" />
+    <Content Include="Scripts\plugins\sweetalert.min.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -183,20 +213,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Candidate\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Employee\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_CandidateLayout.cshtml" />
     <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
+    <Content Include="Scripts\Backup\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
