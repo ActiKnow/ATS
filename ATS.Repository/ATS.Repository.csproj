@@ -48,10 +48,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\ICRUD.cs" />
+    <Compile Include="Interface\IMapOptionRepository.cs" />
+    <Compile Include="Interface\IMapQuestionRepository.cs" />
+    <Compile Include="Interface\IAttemptHistoryRepository.cs" />
+    <Compile Include="Interface\IMapRoleRepository.cs" />
+    <Compile Include="Interface\IOptionRepository.cs" />
     <Compile Include="Interface\IQuestionRepository.cs" />
     <Compile Include="Interface\IRoleRepository.cs" />
+    <Compile Include="Interface\ITestAssignmentRepository.cs" />
+    <Compile Include="Interface\ITestHistoryRepository.cs" />
     <Compile Include="Interface\ITestRepository.cs" />
     <Compile Include="Interface\ITypeRepository.cs" />
+    <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Migrations\201805031734508_NewMigration.cs" />
     <Compile Include="Migrations\201805031734508_NewMigration.Designer.cs">
