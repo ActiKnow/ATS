@@ -109,5 +109,3 @@ F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.cs
 F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.csproj.CopyComplete
 F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.dll
 F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.pdb
-D:\ATS_REMOTE\ATS\ATS.Service\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\ATS_REMOTE\ATS\ATS.Service\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
