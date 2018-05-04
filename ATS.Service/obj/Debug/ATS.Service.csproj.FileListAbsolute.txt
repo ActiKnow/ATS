@@ -111,3 +111,9 @@ F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.dl
 F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Service\obj\Debug\ATS.Service.pdb
 D:\ATS_REMOTE\ATS\ATS.Service\bin\roslyn\Microsoft.CodeAnalysis.dll
 D:\ATS_REMOTE\ATS\ATS.Service\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\System.IO.Compression.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Service\bin\roslyn\VBCSCompiler.exe
