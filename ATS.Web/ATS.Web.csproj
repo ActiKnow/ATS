@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\DashboardController.cs" />
+    <Compile Include="Areas\Admin\SetupController.cs" />
     <Compile Include="Areas\Candidate\DashboardController.cs" />
     <Compile Include="Areas\Employee\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -162,6 +163,7 @@
     <Content Include="Content\Backup\bootstrap.min.css" />
     <Content Include="Content\Backup\Site.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +203,7 @@
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Candidate\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Employee\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_CandidateLayout.cshtml" />
