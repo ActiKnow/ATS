@@ -9,8 +9,8 @@ namespace ATS.Repository.Interface
     public interface ICRUD<T>
     {
         bool Create(T input);
-       T Retrieve(T input);
-        ICollection<T> Select(params object[] inputs);
+        T Retrieve(T input);
+        List<T> Select(params object[] inputs);
         bool Update(T input);
         bool Delete(T input);
     }

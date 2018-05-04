@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
-using System.Linq;
 
 namespace ATS.Repository.DAO
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class TestRepository : BaseRepository, ITestRepository
     {
-        public bool Create(UserInfo input)
+        public bool Create(TestBank input)
         {
-            bool isCreated= false;
+            bool isCreated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -19,9 +21,9 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            context.UserInfo.Add(input);
+                            context.TestBank.Add(input);
                             context.SaveChanges();
-                            
+
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -34,9 +36,9 @@ namespace ATS.Repository.DAO
                 }
                 return isCreated;
             }
-        }
+        }              
 
-        public bool Delete(UserInfo input)
+        public bool Delete(TestBank input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -45,12 +47,12 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (userInfo != null)
+                        TestBank testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
+                        if (testBank != null)
                         {
-                            context.UserInfo.Remove(userInfo);
+                            context.TestBank.Remove(input);
                             context.SaveChanges();
-                            
+
                             dbContextTransaction.Commit();
                             isDeleted = true;
                         }
@@ -64,42 +66,42 @@ namespace ATS.Repository.DAO
                 return isDeleted;
             }
         }
-
-        public UserInfo Retrieve(UserInfo input)
+       
+        public TestBank Retrieve(TestBank input)
         {
-            UserInfo userInfo;
+            TestBank testBank;
             using (var context = GetConnection())
             {
                 try
                 {
-                    userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
                 }
                 catch
                 {
                     throw;
                 }
-                return userInfo;
+                return testBank;
             }
         }
 
-        public List<UserInfo> Select(params object[] inputs)
+        public List<TestBank> Select(params object[] inputs)
         {
-            List<UserInfo> userInfos;
+            List<TestBank> testBank;
             using (var context = GetConnection())
             {
                 try
                 {
-                    userInfos = context.UserInfo.AsNoTracking().ToList();
+                    testBank = context.TestBank.AsNoTracking().ToList();
                 }
                 catch
                 {
                     throw;
                 }
-                return userInfos;
+                return testBank;
             }
         }
 
-        public bool Update(UserInfo input)
+        public bool Update(TestBank input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -108,17 +110,20 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        var userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        var testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
 
-                        if (userInfo != null)
+                        if (testBank != null)
                         {
-                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
-                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
-                            userInfo.UserTypeId = input.UserTypeId;
-                            userInfo.FName = input.FName;
-                            userInfo.LName = input.LName;
-                            userInfo.Mobile = input.Mobile;
-                            userInfo.Status = input.Status;  
+                            testBank.LastUpdatedBy = input.LastUpdatedBy;
+                            testBank.LastUpdatedDate = input.LastUpdatedDate;
+                            testBank.CategoryTypeId = input.CategoryTypeId;
+                            testBank.Description = input.Description;
+                            testBank.Duration = input.Duration;
+                            testBank.Instructions = input.Instructions;
+                            testBank.LavelTypeId = input.LavelTypeId;
+                            testBank.Status = input.Status;
+                            testBank.TestTypeId = input.TestTypeId;
+                            testBank.TotalMarks = input.TotalMarks;                            
 
                             context.SaveChanges();
                             dbContextTransaction.Commit();
@@ -133,29 +138,6 @@ namespace ATS.Repository.DAO
                 }
                 return isUpdated;
             }
-        }
-
-        public Guid ValidateUser(UserCredential userCredential)
-        {
-            Guid userId = Guid.Empty;
-            using (var context = new ATSDBContext())
-            {
-                try
-                {
-                    var userDetail = context.UserCredential.AsNoTracking().Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
-
-                    if (userDetail != null)
-                    {
-                        userId = userDetail.UserId;
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-                return userId;
-            }
-        }
-
+        }        
     }
 }

@@ -117,9 +117,8 @@ namespace ATS.Repository.Migrations
                 c => new
                     {
                         TypeId = c.Guid(nullable: false),
-                        Description = c.String(),
-                        TypeKey = c.String(),
-                        TypeValue = c.String(),
+                        Description = c.String(),                        
+                        Value = c.String(),
                         ParentTypeId = c.String(),
                         Status = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
