@@ -5,14 +5,14 @@ namespace ATS.Repository.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ATS.Repository.Repository.DBContext.ATSDBContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ATS.Repository.DAO.ATSDBContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ATS.Repository.Repository.DBContext.ATSDBContext context)
+        protected override void Seed(ATS.Repository.DAO.ATSDBContext context)
         {
             //  This method will be called after migrating to the latest version.
 
