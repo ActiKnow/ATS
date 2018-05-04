@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
-using System.Linq;
 
 namespace ATS.Repository.DAO
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class TypeDefRepository : BaseRepository, ITypeRepository
     {
-        public bool Create(UserInfo input)
+        public bool Create(TypeDef input)
         {
-            bool isCreated= false;
+            bool isCreated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -19,10 +21,9 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.UserId = Guid.NewGuid();
-                            context.UserInfo.Add(input);
-                            context.SaveChanges();
-                            
+                            input.TypeId = Guid.NewGuid();
+                            context.TypeDef.Add(input);
+                            context.SaveChanges();                            
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -37,7 +38,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(UserInfo input)
+        public bool Delete(TypeDef input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -46,10 +47,10 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (userInfo != null)
+                        TypeDef typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
+                        if (typeDef != null)
                         {
-                            context.UserInfo.Remove(userInfo);
+                            context.TypeDef.Remove(typeDef);
                             context.SaveChanges();
                             
                             dbContextTransaction.Commit();
@@ -66,41 +67,41 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public UserInfo Retrieve(UserInfo input)
+        public TypeDef Retrieve(TypeDef input)
         {
-            UserInfo userInfo;
+            TypeDef typeDef;
             using (var context = GetConnection())
             {
                 try
                 {
-                    userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
                 }
                 catch
                 {
                     throw;
                 }
-                return userInfo;
+                return typeDef;
             }
         }
 
-        public List<UserInfo> Select(params object[] inputs)
+        public List<TypeDef> Select(params object[] inputs)
         {
-            List<UserInfo> userInfos;
+            List<TypeDef> typeDefs;
             using (var context = GetConnection())
             {
                 try
                 {
-                    userInfos = context.UserInfo.AsNoTracking().ToList();
+                    typeDefs = context.TypeDef.AsNoTracking().ToList();
                 }
                 catch
                 {
                     throw;
                 }
-                return userInfos;
+                return typeDefs;
             }
         }
 
-        public bool Update(UserInfo input)
+        public bool Update(TypeDef input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -109,17 +110,16 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        var userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        var typeDef=context.TypeDef.AsNoTracking().Where(x=>x.TypeId==input.TypeId).FirstOrDefault();
 
-                        if (userInfo != null)
+                        if (typeDef != null)
                         {
-                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
-                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
-                            userInfo.UserTypeId = input.UserTypeId;
-                            userInfo.FName = input.FName;
-                            userInfo.LName = input.LName;
-                            userInfo.Mobile = input.Mobile;
-                            userInfo.Status = input.Status;  
+                            typeDef.LastUpdatedBy = input.LastUpdatedBy;
+                            typeDef.LastUpdatedDate = input.LastUpdatedDate;
+                            typeDef.ParentTypeId = input.ParentTypeId;
+                            typeDef.Status = input.Status;
+                            typeDef.Description = input.Description;
+                            typeDef.Value = input.Value;
 
                             context.SaveChanges();
                             dbContextTransaction.Commit();
@@ -135,28 +135,5 @@ namespace ATS.Repository.DAO
                 return isUpdated;
             }
         }
-
-        public Guid ValidateUser(UserCredential userCredential)
-        {
-            Guid userId = Guid.Empty;
-            using (var context = new ATSDBContext())
-            {
-                try
-                {
-                    var userDetail = context.UserCredential.AsNoTracking().Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
-
-                    if (userDetail != null)
-                    {
-                        userId = userDetail.UserId;
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-                return userId;
-            }
-        }
-
     }
 }

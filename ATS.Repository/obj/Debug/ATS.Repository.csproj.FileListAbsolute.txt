@@ -13,18 +13,18 @@ D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
 D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb
 D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.Migrations.NewMigration.resources
 D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResource.Cache
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll.config
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\ATS.Repository.pdb
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\ATS.Core.dll
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\EntityFramework.dll
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.dll
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\ATS.Core.pdb
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\EntityFramework.xml
-D:\ATS_REMOTE\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.xml
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.csprojResolveAssemblyReference.cache
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.Migrations.NewMigration.resources
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResource.Cache
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CoreCompileInputs.cache
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
-D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll.config
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.pdb
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.pdb
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.xml
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csprojResolveAssemblyReference.cache
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.Migrations.NewMigration.resources
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResource.Cache
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CoreCompileInputs.cache
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
+D:\Project\ATS_REMOTE\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
    public class QuestionOptionMapping
     {
@@ -13,6 +12,6 @@ namespace ATS.Core.Model
         public System.Guid QId { get; set; }
         public string OptionKeyId { get; set; }
         public string Answer { get; set; }
-        public virtual QuestionBank QuestionBank { get; set; }
+        public virtual QuestionBankModel QuestionBank { get; set; }
     }
 }

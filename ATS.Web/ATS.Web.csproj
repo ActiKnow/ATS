@@ -167,6 +167,7 @@
     <Content Include="Content\Backup\bootstrap.min.css" />
     <Content Include="Content\Backup\Site.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -174,8 +175,9 @@
     </Content>
     <Content Include="Scripts\Backup\bootstrap.js" />
     <Content Include="Scripts\Backup\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
-    <Content Include="Areas\Admin\Views\Setup\Question.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
@@ -222,7 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
