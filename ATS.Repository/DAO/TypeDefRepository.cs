@@ -21,6 +21,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
+                            input.TypeId = Guid.NewGuid();
                             context.TypeDef.Add(input);
                             context.SaveChanges();                            
                             dbContextTransaction.Commit();

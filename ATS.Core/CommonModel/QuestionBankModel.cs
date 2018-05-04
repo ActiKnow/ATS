@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
-    public class QuestionBank : BaseModel
+    public class QuestionBankModel : BaseModel
     {
-        public QuestionBank()
+        public QuestionBankModel()
         {
             this.QuestionOptionMappings = new List<QuestionOptionMapping>();
-            this.TestQuestionMappings = new List<TestQuestionMapping>();
-            this.UserAttemptedHistories = new List<UserAttemptedHistory>();
+            this.TestQuestionMappings = new List<TestQuestionMapModel>();
+            this.UserAttemptedHistories = new List<UserAttemptHistoryModel>();
         }
         [Key]
         public System.Guid QId { get; set; }
@@ -24,8 +23,8 @@ namespace ATS.Core.Model
     
         public virtual List<QuestionOptionMapping> QuestionOptionMappings { get; set; }
 
-        public virtual List<TestQuestionMapping> TestQuestionMappings { get; set; }
+        public virtual List<TestQuestionMapModel> TestQuestionMappings { get; set; }
 
-        public virtual List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
+        public virtual List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
     }
 }

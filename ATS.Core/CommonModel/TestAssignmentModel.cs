@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
 
-namespace ATS.Core.Model
+namespace ATS.Core.CommonModel
 {
-   public class TestAssignment : BaseModel
+   public class TestAssignmentModel : BaseModel
     {
         [Key]
         public System.Guid ID { get; set; }
         public System.Guid UserId { get; set; }
         public System.Guid TestBankId { get; set; }
-        public virtual TestBank TestBank { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual TestBankModel TestBank { get; set; }
+        public virtual UserInfoModel UserInfo { get; set; }
     }
 }
