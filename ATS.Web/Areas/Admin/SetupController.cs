@@ -13,8 +13,8 @@ namespace ATS.Web.Areas.Admin
         {
             return View();
         }
-        //Admin/Setup/Role
-        public ActionResult Type()
+        //Admin/Setup/TypeSetup
+        public ActionResult TypeSetup()
         {
             return View();
         }
