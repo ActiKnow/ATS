@@ -175,6 +175,7 @@
     <Content Include="Scripts\Backup\bootstrap.js" />
     <Content Include="Scripts\Backup\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Question.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
