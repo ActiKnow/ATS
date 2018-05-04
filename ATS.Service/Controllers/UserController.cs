@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
-using ATS.Repository.Repository;
+using ATS.Repository.DAO;
 
 namespace ATS.Service.Controllers
 {

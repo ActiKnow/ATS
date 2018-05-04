@@ -84,17 +84,7 @@ namespace ATS.Repository.Repository
         bool ICRUD<UserInfo>.Delete(UserInfo input)
         {
             throw new NotImplementedException();
-        }
-
-        UserInfo IUserRepository.GetUserInfo(Guid guid)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IUserRepository.RegisterUser()
-        {
-            throw new NotImplementedException();
-        }
+        }              
 
         ICollection<UserInfo> ICRUD<UserInfo>.Retrieve(UserInfo input)
         {
@@ -104,11 +94,6 @@ namespace ATS.Repository.Repository
         bool ICRUD<UserInfo>.Update(UserInfo input)
         {
             throw new NotImplementedException();
-        }
-
-        Guid IUserRepository.ValidateUser(UserCredential userCredential)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

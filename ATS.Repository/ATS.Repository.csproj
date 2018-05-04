@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\BaseRepository.cs" />
     <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Interface\IMapOptionRepository.cs" />
     <Compile Include="Interface\IMapQuestionRepository.cs" />
@@ -67,8 +68,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\DBContext\ATSDBContext.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="DAO\ATSDBContext.cs" />
+    <Compile Include="DAO\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -85,5 +86,6 @@
       <DependentUpon>201805031734508_NewMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
