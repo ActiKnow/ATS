@@ -11,6 +11,16 @@ namespace ATS.Repository.Repository
 {
     public class UserRepository : IUserRepository
     {
+        public bool Create(UserInfo input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(UserInfo input)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserInfo GetUserInfo(Guid userId)
         {
             UserInfo userInfo;
@@ -30,6 +40,16 @@ namespace ATS.Repository.Repository
         }
 
         public bool RegisterUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<UserInfo> Retrieve(UserInfo input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(UserInfo input)
         {
             throw new NotImplementedException();
         }
