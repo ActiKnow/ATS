@@ -4,3 +4,14 @@ D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
 D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.dll
 D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.pdb
 D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.csprojResolveAssemblyReference.cache
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\bin\Debug\ATS.Core.dll
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\bin\Debug\ATS.Core.pdb
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\obj\Debug\ATS.Core.csprojResolveAssemblyReference.cache
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\obj\Debug\ATS.Core.dll
+F:\0002_Projects\ATS Project\ats_remote\ATS\ATS.Core\obj\Debug\ATS.Core.pdb
+D:\ATS_REMOTE\ATS\ATS.Core\bin\Debug\ATS.Core.dll
+D:\ATS_REMOTE\ATS\ATS.Core\bin\Debug\ATS.Core.pdb
+D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
+D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.dll
+D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.pdb

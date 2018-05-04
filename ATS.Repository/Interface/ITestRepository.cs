@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using ATS.Core.Model;
 
 namespace ATS.Repository.Interface
 {
-   public interface ITestRepository
+   public interface ITestRepository : ICRUD<TestBank>
     {
         Guid CreateTest(List<QuestionBank> questions);
         Guid UpdateTest(List<QuestionBank> questions);
