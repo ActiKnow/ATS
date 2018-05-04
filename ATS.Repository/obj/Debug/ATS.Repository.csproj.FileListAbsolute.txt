@@ -1,0 +1,15 @@
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll.config
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.pdb
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.dll
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.dll
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.pdb
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.xml
+D:\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csprojResolveAssemblyReference.cache
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CoreCompileInputs.cache
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.Migrations.NewMigration.resources
+D:\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResource.Cache
