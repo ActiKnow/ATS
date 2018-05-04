@@ -4,13 +4,14 @@ using ATS.Core.Model;
 using ATS.Repository.Interface;
 using System.Linq;
 
+
 namespace ATS.Repository.DAO
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    public class QuestionRepository : BaseRepository, IQuestionRepository
     {
-        public bool Create(UserInfo input)
+        public bool Create(QuestionBank input)
         {
-            bool isCreated= false;
+            bool isCreated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -19,11 +20,11 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.UserId = Guid.NewGuid();
-                            context.UserInfo.Add(input);
+                            input.QId = Guid.NewGuid();
+                            context.QuestionBank.Add(input);
                             context.SaveChanges();
-                            isCreated = true;
                             dbContextTransaction.Commit();
+                            isCreated = true;
                         }
                     }
                     catch
@@ -36,7 +37,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(UserInfo input)
+        public bool Delete(QuestionBank input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -45,13 +46,13 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
                         if (dataFound != null)
                         {
-                            context.UserInfo.Remove(dataFound);
+                            context.QuestionBank.Remove(dataFound);
                             context.SaveChanges();
-                            isDeleted = true;
                             dbContextTransaction.Commit();
+                            isDeleted = true;
                         }
                     }
                     catch
@@ -64,14 +65,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public UserInfo Retrieve(UserInfo input)
+        public QuestionBank Retrieve(QuestionBank input)
         {
-            UserInfo result;
+            QuestionBank result;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
                 }
                 catch
                 {
@@ -81,29 +82,29 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public ICollection<UserInfo> Select(params object[] inputs)
+        public ICollection<QuestionBank> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(UserInfo input)
+        public bool Update(QuestionBank input)
         {
-            bool isUpdated= false;
+            bool isUpdated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
                         if (dataFound != null)
                         {
                             //updation start
-                            dataFound.FName = input.FName;
+                            dataFound.Description = input.Description;
                             //updateion end
                             context.SaveChanges();
-                            isUpdated = true;
                             dbContextTransaction.Commit();
+                            isUpdated = true;
                         }
                     }
                     catch
@@ -115,28 +116,5 @@ namespace ATS.Repository.DAO
                 return isUpdated;
             }
         }
-
-        public Guid ValidateUser(UserCredential userCredential)
-        {
-            Guid userId = Guid.Empty;
-            using (var context = new ATSDBContext())
-            {
-                try
-                {
-                    var userDetail = context.UserCredential.Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
-
-                    if (userDetail != null)
-                    {
-                        userId = userDetail.UserId;
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-                return userId;
-            }
-        }
-
     }
 }

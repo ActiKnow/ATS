@@ -9,7 +9,7 @@ namespace ATS.Core.Model
     {
         public TypeDef()
         {
-            this.UserInfoes = new List<UserInfo>();
+            this.UserInfo = new List<UserInfo>();
         }
         [Key]
         public System.Guid TypeId { get; set; }
@@ -17,6 +17,6 @@ namespace ATS.Core.Model
         public string TypeKey { get; set; }
         public string TypeValue { get; set; }
         public string ParentTypeId { get; set; }
-        public virtual List<UserInfo> UserInfoes { get; set; }
+        public virtual List<UserInfo> UserInfo { get; set; }
     }
 }
