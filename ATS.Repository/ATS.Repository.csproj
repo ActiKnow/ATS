@@ -48,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\BaseRepository.cs" />
+    <Compile Include="DAO\MapOptionRepository.cs" />
+    <Compile Include="DAO\MapQuestionRepository.cs" />
+    <Compile Include="DAO\OptionRepository.cs" />
+    <Compile Include="DAO\QuestionRepository.cs" />
     <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Interface\IMapOptionRepository.cs" />
     <Compile Include="Interface\IMapQuestionRepository.cs" />

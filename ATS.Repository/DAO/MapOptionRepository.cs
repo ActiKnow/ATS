@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace ATS.Repository.DAO
 {
-    public class UserRepository : BaseRepository, IUserRepository
+    class MapOptionRepository : BaseRepository, IMapOptionRepository
     {
-        public bool Create(UserInfo input)
+        public bool Create(QuestionOptionMapping input)
         {
-            bool isCreated= false;
+            bool isCreated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -19,11 +19,11 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.UserId = Guid.NewGuid();
-                            context.UserInfo.Add(input);
+                            input.Id = Guid.NewGuid();
+                            context.QuestionOptionMapping.Add(input);
                             context.SaveChanges();
-                            isCreated = true;
                             dbContextTransaction.Commit();
+                            isCreated = true;
                         }
                     }
                     catch
@@ -36,7 +36,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(UserInfo input)
+        public bool Delete(QuestionOptionMapping input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -45,13 +45,13 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
                         if (dataFound != null)
                         {
-                            context.UserInfo.Remove(dataFound);
+                            context.QuestionOptionMapping.Remove(dataFound);
                             context.SaveChanges();
-                            isDeleted = true;
                             dbContextTransaction.Commit();
+                            isDeleted = true;
                         }
                     }
                     catch
@@ -64,14 +64,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public UserInfo Retrieve(UserInfo input)
+        public QuestionOptionMapping Retrieve(QuestionOptionMapping input)
         {
-            UserInfo result;
+            QuestionOptionMapping result;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    result = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
                 }
                 catch
                 {
@@ -81,29 +81,29 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public ICollection<UserInfo> Select(params object[] inputs)
+        public ICollection<QuestionOptionMapping> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(UserInfo input)
+        public bool Update(QuestionOptionMapping input)
         {
-            bool isUpdated= false;
+            bool isUpdated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
                         if (dataFound != null)
                         {
                             //updation start
-                            dataFound.FName = input.FName;
+                            //dataFound.Description = input.Description;
                             //updateion end
                             context.SaveChanges();
-                            isUpdated = true;
                             dbContextTransaction.Commit();
+                            isUpdated = true;
                         }
                     }
                     catch
@@ -115,28 +115,5 @@ namespace ATS.Repository.DAO
                 return isUpdated;
             }
         }
-
-        public Guid ValidateUser(UserCredential userCredential)
-        {
-            Guid userId = Guid.Empty;
-            using (var context = new ATSDBContext())
-            {
-                try
-                {
-                    var userDetail = context.UserCredential.Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
-
-                    if (userDetail != null)
-                    {
-                        userId = userDetail.UserId;
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
-                return userId;
-            }
-        }
-
     }
 }
