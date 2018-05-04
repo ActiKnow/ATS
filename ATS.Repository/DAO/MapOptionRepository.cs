@@ -99,7 +99,7 @@ namespace ATS.Repository.DAO
                         if (dataFound != null)
                         {
                             //updation start
-                            //dataFound.Description = input.Description;
+                            dataFound.Answer = input.Answer;
                             //updateion end
                             context.SaveChanges();
                             dbContextTransaction.Commit();
