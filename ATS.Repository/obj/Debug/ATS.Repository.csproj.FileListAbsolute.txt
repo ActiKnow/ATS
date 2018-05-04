@@ -28,3 +28,19 @@ D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResourc
 D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CoreCompileInputs.cache
 D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
 D:\ATS_REMOTE\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll.config
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.dll
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Repository.pdb
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.dll
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.dll
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\ATS.Core.pdb
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.xml
+D:\projects\ATS Project\ATS\ATS.Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csprojResolveAssemblyReference.cache
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.Migrations.NewMigration.resources
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.GenerateResource.cache
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CoreCompileInputs.cache
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.csproj.CopyComplete
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.dll
+D:\projects\ATS Project\ATS\ATS.Repository\obj\Debug\ATS.Repository.pdb

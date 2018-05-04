@@ -9,3 +9,8 @@ D:\ATS_REMOTE\ATS\ATS.Core\bin\Debug\ATS.Core.pdb
 D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
 D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.dll
 D:\ATS_REMOTE\ATS\ATS.Core\obj\Debug\ATS.Core.pdb
+D:\projects\ATS Project\ATS\ATS.Core\bin\Debug\ATS.Core.dll
+D:\projects\ATS Project\ATS\ATS.Core\bin\Debug\ATS.Core.pdb
+D:\projects\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
+D:\projects\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.dll
+D:\projects\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.pdb

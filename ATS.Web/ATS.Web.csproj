@@ -175,8 +175,7 @@
     </Content>
     <Content Include="Scripts\Backup\bootstrap.js" />
     <Content Include="Scripts\Backup\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\Setup\Type.cshtml" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
