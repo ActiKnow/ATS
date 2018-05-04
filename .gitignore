@@ -6,5 +6,7 @@ ATS.Service/bin/*
 ATS.Service/obj/*
 ATS.Web/bin/*
 ATS.Web/obj/*
+*/bin/*
+*/obj/*
 # Visual Studio 2015/2017 cache/options directory
 .vs/
