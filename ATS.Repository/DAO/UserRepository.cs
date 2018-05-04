@@ -22,8 +22,9 @@ namespace ATS.Repository.DAO
                             input.UserId = Guid.NewGuid();
                             context.UserInfo.Add(input);
                             context.SaveChanges();
-                            isCreated = true;
+                            
                             dbContextTransaction.Commit();
+                            isCreated = true;
                         }
                     }
                     catch
@@ -45,13 +46,14 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (dataFound != null)
+                        UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        if (userInfo != null)
                         {
-                            context.UserInfo.Remove(dataFound);
+                            context.UserInfo.Remove(userInfo);
                             context.SaveChanges();
-                            isDeleted = true;
+                            
                             dbContextTransaction.Commit();
+                            isDeleted = true;
                         }
                     }
                     catch
@@ -66,44 +68,62 @@ namespace ATS.Repository.DAO
 
         public UserInfo Retrieve(UserInfo input)
         {
-            UserInfo result;
+            UserInfo userInfo;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
                 }
                 catch
                 {
                     throw;
                 }
-                return result;
+                return userInfo;
             }
         }
 
-        public ICollection<UserInfo> Select(params object[] inputs)
+        public List<UserInfo> Select(params object[] inputs)
         {
-            throw new NotImplementedException();
+            List<UserInfo> userInfos;
+            using (var context = GetConnection())
+            {
+                try
+                {
+                    userInfos = context.UserInfo.AsNoTracking().ToList();
+                }
+                catch
+                {
+                    throw;
+                }
+                return userInfos;
+            }
         }
 
         public bool Update(UserInfo input)
         {
-            bool isUpdated= false;
+            bool isUpdated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        UserInfo dataFound = context.UserInfo.Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (dataFound != null)
+                        var userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+
+                        if (userInfo != null)
                         {
-                            //updation start
-                            dataFound.FName = input.FName;
-                            //updateion end
+                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
+                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
+                            userInfo.UserTypeId = input.UserTypeId;
+                            userInfo.FName = input.FName;
+                            userInfo.LName = input.LName;
+                            userInfo.Mobile = input.Mobile;
+                            userInfo.Status = input.Status;  
+
                             context.SaveChanges();
-                            isUpdated = true;
                             dbContextTransaction.Commit();
+                            isUpdated = true;
                         }
                     }
                     catch
@@ -123,7 +143,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    var userDetail = context.UserCredential.Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
+                    var userDetail = context.UserCredential.AsNoTracking().Where(x => x.EmailId == userCredential.EmailId && x.CurrPassword == userCredential.CurrPassword).FirstOrDefault();
 
                     if (userDetail != null)
                     {

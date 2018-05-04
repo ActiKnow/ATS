@@ -2,7 +2,7 @@
 
 namespace ATS.Repository.Interface
 {
-    public  interface IMapOptionRepository : ICRUD<QuestionOptionMapping>
+   public interface IMapOptionRepository : ICRUD<QuestionOptionMapping>
     {
     }
 }

@@ -81,7 +81,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public ICollection<QuestionOptionMapping> Select(params object[] inputs)
+        public List<QuestionOptionMapping> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
