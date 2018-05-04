@@ -170,10 +170,6 @@
     <Content Include="Scripts\Backup\bootstrap.js" />
     <Content Include="Scripts\Backup\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\Setup\Role.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
-=======
->>>>>>> 180486a9b459330d2cba07407286d7a9c3eb3d7b
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
