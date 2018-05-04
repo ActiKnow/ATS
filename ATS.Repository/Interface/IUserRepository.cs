@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ATS.Core.Model;
 
 namespace ATS.Repository.Interface
 {
-   public interface IUserRepository
+   public interface IUserRepository : ICRUD<UserInfo>
     {
         bool RegisterUser();
         Guid ValidateUser(UserCredential userCredential);

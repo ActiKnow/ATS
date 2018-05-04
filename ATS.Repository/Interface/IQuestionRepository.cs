@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ATS.Core.Model;
 
 namespace ATS.Repository.Interface
 {
-    public interface IQuestionRepository
+    public interface IQuestionRepository : ICRUD<QuestionBank>
     {
     }
 }
