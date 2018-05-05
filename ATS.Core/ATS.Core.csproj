@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,7 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonModel\ApiResult.cs" />
     <Compile Include="CommonModel\BaseModel.cs" />
+    <Compile Include="CommonModel\Constants.cs" />
     <Compile Include="CommonModel\QuestionBankModel.cs" />
     <Compile Include="CommonModel\QuestionOptionModel.cs" />
     <Compile Include="CommonModel\QuestionOptionMapping.cs" />
