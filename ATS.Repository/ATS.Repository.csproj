@@ -52,7 +52,7 @@
     <Compile Include="DAO\MapQuestionRepository.cs" />
     <Compile Include="DAO\OptionRepository.cs" />
     <Compile Include="DAO\QuestionRepository.cs" />
-    <Compile Include="DAO\TestRepository.cs" />
+    <Compile Include="DAO\TestBankRepository.cs" />
     <Compile Include="DAO\TypeDefRepository.cs" />
     <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Interface\IMapOptionRepository.cs" />
