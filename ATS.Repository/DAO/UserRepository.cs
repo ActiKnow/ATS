@@ -10,7 +10,7 @@ namespace ATS.Repository.DAO
     {
         public bool Create(UserInfo input)
         {
-            bool isCreated= false;
+            bool isCreated = false;
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -22,7 +22,7 @@ namespace ATS.Repository.DAO
                             input.UserId = Guid.NewGuid();
                             context.UserInfo.Add(input);
                             context.SaveChanges();
-                            
+
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -51,7 +51,7 @@ namespace ATS.Repository.DAO
                         {
                             context.UserInfo.Remove(userInfo);
                             context.SaveChanges();
-                            
+
                             dbContextTransaction.Commit();
                             isDeleted = true;
                         }
@@ -73,7 +73,22 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                    var query = (from x in context.UserInfo.Where(x => x.UserId == input.UserId)
+                                 select new UserInfo
+                                 {
+                                     CreatedBy = x.CreatedBy,
+                                     CreatedDate = x.CreatedDate,
+                                     Email = x.Email,
+                                     FName = x.FName,
+                                     LastUpdatedBy = x.LastUpdatedBy,
+                                     LastUpdatedDate = x.LastUpdatedDate,
+                                     LName = x.LName,
+                                     Mobile = x.Mobile,
+                                     Status = x.Status,
+                                     UserTypeId = x.UserTypeId
+                                 }).FirstOrDefault();
+
+                    userInfo = query;
                 }
                 catch
                 {
@@ -119,7 +134,7 @@ namespace ATS.Repository.DAO
                             userInfo.FName = input.FName;
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
-                            userInfo.Status = input.Status;  
+                            userInfo.Status = input.Status;
 
                             context.SaveChanges();
                             dbContextTransaction.Commit();
@@ -138,7 +153,7 @@ namespace ATS.Repository.DAO
 
         public Guid ValidateUser(UserCredential userCredential)
         {
-            Guid userId = Guid.Empty;
+            Guid guid = Guid.Empty;
             using (var context = new ATSDBContext())
             {
                 try
@@ -147,14 +162,14 @@ namespace ATS.Repository.DAO
 
                     if (userDetail != null)
                     {
-                        userId = userDetail.UserId;
+                        guid = userDetail.UserId;
                     }
                 }
                 catch
                 {
                     throw;
                 }
-                return userId;
+                return guid;
             }
         }
 

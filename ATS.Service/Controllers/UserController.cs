@@ -25,14 +25,20 @@ namespace ATS.Service.Controllers
         {
             ApiResult apiResult = null;
 
-            var guid = userRepository.ValidateUser(userCredential);
-            if (guid != null)
+            var userId = userRepository.ValidateUser(userCredential);
+            if (userId!= Guid.Empty)
             {
-                apiResult = new ApiResult("", true, guid);
+                UserInfo userInfo = new UserInfo();
+                userInfo.Email = userCredential.EmailId;
+                userInfo.UserId = userId;
+
+                userInfo = userRepository.Retrieve(userInfo);
+
+                apiResult = new ApiResult("", true, userInfo);
             }
             else
             {
-                apiResult = new ApiResult("Username & Password is incorrect.", true, guid);
+                apiResult = new ApiResult("Username & Password is incorrect.", false);
             }
             
             return Ok(apiResult);

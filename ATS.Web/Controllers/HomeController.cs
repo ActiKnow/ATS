@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ATS.Core.CommonModel;
 
 namespace ATS.Web.Controllers
 {
@@ -21,9 +22,40 @@ namespace ATS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ValidateLogin()
+        public ActionResult ValidateLogin(UserCredentialModel userCredential)
         {
-            return View();
+            ApiResult apiResult = null;
+            try
+            {
+                if (userCredential != null)
+                {
+                    apiResult = ApiConsumers.UserApiConsumer.ValidateUser(userCredential);
+
+                    if (apiResult != null)
+                    {
+                        if (apiResult.Status && apiResult.Data != null)
+                        {
+                            return RedirectToAction("SetUserCredential");
+                        }
+                    }
+                    else
+                    {
+                        apiResult = new ApiResult("Error Occured.", false);
+                    }
+                }
+                else
+                {
+                    apiResult = new ApiResult("Error Occured.", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                apiResult = new ApiResult(ex.GetBaseException().Message, false);
+            }
+
+            ViewBag.Error = apiResult.Message;
+
+            return View("Index", userCredential);
         }
     }
 }
