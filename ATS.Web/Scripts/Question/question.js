@@ -47,6 +47,17 @@
             },
         }
     })();
+    var emptyOption = function () {
+
+        var op = defaults;
+        $(op.selectOption1).val("");
+        $(op.selectOption2).val("");
+        $(op.selectOption3).val("");
+        $(op.selectOption4).val("");
+        $(op.selectTrue).val("");
+        $(op.selectFalse).val("");
+        $(op.selectSubjective_text).val("");
+    };
 
     var createQuestion = function () {
         var flag = true;
@@ -94,16 +105,19 @@
                 $(defaults.selectMCQType).show();
                 $(defaults.selectTFType).hide();
                 $(defaults.selectSubjectType).hide();
+                emptyOption();
             }
             else if (Type == '2') {
                 $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).show();
                 $(defaults.selectSubjectType).hide();
+                emptyOption();
             }
             else {
                 $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).hide();
                 $(defaults.selectSubjectType).show();
+                emptyOption();
             }
 
         })
