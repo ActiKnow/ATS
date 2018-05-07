@@ -29,12 +29,26 @@ namespace ATS.Repository.Factory.Question
 
         public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
-            throw new NotImplementedException();
+            var result = (from bank in context.QuestionBank
+                          select new QuestionBankModel
+                          {
+                              QId = bank.QId,
+                              Description = bank.Description,
+                              QuesTypeId = bank.QuesTypeId,
+                              LevelTypeId = bank.LevelTypeId,
+                              CategoryTypeId = bank.CategoryTypeId,
+                              DefaultMark = bank.DefaultMark,
+                          });
+            return result.Where(condition).ToList();
         }
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            throw new NotImplementedException();
+            QuesDAO.UpdateTask( input, context);
+            input.MapOptions.Answer = input.AnsText;
+            input.MapOptions.QId = input.QId;
+            input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
+            MapOptionDAO.UpdateTask(input.MapOptions, context);
         }
     }
 }

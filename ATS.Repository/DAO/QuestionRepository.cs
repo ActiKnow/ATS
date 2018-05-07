@@ -108,7 +108,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    QuestionFactory selector = new QuestionFactory(input.QuesTypeId);
+                    QuestionFactory selector = new QuestionFactory(input.QuesTypeValue);
                     result = selector.QuestionSelector.Select(context, x => x.QId == input.QId).FirstOrDefault();
 
                 }

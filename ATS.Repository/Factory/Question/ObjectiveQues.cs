@@ -93,6 +93,12 @@ namespace ATS.Repository.Factory.Question
                     answers.Add(op.Id);
                 }
             }
+            //Delete Old Map
+            var oldMaps = MapOptionDAO.SelectTask(context, x => x.QId == input.QId);
+            foreach (var map in oldMaps)
+            {
+                MapOptionDAO.DeleteTask(map, context);
+            }
             //Set answers
             foreach (var ans in answers)
             {
@@ -103,7 +109,7 @@ namespace ATS.Repository.Factory.Question
                     OptionKeyId = optionKeyId,
                     Answer = ans.ToString(),
                 };
-                MapOptionDAO.UpdateTask(map, context);
+                MapOptionDAO.CreateTask(map, context);
             }
         }
     }

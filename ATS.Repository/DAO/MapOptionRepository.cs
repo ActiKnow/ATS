@@ -105,8 +105,6 @@ namespace ATS.Repository.DAO
 
         public List<QuestionOptionMapModel> SelectTask(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition)
         {
-
-
             List<QuestionOptionMapModel> result = null;
             var qry = (from option in context.QuestionOptionMapping.AsNoTracking()
                        select new QuestionOptionMapModel
