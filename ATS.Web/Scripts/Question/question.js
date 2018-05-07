@@ -1,7 +1,15 @@
 ﻿var question = (function () {
     'use strict'
     var defaults = {
-
+        selectContainer: '#questionContainer',
+        selectQuesLangId: '#question_language_id_1',
+        selectQuesExamModeId: '#question_exam_mode_id',
+        selectQuesDiffiLevel: '#question_difficulty_level',
+        selectQuesQuesTypeId: '#question_question_type_id',
+        selectQuesSubjectId: '#question_subject_id',
+        selectQuesText: '#question_text',
+        selectQuesMark: '#question_mark',
+        btnCreateQuestion: '#button_create_question'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -18,7 +26,7 @@
             },
         }
     }());
-    var callBack = (function () {
+    var callBacks = (function () {
         var appendQuestion = function (result) {
             let $tableConbtainer = $(defaults.selectContainer);
             $tableConbtainer.html(result);
@@ -75,7 +83,7 @@
 
     var bindEvents = function () {
         var op = defaults;
-        var $selectQuestionContainer = defaults.selectContainer;
+        var $selectQuestionContainer = $(op.selectContainer);
         $selectQuestionContainer.on('click', op.btnCreateQuestion, function (e) {
             createQuestion();
         })

@@ -3,6 +3,7 @@
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div id="questionContainer">
     <div class="app-title">
         <div>
@@ -140,33 +141,35 @@
     <br />
 
     @*<div class="row">
-        <div class="col-md-2">
-            <label class="name-tag" for="question_pool_ids">Question Bank</label>
-        </div>
-        <div class="col-md-8">
-            <div class="ques-pool mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar">
-                <div id="mCSB_1" class="mCustomScrollBox mCS-dark mCSB_vertical mCSB_inside" style="max-height: none;" tabindex="0">
-                    <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
-                        <div class="row cust-row">
-                            <input type="hidden" name="question[pool_ids][]" value="">
-                            <div class="col-lg-4 col-md-6">
-                                <input type="checkbox" value="1" name="question[pool_ids][]" id="question_pool_ids_1">
-                                <label class="checkbox-options" for="question_pool_ids_1">Demo</label>
+            <div class="col-md-2">
+                <label class="name-tag" for="question_pool_ids">Question Bank</label>
+            </div>
+            <div class="col-md-8">
+                <div class="ques-pool mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar">
+                    <div id="mCSB_1" class="mCustomScrollBox mCS-dark mCSB_vertical mCSB_inside" style="max-height: none;" tabindex="0">
+                        <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                            <div class="row cust-row">
+                                <input type="hidden" name="question[pool_ids][]" value="">
+                                <div class="col-lg-4 col-md-6">
+                                    <input type="checkbox" value="1" name="question[pool_ids][]" id="question_pool_ids_1">
+                                    <label class="checkbox-options" for="question_pool_ids_1">Demo</label>
+                                </div>
                             </div>
                         </div>
+                        <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div>
                     </div>
-                    <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
     <br />
     <div class="tile-footer">
         <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
     </div>
-    </div>
-    @section scripts {
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Question/question.js"></script>
     <script>
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -179,15 +182,15 @@
         (function ($, window, document) {
             $(function () {
                 var config = {
-                    selectContainer='#questionContainer',
-                    selectQuesLangId='#question_language_id_1',
-                    selectQuesExamModeId='#question_exam_mode_id',
-                    selectQuesDiffiLevel='#question_difficulty_level',
-                    selectQuesQuesTypeId='#question_question_type_id',
-                    selectQuesSubjectId='#question_subject_id',
-                    selectQuesText='#question_text',
-                    selectQuesMark='#question_mark',
-                    btnCreateQuestion='#button_create_question'
+                    selectContainer: '#questionContainer',
+                    selectQuesLangId: '#question_language_id_1',
+                    selectQuesExamModeId: '#question_exam_mode_id',
+                    selectQuesDiffiLevel: '#question_difficulty_level',
+                    selectQuesQuesTypeId: '#question_question_type_id',
+                    selectQuesSubjectId: '#question_subject_id',
+                    selectQuesText: '#question_text',
+                    selectQuesMark: '#question_mark',
+                    btnCreateQuestion: '#button_create_question'
                 };
                 question.init(config);
 
@@ -196,4 +199,4 @@
         }(window.jQuery, window, document));
     </script>
 
-    }
+}
