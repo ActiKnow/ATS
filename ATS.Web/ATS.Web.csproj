@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiConsumers\CommonApi.cs" />
     <Compile Include="ApiConsumers\ConsumerMethods.cs" />
     <Compile Include="ApiConsumers\UserApiConsumer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

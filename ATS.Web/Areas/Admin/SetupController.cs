@@ -44,5 +44,20 @@ namespace ATS.Web.Areas.Admin
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult GetParentTypes()
+        {
+            ApiResult result = null;
+            try
+            {
+                //result = ApiConsumers.CommonApi.GetParentTypes();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
     }
 }

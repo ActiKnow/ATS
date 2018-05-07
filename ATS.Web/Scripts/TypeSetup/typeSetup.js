@@ -74,7 +74,7 @@
                 StatusId: statusId.trim()
             };
 
-            api.createType('/Setup/CreateType', { typeDef: typeDef })
+            api.firePostAjax('/Setup/CreateType', { typeDef: typeDef })
                 .done(callBacks.onTypeCreated)
                 .fail(callBacks.onTypeCreationFailed);
 
@@ -106,6 +106,36 @@
         return flag;
     }
 
+    var loadParentTypes = function () {
+        var op = defaults;
+
+        api.fireGetAjax('/Setup/GetParentTypes', { })
+            .done(res => {
+                if (res != null) {
+                    var items = "<option>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message) {
+                            $(op.errorMsg).html(res.Message);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            });
+                            $(op.selectPatent).html(items);
+                        }
+                    }
+                    else {
+                        $(op.errorMsg).html(res.Message);
+                    }
+                }
+                $(op.)
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
+    }
+
+
 
     var bindEvents = function () {
         var op = defaults;
@@ -118,9 +148,9 @@
 
     return {
         init: function (config) {
-
             $.extend(true, defaults, config);
             bindEvents();
+            loadParentTypes();
         }
 
     }

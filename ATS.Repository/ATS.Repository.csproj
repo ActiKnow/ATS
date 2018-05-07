@@ -72,9 +72,9 @@
     <Compile Include="Interface\ITypeRepository.cs" />
     <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Migrations\201805031734508_NewMigration.cs" />
-    <Compile Include="Migrations\201805031734508_NewMigration.Designer.cs">
-      <DependentUpon>201805031734508_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201805071535599_NewMigration.cs" />
+    <Compile Include="Migrations\201805071535599_NewMigration.Designer.cs">
+      <DependentUpon>201805071535599_NewMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\QuestionBank.cs" />
@@ -103,10 +103,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805031734508_NewMigration.resx">
-      <DependentUpon>201805031734508_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805071535599_NewMigration.resx">
+      <DependentUpon>201805071535599_NewMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
