@@ -15,7 +15,6 @@ namespace ATS.Repository.Model
         public string PrevPassword { get; set; }
         public string CurrPassword { get; set; }
         public virtual UserInfo UserInfo { get; set; }
-        public virtual UserRole UserRole { get; set; }
         public string EmailId { get; set; }
     }
 }

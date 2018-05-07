@@ -13,6 +13,5 @@ namespace ATS.Repository.Model
         public System.Guid USERID { get; set; }
         public System.Guid ROLEID { get; set; }
         public virtual UserInfo UserInfo { get; set; }
-        public virtual UserRole UserRole { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace ATS.Core.Model
         public const string PUT = "PUT";
         public const string DELETE = "DELETE";
         public const string USERID = "USERID";
-        public const string ROLE = "ROLE";
+        public const string ROLE = "Role";
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }

@@ -61,7 +61,6 @@
     <Compile Include="Interface\IMapRoleRepository.cs" />
     <Compile Include="Interface\IOptionRepository.cs" />
     <Compile Include="Interface\IQuestionRepository.cs" />
-    <Compile Include="Interface\IRoleRepository.cs" />
     <Compile Include="Interface\ITestAssignmentRepository.cs" />
     <Compile Include="Interface\ITestHistoryRepository.cs" />
     <Compile Include="Interface\ITestRepository.cs" />
@@ -83,7 +82,6 @@
     <Compile Include="Model\UserAttemptedHistory.cs" />
     <Compile Include="Model\UserCredential.cs" />
     <Compile Include="Model\UserInfo.cs" />
-    <Compile Include="Model\UserRole.cs" />
     <Compile Include="Model\UserRoleMapping.cs" />
     <Compile Include="Model\UserTestHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

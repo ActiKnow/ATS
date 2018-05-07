@@ -88,6 +88,7 @@ namespace ATS.Repository.DAO
                 try
                 {
                     var query = (from x in context.UserInfo.Where(x => x.UserId == input.UserId)
+                                 join y in context.TypeDef on x.RoleTypeId equals y.TypeId
                                  select new UserInfoModel
                                  {
                                      CreatedBy = x.CreatedBy,
@@ -99,7 +100,10 @@ namespace ATS.Repository.DAO
                                      LName = x.LName,
                                      Mobile = x.Mobile,
                                      Status = x.Status,
-                                     UserTypeId = x.UserTypeId
+                                     UserTypeId = x.UserTypeId,
+                                     RoleTypeId = x.RoleTypeId,
+                                     RoleDescription = y.Description,
+                                     RoleValue=y.Value
                                  }).FirstOrDefault();
 
                     userInfo = query;
