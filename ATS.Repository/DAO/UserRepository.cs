@@ -30,7 +30,7 @@ namespace ATS.Repository.DAO
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
                             userInfo.Status = input.Status;
-                            userInfo.UserId=Guid.NewGuid();
+                            userInfo.UserId = Guid.NewGuid();
                             userInfo.UserTypeId = input.UserTypeId;
 
                             context.UserInfo.Add(userInfo);
@@ -103,10 +103,10 @@ namespace ATS.Repository.DAO
                                      UserTypeId = x.UserTypeId,
                                      RoleTypeId = x.RoleTypeId,
                                      RoleDescription = y.Description,
-                                     RoleValue=y.Value
-                                 }).FirstOrDefault();
+                                     RoleValue = y.Value
+                                 });
 
-                    userInfo = query;
+                    userInfo = query.FirstOrDefault();
                 }
                 catch
                 {
@@ -118,12 +118,31 @@ namespace ATS.Repository.DAO
 
         public List<UserInfoModel> Select(params object[] inputs)
         {
-            List<UserInfoModel> userInfos=null;
+            List<UserInfoModel> userInfos = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    //userInfos = context.UserInfo.AsNoTracking().ToList();
+                    var query = (from x in context.UserInfo.AsNoTracking()
+                                 join y in context.TypeDef on x.RoleTypeId equals y.TypeId
+                                 select new UserInfoModel
+                                 {
+                                     CreatedBy = x.CreatedBy,
+                                     CreatedDate = x.CreatedDate,
+                                     Email = x.Email,
+                                     FName = x.FName,
+                                     LastUpdatedBy = x.LastUpdatedBy,
+                                     LastUpdatedDate = x.LastUpdatedDate,
+                                     LName = x.LName,
+                                     Mobile = x.Mobile,
+                                     Status = x.Status,
+                                     UserTypeId = x.UserTypeId,
+                                     RoleTypeId = x.RoleTypeId,
+                                     RoleDescription = y.Description,
+                                     RoleValue = y.Value
+                                 });
+
+                    userInfos = query.ToList();
                 }
                 catch
                 {

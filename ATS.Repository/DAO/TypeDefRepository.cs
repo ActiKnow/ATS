@@ -22,9 +22,18 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.TypeId = Guid.NewGuid();
-                           // context.TypeDef.Add(input);
-                            context.SaveChanges();                            
+                            TypeDef typeDef = new TypeDef();
+                            typeDef.CreatedBy = input.CreatedBy;
+                            typeDef.CreatedDate = input.CreatedDate;
+                            typeDef.Description = input.Description;
+                            typeDef.ParentTypeId = input.ParentTypeId;
+                            typeDef.Status = input.Status;
+                            typeDef.TypeId = Guid.NewGuid();
+                            typeDef.Value = input.Value;
+
+                            context.TypeDef.Add(typeDef);
+
+                            context.SaveChanges();
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -53,7 +62,7 @@ namespace ATS.Repository.DAO
                         {
                             context.TypeDef.Remove(typeDef);
                             context.SaveChanges();
-                            
+
                             dbContextTransaction.Commit();
                             isDeleted = true;
                         }
@@ -70,12 +79,25 @@ namespace ATS.Repository.DAO
 
         public TypeDefModel Retrieve(TypeDefModel input)
         {
-            TypeDefModel typeDef=null;
+            TypeDefModel typeDef = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    //typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
+                    typeDef = (from x in context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId)
+                               select new TypeDefModel
+                               {
+                                   CreatedBy = x.CreatedBy,
+                                   CreatedDate = x.CreatedDate,
+                                   Description = x.Description,
+                                   LastUpdatedBy = x.LastUpdatedBy,
+                                   LastUpdatedDate=x.LastUpdatedDate,
+                                   ParentTypeId=x.ParentTypeId,
+                                   Status=x.Status,
+                                   TypeId=x.TypeId,
+                                   Value=x.Value
+                               }).FirstOrDefault();
+
                 }
                 catch
                 {
@@ -87,12 +109,24 @@ namespace ATS.Repository.DAO
 
         public List<TypeDefModel> Select(params object[] inputs)
         {
-            List<TypeDefModel> typeDefs=null;
+            List<TypeDefModel> typeDefs = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                   // typeDefs = context.TypeDef.AsNoTracking().ToList();
+                    typeDefs = (from x in context.TypeDef.AsNoTracking()
+                               select new TypeDefModel
+                               {
+                                   CreatedBy = x.CreatedBy,
+                                   CreatedDate = x.CreatedDate,
+                                   Description = x.Description,
+                                   LastUpdatedBy = x.LastUpdatedBy,
+                                   LastUpdatedDate = x.LastUpdatedDate,
+                                   ParentTypeId = x.ParentTypeId,
+                                   Status = x.Status,
+                                   TypeId = x.TypeId,
+                                   Value = x.Value
+                               }).ToList();
                 }
                 catch
                 {
@@ -111,7 +145,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        var typeDef=context.TypeDef.AsNoTracking().Where(x=>x.TypeId==input.TypeId).FirstOrDefault();
+                        var typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
 
                         if (typeDef != null)
                         {
