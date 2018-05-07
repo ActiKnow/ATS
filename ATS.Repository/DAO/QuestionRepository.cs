@@ -4,6 +4,7 @@ using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
 using ATS.Core.Model;
+using ATS.Repository.Factory.Question;
 
 namespace ATS.Repository.DAO
 {
@@ -11,7 +12,8 @@ namespace ATS.Repository.DAO
     {
         IOptionRepository OptionDAO;
         IMapOptionRepository MapOptionDAO;
-        public QuestionRepository() {
+        public QuestionRepository()
+        {
             OptionDAO = new OptionRepository();
             MapOptionDAO = new MapOptionRepository();
         }
@@ -26,7 +28,8 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            CreateTask(input, context);
+                            QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeId);
+                            quesFactory.Question.Create(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -41,7 +44,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask( QuestionBankModel input, ATSDBContext context)
+        public void CreateTask(QuestionBankModel input, ATSDBContext context)
         {
             if (input != null)
             {

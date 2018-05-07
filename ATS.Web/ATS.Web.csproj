@@ -151,7 +151,9 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\DashboardController.cs" />
     <Compile Include="Areas\Admin\SetupController.cs" />
+    <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
     <Compile Include="Areas\Candidate\DashboardController.cs" />
+    <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Areas\Employee\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

@@ -5,9 +5,8 @@ using System.Text;
 
 namespace ATS.Core.Model
 {
-   public class QuestionOptionMapping
+   public class QuestionOptionMapModel
     {
-        [Key]
         public Guid Id { get; set; }
         public System.Guid QId { get; set; }
         public string OptionKeyId { get; set; }

@@ -39,7 +39,7 @@ namespace ATS.Web.Controllers
                             UserInfoModel userInfo=(UserInfoModel)apiResult.Data;
 
                             Session[Constants.USERID] = userInfo.UserId;
-                            Session[Constants.ROLE] = userInfo.RoleValue;
+                            Session[Constants.ROLE] = userInfo.RoleDescription;
 
                             return RedirectToAction("SetUserCredential");
                         }
@@ -64,7 +64,7 @@ namespace ATS.Web.Controllers
             return View("Index", userCredential);
         }
 
-        [HttpPost]
+        
         public ActionResult SetUserCredential()
         {
             ApiResult apiResult = null;
@@ -83,7 +83,7 @@ namespace ATS.Web.Controllers
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(ex.GetBaseException().Message, false);
+                apiResult = new ApiResult( false,ex.GetBaseException().Message);
             }
             ViewBag.Error = apiResult.Message;
             return View("Index");
