@@ -30,7 +30,7 @@ namespace ATS.Repository.DAO
                             testBank.Duration = input.Duration;
                             testBank.Instructions = input.Instructions;
                             testBank.LavelTypeId = input.LavelTypeId;
-                            testBank.Status = input.Status;
+                            testBank.StatusId = input.StatusId;
                             testBank.TestBankId = input.TestBankId;
                             testBank.TestTypeId = input.TestTypeId;
                             testBank.TotalMarks = input.TotalMarks;
@@ -101,7 +101,7 @@ namespace ATS.Repository.DAO
                                      Duration = x.Duration,
                                      Instructions = x.Instructions,
                                      LavelTypeId = x.LavelTypeId,
-                                     Status = x.Status,
+                                     StatusId = x.StatusId,
                                      TestBankId = x.TestBankId,
                                      TestTypeId = x.TestTypeId,
                                      TotalMarks = x.TotalMarks,
@@ -146,7 +146,7 @@ namespace ATS.Repository.DAO
                                      Duration = x.Duration,
                                      Instructions = x.Instructions,
                                      LavelTypeId = x.LavelTypeId,
-                                     Status = x.Status,
+                                     StatusId = x.StatusId,
                                      TestBankId = x.TestBankId,
                                      TestTypeId = x.TestTypeId,
                                      TotalMarks = x.TotalMarks,
@@ -190,7 +190,7 @@ namespace ATS.Repository.DAO
                             testBank.Duration = input.Duration;
                             testBank.Instructions = input.Instructions;
                             testBank.LavelTypeId = input.LavelTypeId;
-                            testBank.Status = input.Status;
+                            testBank.StatusId = input.StatusId;
                             testBank.TestTypeId = input.TestTypeId;
                             testBank.TotalMarks = input.TotalMarks;
 

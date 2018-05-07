@@ -1,1 +1,18 @@
-﻿
+﻿@model List<ATS.Core.Model.TypeDefModel>
+    @{
+        var count = 0;
+    }
+
+    @foreach (var item in Model)
+    {
+        count += 1;
+        <tr>
+            <td>@count</td>
+            <td>@item.Description</td>
+            <td>@item.Value</td>
+            <td>@item.ParentDescription</td>
+            <td>@item.StatusDescription</td>
+            <td><div class="btn-group"><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-plus"></i></a><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-edit"></i></a><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-trash"></i></a></div></td>
+        </tr>
+    }
+

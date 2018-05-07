@@ -16,7 +16,7 @@ namespace ATS.Repository.Model
         public System.Guid TypeId { get; set; }
         public string Description { get; set; }      
         public string Value { get; set; }
-        public string ParentTypeId { get; set; }
+        public string ParentKey { get; set; }
         public virtual List<UserInfo> UserInfo { get; set; }
     }
 }

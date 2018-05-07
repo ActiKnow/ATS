@@ -15,7 +15,10 @@ namespace ATS.Core.Model
         public System.Guid TypeId { get; set; }
         public string Description { get; set; }      
         public string Value { get; set; }
-        public string ParentTypeId { get; set; }
+        public string ParentKey { get; set; }
+        public string ParentDescription { get; set; }
+        public string ParentValue { get; set; }
+        public string StatusDescription { get; set; }
         public virtual List<UserInfoModel> UserInfo { get; set; }
     }
 }
