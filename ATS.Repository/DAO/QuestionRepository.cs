@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
-
+using ATS.Core.Model;
 
 namespace ATS.Repository.DAO
 {
     public class QuestionRepository : BaseRepository, IQuestionRepository
     {
-        public bool Create(QuestionBank input)
+        public bool Create(QuestionBankModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -21,7 +21,7 @@ namespace ATS.Repository.DAO
                         if (input != null)
                         {
                             input.QId = Guid.NewGuid();
-                            context.QuestionBank.Add(input);
+                            //context.QuestionBank.Add(input);
                             context.SaveChanges();
                             dbContextTransaction.Commit();
                             isCreated = true;
@@ -37,7 +37,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(QuestionBank input)
+        public bool Delete(QuestionBankModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -65,14 +65,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public QuestionBank Retrieve(QuestionBank input)
+        public QuestionBankModel Retrieve(QuestionBankModel input)
         {
-            QuestionBank result;
+            QuestionBankModel result=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+                   // result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
                 }
                 catch
                 {
@@ -82,12 +82,12 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<QuestionBank> Select(params object[] inputs)
+        public List<QuestionBankModel> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(QuestionBank input)
+        public bool Update(QuestionBankModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())

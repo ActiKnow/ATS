@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
 using ATS.Core.Model;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.DAO
 {
@@ -20,8 +20,21 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.UserId = Guid.NewGuid();
-                         //   context.UserInfo.Add(input);
+                            UserInfo userInfo = new UserInfo();
+                            userInfo.CreatedBy = input.CreatedBy;
+                            userInfo.CreatedDate = input.CreatedDate;
+                            userInfo.Email = input.Email;
+                            userInfo.FName = input.FName;
+                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
+                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
+                            userInfo.LName = input.LName;
+                            userInfo.Mobile = input.Mobile;
+                            userInfo.Status = input.Status;
+                            userInfo.UserId=Guid.NewGuid();
+                            userInfo.UserTypeId = input.UserTypeId;
+
+                            context.UserInfo.Add(userInfo);
+
                             context.SaveChanges();
 
                             dbContextTransaction.Commit();

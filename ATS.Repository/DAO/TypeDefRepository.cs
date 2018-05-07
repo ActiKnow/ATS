@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ATS.Repository.Model;
 using ATS.Repository.Interface;
+using ATS.Core.Model;
 
 namespace ATS.Repository.DAO
 {
     public class TypeDefRepository : BaseRepository, ITypeRepository
     {
-        public bool Create(TypeDef input)
+        public bool Create(TypeDefModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -22,7 +23,7 @@ namespace ATS.Repository.DAO
                         if (input != null)
                         {
                             input.TypeId = Guid.NewGuid();
-                            context.TypeDef.Add(input);
+                           // context.TypeDef.Add(input);
                             context.SaveChanges();                            
                             dbContextTransaction.Commit();
                             isCreated = true;
@@ -38,7 +39,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(TypeDef input)
+        public bool Delete(TypeDefModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -67,14 +68,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public TypeDef Retrieve(TypeDef input)
+        public TypeDefModel Retrieve(TypeDefModel input)
         {
-            TypeDef typeDef;
+            TypeDefModel typeDef=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
+                    //typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
                 }
                 catch
                 {
@@ -84,14 +85,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<TypeDef> Select(params object[] inputs)
+        public List<TypeDefModel> Select(params object[] inputs)
         {
-            List<TypeDef> typeDefs;
+            List<TypeDefModel> typeDefs=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    typeDefs = context.TypeDef.AsNoTracking().ToList();
+                   // typeDefs = context.TypeDef.AsNoTracking().ToList();
                 }
                 catch
                 {
@@ -101,7 +102,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Update(TypeDef input)
+        public bool Update(TypeDefModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())

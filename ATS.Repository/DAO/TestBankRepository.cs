@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ATS.Repository.Model;
 using ATS.Repository.Interface;
+using ATS.Core.Model;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.DAO
 {
     public class TestBankRepository : BaseRepository, ITestRepository
     {
-        public bool Create(TestBank input)
+        public bool Create(TestBankModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -21,7 +22,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            context.TestBank.Add(input);
+                           // context.TestBank.Add(input);
                             context.SaveChanges();
 
                             dbContextTransaction.Commit();
@@ -38,7 +39,7 @@ namespace ATS.Repository.DAO
             }
         }              
 
-        public bool Delete(TestBank input)
+        public bool Delete(TestBankModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -50,7 +51,7 @@ namespace ATS.Repository.DAO
                         TestBank testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
                         if (testBank != null)
                         {
-                            context.TestBank.Remove(input);
+                            //context.TestBank.Remove(input);
                             context.SaveChanges();
 
                             dbContextTransaction.Commit();
@@ -67,14 +68,14 @@ namespace ATS.Repository.DAO
             }
         }
        
-        public TestBank Retrieve(TestBank input)
+        public TestBankModel Retrieve(TestBankModel input)
         {
-            TestBank testBank;
+            TestBankModel testBank = null; ;
             using (var context = GetConnection())
             {
                 try
                 {
-                    testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
+                    //testBank = context.TestBank.AsNoTracking().Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();
                 }
                 catch
                 {
@@ -84,14 +85,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<TestBank> Select(params object[] inputs)
+        public List<TestBankModel> Select(params object[] inputs)
         {
-            List<TestBank> testBank;
+            List<TestBankModel> testBank=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    testBank = context.TestBank.AsNoTracking().ToList();
+                    //testBank = context.TestBank.AsNoTracking().ToList();
                 }
                 catch
                 {
@@ -101,7 +102,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Update(TestBank input)
+        public bool Update(TestBankModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())

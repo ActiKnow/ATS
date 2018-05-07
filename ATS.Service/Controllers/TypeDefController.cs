@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.Model;
 using ATS.Repository.DAO;
 using ATS.Repository.Interface;
+using ATS.Core.Model;
 
 namespace ATS.Service.Controllers
 {
@@ -20,7 +20,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TypeDef/Create")]
-        public IHttpActionResult Create(TypeDef typeDef)
+        public IHttpActionResult Create(TypeDefModel typeDef)
         {
             var result = repository.Create(typeDef);
             return Ok(result);
@@ -28,7 +28,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TypeDef/Update")]
-        public IHttpActionResult Update(TypeDef typeDef)
+        public IHttpActionResult Update(TypeDefModel typeDef)
         {
             var result = repository.Update(typeDef);
             return Ok(result);
@@ -36,7 +36,7 @@ namespace ATS.Service.Controllers
 
         [HttpDelete]
         [Route("api/TypeDef/Delete")]
-        public IHttpActionResult Delete(TypeDef typeDef)
+        public IHttpActionResult Delete(TypeDefModel typeDef)
         {
             var result = repository.Delete(typeDef);
             return Ok(result);
@@ -44,7 +44,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TypeDef/Retrieve")]
-        public IHttpActionResult Retrieve(TypeDef typeDef)
+        public IHttpActionResult Retrieve(TypeDefModel typeDef)
         {
             var result = repository.Retrieve(typeDef);
             return Ok(result);

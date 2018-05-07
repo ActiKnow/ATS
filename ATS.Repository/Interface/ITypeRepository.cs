@@ -1,8 +1,8 @@
-﻿using ATS.Repository.Model;
+﻿using ATS.Core.Model;
 
 namespace ATS.Repository.Interface
 {
-    public  interface ITypeRepository : ICRUD<TypeDef>
+    public  interface ITypeRepository : ICRUD<TypeDefModel>
     {
     }
 }
