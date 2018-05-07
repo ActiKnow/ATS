@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ATS.Repository.DAO;
+using ATS.Repository.Model;
 using ATS.Core.Model;
 
 namespace ATS.Service.Controllers
@@ -20,7 +21,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Create")]
-        public IHttpActionResult Create(QuestionBank newQues)
+        public IHttpActionResult Create(QuestionBankModel newQues)
         {
             questionRepo.Create(newQues);
             return Ok("");
@@ -28,7 +29,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Update")]
-        public IHttpActionResult Update(QuestionBank newQues)
+        public IHttpActionResult Update(QuestionBankModel newQues)
         {
             questionRepo.Update(newQues);
             return Ok("");
@@ -36,7 +37,7 @@ namespace ATS.Service.Controllers
 
         [HttpDelete]
         [Route("api/Question/Delete")]
-        public IHttpActionResult Delete(QuestionBank newQues)
+        public IHttpActionResult Delete(QuestionBankModel newQues)
         {
             questionRepo.Delete(newQues);
             return Ok("");

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ATS.Core.CommonModel;
+using System.Web.Security;
+using ATS.Core.Model;
 
 namespace ATS.Web.Controllers
 {
@@ -35,27 +36,64 @@ namespace ATS.Web.Controllers
                     {
                         if (apiResult.Status && apiResult.Data != null)
                         {
+                            UserInfoModel userInfo=(UserInfoModel)apiResult.Data;
+
+                            Session[Constants.USERID] = userInfo.UserId;
+                            Session[Constants.ROLE] = userInfo.RoleValue;
+
                             return RedirectToAction("SetUserCredential");
                         }
                     }
                     else
                     {
-                        apiResult = new ApiResult("Error Occured.", false);
+                        apiResult = new ApiResult(false ,"Error Occured." );
                     }
                 }
                 else
                 {
-                    apiResult = new ApiResult("Error Occured.", false);
+                    apiResult = new ApiResult(false,"Error Occured.");
                 }
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(ex.GetBaseException().Message, false);
+                apiResult = new ApiResult(false,ex.GetBaseException().Message );
             }
 
             ViewBag.Error = apiResult.Message;
 
             return View("Index", userCredential);
+        }
+
+        [HttpPost]
+        public ActionResult SetUserCredential()
+        {
+            ApiResult apiResult = null;
+            try
+            { 
+                FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), false);
+                var RoleType=Session[Constants.ROLE].ToString();
+
+                if (RoleType == Constants.ADMIN)
+                    return RedirectToAction("Index", "Dashboard", new { @Area="Admin" });
+                else if (RoleType == Constants.EMPLOYEE)
+                    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
+                else if (RoleType == Constants.CANDIDATE)
+                    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
+
+            }
+            catch (Exception ex)
+            {
+                apiResult = new ApiResult(ex.GetBaseException().Message, false);
+            }
+            ViewBag.Error = apiResult.Message;
+            return View("Index");
+        }
+
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

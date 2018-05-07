@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
+using ATS.Core.Model;
 
-namespace ATS.Core.Model
+namespace ATS.Repository.Model
 {
    public class UserInfo : BaseModel
     {
@@ -21,6 +21,7 @@ namespace ATS.Core.Model
         public string LName { get; set; }
         public decimal Mobile { get; set; }
         public string Email { get; set; }
+        public System.Guid RoleTypeId { get; set; }
         public System.Guid UserTypeId { get; set; }
         public virtual List<TestAssignment> TestAssignments { get; set; }
         public virtual TypeDef TypeDef { get; set; }

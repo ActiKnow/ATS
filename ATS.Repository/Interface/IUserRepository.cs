@@ -1,10 +1,11 @@
 ﻿using System;
 using ATS.Core.Model;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.Interface
 {
-   public interface IUserRepository: ICRUD<UserInfo>
+   public interface IUserRepository: ICRUD<UserInfoModel>
     {
-        Guid ValidateUser(UserCredential userCredential);
+        Guid ValidateUser(UserCredentialModel userCredential);
     }
 }

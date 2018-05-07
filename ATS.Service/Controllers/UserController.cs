@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using ATS.Repository.DAO;
-using ATS.Core.CommonModel;
+using ATS.Core.Model;
 
 namespace ATS.Service.Controllers
 {
@@ -21,24 +21,24 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/User/Validate")]
-        public IHttpActionResult ValidateUser(UserCredential userCredential)
+        public IHttpActionResult ValidateUser(UserCredentialModel userCredential)
         {
             ApiResult apiResult = null;
 
             var userId = userRepository.ValidateUser(userCredential);
             if (userId!= Guid.Empty)
             {
-                UserInfo userInfo = new UserInfo();
+                UserInfoModel userInfo = new UserInfoModel();
                 userInfo.Email = userCredential.EmailId;
                 userInfo.UserId = userId;
 
                 userInfo = userRepository.Retrieve(userInfo);
 
-                apiResult = new ApiResult("", true, userInfo);
+                apiResult = new ApiResult(true, "",  userInfo);
             }
             else
             {
-                apiResult = new ApiResult("Username & Password is incorrect.", false);
+                apiResult = new ApiResult(false, "Username & Password is incorrect." );
             }
             
             return Ok(apiResult);
@@ -46,7 +46,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/User/Create")]
-        public IHttpActionResult Create( UserInfo userCredential)
+        public IHttpActionResult Create(UserInfoModel userCredential)
         {
             var result = userRepository.Create(userCredential);
             return Ok(result);

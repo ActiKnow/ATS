@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ATS.Core.CommonModel
+namespace ATS.Core.Model
 {
    public class UserInfoModel : BaseModel
     {
@@ -20,7 +20,12 @@ namespace ATS.Core.CommonModel
         public string LName { get; set; }
         public decimal Mobile { get; set; }
         public string Email { get; set; }
+        public System.Guid RoleTypeId { get; set; }
+        public string RoleDescription { get; set; }
+        public string RoleValue { get; set; }
         public System.Guid UserTypeId { get; set; }
+        public string UserTypeDescription { get; set; }
+        public string UserTypeValue { get; set; }
         public virtual List<TestAssignmentModel> TestAssignments { get; set; }
         public virtual TypeDefModel TypeDef { get; set; }
         public virtual List<UserCredentialModel> UserCredentials { get; set; }

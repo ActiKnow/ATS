@@ -2,7 +2,7 @@
 
 namespace ATS.Repository.Interface
 {
-    public  interface ITypeRepository : ICRUD<TypeDef>
+    public  interface ITypeRepository : ICRUD<TypeDefModel>
     {
     }
 }

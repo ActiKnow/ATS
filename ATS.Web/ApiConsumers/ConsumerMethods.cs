@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ATS.Core.CommonModel;
+using ATS.Core.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -25,7 +25,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Post<T>(string url, object data)
         {
             ApiResult apiResult = null;
-            string type = Constants.Post;
+            string type = Constants.POST;
             try
             {
                 apiResult= CallApi<T>(url, type, data);
@@ -41,7 +41,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Get<T>(string url)
         {
             ApiResult apiResult = null;
-            string type = Constants.Get;
+            string type = Constants.GET;
             try
             {
                 apiResult = CallApi<T>(url, type);
@@ -57,7 +57,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Delete<T>(string url)
         {
             ApiResult apiResult = null;
-            string type = Constants.Delete;
+            string type = Constants.DELETE;
             try
             {
                 apiResult = CallApi<T>(url, type);
@@ -140,7 +140,7 @@ namespace ATS.Web.ApiConsumers
                 }
                 else
                 {
-                    apiResult = new ApiResult(Response, false, null);
+                    apiResult = new ApiResult(false, Response , null);
                 }
             }
             return apiResult;

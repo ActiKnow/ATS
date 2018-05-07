@@ -4,7 +4,7 @@ using ATS.Core.Model;
 
 namespace ATS.Repository.Interface
 {
-   public interface ITestRepository : ICRUD<TestBank>
+   public interface ITestRepository : ICRUD<TestBankModel>
     {
        
     }

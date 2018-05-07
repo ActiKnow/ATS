@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATS.Core.Model;
 using ATS.Repository.Interface;
 using System.Linq;
+using ATS.Core.Model;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.DAO
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public bool Create(UserInfo input)
+        public bool Create(UserInfoModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -19,8 +20,21 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.UserId = Guid.NewGuid();
-                            context.UserInfo.Add(input);
+                            UserInfo userInfo = new UserInfo();
+                            userInfo.CreatedBy = input.CreatedBy;
+                            userInfo.CreatedDate = input.CreatedDate;
+                            userInfo.Email = input.Email;
+                            userInfo.FName = input.FName;
+                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
+                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
+                            userInfo.LName = input.LName;
+                            userInfo.Mobile = input.Mobile;
+                            userInfo.Status = input.Status;
+                            userInfo.UserId=Guid.NewGuid();
+                            userInfo.UserTypeId = input.UserTypeId;
+
+                            context.UserInfo.Add(userInfo);
+
                             context.SaveChanges();
 
                             dbContextTransaction.Commit();
@@ -37,7 +51,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(UserInfo input)
+        public bool Delete(UserInfoModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -66,15 +80,15 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public UserInfo Retrieve(UserInfo input)
+        public UserInfoModel Retrieve(UserInfoModel input)
         {
-            UserInfo userInfo;
+            UserInfoModel userInfo;
             using (var context = GetConnection())
             {
                 try
                 {
                     var query = (from x in context.UserInfo.Where(x => x.UserId == input.UserId)
-                                 select new UserInfo
+                                 select new UserInfoModel
                                  {
                                      CreatedBy = x.CreatedBy,
                                      CreatedDate = x.CreatedDate,
@@ -98,14 +112,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<UserInfo> Select(params object[] inputs)
+        public List<UserInfoModel> Select(params object[] inputs)
         {
-            List<UserInfo> userInfos;
+            List<UserInfoModel> userInfos=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    userInfos = context.UserInfo.AsNoTracking().ToList();
+                    //userInfos = context.UserInfo.AsNoTracking().ToList();
                 }
                 catch
                 {
@@ -115,7 +129,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Update(UserInfo input)
+        public bool Update(UserInfoModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -151,7 +165,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public Guid ValidateUser(UserCredential userCredential)
+        public Guid ValidateUser(UserCredentialModel userCredential)
         {
             Guid guid = Guid.Empty;
             using (var context = new ATSDBContext())

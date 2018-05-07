@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATS.Core.CommonModel
+namespace ATS.Core.Model
 {
    public class ApiResult
     {
@@ -12,7 +12,7 @@ namespace ATS.Core.CommonModel
         public string Message { get; set; }
         public object Data { get; set; }
 
-        public ApiResult(string message, bool status, object data = null)
+        public ApiResult(bool status, string message, object data = null)
         {
             this.Message = message;
             this.Status = status;

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using ATS.Core.Model;
 
-namespace ATS.Core.CommonModel
+namespace ATS.Repository.Model
 {
-  public  class QuestionOptionModel : BaseModel
+  public  class QuestionOption : BaseModel
     {
         [Key]
         public System.Guid Id { get; set; }

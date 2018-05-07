@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Core.Model;
 using ATS.Repository.DAO;
 using ATS.Repository.Interface;
+using ATS.Core.Model;
 
 namespace ATS.Service.Controllers
 {
@@ -20,7 +20,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Create")]
-        public IHttpActionResult Create(TestBank testBank)
+        public IHttpActionResult Create(TestBankModel testBank)
         {
             var result = repository.Create(testBank);
             return Ok(result);
@@ -28,7 +28,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Update")]
-        public IHttpActionResult Update(TestBank testBank)
+        public IHttpActionResult Update(TestBankModel testBank)
         {
             var result = repository.Update(testBank);
             return Ok(result);
@@ -36,7 +36,7 @@ namespace ATS.Service.Controllers
 
         [HttpDelete]
         [Route("api/TestBank/Delete")]
-        public IHttpActionResult Delete(TestBank testBank)
+        public IHttpActionResult Delete(TestBankModel testBank)
         {
             var result = repository.Delete(testBank);
             return Ok(result);
@@ -44,7 +44,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Retrieve")]
-        public IHttpActionResult Retrieve(TestBank testBank)
+        public IHttpActionResult Retrieve(TestBankModel testBank)
         {
             var result = repository.Retrieve(testBank);
             return Ok(result);

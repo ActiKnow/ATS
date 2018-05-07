@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
+using ATS.Core.Model;
 
 namespace ATS.Repository.DAO
 {
     class OptionRepository : BaseRepository, IOptionRepository
     {
-        public bool Create(QuestionOption input)
+        public bool Create(QuestionOptionModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -19,9 +20,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.Id = Guid.NewGuid();
-                            context.QuestionOption.Add(input);
-                            context.SaveChanges();
+                            CreateTask(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -36,7 +35,17 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Delete(QuestionOption input)
+        public void CreateTask(QuestionOptionModel input, ATSDBContext context)
+        {
+            if (input != null)
+            {
+                input.Id = Guid.NewGuid();
+                //context.QuestionOption.Add(input);
+                context.SaveChanges();
+            }
+        }
+
+        public bool Delete(QuestionOptionModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -45,14 +54,10 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            context.QuestionOption.Remove(dataFound);
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isDeleted = true;
-                        }
+                        DeleteTask(input, context);
+                        dbContextTransaction.Commit();
+                        isDeleted = true;
+
                     }
                     catch
                     {
@@ -64,14 +69,24 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public QuestionOption Retrieve(QuestionOption input)
+        public void DeleteTask(QuestionOptionModel input, ATSDBContext context)
         {
-            QuestionOption result;
+            QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
+            if (dataFound != null)
+            {
+                context.QuestionOption.Remove(dataFound);
+                context.SaveChanges();
+            }
+        }
+
+        public QuestionOptionModel Retrieve(QuestionOptionModel input)
+        {
+            QuestionOptionModel result = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
+                    // result = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
                 }
                 catch
                 {
@@ -81,12 +96,12 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<QuestionOption> Select(params object[] inputs)
+        public List<QuestionOptionModel> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(QuestionOption input)
+        public bool Update(QuestionOptionModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -95,16 +110,10 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            //updation start
-                            dataFound.Description = input.Description;
-                            //updateion end
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isUpdated = true;
-                        }
+                        UpdateTask(input, context);
+                        dbContextTransaction.Commit();
+                        isUpdated = true;
+
                     }
                     catch
                     {
@@ -113,6 +122,18 @@ namespace ATS.Repository.DAO
                     }
                 }
                 return isUpdated;
+            }
+        }
+
+        public void UpdateTask(QuestionOptionModel input, ATSDBContext context)
+        {
+            QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
+            if (dataFound != null)
+            {
+                //updation start
+                dataFound.Description = input.Description;
+                //updateion end
+                context.SaveChanges();
             }
         }
     }
