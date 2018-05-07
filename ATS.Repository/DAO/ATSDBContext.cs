@@ -24,7 +24,6 @@ namespace ATS.Repository.DAO
         public virtual DbSet<TypeDef> TypeDef { get; set; }
         public virtual DbSet<UserAttemptedHistory> UserAttemptedHistory { get; set; }
         public virtual DbSet<UserCredential> UserCredential { get; set; }
-        public virtual DbSet<UserRoleMapping> UserRoleMapping { get; set; }
         public virtual DbSet<UserTestHistory> UserTestHistory { get; set; }
        
     }

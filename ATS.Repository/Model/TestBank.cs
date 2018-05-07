@@ -16,12 +16,12 @@ namespace ATS.Repository.Model
         }
         [Key]
         public System.Guid TestBankId { get; set; }
-        public string CategoryTypeId { get; set; }
-        public string LavelTypeId { get; set; }
+        public System.Guid CategoryTypeId { get; set; }
+        public System.Guid LavelTypeId { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }
         public decimal Duration { get; set; }
-        public string TestTypeId { get; set; }
+        public System.Guid TestTypeId { get; set; }
         public decimal TotalMarks { get; set; }
         public virtual List<TestAssignment> TestAssignments { get; set; }
         public virtual List<TestQuestionMapping> TestQuestionMappings { get; set; }
