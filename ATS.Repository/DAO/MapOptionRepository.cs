@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
+using ATS.Core.Model;
 
 namespace ATS.Repository.DAO
 {
    public class MapOptionRepository : BaseRepository, IMapOptionRepository
     {
-        public bool Create(QuestionOptionMapping input)
+        public bool Create(QuestionOptionMapModel input)
         {
             bool isCreated = false;
             using (var context = GetConnection())
@@ -20,7 +21,7 @@ namespace ATS.Repository.DAO
                         if (input != null)
                         {
                             input.Id = Guid.NewGuid();
-                            context.QuestionOptionMapping.Add(input);
+                           // context.QuestionOptionMapping.Add(input);
                             context.SaveChanges();
                             dbContextTransaction.Commit();
                             isCreated = true;
@@ -35,8 +36,11 @@ namespace ATS.Repository.DAO
                 return isCreated;
             }
         }
-
-        public bool Delete(QuestionOptionMapping input)
+        public void CreateTask(QuestionOptionMapModel input, ATSDBContext context)
+        {
+            throw new NotImplementedException();
+        }
+        public bool Delete(QuestionOptionMapModel input)
         {
             bool isDeleted = false;
             using (var context = GetConnection())
@@ -63,15 +67,18 @@ namespace ATS.Repository.DAO
                 return isDeleted;
             }
         }
-
-        public QuestionOptionMapping Retrieve(QuestionOptionMapping input)
+        public void DeleteTask(QuestionOptionMapModel input, ATSDBContext context)
         {
-            QuestionOptionMapping result;
+            throw new NotImplementedException();
+        }
+        public QuestionOptionMapModel Retrieve(QuestionOptionMapModel input)
+        {
+            QuestionOptionMapModel result=null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    result = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
+                    //result = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
                 }
                 catch
                 {
@@ -80,13 +87,11 @@ namespace ATS.Repository.DAO
                 return result;
             }
         }
-
-        public List<QuestionOptionMapping> Select(params object[] inputs)
+        public List<QuestionOptionMapModel> Select(params object[] inputs)
         {
             throw new NotImplementedException();
         }
-
-        public bool Update(QuestionOptionMapping input)
+        public bool Update(QuestionOptionMapModel input)
         {
             bool isUpdated = false;
             using (var context = GetConnection())
@@ -114,6 +119,10 @@ namespace ATS.Repository.DAO
                 }
                 return isUpdated;
             }
+        }
+        public void UpdateTask(QuestionOptionMapModel input, ATSDBContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

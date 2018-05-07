@@ -9,22 +9,17 @@ namespace ATS.Core.Model
     {
         public QuestionBankModel()
         {
-            this.QuestionOptionMappings = new List<QuestionOptionMapping>();
-            this.TestQuestionMappings = new List<TestQuestionMapModel>();
-            this.UserAttemptedHistories = new List<UserAttemptHistoryModel>();
+            Options = new List<QuestionOptionModel>();
         }
-        [Key]
+
         public System.Guid QId { get; set; }
-        
+
         public string Description { get; set; }
         public string QuesTypeId { get; set; }
         public string LevelTypeId { get; set; }
         public int DefaultMark { get; set; }
-    
-        public virtual List<QuestionOptionMapping> QuestionOptionMappings { get; set; }
-
-        public virtual List<TestQuestionMapModel> TestQuestionMappings { get; set; }
-
-        public virtual List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
+        public string AnsText { get; set; }
+        public List<QuestionOptionModel> Options { get; set; }
+        public QuestionOptionMapModel MapOptions { get; set; }
     }
 }
