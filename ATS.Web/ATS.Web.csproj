@@ -182,6 +182,7 @@
     <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Question.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
