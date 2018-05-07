@@ -34,11 +34,11 @@ namespace ATS.Service.Controllers
 
                 userInfo = userRepository.Retrieve(userInfo);
 
-                apiResult = new ApiResult("", true, userInfo);
+                apiResult = new ApiResult(true, "",  userInfo);
             }
             else
             {
-                apiResult = new ApiResult("Username & Password is incorrect.", false);
+                apiResult = new ApiResult(false, "Username & Password is incorrect." );
             }
             
             return Ok(apiResult);
