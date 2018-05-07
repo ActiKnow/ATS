@@ -212,6 +212,7 @@
     <Content Include="Scripts\plugins\select2.min.js" />
     <Content Include="Scripts\plugins\sweetalert.min.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\Question\question.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

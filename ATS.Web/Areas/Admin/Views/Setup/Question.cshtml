@@ -19,77 +19,55 @@
 
     <div class="row">
 
-        <div class="col-md-2">
-            <label class="name-tag" for="question_language_id">Language</label>
+        <div class="col-md-12">
+            <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
         </div>
-        <div class="col-sm-8">
-            <div class="radio-list"><label class="radio-options new-ques-lang"><input type="radio" value="1" checked="checked" name="question[language_id]" id="question_language_id_1">English</label></div>
-        </div>
+
     </div>
 
+
     <br />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label class="name-tag control-label" for="question_exam_mode_id">Exam Mode</label>
-                        </div>
-                        <div class="col-md-6">
-                            <select class="form-control" required="required" name="question[exam_mode_id]" id="question_exam_mode_id">
-                                <option value="">- Select -</option>
-                                <option selected="selected" value="1">Exam</option>
-                                <option value="2">Homework</option>
-                            </select>
-                        </div>
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
+                        <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
+                            <option value="">- Select -</option>
+                            <option selected="selected" value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                        </div>
-                        <div class="col-md-6">
+                    @*<div class="col-md-6">
                             <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
                                 <option value="">- Select -</option>
                                 <option selected="selected" value="easy">Easy</option>
                                 <option value="medium">Medium</option>
                                 <option value="hard">Hard</option>
                             </select>
-                        </div>
-                    </div>
+                        </div>*@
                 </div>
             </div>
-        </div>
-    </div>
-
-    <br />
-
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <div class="col-md-6"><label class="name-tag control-label" for="question_question_type">Question Type</label><a data-target="#question-instructions-modal" data-toggle="modal" class="q-type-icon" href="#"><i class="fa fa-exclamation-circle blue fa-1x" data-placement="right" data-toggle="tooltip" data-original-title="Instructions"></i></a></div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <label class="name-tag control-label" for="question_question_type">Question Type</label>
                         <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
                             <option value="">- Select -</option>
-                            <option value="1">Multiple Choice</option>
-                            <option value="2">Multiple Selection</option>
-                            <option value="3">Fill in the blanks</option>
-                            <option value="4">Yes/No or True/False</option>
-                            <option value="10">Descriptive</option>
-                            <option value="11">Passage Based</option>
-                            <option value="13">Audio Based</option>
-                            <option value="14">Video Based</option>
-                            <option value="15">Short Answer</option>
+                            <option value="1">Multiple Choice Question</option>
+                            <option value="2">Yes/No or True/False</option>
+                            <option value="3">Subjective</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <div class="col-md-6"><label class="name-tag control-label" for="question_subject">Subject</label></div><div class="col-md-6">
+                    <div class="col-md-12">
+                        <label class="name-tag control-label" for="question_subject">Subject</label>
                         <select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
                             <option value="">- Select -</option>
                             <option value="1">C</option>
@@ -104,6 +82,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -111,11 +90,85 @@
 
     <div class="row">
         <div class="col-md-2">
-            <label class="name-tag" for="question_question_languages_attributes_0_hint">Question</label>
+            <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
         </div>
         <div class="col-md-8"><textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea></div>
     </div>
 
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <label class="name-tag">Answer Description</label>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="MCQType">
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="true" class="form-control input-sm" placeholder="Option1" id="True">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="false" class="form-control input-sm" placeholder="Option2" id="True">
+
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="true" class="form-control input-sm" placeholder="Option3" id="True">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="false" class="form-control input-sm" placeholder="Option4" id="True">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="TFType">
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="true" class="form-control input-sm" placeholder="True" id="True">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="false" class="form-control input-sm" placeholder="False" id="True">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div id="SubjectType">
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
+                        <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br />
 
     <div class="row">
@@ -134,39 +187,18 @@
             <label class="name-tag control-label" for="question_mark">Mark</label>
         </div>
         <div class="col-md-8">
-            <input placeholder="Mark" class="form-control widget-small" required="required" step="0.01" min="0.01" max="1000" type="number" name="question[mark]" id="question_mark">
+            <input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">
         </div>
     </div>
 
-    <br />
-
-    @*<div class="row">
-            <div class="col-md-2">
-                <label class="name-tag" for="question_pool_ids">Question Bank</label>
-            </div>
-            <div class="col-md-8">
-                <div class="ques-pool mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar">
-                    <div id="mCSB_1" class="mCustomScrollBox mCS-dark mCSB_vertical mCSB_inside" style="max-height: none;" tabindex="0">
-                        <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
-                            <div class="row cust-row">
-                                <input type="hidden" name="question[pool_ids][]" value="">
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="checkbox" value="1" name="question[pool_ids][]" id="question_pool_ids_1">
-                                    <label class="checkbox-options" for="question_pool_ids_1">Demo</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
 
     <br />
     <div class="tile-footer">
         <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
     </div>
+
 </div>
+
 
 @section scripts {
     <script src="~/Scripts/Question/question.js"></script>
@@ -190,7 +222,10 @@
                     selectQuesSubjectId: '#question_subject_id',
                     selectQuesText: '#question_text',
                     selectQuesMark: '#question_mark',
-                    btnCreateQuestion: '#button_create_question'
+                    btnCreateQuestion: '#button_create_question',
+                    selectMCQType: '#MCQType',
+                    selectTFType: '#TFType',
+                    selectSubjectType: '#SubjectType'
                 };
                 question.init(config);
 

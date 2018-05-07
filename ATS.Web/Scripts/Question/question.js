@@ -65,11 +65,11 @@
             var QuestionView = {
                 QuesLangId: QuesLangId.trim(),
                 QuesExamModeId: QuesExamModeId,
-                QuesDiffiLevel: QuesDiffiLevel,
-                QuesQuesTypeId: QuesQuesTypeId,
-                QuesSubjectId: QuesSubjectId,
-                QuesText: QuesText,
-                QuesMark: QuesMark
+                LevelTypeId: QuesDiffiLevel,
+                QuesTypeId: QuesQuesTypeId,
+                CategoryTypeId: QuesSubjectId,
+                Description: QuesText,
+                DefaultMark: QuesMark
 
             };
             api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
@@ -87,6 +87,26 @@
         $selectQuestionContainer.on('click', op.btnCreateQuestion, function (e) {
             createQuestion();
         })
+
+        $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
+            var Type = $(op.selectQuesQuesTypeId).val();
+            if (Type == '1') {
+                $(defaults.selectMCQType).show();
+                $(defaults.selectTFType).hide();
+                $(defaults.selectSubjectType).hide();
+            }
+            else if (Type == '2') {
+                $(defaults.selectMCQType).hide();
+                $(defaults.selectTFType).show();
+                $(defaults.selectSubjectType).hide();
+            }
+            else {
+                $(defaults.selectMCQType).hide();
+                $(defaults.selectTFType).hide();
+                $(defaults.selectSubjectType).show();
+            }
+
+        })
     };
 
     return {
@@ -94,6 +114,9 @@
 
             $.extend(true, defaults, config);
             bindEvents();
+            $(defaults.selectMCQType).hide();
+            $(defaults.selectTFType).hide();
+            $(defaults.selectSubjectType).hide();
         }
 
     }
