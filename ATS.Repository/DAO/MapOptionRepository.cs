@@ -74,7 +74,8 @@ namespace ATS.Repository.DAO
         }
         public void DeleteTask(QuestionOptionMapModel input, ATSDBContext context)
         {
-            QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
+            QuestionOptionMapping dataFound = null;
+            dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
             if (dataFound != null)
             {
                 context.QuestionOptionMapping.Remove(dataFound);
@@ -97,10 +98,28 @@ namespace ATS.Repository.DAO
                 return result;
             }
         }
-        public List<QuestionOptionMapModel> Select(params object[] inputs)
+        public List<QuestionOptionMapModel> Select(Func<QuestionOptionMapModel, bool> condition)
         {
             throw new NotImplementedException();
         }
+
+        public List<QuestionOptionMapModel> SelectTask(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition)
+        {
+            List<QuestionOptionMapModel> result = null;
+            var qry = (from option in context.QuestionOptionMapping.AsNoTracking()
+                       select new QuestionOptionMapModel
+                       {
+                           Id = option.Id,
+                           QId = option.QId,
+                           OptionKeyId = option.OptionKeyId,
+                           Answer = option.Answer
+
+                       }).AsQueryable();
+            result = qry.Where(condition).ToList();
+            return result;
+
+        }
+
         public bool Update(QuestionOptionMapModel input)
         {
             bool isUpdated = false;

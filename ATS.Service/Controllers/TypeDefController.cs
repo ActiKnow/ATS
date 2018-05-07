@@ -55,7 +55,7 @@ namespace ATS.Service.Controllers
         [Route("api/TypeDef/Select")]
         public IHttpActionResult Select(params object[] inputs)
         {
-            var result = repository.Select(inputs);
+            var result = repository.Select(null);
             return Ok(result);
         }
     }
