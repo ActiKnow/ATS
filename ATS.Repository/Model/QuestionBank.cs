@@ -18,9 +18,9 @@ namespace ATS.Repository.Model
         public System.Guid QId { get; set; }
         
         public string Description { get; set; }
-        public System.Guid QuesTypeId { get; set; }
-        public System.Guid LevelTypeId { get; set; }
-        public System.Guid CategoryTypeId { get; set; }
+        public string QuesTypeId { get; set; }
+        public string LevelTypeId { get; set; }
+        public string CategoryTypeId { get; set; }
         public int DefaultMark { get; set; }
     
         public virtual List<QuestionOptionMapping> QuestionOptionMappings { get; set; }

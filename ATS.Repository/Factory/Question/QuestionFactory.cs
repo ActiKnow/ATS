@@ -7,27 +7,32 @@ using System.Threading.Tasks;
 
 namespace ATS.Repository.Factory.Question
 {
-   public class QuestionFactory
+    public class QuestionFactory
     {
-        private IQuestion _question;
-       public IQuestion Question { get { return _question; } }
-
+        public IQuestion Question { get; }
+        public ISelectable<QuestionBankModel> QuestionSelector { get; }
         public QuestionFactory(string quesType)
         {
-            _question = null;
+            Question = null;
             if (quesType == Constants.OPTION)
             {
-                _question = new ObjectiveQues();
+                ObjectiveQues obj = new ObjectiveQues();
+                Question = obj;
+                QuestionSelector = obj;
             }
             else if (quesType == Constants.BOOL)
             {
-                _question = new BoolQues();
+                BoolQues obj = new BoolQues();
+                Question = obj;
+                QuestionSelector = obj;
             }
             else if (quesType == Constants.TEXT)
             {
-                _question = new SubjectiveQues();
+                SubjectiveQues obj = new SubjectiveQues();
+                Question = obj;
+                QuestionSelector = obj;
             }
-        
         }
+
     }
 }
