@@ -143,6 +143,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiConsumers\ConsumerMethods.cs" />
+    <Compile Include="ApiConsumers\UserApiConsumer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -239,6 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATS.Core\ATS.Core.csproj">
+      <Project>{00C343C2-66A5-4E5B-8B4F-8B98BEB1243F}</Project>
+      <Name>ATS.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

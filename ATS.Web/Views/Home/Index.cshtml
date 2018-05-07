@@ -1,4 +1,5 @@
-﻿@{   
+﻿@model ATS.Core.CommonModel.UserCredentialModel
+@{   
     ViewBag.Title = "Home Page";
 }
 
@@ -10,15 +11,19 @@
         <h1>ATS</h1>
     </div>
     <div class="login-box">
-        <form class="login-form" action="index.html">
+@using (Html.BeginForm("ValidateLogin", "Home",FormMethod.Post, new { @class = "login-form" }))
+{
+        @*<form class="login-form" action="index.html">*@
             <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
             <div class="form-group">
                 <label class="control-label">USERNAME</label>
-                <input class="form-control" type="text" placeholder="Email" autofocus>
+                @Html.TextBoxFor(x=>x.EmailId,new {@class= "form-control", @placeholder= "Email", @autofocus= "autofocus" })
+                @*<input class="form-control" type="text" placeholder="Email" autofocus>*@
             </div>
             <div class="form-group">
                 <label class="control-label">PASSWORD</label>
-                <input class="form-control" type="password" placeholder="Password">
+                @Html.TextBoxFor(x => x.CurrPassword, new { @class = "form-control", @placeholder = "Password", @autofocus = "autofocus" ,@type= "password" })
+                @*<input class="form-control" type="password" placeholder="Password">*@
             </div>
             <div class="form-group">
                 <div class="utility">
@@ -33,8 +38,18 @@
             <div class="form-group btn-container">
                 <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
             </div>
-        </form>
-        <form class="forget-form" action="index.html">
+            <div class="form-group">
+                @if (ViewBag.Error != null)
+                {
+                    <span style="color:red">@ViewBag.Error</span>
+                }
+            </div>
+        @*</form>*@
+}
+
+@using (Html.BeginForm("ValidateUser", "Home", FormMethod.Post, new { @class = "forget-form" }))
+{
+        @*<form class="forget-form" action="index.html">*@
             <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?</h3>
             <div class="form-group">
                 <label class="control-label">EMAIL</label>
@@ -46,6 +61,7 @@
             <div class="form-group mt-3">
                 <p class="semibold-text mb-0"><a href="#" data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> Back to Login</a></p>
             </div>
-        </form>
+        @*</form>*@
+}
     </div>
 </section>

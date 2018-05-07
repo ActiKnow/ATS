@@ -8,7 +8,7 @@ using ATS.Repository.Interface;
 
 namespace ATS.Repository.DAO
 {
-    public class TestRepository : BaseRepository, ITestRepository
+    public class TestBankRepository : BaseRepository, ITestRepository
     {
         public bool Create(TestBank input)
         {
