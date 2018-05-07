@@ -1,17 +1,5 @@
-ATS.Core/bin/*
-ATS.Core/obj/*
-ATS.Core/obj/Debug/*
-ATS.Repository/bin/*
-ATS.Repository/obj/*
-ATS.Repository/obj/Debug/*
-ATS.Service/bin/*
-ATS.Service/obj/*
-ATS.Service/obj/Debug/*
-ATS.Web/bin/*
-ATS.Web/obj/*
-ATS.Web/obj/Debug/*
-*/bin/*
-*/obj/*
-*/[Dd]ebug/*
+**/bin/**
+**/obj/**
+**/[Dd]ebug/**
 # Visual Studio 2015/2017 cache/options directory
-.vs/
+**/.vs/**

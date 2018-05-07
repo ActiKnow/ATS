@@ -1,6 +1,0 @@
-D:\ATS Project\ATS\ATS.Core\bin\Debug\ATS.Core.dll
-D:\ATS Project\ATS\ATS.Core\bin\Debug\ATS.Core.pdb
-D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.csproj.CoreCompileInputs.cache
-D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.dll
-D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.pdb
-D:\ATS Project\ATS\ATS.Core\obj\Debug\ATS.Core.csprojResolveAssemblyReference.cache
