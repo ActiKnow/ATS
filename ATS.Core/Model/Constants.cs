@@ -13,7 +13,6 @@ namespace ATS.Core.Model
         public const string PUT = "PUT";
         public const string DELETE = "DELETE";
         public const string USERID = "USERID";
-        public const string ROLE = "ROLE";
         public const string ADMIN = "Admin";
         public const string EMPLOYEE = "Employee";
         public const string CANDIDATE = "Candidate";
