@@ -13,12 +13,14 @@ namespace ATS.Web.Areas.Admin
         {
             return View();
         }
-        //Admin/Setup/TypeSetup
+
+        [HttpGet]
         public ActionResult TypeSetup()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult Question()
         {
 
