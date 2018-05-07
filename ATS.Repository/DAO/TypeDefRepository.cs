@@ -26,8 +26,8 @@ namespace ATS.Repository.DAO
                             typeDef.CreatedBy = input.CreatedBy;
                             typeDef.CreatedDate = input.CreatedDate;
                             typeDef.Description = input.Description;
-                            typeDef.ParentTypeId = input.ParentTypeId;
-                            typeDef.Status = input.Status;
+                            typeDef.ParentKey = input.ParentKey;
+                            typeDef.StatusId = input.StatusId;
                             typeDef.TypeId = Guid.NewGuid();
                             typeDef.Value = input.Value;
 
@@ -92,8 +92,8 @@ namespace ATS.Repository.DAO
                                    Description = x.Description,
                                    LastUpdatedBy = x.LastUpdatedBy,
                                    LastUpdatedDate=x.LastUpdatedDate,
-                                   ParentTypeId=x.ParentTypeId,
-                                   Status=x.Status,
+                                   ParentKey=x.ParentKey,
+                                   StatusId=x.StatusId,
                                    TypeId=x.TypeId,
                                    Value=x.Value
                                }).FirstOrDefault();
@@ -122,8 +122,8 @@ namespace ATS.Repository.DAO
                                    Description = x.Description,
                                    LastUpdatedBy = x.LastUpdatedBy,
                                    LastUpdatedDate = x.LastUpdatedDate,
-                                   ParentTypeId = x.ParentTypeId,
-                                   Status = x.Status,
+                                   ParentKey = x.ParentKey,
+                                   StatusId = x.StatusId,
                                    TypeId = x.TypeId,
                                    Value = x.Value
                                }).Where(condition).ToList();
@@ -151,8 +151,8 @@ namespace ATS.Repository.DAO
                         {
                             typeDef.LastUpdatedBy = input.LastUpdatedBy;
                             typeDef.LastUpdatedDate = input.LastUpdatedDate;
-                            typeDef.ParentTypeId = input.ParentTypeId;
-                            typeDef.Status = input.Status;
+                            typeDef.ParentKey = input.ParentKey;
+                            typeDef.StatusId = input.StatusId;
                             typeDef.Description = input.Description;
                             typeDef.Value = input.Value;
 

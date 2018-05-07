@@ -28,7 +28,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeId);
+                            QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
                             if (quesFactory.Question != null)
                             {
                                 quesFactory.Question.Create(input, context);
@@ -149,7 +149,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeId);
+                        QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
                         quesFactory.Question.Update(input, context);
                         dbContextTransaction.Commit();
                         isUpdated = true;

@@ -29,7 +29,7 @@ namespace ATS.Repository.DAO
                             userInfo.LastUpdatedDate = input.LastUpdatedDate;
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
-                            userInfo.Status = input.Status;
+                            userInfo.StatusId = input.StatusId;
                             userInfo.UserId = Guid.NewGuid();
                             userInfo.UserTypeId = input.UserTypeId;
 
@@ -99,7 +99,7 @@ namespace ATS.Repository.DAO
                                      LastUpdatedDate = x.LastUpdatedDate,
                                      LName = x.LName,
                                      Mobile = x.Mobile,
-                                     Status = x.Status,
+                                     StatusId = x.StatusId,
                                      UserTypeId = x.UserTypeId,
                                      RoleTypeId = x.RoleTypeId,
                                      RoleDescription = y.Description,
@@ -135,7 +135,7 @@ namespace ATS.Repository.DAO
                                      LastUpdatedDate = x.LastUpdatedDate,
                                      LName = x.LName,
                                      Mobile = x.Mobile,
-                                     Status = x.Status,
+                                     StatusId = x.StatusId,
                                      UserTypeId = x.UserTypeId,
                                      RoleTypeId = x.RoleTypeId,
                                      RoleDescription = y.Description,
@@ -171,7 +171,7 @@ namespace ATS.Repository.DAO
                             userInfo.FName = input.FName;
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
-                            userInfo.Status = input.Status;
+                            userInfo.StatusId = input.StatusId;
 
                             context.SaveChanges();
                             dbContextTransaction.Commit();
