@@ -46,8 +46,8 @@
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\QuestionBankModel.cs" />
-    <Compile Include="Model\QuestionOptionMapping.cs" />
     <Compile Include="Model\QuestionOptionModel.cs" />
+    <Compile Include="Model\QuestionOptionMapModel.cs" />
     <Compile Include="Model\TestAssignmentModel.cs" />
     <Compile Include="Model\TestBankModel.cs" />
     <Compile Include="Model\TestQuestionMapModel.cs" />
@@ -55,8 +55,6 @@
     <Compile Include="Model\UserAttemptHistoryModel.cs" />
     <Compile Include="Model\UserCredentialModel.cs" />
     <Compile Include="Model\UserInfoModel.cs" />
-    <Compile Include="Model\UserRoleMapModel.cs" />
-    <Compile Include="Model\UserRoleModel.cs" />
     <Compile Include="Model\UserTestHistoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

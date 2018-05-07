@@ -54,6 +54,11 @@
     <Compile Include="DAO\QuestionRepository.cs" />
     <Compile Include="DAO\TestBankRepository.cs" />
     <Compile Include="DAO\TypeDefRepository.cs" />
+    <Compile Include="Factory\Question\BoolQues.cs" />
+    <Compile Include="Factory\Question\IQuestion.cs" />
+    <Compile Include="Factory\Question\ObjectiveQues.cs" />
+    <Compile Include="Factory\Question\QuestionFactory.cs" />
+    <Compile Include="Factory\Question\SubjectiveQues.cs" />
     <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Interface\IMapOptionRepository.cs" />
     <Compile Include="Interface\IMapQuestionRepository.cs" />

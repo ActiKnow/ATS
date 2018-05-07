@@ -83,7 +83,7 @@ namespace ATS.Web.Controllers
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(false,ex.GetBaseException().Message);
+                apiResult = new ApiResult( false,ex.GetBaseException().Message);
             }
             ViewBag.Error = apiResult.Message;
             return View("Index");

@@ -13,14 +13,17 @@ namespace ATS.Core.Model
         public const string PUT = "PUT";
         public const string DELETE = "DELETE";
         public const string USERID = "USERID";
+        public const string ADMIN = "Admin";
+        public const string EMPLOYEE = "Employee";
+        public const string CANDIDATE = "Candidate";
+        public const string OPTION = "Option";
+        public const string BOOL = "Bool";
+        public const string TEXT = "Text";
         public const string ROLE = "Role";
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }
         }
 
-        public const string ADMIN = "Admin";
-        public const string EMPLOYEE = "Employee";
-        public const string CANDIDATE = "Candidate";
     }    
 }
