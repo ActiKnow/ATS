@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ATS.Core.Model;
 
 namespace ATS.Web.Areas.Admin
 {
@@ -25,7 +26,7 @@ namespace ATS.Web.Areas.Admin
             return View();
         }
 
-        public ActionResult CreateQuestion()
+        public ActionResult CreateQuestion(QuestionBankModel QuestionView)
         {
             return View();
         }

@@ -13,7 +13,9 @@
             });
         };
         return {
-
+            createQuestion: function (url, data) {
+                return fireAjax(url, data);
+            },
         }
     }());
     var callBack = (function () {
@@ -42,30 +44,30 @@
         var flag = true;
         var op = defaults;
         var message = "";
-        var QuesLangId = $(op.selectQuesLangId).val().trim();
-        var QuesExamModeId = $(op.selectQuesExamModeId).val().trim();
-        var QuesDiffiLevel = $(op.selectQuesDiffiLevel).val().trim();
-        var QuesQuesTypeId = $(op.selectQuesQuesTypeId).val().trim();
-        var QuesSubjectId = $(op.selectQuesSubjectId).val().trim();
-        var QuesText = $(op.selectQuesText).val().trim();
-        var QuesMark = $(op.selectQuesMark).val().trim();
+        var QuesLangId = $(op.selectQuesLangId).val();
+        var QuesExamModeId = $(op.selectQuesExamModeId).val();
+        var QuesDiffiLevel = $(op.selectQuesDiffiLevel).val();
+        var QuesQuesTypeId = $(op.selectQuesQuesTypeId).val();
+        var QuesSubjectId = $(op.selectQuesSubjectId).val();
+        var QuesText = $(op.selectQuesText).val();
+        var QuesMark = $(op.selectQuesMark).val();
 
         if (flag) {
-            if (validateCustomerGroup()) {
-                var QuestionView = {
-                    QuesLangId: customerGroup.trim(),
-                    QuesExamModeId: description.trim(),
-                    SHORT_NAME: shortname.trim(),
-                    ACCOUNT_CODE: accountcode.trim(),
-                    SUB_ACCOUNT_CODE: subaccountcode.trim(),
-                    SORT_SEQNO: sortseqno.trim(),
-                    STATUS: status,
-                    PAN_MANDATORY: panMandatory,
-                };
-                api.addCustomersGroup('/Accounts/AddCustomerGroup', { CustomerGroupView: CustomerGroupView })
-                    .done(callBacks.onCustomerGroupAdded)
-                    .fail(callBacks.onCustomerGroupAddFailed);
-            }
+
+            var QuestionView = {
+                QuesLangId: QuesLangId.trim(),
+                QuesExamModeId: QuesExamModeId,
+                QuesDiffiLevel: QuesDiffiLevel,
+                QuesQuesTypeId: QuesQuesTypeId,
+                QuesSubjectId: QuesSubjectId,
+                QuesText: QuesText,
+                QuesMark: QuesMark
+
+            };
+            api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
+                .done(callBacks.onQuestionAdded)
+                .fail(callBacks.onQuestionFailed);
+
         }
 
     };
