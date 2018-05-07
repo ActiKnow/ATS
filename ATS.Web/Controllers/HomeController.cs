@@ -46,17 +46,17 @@ namespace ATS.Web.Controllers
                     }
                     else
                     {
-                        apiResult = new ApiResult("Error Occured.", false);
+                        apiResult = new ApiResult(false ,"Error Occured." );
                     }
                 }
                 else
                 {
-                    apiResult = new ApiResult("Error Occured.", false);
+                    apiResult = new ApiResult(false,"Error Occured.");
                 }
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(ex.GetBaseException().Message, false);
+                apiResult = new ApiResult(false,ex.GetBaseException().Message );
             }
 
             ViewBag.Error = apiResult.Message;

@@ -12,7 +12,7 @@ namespace ATS.Core.Model
         public string Message { get; set; }
         public object Data { get; set; }
 
-        public ApiResult(string message, bool status, object data = null)
+        public ApiResult(bool status, string message, object data = null)
         {
             this.Message = message;
             this.Status = status;

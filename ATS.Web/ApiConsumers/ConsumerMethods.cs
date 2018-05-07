@@ -140,7 +140,7 @@ namespace ATS.Web.ApiConsumers
                 }
                 else
                 {
-                    apiResult = new ApiResult(Response, false, null);
+                    apiResult = new ApiResult(false, Response , null);
                 }
             }
             return apiResult;

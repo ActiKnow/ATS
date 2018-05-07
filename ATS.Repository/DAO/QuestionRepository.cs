@@ -9,6 +9,12 @@ namespace ATS.Repository.DAO
 {
     public class QuestionRepository : BaseRepository, IQuestionRepository
     {
+        IOptionRepository OptionDAO;
+        IMapOptionRepository MapOptionDAO;
+        public QuestionRepository() {
+            OptionDAO = new OptionRepository();
+            MapOptionDAO = new MapOptionRepository();
+        }
         public bool Create(QuestionBankModel input)
         {
             bool isCreated = false;
@@ -20,9 +26,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.QId = Guid.NewGuid();
-                            //context.QuestionBank.Add(input);
-                            context.SaveChanges();
+                            CreateTask(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -37,6 +41,16 @@ namespace ATS.Repository.DAO
             }
         }
 
+        public void CreateTask( QuestionBankModel input, ATSDBContext context)
+        {
+            if (input != null)
+            {
+                input.QId = Guid.NewGuid();
+                //context.QuestionBank.Add(input);
+                context.SaveChanges();
+            }
+        }
+
         public bool Delete(QuestionBankModel input)
         {
             bool isDeleted = false;
@@ -46,14 +60,10 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            context.QuestionBank.Remove(dataFound);
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isDeleted = true;
-                        }
+                        DeleteTask(input, context);
+                        dbContextTransaction.Commit();
+                        isDeleted = true;
+
                     }
                     catch
                     {
@@ -65,14 +75,24 @@ namespace ATS.Repository.DAO
             }
         }
 
+        public void DeleteTask(QuestionBankModel input, ATSDBContext context)
+        {
+            QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+            if (dataFound != null)
+            {
+                context.QuestionBank.Remove(dataFound);
+                context.SaveChanges();
+            }
+        }
+
         public QuestionBankModel Retrieve(QuestionBankModel input)
         {
-            QuestionBankModel result=null;
+            QuestionBankModel result = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                   // result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+                    // result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
                 }
                 catch
                 {
@@ -96,16 +116,10 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            //updation start
-                            dataFound.Description = input.Description;
-                            //updateion end
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isUpdated = true;
-                        }
+                        UpdateTask(input, context);
+                        dbContextTransaction.Commit();
+                        isUpdated = true;
+
                     }
                     catch
                     {
@@ -114,6 +128,18 @@ namespace ATS.Repository.DAO
                     }
                 }
                 return isUpdated;
+            }
+        }
+
+        public void UpdateTask(QuestionBankModel input, ATSDBContext context)
+        {
+            QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+            if (dataFound != null)
+            {
+                //updation start
+                dataFound.Description = input.Description;
+                //updateion end
+                context.SaveChanges();
             }
         }
     }
