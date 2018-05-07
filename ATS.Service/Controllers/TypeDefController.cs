@@ -51,12 +51,21 @@ namespace ATS.Service.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/TypeDef/Select")]
-        public IHttpActionResult Select(params object[] inputs)
+        public IHttpActionResult Select()
         {
-            var result = repository.Select(null);
-            return Ok(result);
+            ApiResult apiResult = null;
+            var result = repository.Select(x=>x.ParentKey==null);
+            if (result != null)
+            {
+                apiResult = new ApiResult(true, "", result);
+            }
+            else
+            {
+                apiResult = new ApiResult(false, "No record found");
+            }
+            return Ok(apiResult);
         }
     }
 }

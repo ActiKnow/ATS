@@ -1,10 +1,10 @@
-﻿var typeSetup = (function () {
+﻿var typeSetup  = (function () {
     'use strict'
     var defaults = {
         typeName: '.typeName',
-        parentId: '.parentId',
+        selectParent: '.ddlParents',
         typeValue: '.typeValue',
-        statusId: '.statusId',
+        selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
     };
@@ -60,17 +60,17 @@
 
         var typeName = $(op.typeName).val();
         var typeValue = $(op.typeValue).val();
-        var parentId = $(op.parentId).val();
-        var statusId = $(op.statusId).val();
+        var parentKey = $(op.selectParent).val();
+        var statusId = $(op.selectStatus).val();
 
-        flag = validateRequiredField(typeName, typeValue, parentId, statusId);
+        flag = validateRequiredField(typeName, typeValue, parentKey, statusId);
 
         if (flag) {
 
             var typeDef = {
                 Description: typeName.trim(),
                 Value: typeValue.trim(),
-                ParentKey: parentId.trim(),
+                ParentKey: parentKey.trim(),
                 StatusId: statusId.trim()
             };
 
@@ -82,7 +82,7 @@
 
     };
 
-    var validateRequiredField = function (typeName, typeValue, parentId, statusId) {
+    var validateRequiredField = function (typeName, typeValue, selectParent, statusId) {
 
         var flag = true;
         var message = "";
@@ -112,7 +112,7 @@
         api.fireGetAjax('/Setup/GetParentTypes', { })
             .done(res => {
                 if (res != null) {
-                    var items = "<option>-Select-</option>";
+                    var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
                         if (res.Message) {
                             $(op.errorMsg).html(res.Message);
@@ -121,28 +121,53 @@
                             $.each(res.Data, function (index, value) {
                                 items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
                             });
-                            $(op.selectPatent).html(items);
+                            $(op.selectParent).html(items);
                         }
                     }
                     else {
                         $(op.errorMsg).html(res.Message);
                     }
                 }
-                $(op.)
             })
             .fail(res => {
                 $(op.errorMsg).html(res.responseText);
             });
     }
 
+    var loadStatus = function () {
+        var op = defaults;
 
+        api.fireGetAjax('/Setup/GetStatus', {})
+            .done(res => {
+                if (res != null) {
+                    if (res.Status) {
+                        if (res.Message) {
+                            $(op.errorMsg).html(res.Message);
+                        }
+                        else {
+                            var items = "";
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.Value + "'>" + value.Text + "</option>";
+                            });
+                            $(op.selectStatus).html(items);
+                        }
+                    }
+                    else {
+                        $(op.errorMsg).html(res.Message);
+                    }
+                }
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
+    }
 
     var bindEvents = function () {
         var op = defaults;
-        var $selectQuestionContainer = $(op.selectContainer);
+        var $typeContext = $(op.typeContext);
 
-        $selectQuestionContainer.on('click', op.btnCreateQuestion, function (e) {
-            createQuestion();
+        $typeContext.on('click', op.btnCreateType, function (e) {
+            createType();
         })
     };
 
@@ -151,6 +176,7 @@
             $.extend(true, defaults, config);
             bindEvents();
             loadParentTypes();
+            loadStatus();
         }
 
     }

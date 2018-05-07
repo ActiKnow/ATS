@@ -42,6 +42,16 @@ namespace ATS.Web.Areas.Admin
         [HttpPost]
         public ActionResult CreateType(TypeDefModel typeDef)
         {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApi.GetParentTypes();
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
             return View();
         }
 
@@ -51,13 +61,28 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                //result = ApiConsumers.CommonApi.GetParentTypes();
+                result = ApiConsumers.CommonApi.GetParentTypes();
             }
             catch(Exception ex)
             {
-
+                result = new ApiResult(false, ex.GetBaseException().Message);
             }
-            return Json("", JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetStatus()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApi.GetStatus();
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

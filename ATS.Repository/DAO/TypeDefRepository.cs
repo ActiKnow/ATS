@@ -114,7 +114,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    typeDefs = (from x in context.TypeDef.AsNoTracking()
+                   var query = (from x in context.TypeDef.AsNoTracking()
                                select new TypeDefModel
                                {
                                    CreatedBy = x.CreatedBy,
@@ -126,7 +126,12 @@ namespace ATS.Repository.DAO
                                    StatusId = x.StatusId,
                                    TypeId = x.TypeId,
                                    Value = x.Value
-                               }).Where(condition).ToList();
+                               });
+
+                    if (condition != null)
+                        typeDefs = query.Where(condition).ToList();
+                    else
+                        typeDefs = query.ToList();
                 }
                 catch
                 {
