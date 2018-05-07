@@ -55,8 +55,6 @@
     <Compile Include="Model\UserAttemptHistoryModel.cs" />
     <Compile Include="Model\UserCredentialModel.cs" />
     <Compile Include="Model\UserInfoModel.cs" />
-    <Compile Include="Model\UserRoleModel.cs" />
-    <Compile Include="Model\UserRoleMapModel.cs" />
     <Compile Include="Model\UserTestHistoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

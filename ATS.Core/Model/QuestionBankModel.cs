@@ -17,6 +17,7 @@ namespace ATS.Core.Model
         public string Description { get; set; }
         public string QuesTypeId { get; set; }
         public string LevelTypeId { get; set; }
+        public string CategoryTypeId { get; set; }
         public int DefaultMark { get; set; }
         public string AnsText { get; set; }
         public List<QuestionOptionModel> Options { get; set; }

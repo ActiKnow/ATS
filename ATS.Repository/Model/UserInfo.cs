@@ -12,7 +12,6 @@ namespace ATS.Repository.Model
         {
             this.TestAssignments = new List<TestAssignment>();
             this.UserCredentials = new List<UserCredential>();
-            this.UserRoleMappings = new List<UserRoleMapping>();
             this.UserTestHistories = new List<UserTestHistory>();
         }
         [Key]
@@ -26,7 +25,6 @@ namespace ATS.Repository.Model
         public virtual List<TestAssignment> TestAssignments { get; set; }
         public virtual TypeDef TypeDef { get; set; }
         public virtual List<UserCredential> UserCredentials { get; set; }
-        public virtual List<UserRoleMapping> UserRoleMappings { get; set; }
         public virtual List<UserTestHistory> UserTestHistories { get; set; }
     }
 }
