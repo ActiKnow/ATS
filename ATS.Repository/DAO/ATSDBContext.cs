@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Text;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 
 
 namespace ATS.Repository.DAO

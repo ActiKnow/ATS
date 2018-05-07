@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 using ATS.Repository.Interface;
 
 namespace ATS.Repository.DAO

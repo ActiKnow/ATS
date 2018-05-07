@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using System.Linq;
 

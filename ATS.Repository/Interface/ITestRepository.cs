@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ATS.Core.Model;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.Interface
 {

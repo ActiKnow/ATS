@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATS.Core.CommonModel
+namespace ATS.Core.Model
 {
    public class ApiResult
     {

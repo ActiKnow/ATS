@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ATS.Core.CommonModel
+namespace ATS.Core.Model
 {
    public class BaseModel
     {

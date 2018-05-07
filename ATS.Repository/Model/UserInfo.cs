@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using ATS.Core.CommonModel;
+using ATS.Core.Model;
 
-namespace ATS.Core.Model
+namespace ATS.Repository.Model
 {
    public class UserInfo : BaseModel
     {
