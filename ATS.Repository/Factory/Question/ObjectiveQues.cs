@@ -9,7 +9,7 @@ using ATS.Repository.Interface;
 
 namespace ATS.Repository.Factory.Question
 {
-   public class ObjectiveQues : IQuestion
+    public class ObjectiveQues : IQuestion
     {
         IQuestionRepository QuesDAO;
         IOptionRepository OptionDAO;
@@ -20,17 +20,20 @@ namespace ATS.Repository.Factory.Question
             MapOptionDAO = new MapOptionRepository();
             QuesDAO = new QuestionRepository();
         }
+
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.CreateTask(input, context);
+            QuesDAO.CreateTask(ref input, context);
             string optionKeyId = input.QId.ToString();
             List<Guid> answers = new List<Guid>();
-            
+
+
             //Set Options
-            foreach (var op in input.Options)
+            for (int indx = 0; indx < input.Options.Count(); indx++)
             {
+                var op = input.Options[indx];
                 op.KeyId = optionKeyId;
-                OptionDAO.CreateTask(op, context);
+                OptionDAO.CreateTask(ref op, context);
                 if (op.IsAnswer)
                 {
                     answers.Add(op.Id);
@@ -40,8 +43,34 @@ namespace ATS.Repository.Factory.Question
             foreach (var ans in answers)
             {
                 input.MapOptions.OptionKeyId = optionKeyId;
-                MapOptionDAO.CreateTask(input.MapOptions, context);
+                QuestionOptionMapModel map = new QuestionOptionMapModel
+                {
+                    QId = input.QId,
+                    OptionKeyId = optionKeyId,
+                    Answer = ans.ToString(),
+                };
+                MapOptionDAO.CreateTask(map, context);
             }
+        }
+
+        public List<QuestionBankModel> Select(ATSDBContext context, params object[] inputs)
+        {
+            var result = (from bank in context.QuestionBank.Where(x => x.QId.ToString() == inputs[0].ToString())
+                          select new QuestionBankModel
+                          {
+                              QId = bank.QId,
+                              Description = bank.Description,
+                              QuesTypeId = bank.QuesTypeId,
+                              LevelTypeId = bank.LevelTypeId,
+                              CategoryTypeId = bank.CategoryTypeId,
+                              DefaultMark = bank.DefaultMark,
+                          });
+            return result.ToList();
+        }
+
+        public void Update(QuestionBankModel input, ATSDBContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

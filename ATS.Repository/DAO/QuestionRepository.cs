@@ -29,9 +29,12 @@ namespace ATS.Repository.DAO
                         if (input != null)
                         {
                             QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
-                            quesFactory.Question.Create(input, context);
-                            dbContextTransaction.Commit();
-                            isCreated = true;
+                            if (quesFactory.Question != null)
+                            {
+                                quesFactory.Question.Create(input, context);
+                                dbContextTransaction.Commit();
+                                isCreated = true;
+                            }
                         }
                     }
                     catch
@@ -44,12 +47,22 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask(QuestionBankModel input, ATSDBContext context)
+        public void CreateTask(ref QuestionBankModel input, ATSDBContext context)
         {
             if (input != null)
             {
                 input.QId = Guid.NewGuid();
-                //context.QuestionBank.Add(input);
+                QuestionBank ques = new QuestionBank
+                {
+                    QId = input.QId,
+                    Description = input.Description,
+                    QuesTypeId = input.QuesTypeId,
+                    LevelTypeId = input.LevelTypeId,
+                    DefaultMark = input.DefaultMark,
+                    CategoryTypeId = input.CategoryTypeId,
+                    CreatedBy = input.CreatedBy
+                };
+                context.QuestionBank.Add(ques);
                 context.SaveChanges();
             }
         }
@@ -95,7 +108,9 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    // result = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
+                    QuestionFactory selector = new QuestionFactory(input.QuesTypeValue);
+                    result = selector.QuestionSelector.Select( context,input.QId).FirstOrDefault();
+                   
                 }
                 catch
                 {
@@ -107,7 +122,22 @@ namespace ATS.Repository.DAO
 
         public List<QuestionBankModel> Select(params object[] inputs)
         {
-            throw new NotImplementedException();
+            List<QuestionBankModel> result = null;
+            string quesType = Constants.OPTION;
+            using (var context = GetConnection())
+            {
+                try
+                {
+                    QuestionFactory selector = new QuestionFactory(quesType);
+                    result = selector.QuestionSelector.Select(context, inputs);
+
+                }
+                catch
+                {
+                    throw;
+                }
+                return result;
+            }
         }
 
         public bool Update(QuestionBankModel input)
@@ -119,7 +149,8 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UpdateTask(input, context);
+                        QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
+                        quesFactory.Question.Update(input, context);
                         dbContextTransaction.Commit();
                         isUpdated = true;
 

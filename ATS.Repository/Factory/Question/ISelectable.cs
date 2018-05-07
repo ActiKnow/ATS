@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace ATS.Repository.Factory.Question
 {
-    public interface IQuestion: ISelectable<QuestionBankModel>
+    public interface ISelectable<T>
     {
-        void Create(QuestionBankModel input, ATSDBContext context);
-        void Update(QuestionBankModel input, ATSDBContext context);
+        List<T> Select( ATSDBContext context,params object[] inputs);
     }
 }

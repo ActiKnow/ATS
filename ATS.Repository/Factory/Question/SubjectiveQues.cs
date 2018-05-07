@@ -20,11 +20,21 @@ namespace ATS.Repository.Factory.Question
         }
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.CreateTask(input, context);
+            QuesDAO.CreateTask(ref input, context);
             input.MapOptions.Answer = input.AnsText;
             input.MapOptions.QId = input.QId;
             input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
             MapOptionDAO.CreateTask(input.MapOptions, context);
+        }
+
+        public List<QuestionBankModel> Select(ATSDBContext context, params object[] inputs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(QuestionBankModel input, ATSDBContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

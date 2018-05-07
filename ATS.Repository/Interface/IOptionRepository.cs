@@ -6,7 +6,7 @@ namespace ATS.Repository.Interface
 {
     interface IOptionRepository : ICRUD<QuestionOptionModel>
     {
-        void CreateTask(QuestionOptionModel input, ATSDBContext context);
+        void CreateTask(ref QuestionOptionModel input, ATSDBContext context);
         void UpdateTask(QuestionOptionModel input, ATSDBContext context);
         void DeleteTask(QuestionOptionModel input, ATSDBContext context);
     }

@@ -7,7 +7,7 @@ using ATS.Core.Model;
 
 namespace ATS.Repository.DAO
 {
-   public class MapOptionRepository : BaseRepository, IMapOptionRepository
+    public class MapOptionRepository : BaseRepository, IMapOptionRepository
     {
         public bool Create(QuestionOptionMapModel input)
         {
@@ -20,9 +20,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            input.Id = Guid.NewGuid();
-                           // context.QuestionOptionMapping.Add(input);
-                            context.SaveChanges();
+                            CreateTask(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -38,7 +36,19 @@ namespace ATS.Repository.DAO
         }
         public void CreateTask(QuestionOptionMapModel input, ATSDBContext context)
         {
-            throw new NotImplementedException();
+            if (input != null)
+            {
+                input.Id = Guid.NewGuid();
+                QuestionOptionMapping mapQues = new QuestionOptionMapping
+                {
+                    Id = input.Id,
+                    QId = input.QId,
+                    OptionKeyId = input.OptionKeyId,
+                    Answer = input.Answer
+                };
+                context.QuestionOptionMapping.Add(mapQues);
+                context.SaveChanges();
+            }
         }
         public bool Delete(QuestionOptionMapModel input)
         {
@@ -49,14 +59,9 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            context.QuestionOptionMapping.Remove(dataFound);
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isDeleted = true;
-                        }
+                        DeleteTask(input, context);
+                        dbContextTransaction.Commit();
+                        isDeleted = true;
                     }
                     catch
                     {
@@ -69,11 +74,16 @@ namespace ATS.Repository.DAO
         }
         public void DeleteTask(QuestionOptionMapModel input, ATSDBContext context)
         {
-            throw new NotImplementedException();
+            QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
+            if (dataFound != null)
+            {
+                context.QuestionOptionMapping.Remove(dataFound);
+                context.SaveChanges();
+            }
         }
         public QuestionOptionMapModel Retrieve(QuestionOptionMapModel input)
         {
-            QuestionOptionMapModel result=null;
+            QuestionOptionMapModel result = null;
             using (var context = GetConnection())
             {
                 try
@@ -100,16 +110,9 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
-                        if (dataFound != null)
-                        {
-                            //updation start
-                            dataFound.Answer = input.Answer;
-                            //updateion end
-                            context.SaveChanges();
-                            dbContextTransaction.Commit();
-                            isUpdated = true;
-                        }
+                        UpdateTask(input, context);
+                        dbContextTransaction.Commit();
+                        isUpdated = true;
                     }
                     catch
                     {
@@ -122,7 +125,14 @@ namespace ATS.Repository.DAO
         }
         public void UpdateTask(QuestionOptionMapModel input, ATSDBContext context)
         {
-            throw new NotImplementedException();
+            QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
+            if (dataFound != null)
+            {
+                //updation start
+                dataFound.Answer = input.Answer;
+                //updateion end
+                context.SaveChanges();
+            }
         }
     }
 }
