@@ -25,7 +25,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Post<T>(string url, object data)
         {
             ApiResult apiResult = null;
-            string type = Constants.Post;
+            string type = Constants.POST;
             try
             {
                 apiResult= CallApi<T>(url, type, data);
@@ -41,7 +41,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Get<T>(string url)
         {
             ApiResult apiResult = null;
-            string type = Constants.Get;
+            string type = Constants.GET;
             try
             {
                 apiResult = CallApi<T>(url, type);
@@ -57,7 +57,7 @@ namespace ATS.Web.ApiConsumers
         public static ApiResult Delete<T>(string url)
         {
             ApiResult apiResult = null;
-            string type = Constants.Delete;
+            string type = Constants.DELETE;
             try
             {
                 apiResult = CallApi<T>(url, type);

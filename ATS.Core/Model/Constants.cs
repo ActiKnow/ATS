@@ -8,13 +8,19 @@ namespace ATS.Core.Model
 {
    public class Constants
     {
-        public const string Post = "POST";
-        public const string Get = "GET";
-        public const string Put = "PUT";
-        public const string Delete = "DELETE";
+        public const string POST = "POST";
+        public const string GET = "GET";
+        public const string PUT = "PUT";
+        public const string DELETE = "DELETE";
+        public const string USERID = "USERID";
+        public const string ROLE = "ROLE";
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }
         }
+
+        public const string ADMIN = "Admin";
+        public const string EMPLOYEE = "Employee";
+        public const string CANDIDATE = "Candidate";
     }    
 }

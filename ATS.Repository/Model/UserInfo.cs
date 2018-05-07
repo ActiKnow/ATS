@@ -21,6 +21,7 @@ namespace ATS.Repository.Model
         public string LName { get; set; }
         public decimal Mobile { get; set; }
         public string Email { get; set; }
+        public System.Guid RoleTypeId { get; set; }
         public System.Guid UserTypeId { get; set; }
         public virtual List<TestAssignment> TestAssignments { get; set; }
         public virtual TypeDef TypeDef { get; set; }
