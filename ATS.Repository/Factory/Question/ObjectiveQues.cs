@@ -25,8 +25,7 @@ namespace ATS.Repository.Factory.Question
             QuesDAO.CreateTask(input, context);
             string optionKeyId = input.QId.ToString();
             List<Guid> answers = new List<Guid>();
-
-            optionKeyId = input.QuesTypeId;
+            
             //Set Options
             foreach (var op in input.Options)
             {

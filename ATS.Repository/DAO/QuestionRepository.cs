@@ -28,7 +28,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeId);
+                            QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
                             quesFactory.Question.Create(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;

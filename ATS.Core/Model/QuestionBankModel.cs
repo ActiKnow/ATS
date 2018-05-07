@@ -15,11 +15,14 @@ namespace ATS.Core.Model
         public System.Guid QId { get; set; }
 
         public string Description { get; set; }
-        public string QuesTypeId { get; set; }
-        public string LevelTypeId { get; set; }
-        public string CategoryTypeId { get; set; }
+        public System.Guid QuesTypeId { get; set; }
+        public System.Guid LevelTypeId { get; set; }
+        public System.Guid CategoryTypeId { get; set; }
         public int DefaultMark { get; set; }
         public string AnsText { get; set; }
+        public string QuesTypeValue { get; set; }
+        public string CategoryTypeValue { get; set; }
+        public string LevelTypeValue { get; set; }
         public List<QuestionOptionModel> Options { get; set; }
         public QuestionOptionMapModel MapOptions { get; set; }
     }

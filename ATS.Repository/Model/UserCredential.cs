@@ -11,7 +11,7 @@ namespace ATS.Repository.Model
         [Key]
         public System.Guid Id { get; set; }
         public System.Guid UserId { get; set; }
-        public Nullable<System.Guid> RoleId { get; set; }
+        public Nullable<System.Guid> RoleTypeId { get; set; }
         public string PrevPassword { get; set; }
         public string CurrPassword { get; set; }
         public virtual UserInfo UserInfo { get; set; }

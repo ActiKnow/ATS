@@ -23,7 +23,7 @@ namespace ATS.Repository.Factory.Question
             QuesDAO.CreateTask(input, context);
             input.MapOptions.Answer = input.AnsText;
             input.MapOptions.QId = input.QId;
-            input.MapOptions.OptionKeyId = input.QuesTypeId;
+            input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
             MapOptionDAO.CreateTask(input.MapOptions, context);
         }
     }

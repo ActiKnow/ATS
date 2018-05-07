@@ -1,0 +1,101 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "TypeSetup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>Type Setup</h1>
+        <p>Setup form for users</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Type Setup</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Type Name</label>
+                        <input class="form-control typeName" type="text" placeholder="Enter type name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelect1">Select Parent ID</label>
+                        <select class="form-control parentId">
+                            <option>-Select-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Type Value</label>
+                        <input class="form-control typeValue" type="text" placeholder="Enter type value">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelect1">Status</label>
+                        <select class="form-control statusId">
+                            <option>-Select-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="tile-footer">
+                <button class="btn btn-primary" type="submit" id="btnCreateType">Submit</button>
+                <span class="errorMsg" style="display:none"></span>
+                <span class="successMsg" style="display:none"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 tableContext">
+        <div class="tile">
+            <h3 class="tile-title">Type List</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Type Name</th>
+                        <th>Type Value</th>
+                        <th>Parent</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script src="~/Scripts/TypeSetup/typeSetup.js"></script>
+
+<script>
+    (function ($, window, document) {
+        $(function () {
+            var config = {
+                typeName:'.typeName',
+                parentId:'.parentId',
+                typeValue:'.typeValue',
+                statusId:'.statusId',
+                btnCreateType: '#btnCreateType',
+                errorMsg: '.errorMsg',
+                successMsg: '.successMsg',
+                tableContext:'.tableContext',
+            };
+            typeSetup.init(config);
+        });
+
+    }(window.jQuery, window, document));
+</script>
+}
+

@@ -42,8 +42,8 @@
                     }
                 }
             },
-            onQuestionFailed: function (res) {
-                alertService.showError(result.Message);
+            onQuestionFailed: function (result) {
+                alertService.showError(result.responseText);
             },
         }
     })();

@@ -33,5 +33,16 @@ namespace ATS.Web.Areas.Admin
             return View();
         }
 
+        [ActionName("UserSetup")]
+        public ActionResult UserCreation(QuestionBankModel QuestionView)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateType(TypeDefModel typeDef)
+        {
+            return View();
+        }
     }
 }
