@@ -44,12 +44,21 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask(QuestionBankModel input, ATSDBContext context)
+        public void CreateTask(ref QuestionBankModel input, ATSDBContext context)
         {
             if (input != null)
             {
                 input.QId = Guid.NewGuid();
-                //context.QuestionBank.Add(input);
+                QuestionBank ques = new QuestionBank
+                {
+                    QId = input.QId,
+                    Description = input.Description,
+                    QuesTypeId = input.QuesTypeId,
+                    LevelTypeId = input.LevelTypeId,
+                    DefaultMark = input.DefaultMark,
+
+                };
+                context.QuestionBank.Add(ques);
                 context.SaveChanges();
             }
         }
@@ -78,7 +87,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void DeleteTask(QuestionBankModel input, ATSDBContext context)
+        public void DeleteTask( QuestionBankModel input, ATSDBContext context)
         {
             QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
             if (dataFound != null)
@@ -119,7 +128,8 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UpdateTask(input, context);
+                        QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeId);
+                        quesFactory.Question.Update(input, context);
                         dbContextTransaction.Commit();
                         isUpdated = true;
 
@@ -134,7 +144,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void UpdateTask(QuestionBankModel input, ATSDBContext context)
+        public void UpdateTask( QuestionBankModel input, ATSDBContext context)
         {
             QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
             if (dataFound != null)

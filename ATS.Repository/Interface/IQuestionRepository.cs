@@ -6,9 +6,9 @@ namespace ATS.Repository.Interface
 {
     public interface IQuestionRepository : ICRUD<QuestionBankModel>
     {
-        void CreateTask(QuestionBankModel input, ATSDBContext context);
-        void UpdateTask(QuestionBankModel input, ATSDBContext context);
-        void DeleteTask(QuestionBankModel input, ATSDBContext context);
+        void CreateTask(ref QuestionBankModel input, ATSDBContext context);
+        void UpdateTask( QuestionBankModel input, ATSDBContext context);
+        void DeleteTask( QuestionBankModel input, ATSDBContext context);
     
     }
 }
