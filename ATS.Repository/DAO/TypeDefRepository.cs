@@ -107,7 +107,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<TypeDefModel> Select(params object[] inputs)
+        public List<TypeDefModel> Select(Func<TypeDefModel, bool> condition)
         {
             List<TypeDefModel> typeDefs = null;
             using (var context = GetConnection())
@@ -126,7 +126,7 @@ namespace ATS.Repository.DAO
                                    Status = x.Status,
                                    TypeId = x.TypeId,
                                    Value = x.Value
-                               }).ToList();
+                               }).Where(condition).ToList();
                 }
                 catch
                 {

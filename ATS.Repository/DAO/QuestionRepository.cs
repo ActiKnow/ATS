@@ -109,8 +109,8 @@ namespace ATS.Repository.DAO
                 try
                 {
                     QuestionFactory selector = new QuestionFactory(input.QuesTypeId);
-                    result = selector.QuestionSelector.Select( context,input.QId).FirstOrDefault();
-                   
+                    result = selector.QuestionSelector.Select(context, x => x.QId == input.QId).FirstOrDefault();
+
                 }
                 catch
                 {
@@ -120,7 +120,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<QuestionBankModel> Select(params object[] inputs)
+        public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
             List<QuestionBankModel> result = null;
             string quesType = Constants.OPTION;
@@ -129,7 +129,7 @@ namespace ATS.Repository.DAO
                 try
                 {
                     QuestionFactory selector = new QuestionFactory(quesType);
-                    result = selector.QuestionSelector.Select(context, inputs);
+                    result = selector.QuestionSelector.Select(context, condition);
 
                 }
                 catch

@@ -116,7 +116,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<UserInfoModel> Select(params object[] inputs)
+        public List<UserInfoModel> Select(Func<UserInfoModel, bool> condition)
         {
             List<UserInfoModel> userInfos = null;
             using (var context = GetConnection())
@@ -142,7 +142,7 @@ namespace ATS.Repository.DAO
                                      RoleValue = y.Value
                                  });
 
-                    userInfos = query.ToList();
+                    userInfos = query.Where(condition).ToList();
                 }
                 catch
                 {

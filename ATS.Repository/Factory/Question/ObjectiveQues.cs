@@ -53,9 +53,9 @@ namespace ATS.Repository.Factory.Question
             }
         }
 
-        public List<QuestionBankModel> Select(ATSDBContext context, params object[] inputs)
+        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
-            var result = (from bank in context.QuestionBank.Where(x => x.QId.ToString() == inputs[0].ToString())
+            var result = (from bank in context.QuestionBank
                           select new QuestionBankModel
                           {
                               QId = bank.QId,
@@ -65,12 +65,46 @@ namespace ATS.Repository.Factory.Question
                               CategoryTypeId = bank.CategoryTypeId,
                               DefaultMark = bank.DefaultMark,
                           });
-            return result.ToList();
+            return result.Where(condition).ToList();
         }
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            throw new NotImplementedException();
+            QuesDAO.UpdateTask( input, context);
+            string optionKeyId = input.QId.ToString();
+            List<Guid> answers = new List<Guid>();
+
+            //Set Options
+            for (int indx = 0; indx < input.Options.Count(); indx++)
+            {
+                var op = input.Options[indx];
+                op.KeyId = optionKeyId;
+                var opFound = OptionDAO.SelectTask(context, x=>x.Id == op.Id);
+                if (opFound != null)
+                {
+                    OptionDAO.UpdateTask(op, context);
+                }
+                else
+                {
+                    OptionDAO.CreateTask(ref op, context);
+                }
+                if (op.IsAnswer)
+                {
+                    answers.Add(op.Id);
+                }
+            }
+            //Set answers
+            foreach (var ans in answers)
+            {
+                input.MapOptions.OptionKeyId = optionKeyId;
+                QuestionOptionMapModel map = new QuestionOptionMapModel
+                {
+                    QId = input.QId,
+                    OptionKeyId = optionKeyId,
+                    Answer = ans.ToString(),
+                };
+                MapOptionDAO.UpdateTask(map, context);
+            }
         }
     }
 }

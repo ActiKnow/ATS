@@ -27,7 +27,7 @@ namespace ATS.Repository.Factory.Question
             MapOptionDAO.CreateTask(input.MapOptions, context);
         }
 
-        public List<QuestionBankModel> Select(ATSDBContext context, params object[] inputs)
+        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
             throw new NotImplementedException();
         }

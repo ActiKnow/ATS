@@ -40,10 +40,11 @@ namespace ATS.Repository.DAO
             if (input != null)
             {
                 input.Id = Guid.NewGuid();
-                QuestionOption option = new QuestionOption {
-                    Id= input.Id,
-                    KeyId=input.KeyId,
-                    Description=input.Description
+                QuestionOption option = new QuestionOption
+                {
+                    Id = input.Id,
+                    KeyId = input.KeyId,
+                    Description = input.Description
                 };
 
                 context.QuestionOption.Add(option);
@@ -92,7 +93,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    // result = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
+                    result = SelectTask(context,x=>x.Id == input.Id).FirstOrDefault();
                 }
                 catch
                 {
@@ -101,8 +102,20 @@ namespace ATS.Repository.DAO
                 return result;
             }
         }
+        public List<QuestionOptionModel> SelectTask( ATSDBContext context, Func<QuestionOptionModel, bool> condition)
+        {
+            List<QuestionOptionModel> result = null;
+            result = (from option in context.QuestionOption
+                      select new QuestionOptionModel
+                      {
+                          Id = option.Id,
+                          KeyId = option.KeyId,
+                          Description = option.Description,
 
-        public List<QuestionOptionModel> Select(params object[] inputs)
+                      }).Where(condition).ToList();
+            return result;
+        }
+        public List<QuestionOptionModel> Select(Func<QuestionOptionModel, bool> condition)
         {
             throw new NotImplementedException();
         }

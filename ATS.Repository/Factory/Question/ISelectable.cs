@@ -10,6 +10,6 @@ namespace ATS.Repository.Factory.Question
 {
     public interface ISelectable<T>
     {
-        List<T> Select( ATSDBContext context,params object[] inputs);
+        List<T> Select( ATSDBContext context, Func<T, bool> condition);
     }
 }
