@@ -23,24 +23,36 @@ namespace ATS.Service.Controllers
         [Route("api/Question/Create")]
         public IHttpActionResult Create(QuestionBankModel newQues)
         {
-            questionRepo.Create(newQues);
-            return Ok("");
+            ApiResult apiResult = new ApiResult(false,"Not Created");
+            if (questionRepo.Create(newQues))
+            {
+                apiResult = new ApiResult(true);
+            }
+            return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/Question/Update")]
         public IHttpActionResult Update(QuestionBankModel newQues)
         {
-            questionRepo.Update(newQues);
-            return Ok("");
+            ApiResult apiResult = new ApiResult(false, "Not Updated");
+            if (questionRepo.Update(newQues))
+            {
+                apiResult = new ApiResult(true);
+            }
+            return Ok(apiResult);
         }
 
         [HttpDelete]
         [Route("api/Question/Delete")]
         public IHttpActionResult Delete(QuestionBankModel newQues)
         {
-            questionRepo.Delete(newQues);
-            return Ok("");
+            ApiResult apiResult = new ApiResult(false, "Not Deleted");
+            if (questionRepo.Delete(newQues))
+            {
+                apiResult = new ApiResult(true);
+            }
+            return Ok(apiResult);
         }
     }
 }

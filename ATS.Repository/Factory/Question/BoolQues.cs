@@ -14,5 +14,10 @@ namespace ATS.Repository.Factory.Question
         {
             throw new NotImplementedException();
         }
+
+        public void Update(QuestionBankModel input, ATSDBContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

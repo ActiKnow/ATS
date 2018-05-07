@@ -20,7 +20,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            CreateTask(input, context);
+                            CreateTask(ref input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -35,12 +35,18 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask(QuestionOptionModel input, ATSDBContext context)
+        public void CreateTask(ref QuestionOptionModel input, ATSDBContext context)
         {
             if (input != null)
             {
                 input.Id = Guid.NewGuid();
-                //context.QuestionOption.Add(input);
+                QuestionOption option = new QuestionOption {
+                    Id= input.Id,
+                    KeyId=input.KeyId,
+                    Description=input.Description
+                };
+
+                context.QuestionOption.Add(option);
                 context.SaveChanges();
             }
         }
