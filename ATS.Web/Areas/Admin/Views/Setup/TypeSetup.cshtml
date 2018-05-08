@@ -1,7 +1,6 @@
-﻿@inherits System.Web.Mvc.WebViewPage
-@{
+﻿@{
     ViewBag.Title = "TypeSetup";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";   
 }
 
 <div class="app-title">
@@ -91,7 +90,7 @@
                 errorMsg: '.errorMsg',
                 successMsg: '.successMsg',
                 tableContext: '.tableContext',
-                typeContext:'#typeContext'
+                typeContext: '#typeContext',
             };
             typeSetup.init(config);
         });

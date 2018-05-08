@@ -7,14 +7,14 @@ using ATS.Core.Model;
 
 namespace ATS.Web.ApiConsumers
 {
-    public class CommonApi
+    public class CommonApiConsumer
     {
-        public static ApiResult GetParentTypes()
+        public static ApiResult GetParentTypes(Guid? parentKey=null)
         {
             ApiResult apiResult = null;
             try
             {
-                string url = "api/TypeDef/Select";
+                string url = "api/TypeDef/Select/parentKey/"+ parentKey;
                 apiResult = ConsumerMethods.Get<List<TypeDefModel>>(url);
             }
             catch
@@ -29,7 +29,7 @@ namespace ATS.Web.ApiConsumers
             ApiResult apiResult = null;
             try
             {
-                var list=new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "1" }, new SelectListItem { Text = "Inactive", Value = "0" } };
+                var list=new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "true" }, new SelectListItem { Text = "Inactive", Value = "false" } };
                 apiResult = new ApiResult(true, "", list);
             }
             catch
