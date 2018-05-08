@@ -106,11 +106,12 @@ namespace ATS.Service.Controllers
 
 
         [HttpGet]
-        [Route("api/TypeDef/Select")]
-        public IHttpActionResult Select()
+        [Route("api/TypeDef/Select/{parentKey?}")]
+        public IHttpActionResult Select(Guid? parentKey=null)
         {
             ApiResult apiResult = null;
-            var result = repository.Select(x=>x.ParentKey==null);
+             var result = repository.Select(x => x.ParentKey == parentKey);
+            
             if (result != null)
             {
                 apiResult = new ApiResult(true, "", result);

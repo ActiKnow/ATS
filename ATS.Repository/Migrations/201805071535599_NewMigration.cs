@@ -1,4 +1,4 @@
-namespace ATS.Repository.Migrations
+namespace ATS.Repository.DAO.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
