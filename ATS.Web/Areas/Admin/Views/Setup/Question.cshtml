@@ -1,4 +1,4 @@
-﻿
+﻿@model List<ATS.Core.Model.QuestionBankModel>
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -23,6 +23,8 @@
             <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
         </div>
 
+        <span class="errorMsg" style="display:none"></span>
+        <span class="successMsg" style="display:none"></span>
     </div>
 
     <br />
@@ -56,9 +58,9 @@
                         <label class="name-tag control-label" for="question_question_type">Question Type</label>
                         <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
                             <option value="">- Select -</option>
-                            <option value="1">Multiple Choice Question</option>
-                            <option value="2">Yes/No or True/False</option>
-                            <option value="3">Subjective</option>
+                            <option value="Option">Multiple Choice Question</option>
+                            <option value="Bool">Yes/No or True/False</option>
+                            <option value="Text">Subjective</option>
                         </select>
                     </div>
                 </div>
@@ -219,8 +221,8 @@
 
                     btnAdd: '#btnAdd',
                     btnRemove:'#btnRemove',
-                    rowMCQGenrate: '#rowMCQGenrate'
-
+                    rowMCQGenrate: '#rowMCQGenrate',
+                    errorMsg: '.errorMsg',
                 };
                 question.init(config);
 

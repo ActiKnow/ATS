@@ -56,25 +56,7 @@ namespace ATS.Repository.Factory.Question
 
         public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
-            List<QuestionBankModel> result = null;
-            var qry = (from bank in context.QuestionBank
-                       select new QuestionBankModel
-                       {
-                           QId = bank.QId,
-                           Description = bank.Description,
-                           QuesTypeId = bank.QuesTypeId,
-                           LevelTypeId = bank.LevelTypeId,
-                           CategoryTypeId = bank.CategoryTypeId,
-                           DefaultMark = bank.DefaultMark,
-                       });
-            if (condition != null)
-            {
-                result = qry.Where(condition).ToList();
-            }
-            else
-            {
-                result = qry.ToList();
-            }
+            List<QuestionBankModel> result  = QuesDAO.Select(context, condition);
             if (result != null)
             {
                 foreach (var ques in result)

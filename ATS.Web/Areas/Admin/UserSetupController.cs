@@ -42,6 +42,11 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
+                userInfoModel.CreatedDate = DateTime.Now;
+                userInfoModel.CreatedBy = Session[Constants.USERID].ToString();
+                userInfoModel.UserCredentials[0].CreatedDate= DateTime.Now;
+                userInfoModel.UserCredentials[0].CreatedBy = Session[Constants.USERID].ToString();
+
                 result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
             }
             catch (Exception ex)
@@ -50,6 +55,31 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
           
+        }
+
+        [HttpGet]
+        public ActionResult CreateRandomPassword(int PasswordLength)
+        {
+            ApiResult result = null;
+            try
+            {
+                string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
+                Random randNum = new Random();
+                char[] chars = new char[PasswordLength];
+                int allowedCharCount = _allowedChars.Length;
+                for (int i = 0; i < PasswordLength; i++)
+                {
+                    chars[i] = _allowedChars[(int)((_allowedChars.Length) * randNum.NextDouble())];
+                }
+                string pwd = new string(chars);
+                result = new ApiResult(true, "", pwd);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
         }
     }
 }
