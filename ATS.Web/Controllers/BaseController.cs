@@ -10,8 +10,8 @@ namespace ATS.Web.Controllers
     public class BaseController : Controller
     {
         // GET: Base
-        protected string RenderPartialViewToString(string viewName, object model, ControllerContext controllerContext = null)
-        {
+        protected string RenderPartialViewToString(string viewName, object model, ControllerContext controllerContext=null)
+        {  
             ViewData.Model = model;
 
             using (var sw = new StringWriter())

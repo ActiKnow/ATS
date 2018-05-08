@@ -38,7 +38,8 @@
                             $(op.errorMsg).html(result.Message);
                         }
                         else {
-                            $(op.tableContext).html(result.Data);
+                            $(op.tableContext).find('tbody').html(result.Data);
+                            loadParentTypes();
                         }
                     }
                     else {
@@ -74,7 +75,7 @@
                 StatusId: statusId.trim()
             };
 
-            api.firePostAjax('/Setup/CreateType', { typeDef: typeDef })
+            api.firePostAjax('/Admin/Setup/CreateType', { typeDef: typeDef })
                 .done(callBacks.onTypeCreated)
                 .fail(callBacks.onTypeCreationFailed);
 
