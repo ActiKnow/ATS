@@ -163,22 +163,36 @@
             });
     }
 
+    var loadAllTypes = function () {
+        
+        var op = defaults;
+
+        api.fireGetAjax('/Setup/GetAllTypes', {})
+            .done(callBacks.onTypeCreated)
+            .fail(callBacks.onTypeCreationFailed);
+    }
+
     var bindEvents = function () {
         var op = defaults;
         var $typeContext = $(op.typeContext);
 
         $typeContext.on('click', op.btnCreateType, function (e) {
             createType();
-        })
+        });
+
+        loadDefaults();
     };
+
+    var loadDefaults=function() {
+        loadParentTypes();
+        loadStatus();
+        loadAllTypes();
+    }
 
     return {
         init: function (config) {
             $.extend(true, defaults, config);
-            bindEvents();
-            loadParentTypes();
-            loadStatus();
+            bindEvents(); 
         }
-
     }
 })();

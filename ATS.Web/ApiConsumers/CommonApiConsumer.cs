@@ -9,12 +9,12 @@ namespace ATS.Web.ApiConsumers
 {
     public class CommonApiConsumer
     {
-        public static ApiResult GetParentTypes(Guid? parentKey=null)
+        public static ApiResult SelectTypes(bool isParentDependent,Guid? parentKey=null)
         {
             ApiResult apiResult = null;
             try
             {
-                string url = "api/TypeDef/Select/parentKey/"+ parentKey;
+                string url =string.Format("api/TypeDef/Select/{0}/{1}", isParentDependent, parentKey);
                 apiResult = ConsumerMethods.Get<List<TypeDefModel>>(url);
             }
             catch

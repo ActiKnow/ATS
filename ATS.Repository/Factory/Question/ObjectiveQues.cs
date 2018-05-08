@@ -40,37 +40,40 @@ namespace ATS.Repository.Factory.Question
                 }
             }
             //Set answers
+            input.MappedOptions = new List<QuestionOptionMapModel>();
             foreach (var ans in answers)
             {
-                input.MapOptions.OptionKeyId = optionKeyId;
                 QuestionOptionMapModel map = new QuestionOptionMapModel
                 {
                     QId = input.QId,
                     OptionKeyId = optionKeyId,
                     Answer = ans.ToString(),
                 };
-                MapOptionDAO.CreateTask(map, context);
+                input.MappedOptions.Add(map);
+                MapOptionDAO.Create(map, context);
             }
         }
 
         public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
-            var result = (from bank in context.QuestionBank
-                          select new QuestionBankModel
-                          {
-                              QId = bank.QId,
-                              Description = bank.Description,
-                              QuesTypeId = bank.QuesTypeId,
-                              LevelTypeId = bank.LevelTypeId,
-                              CategoryTypeId = bank.CategoryTypeId,
-                              DefaultMark = bank.DefaultMark,
-                          });
-            return result.Where(condition).ToList();
+            List<QuestionBankModel> result  = QuesDAO.Select(context, condition);
+            if (result != null)
+            {
+                foreach (var ques in result)
+                {
+                    ques.MappedOptions = MapOptionDAO.Select(context, x => x.QId == ques.QId);
+                    foreach (var map in ques.MappedOptions)
+                    {
+                        ques.Options = OptionDAO.Select(context, x => x.KeyId == map.OptionKeyId);
+                    }
+                }
+            }
+            return result;
         }
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.Update( input, context);
+            QuesDAO.Update(input, context);
             string optionKeyId = input.QId.ToString();
             List<Guid> answers = new List<Guid>();
 
@@ -79,7 +82,7 @@ namespace ATS.Repository.Factory.Question
             {
                 var op = input.Options[indx];
                 op.KeyId = optionKeyId;
-                var opFound = OptionDAO.Select(context, x=>x.Id == op.Id);
+                var opFound = OptionDAO.Select(context, x => x.Id == op.Id);
                 if (opFound != null)
                 {
                     OptionDAO.Update(op, context);
@@ -94,22 +97,24 @@ namespace ATS.Repository.Factory.Question
                 }
             }
             //Delete Old Map
-            var oldMaps = MapOptionDAO.SelectTask(context, x => x.QId == input.QId);
+            var oldMaps = MapOptionDAO.Select(context, x => x.QId == input.QId);
             foreach (var map in oldMaps)
             {
-                MapOptionDAO.DeleteTask(map, context);
+                MapOptionDAO.Delete(map, context);
             }
             //Set answers
+            input.MappedOptions = new List<QuestionOptionMapModel>();
             foreach (var ans in answers)
             {
-                input.MapOptions.OptionKeyId = optionKeyId;
+                
                 QuestionOptionMapModel map = new QuestionOptionMapModel
                 {
                     QId = input.QId,
                     OptionKeyId = optionKeyId,
                     Answer = ans.ToString(),
                 };
-                MapOptionDAO.CreateTask(map, context);
+                input.MappedOptions.Add(map);
+                MapOptionDAO.Create(map, context);
             }
         }
     }

@@ -127,7 +127,7 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.GetParentTypes();
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
             }
             catch(Exception ex)
             {
@@ -151,34 +151,25 @@ namespace ATS.Web.Areas.Admin
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //protected string RenderPartialViewToString(string viewName, object model, ControllerContext controllerContext = null)
-        //{
-        //    ViewData.Model = model;
+        [HttpGet]
+        public ActionResult GetAllTypes()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(false);
+                if (result.Status && result.Data != null)
+                {
+                    var list = (List<TypeDefModel>)result.Data;
 
-        //    using (var sw = new StringWriter())
-        //    {
-        //        var viewResult = ViewEngines.Engines.FindPartialView(this.ControllerContext, viewName);
-        //        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-        //        viewResult.View.Render(viewContext, sw);
-        //        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-        //        return sw.GetStringBuilder().ToString();
-
-        //        //ViewPage viewPage = new ViewPage() { ViewContext = new ViewContext() };
-
-        //        //viewPage.ViewData = new ViewDataDictionary(model);
-        //        //viewPage.Controls.Add(viewPage.LoadControl(viewName));
-
-        //        //StringBuilder sb = new StringBuilder();
-        //        //using (StringWriter sw = new StringWriter(sb))
-        //        //{
-        //        //    using (HtmlTextWriter tw = new HtmlTextWriter(sw))
-        //        //    {
-        //        //        viewPage.RenderControl(tw);
-        //        //    }
-        //        //}
-
-        //        //return sb.ToString();
-        //    }
-        //}
+                    result.Data = RenderPartialViewToString("_TypeList", list);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

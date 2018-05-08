@@ -12,6 +12,7 @@ namespace ATS.Repository.DAO
         public bool Create(UserInfoModel input)
         {
             bool isCreated = false;
+             
             using (var context = GetConnection())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -36,9 +37,28 @@ namespace ATS.Repository.DAO
                             context.UserInfo.Add(userInfo);
 
                             context.SaveChanges();
-
-                            dbContextTransaction.Commit();
+                            
                             isCreated = true;
+                            if (isCreated)
+                            {
+                                UserCredential userCredential = new UserCredential();
+                                userCredential.EmailId = input.Email;
+                                userCredential.CurrPassword = input.UserCredentials[0].CurrPassword;
+                                userCredential.UserId = userInfo.UserId;
+                                userCredential.CreatedBy = input.UserCredentials[0].CreatedBy;
+                                userCredential.CreatedDate = input.UserCredentials[0].CreatedDate;
+                                context.UserCredential.Add(userCredential);
+                                context.SaveChanges();
+                                isCreated = true;
+                            }
+                            else
+                            {
+                                isCreated = false;
+                            }
+                            if (isCreated)
+                            {
+                                dbContextTransaction.Commit();
+                            }
                         }
                     }
                     catch

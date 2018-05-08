@@ -123,14 +123,23 @@ namespace ATS.Repository.DAO
         public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
             List<QuestionBankModel> result = null;
-            string quesType = Constants.OPTION;
             using (var context = GetConnection())
             {
                 try
                 {
-                    QuestionFactory selector = new QuestionFactory(quesType);
-                    result = selector.QuestionSelector.Select(context, condition);
-
+                    var dataFound = Select(context, condition);
+                    if (dataFound != null)
+                    {
+                        result = new List<QuestionBankModel>();
+                        foreach (var ques in dataFound)
+                        {
+                            QuestionFactory selector = new QuestionFactory(ques.QuesTypeValue);
+                            if (selector.QuestionSelector != null)
+                            {
+                                result.Add(selector.QuestionSelector.Select(context, x => x.QId == ques.QId).FirstOrDefault());
+                            }
+                        }
+                    }
                 }
                 catch
                 {
@@ -138,6 +147,33 @@ namespace ATS.Repository.DAO
                 }
                 return result;
             }
+        }
+
+        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
+        {
+            List<QuestionBankModel> result = null;
+            var qry = (from ques in context.QuestionBank
+                       join t in context.TypeDef on ques.QuesTypeId equals t.TypeId into emptyType
+                       from type in emptyType.DefaultIfEmpty()
+                       select new QuestionBankModel {
+                           QId = ques.QId,
+                           Description = ques.Description,
+                           QuesTypeId = ques.QuesTypeId,
+                           LevelTypeId = ques.LevelTypeId,
+                           CategoryTypeId = ques.CategoryTypeId,
+                           DefaultMark = ques.DefaultMark,
+                           QuesTypeValue =type.Value
+                       }).AsQueryable();
+
+            if (condition != null)
+            {
+                result = qry.Where(condition).ToList();
+            }
+            else
+            {
+                result = qry.ToList();
+            }
+            return result;
         }
 
         public bool Update(QuestionBankModel input)
