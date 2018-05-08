@@ -11,6 +11,7 @@ namespace ATS.Repository.DAO.Migrations
         {
             AutomaticMigrationsEnabled = true;
             //AutomaticMigrationDataLossAllowed = false;
+            ContextKey = "ATS.Repository.DAO.ATSDBContext";
         }
 
         protected override void Seed(ATS.Repository.DAO.ATSDBContext context)
