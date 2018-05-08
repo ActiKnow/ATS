@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\DashboardController.cs" />
     <Compile Include="Areas\Admin\SetupController.cs" />
+    <Compile Include="Areas\Admin\UserSetupController.cs" />
     <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
     <Compile Include="Areas\Candidate\DashboardController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
@@ -187,6 +188,7 @@
     <Content Include="Areas\Admin\Views\Setup\Question.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
+    <Content Include="Areas\Admin\Views\UserSetup\UserSetup.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Candidate\Views\web.config" />
     <Content Include="Areas\Employee\Views\web.config" />
@@ -221,6 +223,7 @@
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\Question\question.js" />
     <Content Include="Scripts\TypeSetup\typeSetup.js" />
+    <Content Include="Scripts\UserSetup\userSetup.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
