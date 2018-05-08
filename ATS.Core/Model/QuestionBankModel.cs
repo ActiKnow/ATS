@@ -24,7 +24,8 @@ namespace ATS.Core.Model
         public string CategoryTypeValue { get; set; }
         public string LevelTypeValue { get; set; }
         public List<QuestionOptionModel> Options { get; set; }
-        public QuestionOptionMapModel MapOptions { get; set; }
+        public List<QuestionOptionMapModel> MappedOptions { get; set; }
+        public TestQuestionMapModel MappedQuestion { get; set; }
     }
 }
 

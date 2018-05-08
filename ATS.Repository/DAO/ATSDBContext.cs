@@ -11,7 +11,7 @@ namespace ATS.Repository.DAO
     {
         public ATSDBContext() : base("name=ATSDBContext")
         {
-
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.DAO.Migrations.Configuration>());
         }
 
         public virtual DbSet<UserInfo> UserInfo { get; set; }
@@ -25,6 +25,10 @@ namespace ATS.Repository.DAO
         public virtual DbSet<UserAttemptedHistory> UserAttemptedHistory { get; set; }
         public virtual DbSet<UserCredential> UserCredential { get; set; }
         public virtual DbSet<UserTestHistory> UserTestHistory { get; set; }
-       
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

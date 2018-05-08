@@ -25,7 +25,7 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.GetParentTypes();
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
             }
             catch (Exception ex)
             {

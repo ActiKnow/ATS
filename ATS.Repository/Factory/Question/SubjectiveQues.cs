@@ -21,10 +21,13 @@ namespace ATS.Repository.Factory.Question
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
             QuesDAO.Create(ref input, context);
-            input.MapOptions.Answer = input.AnsText;
-            input.MapOptions.QId = input.QId;
-            input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
-            MapOptionDAO.CreateTask(input.MapOptions, context);
+            if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+            {
+                input.MappedOptions[0].Answer = input.AnsText;
+                input.MappedOptions[0].QId = input.QId;
+                input.MappedOptions[0].OptionKeyId = input.QuesTypeId.ToString();
+                MapOptionDAO.Create(input.MappedOptions[0], context);
+            }
         }
 
         public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
@@ -45,10 +48,13 @@ namespace ATS.Repository.Factory.Question
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
             QuesDAO.Update( input, context);
-            input.MapOptions.Answer = input.AnsText;
-            input.MapOptions.QId = input.QId;
-            input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
-            MapOptionDAO.UpdateTask(input.MapOptions, context);
+            if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+            {
+                input.MappedOptions[0].Answer = input.AnsText;
+                input.MappedOptions[0].QId = input.QId;
+                input.MappedOptions[0].OptionKeyId = input.QuesTypeId.ToString();
+                MapOptionDAO.Update(input.MappedOptions[0], context);
+            }
         }
     }
 }
