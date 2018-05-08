@@ -36,9 +36,18 @@ namespace ATS.Repository.DAO
                             context.UserInfo.Add(userInfo);
 
                             context.SaveChanges();
-
-                            dbContextTransaction.Commit();
+                            
                             isCreated = true;
+                            if (isCreated)
+                            {
+                                UserCredential userCredential = new UserCredential();
+                                userCredential.EmailId = input.Email;
+                                userCredential.CurrPassword = input.UserCredentials[0].CurrPassword;
+                                userCredential.UserId = userInfo.UserId;
+                                context.UserCredential.Add(userCredential);
+                                context.SaveChanges();
+                            }
+                            dbContextTransaction.Commit();
                         }
                     }
                     catch

@@ -60,7 +60,7 @@
     var createUser = function () {
 
         var flag = true;
-
+        var UserCredentials = [];
         var op = defaults;
 
         var firstName = $(op.firstName).val();
@@ -73,11 +73,12 @@
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
         if (flag) {
-            var UserCredentials = {
+            var item = {
                 CurrPassword: password,
                 EmailId: email,
                 RoleTypeId: roleType,
             };
+            UserCredentials.push(item);
             var userInfoModel = {
                 FName: typeName.trim(),
                 LName: typeValue.trim(),
