@@ -19,64 +19,71 @@
     <div class="col-md-12" id="userSetupContext">
         <div class="tile">
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-form-label">First Name</label>
-                        <input class="form-control firstName" type="text" placeholder="Enter first name">
-                    </div>
+                <div class="col-sm-12">
+                    <div class="form-control-feedback" for="inputDanger1">
+                    <span class="alert-danger errorMsg" style="display:none"></span></div>                    
+                    <span class="alert-success successMsg" style="display:none"></span>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-form-label">Last Name</label>
-                        <input class="form-control lastName" type="text" placeholder="Enter last name">
+              </div>
+                <div class="row">
+                 
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label">First Name</label>
+                            <input class="form-control firstName" type="text" placeholder="Enter first name">
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-form-label">Mobile No</label>
-                        <input class="form-control mobile" type="text" placeholder="Enter mobile number">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label">Last Name</label>
+                            <input class="form-control lastName" type="text" placeholder="Enter last name">
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input class="form-control email" placeholder="Enter email" type="email">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label">Mobile No</label>
+                            <input class="form-control mobile" type="text" placeholder="Enter mobile number">
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-form-label">Role Type</label>
-                        <select class="form-control roleType" id="roleType">
-                            <option value="">-Select-</option>
-                        </select>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input class="form-control email" placeholder="Enter email" type="email">
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">        
-                    <div class="form-group">
-                        <label class="control-label">Password</label>
-                        <div class="form-group">                           
-                            <div class="input-group">       
-                                <input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password" value="secret">
-        <button class="input-group-lg input-group-append"><span  toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
-                                <button class="input-group-lg input-group-append">
-                                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                                </button>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label">Role Type</label>
+                            <select class="form-control roleType" id="roleType">
+                                <option value="">-Select-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Password</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">
+                                    <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
+                                    <button class="input-group-lg input-group-append" id="refresh">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button class="btn btn-primary" id="createUser" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button><button class="btn btn-secondary" id="cancelUser" type="button">
+                                <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="tile-footer">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-3">
-                        <button class="btn btn-primary" id="createUser" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button><button class="btn btn-secondary" id="cancelUser" type="button">
-    <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</button>
-    <span class="errorMsg" style="display:none"></span>
-    <span class="successMsg" style="display:none"></span>
-</div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @section scripts
@@ -97,7 +104,7 @@
                 successMsg: '.successMsg',
                 btnCreateUser: '#createUser',
                 btnCancelUser: '#cancelUser',
-                userSetupContext:"#userSetupContext",
+                userSetupContext: "#userSetupContext",
             };
             userSetup.init(config);
         });
