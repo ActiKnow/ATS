@@ -10,7 +10,10 @@
         selectQuesText: '#question_text',
         selectQuesMark: '#question_mark',
         btnCreateQuestion: '#button_create_question'
+         
     };
+    var optionArray = [];
+    var counter = 1;
     var api = (function () {
         var fireAjax = function (url, data, type) {
             var httpMethod = type || 'POST';
@@ -59,6 +62,44 @@
         $(op.selectSubjective_text).val("");
     };
 
+    var addQuestion = function () {
+       
+        var rowGenrate = "<div class='form-group row'>" +
+            "		<div class='col-md-1'>" +
+            "		</div>" +
+            "		<div class='col-md-1'>" +
+            counter + 
+            "		</div>" +
+            "		<div class='col-md-7'>" +
+            "			<input type='text' name='true' class='form-control input-sm' placeholder='Option1' id='Option1'>" +
+            "		</div>" +
+            "		<div class='col-md-3'>" +
+            "			<input id='radio1' name='statusRadio' type='radio' value='Y'>" +
+            "			<span>Is Correct</span>" +
+            "   	</div>" +
+            "</div>";
+
+        optionArray.push(rowGenrate);
+
+        renderOption(optionArray);       
+
+        counter++;
+    };
+    var removeQuestion = function () {
+
+        optionArray.pop();
+
+        renderOption(optionArray);
+        counter--;
+    };
+
+    var renderOption = function () {
+        $(defaults.selectMCQType).html("");
+        for (let i = 0; i < optionArray.length; i++) {
+            $(defaults.selectMCQType).append(optionArray[i]);
+        }
+    }
+
     var createQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -71,10 +112,22 @@
         var QuesText = $(op.selectQuesText).val();
         var QuesMark = $(op.selectQuesMark).val();
 
+        var Arr = [];
+
+
+
+        var option1 = $(op.selectOption1).val();
+        var option2 = $(op.selectOption2).val();
+        var option3 = $(op.selectOption3).val();
+        var option4 = $(op.selectOption4).val();
+        var trueOption = $(op.selectTrue).val();
+        var falseOption = $(op.selectFalse).val();
+        var subjectiveAns = $(op.selectSubjective_text).val();
+
         if (flag) {
 
             var QuestionView = {
-                QuesLangId: QuesLangId.trim(),
+                QuesLangId: QuesLangId,
                 QuesExamModeId: QuesExamModeId,
                 LevelTypeId: QuesDiffiLevel,
                 QuesTypeId: QuesQuesTypeId,
@@ -83,6 +136,7 @@
                 DefaultMark: QuesMark
 
             };
+            QuestionView.Options = Arr;
             api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
                 .done(callBacks.onQuestionAdded)
                 .fail(callBacks.onQuestionFailed);
@@ -105,23 +159,41 @@
                 $(defaults.selectMCQType).show();
                 $(defaults.selectTFType).hide();
                 $(defaults.selectSubjectType).hide();
-                emptyOption();
+                optionArray.splice(0, optionArray.length)
+                counter = 1;
+                addQuestion();
+                $(defaults.btnAdd).show();
+                $(defaults.btnRemove).show();
             }
             else if (Type == '2') {
                 $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).show();
                 $(defaults.selectSubjectType).hide();
                 emptyOption();
+                $(defaults.btnAdd).hide();
+                $(defaults.btnRemove).hide();
             }
             else {
                 $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).hide();
                 $(defaults.selectSubjectType).show();
                 emptyOption();
+                $(defaults.btnAdd).hide();
+                $(defaults.btnRemove).hide();
             }
 
         })
-    };
+
+        $selectQuestionContainer.on('click', op.btnAdd, function (e) {
+            addQuestion();
+        })
+
+        $selectQuestionContainer.on('click', op.btnRemove, function (e) {
+            removeQuestion();
+        })
+
+    
+};
 
     return {
         init: function (config) {
@@ -131,6 +203,8 @@
             $(defaults.selectMCQType).hide();
             $(defaults.selectTFType).hide();
             $(defaults.selectSubjectType).hide();
+            $(defaults.btnAdd).hide();
+            $(defaults.btnRemove).hide();
         }
 
     }

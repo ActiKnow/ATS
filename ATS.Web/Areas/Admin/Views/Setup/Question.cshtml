@@ -25,7 +25,6 @@
 
     </div>
 
-
     <br />
 
     <div class="col-md-12">
@@ -100,109 +99,66 @@
         <div class="col-md-2">
             <label class="name-tag">Answer Description</label>
         </div>
+        <div class="col-md-8">
+
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div id="MCQType">
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                       
-                        </div>
-                        <div class="col-md-1">
-                            <span>A.</span>
-                        </div>
-                        <div class="col-md-8">
-
-                            <input type="text" name="true" class="form-control input-sm" placeholder="Option1" id="Option1">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                          
-                        </div>
-                        <div class="col-md-1">
-                            <span>B.</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="false" class="form-control input-sm" placeholder="Option2" id="Option2">
-
-
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-
-                        </div>
-                        <div class="col-md-1">
-                            <span>C.</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="true" class="form-control input-sm" placeholder="Option3" id="Option3">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-
-                        </div>
-                        <div class="col-md-1">
-                            <span>D.</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="false" class="form-control input-sm" placeholder="Option4" id="Option4">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div id="TFType">
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                        </div>
-                        <div class="col-md-1">
-                            <span>A.</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="true" class="form-control input-sm" placeholder="True" id="True">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                        </div>
-                        <div class="col-md-1">
-                            <span>B.</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="false" class="form-control input-sm" placeholder="False" id="False">
-                        </div>
-                    </div>
-
-                </div>
+        <div class="col-md-2">
+            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
+            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="MCQType">
+               
             </div>
         </div>
         <div class="col-md-12">
-            <div id="SubjectType">
-                <div class="row">
+            <div id="TFType">
+                <div class="form-group row">
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-1">
                         <span>A.</span>
                     </div>
-                    <div class="col-md-8">
-                        <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                    <div class="col-md-7">
+                        <input type="text" name="true" class="form-control input-sm" placeholder="True" id="True">
+                    </div>
+                    <div class="col-md-3">
+                        <input id="radio1" name="statusRadio" type="radio" value="Y">
+                        <span>Is Correct</span>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-1">
+                        <span>B.</span>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" name="false" class="form-control input-sm" placeholder="False" id="False">
+                    </div>
+                    <div class="col-md-3">
+                        <input id="radio1" name="statusRadio" type="radio" value="Y">
+                        <span>Is Correct</span>
+                    </div>
+                </div>
+
             </div>
         </div>
-  
-    <br />
-
-    <div class="row">
-        <div class="col-md-2">
-            <label class="name-tag ans-opt-label" for="question_Answer Options">Answer options</label>
-        </div>
-        <div class="col-md-8 option-partial">
-            <i class="grey">Please select the question type first</i>
+    </div>
+    <div class="col-md-12">
+        <div id="SubjectType">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-1">
+                    <span>A.</span>
+                </div>
+                <div class="col-md-8">
+                    <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -259,8 +215,11 @@
                     selectOption4: '#Option4',
                     selectTrue: '#True',
                     selectFalse: '#False',
-                    selectSubjective_text:'#Subjective_text'
+                    selectSubjective_text:'#Subjective_text',
 
+                    btnAdd: '#btnAdd',
+                    btnRemove:'#btnRemove',
+                    rowMCQGenrate: '#rowMCQGenrate'
 
                 };
                 question.init(config);
