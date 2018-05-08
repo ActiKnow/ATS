@@ -43,7 +43,7 @@
                             $(op.errorMsg).html(result.Message);
                         }
                         else {
-                            $(op.tableContext).html(result.Data);
+                            resetFields();
                         }
                     }
                     else {
@@ -80,9 +80,9 @@
             };
             UserCredentials.push(item);
             var userInfoModel = {
-                FName: typeName.trim(),
-                LName: typeValue.trim(),
-                Mobile: parentKey.trim(),
+                FName: firstName.trim(),
+                LName: lastName.trim(),
+                Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
                 UserTypeId: roleType.trim(),
@@ -90,12 +90,10 @@
                 UserCredentials: UserCredentials,
             };
 
-            api.firePostAjax('/Setup/CreateType', { userInfoModel: userInfoModel })
-                .done(callBacks.onTypeCreated)
-                .fail(callBacks.onTypeCreationFailed);
-
-        }
-
+            api.firePostAjax('/UserSetup/CreateUser', { userInfoModel: userInfoModel })
+                .done(callBacks.onUserCreated)
+                .fail(callBacks.onUserCreationFailed);
+        }       
 
     };
 
@@ -121,6 +119,7 @@
         }
 
         if (message != "") {
+            $(defaults.errorMsg).show();
             $(defaults.errorMsg).html(message);
             flag = false;
         }
@@ -155,8 +154,36 @@
                 $(op.errorMsg).html(res.responseText);
             });
     }
+    var getPassword = function () {
+        
+        var op = defaults;
 
+        api.fireGetAjax('/UserSetup/CreateRandomPassword', { PasswordLength:6})
+            .done(result => {
+                if (result != null) {
 
+                    if (result.Status) {
+                        
+                        $(op.password).val(result.Data);
+                    }
+                    else {
+                        $(op.errorMsg).html(result.Message);
+                    }
+                }
+            })
+            .fail(result => {
+                $(op.errorMsg).html(result.responseText);
+            });
+    }
+    var resetFields = function () {
+        var op = defaults;
+        $(op.firstName).val("");
+        $(op.lastName).val("");
+        $(op.email).val("");
+        $(op.mobile).val("");
+        $(op.password).val("");
+        $(op.ddlRoleType).val("");
+    };
     var bindEvents = function () {
         var op = defaults;
 
@@ -174,15 +201,24 @@
 
         $userContext.on('click', op.btnCreateUser, function (e) {
             createUser();
-        })
+        });
+        $userContext.on('click', op.btnRefresh, function (e) {
+            $(op.password).val("");
+            getPassword();
+        });
+        $userContext.on('click', op.btnCancelUser, function (e) {
+            resetFields();
+        });
+        $userContext.on('change', op.ddlRoleType, function (e) {          
+            getPassword();
+        });
     };
 
     return {
         init: function (config) {
             $.extend(true, defaults, config);
             bindEvents();
-            loadRoleTypes();
-
+            loadRoleTypes();            
         }
 
     }
