@@ -131,16 +131,25 @@ namespace ATS.Service.Controllers
 
 
         [HttpGet]
-        [Route("api/TypeDef/Select/{parentKey?}")]
-        public IHttpActionResult Select(Guid? parentKey=null)
+        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey?}")]
+        public IHttpActionResult Select(bool isParentDependent,Guid? parentKey=null)
         {
             ApiResult apiResult = null;
             try
             {
-                var result = repository.Select(x => x.ParentKey == parentKey);
-                if (result != null)
+                List<TypeDefModel> list = new List<TypeDefModel>();
+                if (isParentDependent)
                 {
-                    apiResult = new ApiResult(true, "", result);
+                    list = repository.Select(x => x.ParentKey == parentKey);                   
+                }
+                else
+                {
+                    list = repository.Select(null);
+                }
+
+                if (list != null)
+                {
+                    apiResult = new ApiResult(true, "", list);
                 }
                 else
                 {
