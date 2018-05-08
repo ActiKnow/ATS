@@ -80,16 +80,24 @@ namespace ATS.Service.Controllers
         }
 
         [HttpGet]
-        [Route("api/Question/Select")]
-        public IHttpActionResult Select()
+        [Route("api/Question/Select/{questionId?}")]
+        public IHttpActionResult Select(Guid? questionId = null)
         {
             ApiResult apiResult = new ApiResult(false, "Record not found");
             try
             {
-                List<QuestionBankModel> ques = questionRepo.Select(null);
-                if (ques != null)
+                List<QuestionBankModel> ques = null;
+                if (questionId != null)
                 {
-                    apiResult = new ApiResult(true,"",ques);
+                    ques = questionRepo.Select(x => x.QId == questionId);
+                }
+                else
+                {
+                    ques = questionRepo.Select(null);
+                }
+                if (ques != null && ques.Count > 0)
+                {
+                    apiResult = new ApiResult(true, "", ques);
                 }
             }
             catch (Exception ex)

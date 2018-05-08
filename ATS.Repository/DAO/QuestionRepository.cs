@@ -134,7 +134,10 @@ namespace ATS.Repository.DAO
                         foreach (var ques in dataFound)
                         {
                             QuestionFactory selector = new QuestionFactory(ques.QuesTypeValue);
-                            result.Add( selector.QuestionSelector.Select(context, x => x.QId == ques.QId).FirstOrDefault());
+                            if (selector.QuestionSelector != null)
+                            {
+                                result.Add(selector.QuestionSelector.Select(context, x => x.QId == ques.QId).FirstOrDefault());
+                            }
                         }
                     }
                 }
