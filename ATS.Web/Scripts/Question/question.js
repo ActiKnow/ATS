@@ -12,6 +12,11 @@
         btnCreateQuestion: '#button_create_question'
          
     };
+    var questionTypes = {
+        option: "Option",
+        bool: "Bool",
+        text:"Text"
+    };
     var optionArray = [];
     var counter = 1;
     var api = (function () {
@@ -30,6 +35,7 @@
         }
     }());
     var callBacks = (function () {
+        var op = defaults;
         var appendQuestion = function (result) {
             let $tableConbtainer = $(defaults.selectContainer);
             $tableConbtainer.html(result);
@@ -38,15 +44,15 @@
             onQuestionAdded: function (result) {
                 if (result !== "") {
                     if (result.Status) {
-                        alertService.showSuccess(result.Message);
+                        $(op.errorMsg).html(result.Message);
                     }
                     else {
-                        alertService.showError(result.Message);
+                        $(op.errorMsg).html(result.Message);
                     }
                 }
             },
             onQuestionFailed: function (result) {
-                alertService.showError(result.responseText);
+                $(op.errorMsg).html(result.Message);
             },
         }
     })();
@@ -67,14 +73,12 @@
         var rowGenrate = "<div class='form-group row'>" +
             "		<div class='col-md-1'>" +
             "		</div>" +
-            "		<div class='col-md-1'>" +
-            counter + 
-            "		</div>" +
+            "		<div class='col-md-1'>" + counter +  "</div>" +
             "		<div class='col-md-7'>" +
-            "			<input type='text' name='true' class='form-control input-sm' placeholder='Option1' id='Option1'>" +
+            "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value=''>" +
             "		</div>" +
             "		<div class='col-md-3'>" +
-            "			<input id='radio1' name='statusRadio' type='radio' value='Y'>" +
+            "			<input id='radio' name='statusRadio' type='radio' value=''>" +
             "			<span>Is Correct</span>" +
             "   	</div>" +
             "</div>";
@@ -104,8 +108,6 @@
         var flag = true;
         var op = defaults;
         var message = "";
-        var QuesLangId = $(op.selectQuesLangId).val();
-        var QuesExamModeId = $(op.selectQuesExamModeId).val();
         var QuesDiffiLevel = $(op.selectQuesDiffiLevel).val();
         var QuesQuesTypeId = $(op.selectQuesQuesTypeId).val();
         var QuesSubjectId = $(op.selectQuesSubjectId).val();
@@ -114,34 +116,33 @@
 
         var Arr = [];
 
+        var optionValue = [];
+       
+        $("input[name=DynamicTextBox]").each(function () {
+            //optionValue += $(this).val() + "\n";
+            optionValue.push({ Id: "", KeyId: "", Description : $(this).val() , IsAnswer: "false" });
+        });
+        
 
+ 
 
-        var option1 = $(op.selectOption1).val();
-        var option2 = $(op.selectOption2).val();
-        var option3 = $(op.selectOption3).val();
-        var option4 = $(op.selectOption4).val();
-        var trueOption = $(op.selectTrue).val();
-        var falseOption = $(op.selectFalse).val();
-        var subjectiveAns = $(op.selectSubjective_text).val();
+        var QuestionView = {
+            LevelTypeId: QuesDiffiLevel,
+            QuesTypeValue: QuesQuesTypeId,
+            CategoryTypeId: QuesSubjectId,
+            Description: QuesText,
+            DefaultMark: QuesMark
 
-        if (flag) {
+        }
 
-            var QuestionView = {
-                QuesLangId: QuesLangId,
-                QuesExamModeId: QuesExamModeId,
-                LevelTypeId: QuesDiffiLevel,
-                QuesTypeId: QuesQuesTypeId,
-                CategoryTypeId: QuesSubjectId,
-                Description: QuesText,
-                DefaultMark: QuesMark
+       
 
-            };
-            QuestionView.Options = Arr;
+            QuestionView.options = optionValue;
             api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
                 .done(callBacks.onQuestionAdded)
                 .fail(callBacks.onQuestionFailed);
 
-        }
+        
 
     };
 
@@ -155,7 +156,7 @@
 
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
             var Type = $(op.selectQuesQuesTypeId).val();
-            if (Type == '1') {
+            if (Type == questionTypes.option) {
                 $(defaults.selectMCQType).show();
                 $(defaults.selectTFType).hide();
                 $(defaults.selectSubjectType).hide();
@@ -165,7 +166,7 @@
                 $(defaults.btnAdd).show();
                 $(defaults.btnRemove).show();
             }
-            else if (Type == '2') {
+            else if (Type == questionTypes.bool) {
                 $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).show();
                 $(defaults.selectSubjectType).hide();

@@ -34,7 +34,18 @@ namespace ATS.Web.Areas.Admin
 
         public ActionResult CreateQuestion(QuestionBankModel QuestionView)
         {
-            return View();
+
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.QuestionApiConsumer.CreateQuestion(QuestionView);
+
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [ActionName("UserSetup")]
