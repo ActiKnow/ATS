@@ -22,19 +22,20 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            TestBank testBank = new TestBank();
-                            testBank.CategoryTypeId = input.CategoryTypeId;
-                            testBank.CreatedBy = input.CreatedBy;
-                            testBank.CreatedDate = input.CreatedDate;
-                            testBank.Description = input.Description;
-                            testBank.Duration = input.Duration;
-                            testBank.Instructions = input.Instructions;
-                            testBank.LavelTypeId = input.LavelTypeId;
-                            testBank.StatusId = input.StatusId;
-                            testBank.TestBankId = input.TestBankId;
-                            testBank.TestTypeId = input.TestTypeId;
-                            testBank.TotalMarks = input.TotalMarks;
-
+                            TestBank testBank = new TestBank
+                            {
+                                CategoryTypeId = input.CategoryTypeId,
+                                CreatedBy = input.CreatedBy,
+                                CreatedDate = input.CreatedDate,
+                                Description = input.Description,
+                                Duration = input.Duration,
+                                Instructions = input.Instructions,
+                                LavelTypeId = input.LavelTypeId,
+                                StatusId = input.StatusId,
+                                TestBankId = input.TestBankId,
+                                TestTypeId = input.TestTypeId,
+                                TotalMarks = input.TotalMarks
+                            };
                             context.TestBank.Add(testBank);
                             context.SaveChanges();
 
@@ -112,7 +113,7 @@ namespace ATS.Repository.DAO
                                      LavelTypeDescription = m.Description,
                                      LavelTypeValue = m.Value,
                                      TestTypeDescription = n.Description,
-                                     TestTypeValue=n.Value
+                                     TestTypeValue = n.Value
                                  });
 
                     testBank = query.Where(x => x.TestBankId == input.TestBankId).FirstOrDefault();

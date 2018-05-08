@@ -20,7 +20,7 @@ namespace ATS.Repository.Factory.Question
         }
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.CreateTask(ref input, context);
+            QuesDAO.Create(ref input, context);
             input.MapOptions.Answer = input.AnsText;
             input.MapOptions.QId = input.QId;
             input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();
@@ -44,7 +44,7 @@ namespace ATS.Repository.Factory.Question
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.UpdateTask( input, context);
+            QuesDAO.Update( input, context);
             input.MapOptions.Answer = input.AnsText;
             input.MapOptions.QId = input.QId;
             input.MapOptions.OptionKeyId = input.QuesTypeId.ToString();

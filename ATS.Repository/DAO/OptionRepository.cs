@@ -20,7 +20,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            CreateTask(ref input, context);
+                            Create(ref input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -35,7 +35,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask(ref QuestionOptionModel input, ATSDBContext context)
+        public void Create(ref QuestionOptionModel input, ATSDBContext context)
         {
             if (input != null)
             {
@@ -61,7 +61,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        DeleteTask(input, context);
+                        Delete(input, context);
                         dbContextTransaction.Commit();
                         isDeleted = true;
 
@@ -76,7 +76,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void DeleteTask(QuestionOptionModel input, ATSDBContext context)
+        public void Delete(QuestionOptionModel input, ATSDBContext context)
         {
             QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
             if (dataFound != null)
@@ -93,7 +93,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    result = SelectTask(context,x=>x.Id == input.Id).FirstOrDefault();
+                    result = Select(context,x=>x.Id == input.Id).FirstOrDefault();
                 }
                 catch
                 {
@@ -102,7 +102,7 @@ namespace ATS.Repository.DAO
                 return result;
             }
         }
-        public List<QuestionOptionModel> SelectTask( ATSDBContext context, Func<QuestionOptionModel, bool> condition)
+        public List<QuestionOptionModel> Select( ATSDBContext context, Func<QuestionOptionModel, bool> condition)
         {
             List<QuestionOptionModel> result = null;
             result = (from option in context.QuestionOption
@@ -129,7 +129,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UpdateTask(input, context);
+                        Update(input, context);
                         dbContextTransaction.Commit();
                         isUpdated = true;
 
@@ -144,7 +144,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void UpdateTask(QuestionOptionModel input, ATSDBContext context)
+        public void Update(QuestionOptionModel input, ATSDBContext context)
         {
             QuestionOption dataFound = context.QuestionOption.Where(x => x.Id == input.Id).FirstOrDefault();
             if (dataFound != null)

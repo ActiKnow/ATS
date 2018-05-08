@@ -24,23 +24,29 @@ namespace ATS.Service.Controllers
         public IHttpActionResult ValidateUser(UserCredentialModel userCredential)
         {
             ApiResult apiResult = null;
-
-            var userId = userRepository.ValidateUser(userCredential);
-            if (userId!= Guid.Empty)
+            try
             {
-                UserInfoModel userInfo = new UserInfoModel();
-                userInfo.Email = userCredential.EmailId;
-                userInfo.UserId = userId;
+                var userId = userRepository.ValidateUser(userCredential);
+                if (userId != Guid.Empty)
+                {
+                    UserInfoModel userInfo = new UserInfoModel();
+                    userInfo.Email = userCredential.EmailId;
+                    userInfo.UserId = userId;
 
-                userInfo = userRepository.Retrieve(userInfo);
+                    userInfo = userRepository.Retrieve(userInfo);
 
-                apiResult = new ApiResult(true, "",  userInfo);
+                    apiResult = new ApiResult(true, "", userInfo);
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "Username & Password is incorrect.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                apiResult = new ApiResult(false, "Username & Password is incorrect." );
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
             }
-            
             return Ok(apiResult);
         }
 
@@ -48,8 +54,41 @@ namespace ATS.Service.Controllers
         [Route("api/User/Create")]
         public IHttpActionResult Create(UserInfoModel userCredential)
         {
-            var result = userRepository.Create(userCredential);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Not Created");
+            try
+            {
+                if (userRepository.Create(userCredential))
+                {
+                    apiResult = new ApiResult(true, "Record Created");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpGet]
+        [Route("api/User/Select")]
+        public IHttpActionResult Select()
+        {
+            ApiResult apiResult = new ApiResult(false, "Records not Found");
+            try
+            {
+                List<UserInfoModel> user = userRepository.Select(null);
+                if (user != null)
+                {
+                    apiResult = new ApiResult(true, "", user);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
     }
 }

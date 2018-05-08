@@ -87,26 +87,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    var query = (from x in context.UserInfo.Where(x => x.UserId == input.UserId)
-                                 join y in context.TypeDef on x.RoleTypeId equals y.TypeId
-                                 select new UserInfoModel
-                                 {
-                                     CreatedBy = x.CreatedBy,
-                                     CreatedDate = x.CreatedDate,
-                                     Email = x.Email,
-                                     FName = x.FName,
-                                     LastUpdatedBy = x.LastUpdatedBy,
-                                     LastUpdatedDate = x.LastUpdatedDate,
-                                     LName = x.LName,
-                                     Mobile = x.Mobile,
-                                     StatusId = x.StatusId,
-                                     UserTypeId = x.UserTypeId,
-                                     RoleTypeId = x.RoleTypeId,
-                                     RoleDescription = y.Description,
-                                     RoleValue = y.Value
-                                 });
-
-                    userInfo = query.FirstOrDefault();
+                    userInfo = Select(context, x => x.UserId == input.UserId).FirstOrDefault();
                 }
                 catch
                 {
@@ -123,26 +104,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    var query = (from x in context.UserInfo.AsNoTracking()
-                                 join y in context.TypeDef on x.RoleTypeId equals y.TypeId
-                                 select new UserInfoModel
-                                 {
-                                     CreatedBy = x.CreatedBy,
-                                     CreatedDate = x.CreatedDate,
-                                     Email = x.Email,
-                                     FName = x.FName,
-                                     LastUpdatedBy = x.LastUpdatedBy,
-                                     LastUpdatedDate = x.LastUpdatedDate,
-                                     LName = x.LName,
-                                     Mobile = x.Mobile,
-                                     StatusId = x.StatusId,
-                                     UserTypeId = x.UserTypeId,
-                                     RoleTypeId = x.RoleTypeId,
-                                     RoleDescription = y.Description,
-                                     RoleValue = y.Value
-                                 });
-
-                    userInfos = query.Where(condition).ToList();
+                    Select(context, condition);
                 }
                 catch
                 {
@@ -150,6 +112,42 @@ namespace ATS.Repository.DAO
                 }
                 return userInfos;
             }
+        }
+
+        public List<UserInfoModel> Select(ATSDBContext context, Func<UserInfoModel, bool> condition)
+        {
+            List<UserInfoModel> userInfos = null;
+
+            var query = (from x in context.UserInfo.AsNoTracking()
+                         join y in context.TypeDef on x.RoleTypeId equals y.TypeId
+                         select new UserInfoModel
+                         {
+                             UserId = x.UserId,
+                             CreatedBy = x.CreatedBy,
+                             CreatedDate = x.CreatedDate,
+                             Email = x.Email,
+                             FName = x.FName,
+                             LastUpdatedBy = x.LastUpdatedBy,
+                             LastUpdatedDate = x.LastUpdatedDate,
+                             LName = x.LName,
+                             Mobile = x.Mobile,
+                             StatusId = x.StatusId,
+                             UserTypeId = x.UserTypeId,
+                             RoleTypeId = x.RoleTypeId,
+                             RoleDescription = y.Description,
+                             RoleValue = y.Value
+                         });
+            if (condition != null)
+            {
+                userInfos = query.Where(condition).ToList();
+            }
+            else
+            {
+                userInfos = query.ToList();
+            }
+
+            return userInfos;
+
         }
 
         public bool Update(UserInfoModel input)
