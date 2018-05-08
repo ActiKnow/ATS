@@ -51,8 +51,7 @@ namespace ATS.Web.Areas.Admin
             {
                 result = new ApiResult(false, ex.GetBaseException().Message);
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
-            return View();
+            return Json(result, JsonRequestBehavior.AllowGet);           
         }
 
         [HttpGet]

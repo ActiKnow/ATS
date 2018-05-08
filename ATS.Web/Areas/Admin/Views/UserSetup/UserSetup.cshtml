@@ -1,0 +1,108 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "UserSetup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>User Setup</h1>
+        <p>You can create a user by filling the fields in form below.</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">User Setup</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12" id="userSetupContext">
+        <div class="tile">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">First Name</label>
+                        <input class="form-control firstName" type="text" placeholder="Enter first name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Last Name</label>
+                        <input class="form-control lastName" type="text" placeholder="Enter last name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Mobile No</label>
+                        <input class="form-control mobile" type="text" placeholder="Enter mobile number">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input class="form-control email" placeholder="Enter email" type="email">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Role Type</label>
+                        <select class="form-control roleType" id="roleType">
+                            <option value="">-Select-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">        
+                    <div class="form-group">
+                        <label class="control-label">Password</label>
+                        <div class="form-group">                           
+                            <div class="input-group">       
+                                <input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password" value="secret">
+        <button class="input-group-lg input-group-append"><span  toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
+                                <button class="input-group-lg input-group-append">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3">
+                        <button class="btn btn-primary" id="createUser" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button><button class="btn btn-secondary" id="cancelUser" type="button">
+    <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</button>
+    <span class="errorMsg" style="display:none"></span>
+    <span class="successMsg" style="display:none"></span>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/UserSetup/userSetup.js"></script>
+    <script>
+    (function ($, window, document) {
+        $(function () {
+            var config = {
+                firstName:'.firstName',
+                lastName:'.lastName',
+                mobile:'.mobile',
+                email: '.email',
+                password: '#password-field', 
+                btnRefresh: '#refresh',
+                ddlRoleType: '#roleType',
+                errorMsg: '.errorMsg',
+                successMsg: '.successMsg',
+                btnCreateUser: '#createUser',
+                btnCancelUser: '#cancelUser',
+                userSetupContext:"#userSetupContext",
+            };
+            userSetup.init(config);
+        });
+
+    }(window.jQuery, window, document));
+    </script>
+
+}

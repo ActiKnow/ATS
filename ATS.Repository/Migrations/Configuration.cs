@@ -1,4 +1,4 @@
-namespace ATS.Repository.Migrations
+namespace ATS.Repository.DAO.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -10,7 +10,7 @@ namespace ATS.Repository.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = false;
+            //AutomaticMigrationDataLossAllowed = false;
         }
 
         protected override void Seed(ATS.Repository.DAO.ATSDBContext context)
