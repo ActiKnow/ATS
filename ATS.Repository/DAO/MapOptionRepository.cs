@@ -20,7 +20,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
-                            CreateTask(input, context);
+                            Create(input, context);
                             dbContextTransaction.Commit();
                             isCreated = true;
                         }
@@ -34,7 +34,7 @@ namespace ATS.Repository.DAO
                 return isCreated;
             }
         }
-        public void CreateTask(QuestionOptionMapModel input, ATSDBContext context)
+        public void Create(QuestionOptionMapModel input, ATSDBContext context)
         {
             if (input != null)
             {
@@ -59,7 +59,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        DeleteTask(input, context);
+                        Delete(input, context);
                         dbContextTransaction.Commit();
                         isDeleted = true;
                     }
@@ -72,7 +72,7 @@ namespace ATS.Repository.DAO
                 return isDeleted;
             }
         }
-        public void DeleteTask(QuestionOptionMapModel input, ATSDBContext context)
+        public void Delete(QuestionOptionMapModel input, ATSDBContext context)
         {
             QuestionOptionMapping dataFound = null;
             dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
@@ -103,7 +103,7 @@ namespace ATS.Repository.DAO
             throw new NotImplementedException();
         }
 
-        public List<QuestionOptionMapModel> SelectTask(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition)
+        public List<QuestionOptionMapModel> Select(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition)
         {
             List<QuestionOptionMapModel> result = null;
             var qry = (from option in context.QuestionOptionMapping.AsNoTracking()
@@ -129,7 +129,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UpdateTask(input, context);
+                        Update(input, context);
                         dbContextTransaction.Commit();
                         isUpdated = true;
                     }
@@ -142,7 +142,7 @@ namespace ATS.Repository.DAO
                 return isUpdated;
             }
         }
-        public void UpdateTask(QuestionOptionMapModel input, ATSDBContext context)
+        public void Update(QuestionOptionMapModel input, ATSDBContext context)
         {
             QuestionOptionMapping dataFound = context.QuestionOptionMapping.Where(x => x.Id == input.Id).FirstOrDefault();
             if (dataFound != null)

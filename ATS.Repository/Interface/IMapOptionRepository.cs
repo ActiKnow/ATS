@@ -7,9 +7,9 @@ namespace ATS.Repository.Interface
 {
    public interface IMapOptionRepository : ICRUD<QuestionOptionMapModel>
     {
-        void CreateTask(QuestionOptionMapModel input, ATSDBContext context);
-        void UpdateTask(QuestionOptionMapModel input, ATSDBContext context);
-        void DeleteTask(QuestionOptionMapModel input, ATSDBContext context);
-        List<QuestionOptionMapModel> SelectTask(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition);
+        void Create(QuestionOptionMapModel input, ATSDBContext context);
+        void Update(QuestionOptionMapModel input, ATSDBContext context);
+        void Delete(QuestionOptionMapModel input, ATSDBContext context);
+        List<QuestionOptionMapModel> Select(ATSDBContext context, Func<QuestionOptionMapModel, bool> condition);
     }
 }

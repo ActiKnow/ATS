@@ -14,10 +14,12 @@ namespace ATS.Service.Controllers
     {
         private ITestRepository repository = null;
         private IMapQuestionRepository mapQuesRepository = null;
+        private IQuestionRepository quesRepository = null;
         public TestBankController()
         {
             repository = new TestBankRepository();
             mapQuesRepository = new MapQuestionRepository();
+            quesRepository = new QuestionRepository();
         }
 
         [HttpPost]
@@ -123,6 +125,40 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
+        [HttpGet]
+        [Route("api/TestBank/Questions/Select/{testBankId}")]
+        public IHttpActionResult QuestionsSelect(Guid testBankId)
+        {
+            ApiResult apiResult = new ApiResult(false, "Record not found");
+            try
+            {
+                List<TestQuestionMapModel> dataMaps = mapQuesRepository.Select(x=>x.TestBankId == testBankId);
+                List<QuestionBankModel> questions = null;
+                if (dataMaps != null)
+                {
+                    questions = new List<QuestionBankModel>();
+                    foreach (var map in dataMaps)
+                    {
+                        var quesFound = quesRepository.Select(x => x.QId == map.QId).FirstOrDefault();
+                        if (quesFound != null)
+                        {
+                            quesFound.MappedQuestion = map;
+                            questions.Add(quesFound);
+                        }
+                    }
+                }
+                if (questions != null)
+                {
+                    apiResult = new ApiResult(true, "", questions);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
         [HttpPost]
         [Route("api/TestBank/Link/Questions")]
         public IHttpActionResult MapQuestion(List<TestQuestionMapModel> inputs)
@@ -130,7 +166,7 @@ namespace ATS.Service.Controllers
             ApiResult apiResult = new ApiResult(false, "Record not Mapped");
             try
             {
-                if (mapQuesRepository.Create(inputs))
+                if (inputs != null && mapQuesRepository.Create(inputs))
                 {
                     apiResult = new ApiResult(true, "Records Mapped");
                 }
@@ -150,7 +186,7 @@ namespace ATS.Service.Controllers
             ApiResult apiResult = new ApiResult(false, "Record not Found");
             try
             {
-                if (mapQuesRepository.Delete(inputs))
+                if (inputs != null &&  mapQuesRepository.Delete(inputs))
                 {
                     apiResult = new ApiResult(true, "Operation successful ");
                 }
