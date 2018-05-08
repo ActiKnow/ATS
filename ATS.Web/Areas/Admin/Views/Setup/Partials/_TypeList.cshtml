@@ -1,13 +1,10 @@
-﻿@model List<ATS.Core.Model.TypeDefModel>
-    @{
+﻿    @{
         var count = 0;
     }
-
     @foreach (var item in Model)
     {
-        count += 1;
         <tr>
-            <td>@count</td>
+            <td>@(count++)</td>
             <td>@item.Description</td>
             <td>@item.Value</td>
             <td>@item.ParentDescription</td>

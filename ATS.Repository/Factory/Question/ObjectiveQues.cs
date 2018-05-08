@@ -23,7 +23,7 @@ namespace ATS.Repository.Factory.Question
 
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.CreateTask(ref input, context);
+            QuesDAO.Create(ref input, context);
             string optionKeyId = input.QId.ToString();
             List<Guid> answers = new List<Guid>();
 
@@ -33,7 +33,7 @@ namespace ATS.Repository.Factory.Question
             {
                 var op = input.Options[indx];
                 op.KeyId = optionKeyId;
-                OptionDAO.CreateTask(ref op, context);
+                OptionDAO.Create(ref op, context);
                 if (op.IsAnswer)
                 {
                     answers.Add(op.Id);
@@ -70,7 +70,7 @@ namespace ATS.Repository.Factory.Question
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.UpdateTask( input, context);
+            QuesDAO.Update( input, context);
             string optionKeyId = input.QId.ToString();
             List<Guid> answers = new List<Guid>();
 
@@ -79,14 +79,14 @@ namespace ATS.Repository.Factory.Question
             {
                 var op = input.Options[indx];
                 op.KeyId = optionKeyId;
-                var opFound = OptionDAO.SelectTask(context, x=>x.Id == op.Id);
+                var opFound = OptionDAO.Select(context, x=>x.Id == op.Id);
                 if (opFound != null)
                 {
-                    OptionDAO.UpdateTask(op, context);
+                    OptionDAO.Update(op, context);
                 }
                 else
                 {
-                    OptionDAO.CreateTask(ref op, context);
+                    OptionDAO.Create(ref op, context);
                 }
                 if (op.IsAnswer)
                 {

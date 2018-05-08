@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201805071535599_NewMigration.Designer.cs">
       <DependentUpon>201805071535599_NewMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805080602140_Initial.cs" />
+    <Compile Include="Migrations\201805080602140_Initial.Designer.cs">
+      <DependentUpon>201805080602140_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\QuestionBank.cs" />
     <Compile Include="Model\QuestionOption.cs" />
@@ -105,6 +109,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805071535599_NewMigration.resx">
       <DependentUpon>201805071535599_NewMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805080602140_Initial.resx">
+      <DependentUpon>201805080602140_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,50 +13,154 @@ namespace ATS.Service.Controllers
     public class TestBankController : ApiController
     {
         private ITestRepository repository = null;
+        private IMapQuestionRepository mapQuesRepository = null;
         public TestBankController()
         {
             repository = new TestBankRepository();
+            mapQuesRepository = new MapQuestionRepository();
         }
 
         [HttpPost]
         [Route("api/TestBank/Create")]
         public IHttpActionResult Create(TestBankModel testBank)
         {
-            var result = repository.Create(testBank);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Not Created");
+            try
+            {
+                if (repository.Create(testBank))
+                {
+                    apiResult = new ApiResult(true, "Record Created");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/TestBank/Update")]
         public IHttpActionResult Update(TestBankModel testBank)
         {
-            var result = repository.Update(testBank);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Not Updated");
+            try
+            {
+                if (repository.Update(testBank))
+                {
+                    apiResult = new ApiResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
 
         [HttpDelete]
         [Route("api/TestBank/Delete")]
         public IHttpActionResult Delete(TestBankModel testBank)
         {
-            var result = repository.Delete(testBank);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Not Deleted");
+            try
+            {
+                if (repository.Delete(testBank))
+                {
+                    apiResult = new ApiResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/TestBank/Retrieve")]
         public IHttpActionResult Retrieve(TestBankModel testBank)
         {
-            var result = repository.Retrieve(testBank);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Record not found");
+            try
+            {
+                TestBankModel data = repository.Retrieve(testBank);
+                if (data != null)
+                {
+                    apiResult = new ApiResult(true, "", data);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/TestBank/Select")]
-        public IHttpActionResult Select(params object[] inputs)
+        public IHttpActionResult Select()
         {
-            var result = repository.Select(null);
-            return Ok(result);
+            ApiResult apiResult = new ApiResult(false, "Record not found");
+            try
+            {
+                List<TestBankModel> data = repository.Select(null);
+                if (data != null)
+                {
+                    apiResult = new ApiResult(true, "", data);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpPost]
+        [Route("api/TestBank/Link/Questions")]
+        public IHttpActionResult MapQuestion(List<TestQuestionMapModel> inputs)
+        {
+            ApiResult apiResult = new ApiResult(false, "Record not Mapped");
+            try
+            {
+                if (mapQuesRepository.Create(inputs))
+                {
+                    apiResult = new ApiResult(true, "Records Mapped");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpPost]
+        [Route("api/TestBank/Unlink/Questions")]
+        public IHttpActionResult DeleteMapQuestion(List<TestQuestionMapModel> inputs)
+        {
+            ApiResult apiResult = new ApiResult(false, "Record not Found");
+            try
+            {
+                if (mapQuesRepository.Delete(inputs))
+                {
+                    apiResult = new ApiResult(true, "Operation successful ");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void CreateTask(ref QuestionBankModel input, ATSDBContext context)
+        public void Create(ref QuestionBankModel input, ATSDBContext context)
         {
             if (input != null)
             {
@@ -76,7 +76,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        DeleteTask(input, context);
+                        Delete(input, context);
                         dbContextTransaction.Commit();
                         isDeleted = true;
 
@@ -91,7 +91,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void DeleteTask(QuestionBankModel input, ATSDBContext context)
+        public void Delete(QuestionBankModel input, ATSDBContext context)
         {
             QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
             if (dataFound != null)
@@ -165,7 +165,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public void UpdateTask(QuestionBankModel input, ATSDBContext context)
+        public void Update(QuestionBankModel input, ATSDBContext context)
         {
             QuestionBank dataFound = context.QuestionBank.Where(x => x.QId == input.QId).FirstOrDefault();
             if (dataFound != null)

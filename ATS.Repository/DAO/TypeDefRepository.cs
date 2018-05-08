@@ -85,6 +85,7 @@ namespace ATS.Repository.DAO
                 try
                 {
                     typeDef = (from x in context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId)
+                               join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId
                                select new TypeDefModel
                                {
                                    CreatedBy = x.CreatedBy,
@@ -93,7 +94,9 @@ namespace ATS.Repository.DAO
                                    LastUpdatedBy = x.LastUpdatedBy,
                                    LastUpdatedDate=x.LastUpdatedDate,
                                    ParentKey=x.ParentKey,
-                                   StatusId=x.StatusId,
+                                   ParentDescription = y.Description,
+                                   ParentValue = y.Value,
+                                   StatusId =x.StatusId,
                                    TypeId=x.TypeId,
                                    Value=x.Value
                                }).FirstOrDefault();
@@ -115,7 +118,9 @@ namespace ATS.Repository.DAO
                 try
                 {
                    var query = (from x in context.TypeDef.AsNoTracking()
-                               select new TypeDefModel
+                                join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId into parent
+                                from p in parent.DefaultIfEmpty()
+                                select new TypeDefModel
                                {
                                    CreatedBy = x.CreatedBy,
                                    CreatedDate = x.CreatedDate,
@@ -123,6 +128,8 @@ namespace ATS.Repository.DAO
                                    LastUpdatedBy = x.LastUpdatedBy,
                                    LastUpdatedDate = x.LastUpdatedDate,
                                    ParentKey = x.ParentKey,
+                                   ParentDescription=p.Description,
+                                   ParentValue=p.Value,
                                    StatusId = x.StatusId,
                                    TypeId = x.TypeId,
                                    Value = x.Value
