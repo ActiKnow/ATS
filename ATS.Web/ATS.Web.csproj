@@ -170,8 +170,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\ATS.Web.dll" />
-    <Content Include="bin\ATS.Web.pdb" />
     <Content Include="Content\Backup\bootstrap.css" />
     <Content Include="Content\Backup\bootstrap.min.css" />
     <Content Include="Content\Backup\Site.css" />
