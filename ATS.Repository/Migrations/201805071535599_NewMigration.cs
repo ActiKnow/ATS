@@ -13,10 +13,11 @@ namespace ATS.Repository.Migrations
                     {
                         QId = c.Guid(nullable: false),
                         Description = c.String(),
-                        QuesTypeId = c.String(),
-                        LevelTypeId = c.String(),
+                        QuesTypeId = c.Guid(nullable: false),
+                        LevelTypeId = c.Guid(nullable: false),
+                        CategoryTypeId = c.Guid(nullable: false),
                         DefaultMark = c.Int(nullable: false),
-                        Status = c.Boolean(nullable: false),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -28,7 +29,7 @@ namespace ATS.Repository.Migrations
                 "dbo.QuestionOptionMappings",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Guid(nullable: false),
                         QId = c.Guid(nullable: false),
                         OptionKeyId = c.String(),
                         Answer = c.String(),
@@ -57,14 +58,14 @@ namespace ATS.Repository.Migrations
                 c => new
                     {
                         TestBankId = c.Guid(nullable: false),
-                        CategoryTypeId = c.String(),
-                        LavelTypeId = c.String(),
+                        CategoryTypeId = c.Guid(nullable: false),
+                        LavelTypeId = c.Guid(nullable: false),
                         Description = c.String(),
                         Instructions = c.String(),
                         Duration = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        TestTypeId = c.String(),
+                        TestTypeId = c.Guid(nullable: false),
                         TotalMarks = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Status = c.Boolean(nullable: false),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -79,7 +80,7 @@ namespace ATS.Repository.Migrations
                         ID = c.Guid(nullable: false),
                         UserId = c.Guid(nullable: false),
                         TestBankId = c.Guid(nullable: false),
-                        Status = c.Boolean(nullable: false),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -100,8 +101,9 @@ namespace ATS.Repository.Migrations
                         LName = c.String(),
                         Mobile = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Email = c.String(),
-                        UserTypeId = c.Guid(nullable: false),
-                        Status = c.Boolean(nullable: false),
+                        RoleTypeId = c.Guid(nullable: false),
+                        UserTypeId = c.Guid(),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -117,10 +119,10 @@ namespace ATS.Repository.Migrations
                 c => new
                     {
                         TypeId = c.Guid(nullable: false),
-                        Description = c.String(),                        
+                        Description = c.String(),
                         Value = c.String(),
-                        ParentTypeId = c.String(),
-                        Status = c.Boolean(nullable: false),
+                        ParentKey = c.String(),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -134,11 +136,11 @@ namespace ATS.Repository.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         UserId = c.Guid(nullable: false),
-                        RoleId = c.Guid(),
+                        RoleTypeId = c.Guid(),
                         PrevPassword = c.String(),
                         CurrPassword = c.String(),
                         EmailId = c.String(),
-                        Status = c.Boolean(nullable: false),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -146,42 +148,7 @@ namespace ATS.Repository.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.UserInfoes", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.UserRoles", t => t.RoleId)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.UserRoles",
-                c => new
-                    {
-                        RoleId = c.Guid(nullable: false),
-                        Description = c.String(),
-                        Status = c.Boolean(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(),
-                        LastUpdatedDate = c.DateTime(),
-                        LastUpdatedBy = c.String(),
-                    })
-                .PrimaryKey(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.UserRoleMappings",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        USERID = c.Guid(nullable: false),
-                        ROLEID = c.Guid(nullable: false),
-                        Status = c.Boolean(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(),
-                        LastUpdatedDate = c.DateTime(),
-                        LastUpdatedBy = c.String(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.UserInfoes", t => t.USERID, cascadeDelete: true)
-                .ForeignKey("dbo.UserRoles", t => t.ROLEID, cascadeDelete: true)
-                .Index(t => t.USERID)
-                .Index(t => t.ROLEID);
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.UserTestHistories",
@@ -226,7 +193,7 @@ namespace ATS.Repository.Migrations
                         Id = c.Guid(nullable: false),
                         KeyId = c.String(),
                         Description = c.String(),
-                        Status = c.Boolean(nullable: false),
+                        StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -243,9 +210,6 @@ namespace ATS.Repository.Migrations
             DropForeignKey("dbo.UserAttemptedHistories", "UserTestHistory_HistoryId", "dbo.UserTestHistories");
             DropForeignKey("dbo.UserAttemptedHistories", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.UserTestHistories", "TestbankId", "dbo.TestBanks");
-            DropForeignKey("dbo.UserRoleMappings", "ROLEID", "dbo.UserRoles");
-            DropForeignKey("dbo.UserRoleMappings", "USERID", "dbo.UserInfoes");
-            DropForeignKey("dbo.UserCredentials", "RoleId", "dbo.UserRoles");
             DropForeignKey("dbo.UserCredentials", "UserId", "dbo.UserInfoes");
             DropForeignKey("dbo.UserInfoes", "TypeDef_TypeId", "dbo.TypeDefs");
             DropForeignKey("dbo.TestAssignments", "UserId", "dbo.UserInfoes");
@@ -256,9 +220,6 @@ namespace ATS.Repository.Migrations
             DropIndex("dbo.UserAttemptedHistories", new[] { "QId" });
             DropIndex("dbo.UserTestHistories", new[] { "TestbankId" });
             DropIndex("dbo.UserTestHistories", new[] { "UserId" });
-            DropIndex("dbo.UserRoleMappings", new[] { "ROLEID" });
-            DropIndex("dbo.UserRoleMappings", new[] { "USERID" });
-            DropIndex("dbo.UserCredentials", new[] { "RoleId" });
             DropIndex("dbo.UserCredentials", new[] { "UserId" });
             DropIndex("dbo.UserInfoes", new[] { "TypeDef_TypeId" });
             DropIndex("dbo.TestAssignments", new[] { "TestBankId" });
@@ -269,8 +230,6 @@ namespace ATS.Repository.Migrations
             DropTable("dbo.QuestionOptions");
             DropTable("dbo.UserAttemptedHistories");
             DropTable("dbo.UserTestHistories");
-            DropTable("dbo.UserRoleMappings");
-            DropTable("dbo.UserRoles");
             DropTable("dbo.UserCredentials");
             DropTable("dbo.TypeDefs");
             DropTable("dbo.UserInfoes");

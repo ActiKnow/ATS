@@ -126,7 +126,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<TestBankModel> Select(params object[] inputs)
+        public List<TestBankModel> Select(Func<TestBankModel, bool> condition)
         {
             List<TestBankModel> testBanks = null;
             using (var context = GetConnection())
@@ -160,7 +160,7 @@ namespace ATS.Repository.DAO
                                      TestTypeValue = n.Value
                                  });
 
-                    testBanks = query.ToList();
+                    testBanks = query.Where(condition).ToList();
                 }
                 catch
                 {

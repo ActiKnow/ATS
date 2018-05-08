@@ -10,7 +10,7 @@ namespace ATS.Repository.Interface
     {
         bool Create(T input);
         T Retrieve(T input);
-        List<T> Select(params object[] inputs);
+        List<T> Select(Func<T, bool> condition);
         bool Update(T input);
         bool Delete(T input);
     }

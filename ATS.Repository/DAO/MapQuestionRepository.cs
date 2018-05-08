@@ -23,7 +23,7 @@ namespace ATS.Repository.DAO
             throw new NotImplementedException();
         }
 
-        public List<TestQuestionMapping> Select(params object[] inputs)
+        public List<TestQuestionMapping> Select(Func<TestQuestionMapping, bool> condition)
         {
             throw new NotImplementedException();
         }

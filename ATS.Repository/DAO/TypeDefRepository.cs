@@ -107,14 +107,14 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public List<TypeDefModel> Select(params object[] inputs)
+        public List<TypeDefModel> Select(Func<TypeDefModel, bool> condition)
         {
             List<TypeDefModel> typeDefs = null;
             using (var context = GetConnection())
             {
                 try
                 {
-                    typeDefs = (from x in context.TypeDef.AsNoTracking()
+                   var query = (from x in context.TypeDef.AsNoTracking()
                                select new TypeDefModel
                                {
                                    CreatedBy = x.CreatedBy,
@@ -126,7 +126,12 @@ namespace ATS.Repository.DAO
                                    StatusId = x.StatusId,
                                    TypeId = x.TypeId,
                                    Value = x.Value
-                               }).ToList();
+                               });
+
+                    if (condition != null)
+                        typeDefs = query.Where(condition).ToList();
+                    else
+                        typeDefs = query.ToList();
                 }
                 catch
                 {

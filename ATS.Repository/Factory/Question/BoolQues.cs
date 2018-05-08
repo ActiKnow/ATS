@@ -15,7 +15,7 @@ namespace ATS.Repository.Factory.Question
             throw new NotImplementedException();
         }
 
-        public List<QuestionBankModel> Select(ATSDBContext context, params object[] inputs)
+        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
             throw new NotImplementedException();
         }
