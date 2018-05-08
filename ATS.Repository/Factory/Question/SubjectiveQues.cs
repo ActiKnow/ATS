@@ -21,33 +21,32 @@ namespace ATS.Repository.Factory.Question
         public void Create(QuestionBankModel input, ATSDBContext context)
         {
             QuesDAO.Create(ref input, context);
-            if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+            QuestionOptionMapModel map = new QuestionOptionMapModel
             {
-                input.MappedOptions[0].Answer = input.AnsText;
-                input.MappedOptions[0].QId = input.QId;
-                input.MappedOptions[0].OptionKeyId = input.QuesTypeId.ToString();
-                MapOptionDAO.Create(input.MappedOptions[0], context);
-            }
+                Answer = input.AnsText,
+                QId = input.QId,
+                OptionKeyId = input.QuesTypeId.ToString()
+            };
+            MapOptionDAO.Create(map, context);
+
         }
 
         public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
         {
-            var result = (from bank in context.QuestionBank
-                          select new QuestionBankModel
-                          {
-                              QId = bank.QId,
-                              Description = bank.Description,
-                              QuesTypeId = bank.QuesTypeId,
-                              LevelTypeId = bank.LevelTypeId,
-                              CategoryTypeId = bank.CategoryTypeId,
-                              DefaultMark = bank.DefaultMark,
-                          });
-            return result.Where(condition).ToList();
+            List<QuestionBankModel> result = QuesDAO.Select(context, condition);
+            if (result != null)
+            {
+                foreach (var ques in result)
+                {
+                    ques.MappedOptions = MapOptionDAO.Select(context, x => x.QId == ques.QId);
+                }
+            }
+            return result;
         }
 
         public void Update(QuestionBankModel input, ATSDBContext context)
         {
-            QuesDAO.Update( input, context);
+            QuesDAO.Update(input, context);
             if (input.MappedOptions != null && input.MappedOptions.Count > 0)
             {
                 input.MappedOptions[0].Answer = input.AnsText;

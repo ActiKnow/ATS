@@ -10,7 +10,7 @@ namespace ATS.Repository.DAO.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            //AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "ATS.Repository.DAO.ATSDBContext";
         }
 
