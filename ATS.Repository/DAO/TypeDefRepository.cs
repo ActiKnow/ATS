@@ -92,13 +92,14 @@ namespace ATS.Repository.DAO
                                    CreatedDate = x.CreatedDate,
                                    Description = x.Description,
                                    LastUpdatedBy = x.LastUpdatedBy,
-                                   LastUpdatedDate=x.LastUpdatedDate,
-                                   ParentKey=x.ParentKey,
+                                   LastUpdatedDate = x.LastUpdatedDate,
+                                   ParentKey = x.ParentKey,
                                    ParentDescription = y.Description,
                                    ParentValue = y.Value,
-                                   StatusId =x.StatusId,
-                                   TypeId=x.TypeId,
-                                   Value=x.Value
+                                   StatusId = x.StatusId,
+                                   StatusDescription = x.StatusId ? "Active" : "Inactive",
+                                   TypeId = x.TypeId,
+                                   Value = x.Value
                                }).FirstOrDefault();
 
                 }
@@ -117,23 +118,24 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                   var query = (from x in context.TypeDef.AsNoTracking()
-                                join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId into parent
-                                from p in parent.DefaultIfEmpty()
-                                select new TypeDefModel
-                               {
-                                   CreatedBy = x.CreatedBy,
-                                   CreatedDate = x.CreatedDate,
-                                   Description = x.Description,
-                                   LastUpdatedBy = x.LastUpdatedBy,
-                                   LastUpdatedDate = x.LastUpdatedDate,
-                                   ParentKey = x.ParentKey,
-                                   ParentDescription=p.Description,
-                                   ParentValue=p.Value,
-                                   StatusId = x.StatusId,
-                                   TypeId = x.TypeId,
-                                   Value = x.Value
-                               });
+                    var query = (from x in context.TypeDef.AsNoTracking()
+                                 join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId into parent
+                                 from p in parent.DefaultIfEmpty()
+                                 select new TypeDefModel
+                                 {
+                                     CreatedBy = x.CreatedBy,
+                                     CreatedDate = x.CreatedDate,
+                                     Description = x.Description,
+                                     LastUpdatedBy = x.LastUpdatedBy,
+                                     LastUpdatedDate = x.LastUpdatedDate,
+                                     ParentKey = x.ParentKey,
+                                     ParentDescription = p.Description,
+                                     ParentValue = p.Value,
+                                     StatusId = x.StatusId,
+                                     StatusDescription = x.StatusId ? "Active" : "Inactive",
+                                     TypeId = x.TypeId,
+                                     Value = x.Value
+                                 });
 
                     if (condition != null)
                         typeDefs = query.Where(condition).ToList();
@@ -157,7 +159,7 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        var typeDef = context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId).FirstOrDefault();
+                        var typeDef = context.TypeDef.Where(x => x.TypeId == input.TypeId).FirstOrDefault();
 
                         if (typeDef != null)
                         {
@@ -180,6 +182,23 @@ namespace ATS.Repository.DAO
                     }
                 }
                 return isUpdated;
+            }
+        }
+
+        public bool Validate(string typeName, string typeValue)
+        {
+            var flag = false;
+            using (var context = GetConnection())
+            {
+                try
+                {
+                    flag = context.TypeDef.Any(x => x.Description == typeName && x.Value == typeValue);
+                }
+                catch
+                {
+                    throw;
+                }
+                return flag;
             }
         }
     }
