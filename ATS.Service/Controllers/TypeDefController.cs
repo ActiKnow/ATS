@@ -22,16 +22,70 @@ namespace ATS.Service.Controllers
         [Route("api/TypeDef/Create")]
         public IHttpActionResult Create(TypeDefModel typeDef)
         {
-            var result = repository.Create(typeDef);
-            return Ok(result);
+            ApiResult apiResult = null;
+
+            try
+            {
+                var result = repository.Create(typeDef);
+
+                if (result)
+                {
+                    var typeDefs = repository.Select(null);
+
+                    if (typeDefs != null)
+                    {
+                        apiResult = new ApiResult(true, "", typeDefs);
+                    }
+                    else
+                    {
+                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
+                    }
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "Type not created.");
+                }
+            }
+            catch(Exception ex)
+            {
+                apiResult = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/TypeDef/Update")]
         public IHttpActionResult Update(TypeDefModel typeDef)
         {
-            var result = repository.Update(typeDef);
-            return Ok(result);
+            ApiResult apiResult = null;
+
+            try
+            {
+                var result = repository.Update(typeDef);
+
+                if (result)
+                {
+                    var typeDefs = repository.Select(null);
+
+                    if (typeDefs != null)
+                    {
+                        apiResult = new ApiResult(true, "", typeDefs);
+                    }
+                    else
+                    {
+                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
+                    }
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "Type not updated.");
+                }
+            }
+            catch (Exception ex)
+            {
+                apiResult = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Ok(apiResult);
         }
 
         [HttpDelete]

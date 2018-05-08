@@ -143,8 +143,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiConsumers\CommonApi.cs" />
+    <Compile Include="ApiConsumers\CommonApiConsumer.cs" />
     <Compile Include="ApiConsumers\ConsumerMethods.cs" />
+    <Compile Include="ApiConsumers\TypeApiConsumer.cs" />
     <Compile Include="ApiConsumers\UserApiConsumer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Areas\Candidate\DashboardController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Areas\Employee\DashboardController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +235,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />

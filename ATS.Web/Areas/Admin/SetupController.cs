@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ATS.Core.Model;
+using ATS.Web.Controllers;
 
 namespace ATS.Web.Areas.Admin
 {
-    public class SetupController : Controller
+    public class SetupController : BaseController
     {
         // GET: Admin/Setup
         public ActionResult Index()
@@ -45,14 +46,64 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApi.GetParentTypes();
+                result = ApiConsumers.TypeApiConsumer.CreateType(typeDef);
+
+                if(result.Status && result.Data != null)
+                {
+                    var list = (List<TypeDefModel>)result.Data;
+                   // result.Data = RenderPartialViewToString(new { }, list);
+                }
             }
             catch (Exception ex)
             {
                 result = new ApiResult(false, ex.GetBaseException().Message);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
-            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateType(TypeDefModel typeDef)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TypeApiConsumer.UpdateType(typeDef);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteType(TypeDefModel typeDef)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TypeApiConsumer.DeleteType(typeDef);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RetrieveType(TypeDefModel typeDef)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TypeApiConsumer.RetrieveType(typeDef);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -61,7 +112,7 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApi.GetParentTypes();
+                result = ApiConsumers.CommonApiConsumer.GetParentTypes();
             }
             catch(Exception ex)
             {
@@ -76,7 +127,7 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApi.GetStatus();
+                result = ApiConsumers.CommonApiConsumer.GetStatus();
             }
             catch (Exception ex)
             {
