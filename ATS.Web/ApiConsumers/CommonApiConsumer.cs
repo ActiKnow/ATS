@@ -7,7 +7,7 @@ using ATS.Core.Model;
 
 namespace ATS.Web.ApiConsumers
 {
-    public class CommonApi
+    public class CommonApiConsumer
     {
         public static ApiResult GetParentTypes()
         {

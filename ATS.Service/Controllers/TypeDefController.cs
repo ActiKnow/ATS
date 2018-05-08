@@ -22,18 +22,33 @@ namespace ATS.Service.Controllers
         [Route("api/TypeDef/Create")]
         public IHttpActionResult Create(TypeDefModel typeDef)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Created");
+            ApiResult apiResult = null;
+
             try
             {
-                if (repository.Create(typeDef))
+                var result = repository.Create(typeDef);
+
+                if (result)
                 {
-                    apiResult = new ApiResult(true, "Record Created");
+                    var typeDefs = repository.Select(null);
+
+                    if (typeDefs != null)
+                    {
+                        apiResult = new ApiResult(true, "", typeDefs);
+                    }
+                    else
+                    {
+                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
+                    }
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "Type not created.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -42,18 +57,33 @@ namespace ATS.Service.Controllers
         [Route("api/TypeDef/Update")]
         public IHttpActionResult Update(TypeDefModel typeDef)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Updated");
+            ApiResult apiResult = null;
+
             try
             {
-                if (repository.Update(typeDef))
+                var result = repository.Update(typeDef);
+
+                if (result)
                 {
-                    apiResult = new ApiResult(true);
+                    var typeDefs = repository.Select(null);
+
+                    if (typeDefs != null)
+                    {
+                        apiResult = new ApiResult(true, "", typeDefs);
+                    }
+                    else
+                    {
+                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
+                    }
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "Type not updated.");
                 }
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
