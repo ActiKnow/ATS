@@ -23,10 +23,18 @@ namespace ATS.Service.Controllers
         [Route("api/Question/Create")]
         public IHttpActionResult Create(QuestionBankModel newQues)
         {
-            ApiResult apiResult = new ApiResult(false,"Not Created");
-            if (questionRepo.Create(newQues))
+            ApiResult apiResult = new ApiResult(false, "Not Created");
+            try
             {
-                apiResult = new ApiResult(true);
+                if (questionRepo.Create(newQues))
+                {
+                    apiResult = new ApiResult(true, "Record Created");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
             }
             return Ok(apiResult);
         }
@@ -36,9 +44,17 @@ namespace ATS.Service.Controllers
         public IHttpActionResult Update(QuestionBankModel newQues)
         {
             ApiResult apiResult = new ApiResult(false, "Not Updated");
-            if (questionRepo.Update(newQues))
+            try
             {
-                apiResult = new ApiResult(true);
+                if (questionRepo.Update(newQues))
+                {
+                    apiResult = new ApiResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
             }
             return Ok(apiResult);
         }
@@ -48,9 +64,38 @@ namespace ATS.Service.Controllers
         public IHttpActionResult Delete(QuestionBankModel newQues)
         {
             ApiResult apiResult = new ApiResult(false, "Not Deleted");
-            if (questionRepo.Delete(newQues))
+            try
             {
-                apiResult = new ApiResult(true);
+                if (questionRepo.Delete(newQues))
+                {
+                    apiResult = new ApiResult(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpGet]
+        [Route("api/Question/Select")]
+        public IHttpActionResult Select()
+        {
+            ApiResult apiResult = new ApiResult(false, "Record not found");
+            try
+            {
+                List<QuestionBankModel> ques = questionRepo.Select(null);
+                if (ques != null)
+                {
+                    apiResult = new ApiResult(true,"",ques);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
             }
             return Ok(apiResult);
         }
