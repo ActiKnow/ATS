@@ -14,11 +14,13 @@ namespace ATS.Web.Areas.Admin
         {
             return View();
         }
+
         [ActionName("UserSetup")]
         public ActionResult UserSetup()
         {
             return View();
         }
+
         [HttpGet]
         public ActionResult GetRoleTypes()
         {
@@ -33,6 +35,7 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         public ActionResult CreateUser(UserInfoModel userInfoModel)
         {

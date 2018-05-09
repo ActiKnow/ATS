@@ -67,5 +67,34 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult SelectType(SimpleQueryModel qry)   // Getting TypeDef by using query
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TypeDef/Select";
+                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, qry);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+
+        public static ApiResult ValidateType(string typeName,string typeValue)   // Getting TypeDef by using ID
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TypeDef/ValidateType/"+typeName+"/"+typeValue;
+                apiResult = ConsumerMethods.Get<bool>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }

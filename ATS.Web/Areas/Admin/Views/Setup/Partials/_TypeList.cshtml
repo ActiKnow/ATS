@@ -1,15 +1,24 @@
-﻿    @{
-        var count = 0;
+﻿@model List<ATS.Core.Model.TypeDefModel>    
+@{
+        var count = 1;
     }
     @foreach (var item in Model)
     {
         <tr>
             <td>@(count++)</td>
-            <td>@item.Description</td>
-            <td>@item.Value</td>
-            <td>@item.ParentDescription</td>
+            <td><span class="itemName">@item.Description</span></td>
+            <td><span class="itemValue">@item.Value</span></td>
+            <td>@(item.ParentDescription ?? "_")</td>
             <td>@item.StatusDescription</td>
-            <td><div class="btn-group"><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-plus"></i></a><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-edit"></i></a><a class="btn btn-primary" href="#"><i class="fa fa-lg fa-trash"></i></a></div></td>
+            <td>
+               <div class="btn-group">
+                <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
+                <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
+               </div>
+                <span class="itemTypeId" style="display:none">@item.TypeId</span>
+                <span class="itemParentTypeId" style="display:none">@item.ParentKey</span>
+                <span class="itemStatus" style="display:none">@item.StatusId</span>
+            </td>
         </tr>
     }
 

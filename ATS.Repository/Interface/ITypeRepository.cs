@@ -2,7 +2,8 @@
 
 namespace ATS.Repository.Interface
 {
-    public  interface ITypeRepository : ICRUD<TypeDefModel>
+    public interface ITypeRepository : ICRUD<TypeDefModel>
     {
+        bool Validate(string typeName, string typeValue);
     }
 }

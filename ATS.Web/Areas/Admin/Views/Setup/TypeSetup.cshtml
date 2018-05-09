@@ -18,6 +18,7 @@
     <div class="col-md-12" id="typeContext">
         <div class="tile">
             <div class="row">
+                <span class="typeId" style="display:none"></span>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Type Name</label>
@@ -44,7 +45,9 @@
                 </div>
             </div>
             <div class="tile-footer">
-                <button class="btn btn-primary" type="button" id="btnCreateType">Submit</button>
+                <button class="btn btn-primary" type="button" id="btnCreateType">Create</button>
+                <button class="btn btn-primary" type="button" id="btnUpdateType" style="display:none">Update</button>
+                <button class="btn btn-primary" type="reset" id="btnClearType">Clear</button>
                 <span class="errorMsg" style="display:none"></span>
                 <span class="successMsg" style="display:none"></span>
             </div>
@@ -87,10 +90,20 @@
                 typeValue:'.typeValue',
                 selectStatus:'.ddlStatus',
                 btnCreateType: '#btnCreateType',
+                btnUpdateType:'#btnUpdateType',
                 errorMsg: '.errorMsg',
                 successMsg: '.successMsg',
                 tableContext: '.tableContext',
                 typeContext: '#typeContext',
+                btnEditType: '.btnEditType',
+                btnRemoveType: '.btnRemoveType',
+                btnClearType: '#btnClearType',
+                selectedTypeId: '.itemTypeId',
+                selectedItemName: '.itemName',
+                selectedItemValue: '.itemValue',
+                selectedParentTypeId: '.itemParentTypeId',
+                typeId: '.typeId',
+                selectedItemStatus:'.itemStatus',
             };
             typeSetup.init(config);
         });
