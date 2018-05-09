@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ATS.Core.Model;
 
+
 namespace ATS.Web.ApiConsumers
 {
     public class UserApiConsumer
@@ -37,5 +38,7 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+
+       
     }
 }
