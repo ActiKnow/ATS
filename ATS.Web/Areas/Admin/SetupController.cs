@@ -122,7 +122,12 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.TypeApiConsumer.RetrieveType(typeDef);
+                //result = ApiConsumers.TypeApiConsumer.RetrieveType(typeDef);
+                SimpleQueryModel qry = new SimpleQueryModel();
+                qry.ModelName = nameof(TypeDefModel);
+                qry[nameof(TypeDefModel.TypeId)] = typeDef.TypeId;
+
+                result = ApiConsumers.TypeApiConsumer.SelectType(qry);
             }
             catch (Exception ex)
             {

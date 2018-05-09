@@ -189,5 +189,36 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
+
+        [HttpPost]
+        [Route("api/TypeDef/Select")]
+        public IHttpActionResult SelectTest(SimpleQueryModel qry)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                List<TypeDefModel> list = new List<TypeDefModel>();
+                if (qry != null)
+                {
+                    SimpleQuery<TypeDefModel> simpleQry = new SimpleQuery<TypeDefModel>();
+                    list = repository.Select(simpleQry.GetQuery(query: qry).Compile());
+                }
+
+                if (list != null)
+                {
+                    apiResult = new ApiResult(true, "", list);
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, "No record found");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
     }
 }
