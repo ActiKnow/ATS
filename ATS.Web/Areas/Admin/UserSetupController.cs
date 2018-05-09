@@ -96,7 +96,7 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(false);
+                result = ApiConsumers.UserApiConsumer.SelectUsers();
 
                 if (result.Status && result.Data != null)
                 {

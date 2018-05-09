@@ -31,8 +31,8 @@ namespace ATS.Repository.DAO
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
                             userInfo.StatusId = input.StatusId;
-                            userInfo.UserId = Guid.NewGuid();
-                            userInfo.UserTypeId = input.UserTypeId;
+                            userInfo.UserId = Guid.NewGuid();      
+                            userInfo.RoleTypeId = input.RoleTypeId;
 
                             context.UserInfo.Add(userInfo);
 
@@ -124,7 +124,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    Select(context, condition);
+                    userInfos=Select(context, condition);
                 }
                 catch
                 {

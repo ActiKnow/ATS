@@ -51,5 +51,20 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+
+        public static ApiResult SelectUsers()   // Getting TypeDef by using query
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Select";
+                apiResult = ConsumerMethods.Get<List<TypeDefModel>>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }
