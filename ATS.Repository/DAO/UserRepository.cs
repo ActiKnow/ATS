@@ -115,7 +115,7 @@ namespace ATS.Repository.DAO
                 }
                 return userInfo;
             }
-        }
+        } 
 
         public List<UserInfoModel> Select(Func<UserInfoModel, bool> condition)
         {
