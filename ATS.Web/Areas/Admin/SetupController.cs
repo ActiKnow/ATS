@@ -11,6 +11,7 @@ using ATS.Web.Controllers;
 
 namespace ATS.Web.Areas.Admin
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class SetupController : BaseController
     {
         // GET: Admin/Setup
@@ -34,7 +35,18 @@ namespace ATS.Web.Areas.Admin
 
         public ActionResult CreateQuestion(QuestionBankModel QuestionView)
         {
-            return View();
+
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.QuestionApiConsumer.CreateQuestion(QuestionView);
+
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [ActionName("UserSetup")]
@@ -71,7 +83,16 @@ namespace ATS.Web.Areas.Admin
             ApiResult result = null;
             try
             {
+                typeDef.LastUpdatedBy = Session[Constants.USERID].ToString();
+                typeDef.LastUpdatedDate = DateTime.Now;
+
                 result = ApiConsumers.TypeApiConsumer.UpdateType(typeDef);
+                if (result.Status && result.Data != null)
+                {
+                    var list = (List<TypeDefModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("_TypeList", list);
+                }
             }
             catch (Exception ex)
             {
@@ -159,6 +180,21 @@ namespace ATS.Web.Areas.Admin
 
                     result.Data = RenderPartialViewToString("_TypeList", list);
                 }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ValidateType(string typeName, string typeValue)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TypeApiConsumer.ValidateType(typeName, typeValue);
             }
             catch (Exception ex)
             {

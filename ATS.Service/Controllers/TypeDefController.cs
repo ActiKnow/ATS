@@ -46,7 +46,7 @@ namespace ATS.Service.Controllers
                     apiResult = new ApiResult(false, "Type not created.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 apiResult = new ApiResult(false, ex.GetBaseException().Message);
             }
@@ -132,7 +132,7 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/TypeDef/Select/{isParentDependent}/{parentKey?}")]
-        public IHttpActionResult Select(bool isParentDependent,Guid? parentKey=null)
+        public IHttpActionResult Select(bool isParentDependent, Guid? parentKey = null)
         {
             ApiResult apiResult = null;
             try
@@ -140,7 +140,7 @@ namespace ATS.Service.Controllers
                 List<TypeDefModel> list = new List<TypeDefModel>();
                 if (isParentDependent)
                 {
-                    list = repository.Select(x => x.ParentKey == parentKey);                   
+                    list = repository.Select(x => x.ParentKey == parentKey);
                 }
                 else
                 {
@@ -154,6 +154,32 @@ namespace ATS.Service.Controllers
                 else
                 {
                     apiResult = new ApiResult(false, "No record found");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpGet]
+        [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
+        public IHttpActionResult ValidateType(string typeName, string typeValue)
+        {
+            ApiResult apiResult = null;
+            var status = false;
+            try
+            {
+                status = repository.Validate(typeName, typeValue);
+                if (status)
+                {
+                    apiResult = new ApiResult(false, "Type Name : " + typeName + " , Type Value :" + typeValue + " already exists.");
+                }
+                else
+                {
+                    apiResult = new ApiResult(true, "",false);
                 }
             }
             catch (Exception ex)

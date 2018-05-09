@@ -29,7 +29,7 @@ namespace ATS.Web.ApiConsumers
             ApiResult apiResult = null;
             try
             {
-                var list=new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "true" }, new SelectListItem { Text = "Inactive", Value = "false" } };
+                var list=new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "True" }, new SelectListItem { Text = "Inactive", Value = "False" } };
                 apiResult = new ApiResult(true, "", list);
             }
             catch
