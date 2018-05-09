@@ -67,5 +67,19 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult SelectType(SimpleQueryModel qry)   // Getting TypeDef by using query
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TypeDef/Select";
+                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, qry);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }
