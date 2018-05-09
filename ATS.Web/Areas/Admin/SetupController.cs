@@ -125,8 +125,7 @@ namespace ATS.Web.Areas.Admin
                 //result = ApiConsumers.TypeApiConsumer.RetrieveType(typeDef);
                 SimpleQueryModel qry = new SimpleQueryModel();
                 qry.ModelName = nameof(TypeDefModel);
-                qry.Properties = new Dictionary<string, object>();
-                qry.Properties[nameof(TypeDefModel.TypeId)] = typeDef.TypeId;
+                qry[nameof(TypeDefModel.TypeId)] = typeDef.TypeId;
 
                 result = ApiConsumers.TypeApiConsumer.SelectType(qry);
             }
