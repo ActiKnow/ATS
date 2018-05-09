@@ -191,6 +191,8 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Candidate\Views\web.config" />
     <Content Include="Areas\Employee\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\Partials\_QuestionList.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.js" />
     <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />

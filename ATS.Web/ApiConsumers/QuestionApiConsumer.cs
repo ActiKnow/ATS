@@ -23,5 +23,20 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
+        public static ApiResult SelectList()
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/Question/Select";
+                apiResult = ConsumerMethods.Get<List<QuestionBankModel>>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+
     }
 }

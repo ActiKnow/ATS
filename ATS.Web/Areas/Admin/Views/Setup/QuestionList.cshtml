@@ -1,0 +1,50 @@
+﻿@model List<ATS.Core.Model.QuestionBankModel>
+@{
+    ViewBag.Title = "QuestionList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>Setup</h1>
+        <p>Setup form for users</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Question List</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12 tableContext" >
+        <div class="tile">
+            <h3 class="tile-title">Question List</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Question Description</th>
+                        <th>Question Type</th>
+                        <th>Question Level</th>
+                        <th>Category</th>
+                        <th>Marks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+        $(op.tableContext).find('tbody').html(result.Data);
+    </script>
+
+    }
+

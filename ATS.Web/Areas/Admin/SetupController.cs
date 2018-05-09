@@ -202,5 +202,32 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+       public ActionResult QuestionList()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.QuestionApiConsumer.SelectList();
+                if (result.Status && result.Data != null)
+                {
+                    var list = (List<QuestionBankModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("_QuestionList", list);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EditQuestion()
+        {
+            return View();
+        }
+
+
     }
 }
