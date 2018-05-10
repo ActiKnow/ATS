@@ -7,6 +7,7 @@ using System.Web.Http;
 using ATS.Repository.DAO;
 using ATS.Repository.Interface;
 using ATS.Core.Model;
+using ATS.Core.Helper;
 
 namespace ATS.Service.Controllers
 {
@@ -106,13 +107,14 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/TestBank/Select")]
-        public IHttpActionResult Select()
+        public IHttpActionResult Select(SimpleQueryModel query)
         {
             ApiResult apiResult = new ApiResult(false, "Record not found");
             try
             {
-                List<TestBankModel> data = repository.Select(null);
-                if (data != null)
+                SimpleQueryBuilder<TestBankModel> simpleQry = new SimpleQueryBuilder<TestBankModel>();
+                List<TestBankModel> data = repository.Select(simpleQry.GetQuery(query).Compile());
+                if (data != null && data.Count > 0)
                 {
                     apiResult = new ApiResult(true, "", data);
                 }
@@ -125,14 +127,15 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-        [HttpGet]
-        [Route("api/TestBank/Questions/Select/{testBankId}")]
-        public IHttpActionResult QuestionsSelect(Guid testBankId)
+        [HttpPost]
+        [Route("api/TestBank/Questions/Select")]
+        public IHttpActionResult QuestionsSelect(SimpleQueryModel query)
         {
             ApiResult apiResult = new ApiResult(false, "Record not found");
             try
             {
-                List<TestQuestionMapModel> dataMaps = mapQuesRepository.Select(x=>x.TestBankId == testBankId);
+                SimpleQueryBuilder<TestQuestionMapModel> simpleQry = new SimpleQueryBuilder<TestQuestionMapModel>();
+                List<TestQuestionMapModel> dataMaps = mapQuesRepository.Select(simpleQry.GetQuery(query).Compile());
                 List<QuestionBankModel> questions = null;
                 if (dataMaps != null)
                 {

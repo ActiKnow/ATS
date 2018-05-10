@@ -8,6 +8,7 @@ using System.Web.Http;
 using ATS.Repository.DAO;
 using ATS.Repository.Model;
 using ATS.Core.Model;
+using ATS.Core.Helper;
 
 namespace ATS.Service.Controllers
 {
@@ -80,21 +81,15 @@ namespace ATS.Service.Controllers
         }
 
         [HttpGet]
-        [Route("api/Question/Select/{questionId?}")]
-        public IHttpActionResult Select(Guid? questionId = null)
+        [Route("api/Question/Select")]
+        public IHttpActionResult Select(SimpleQueryModel query)
         {
             ApiResult apiResult = new ApiResult(false, "Record not found");
             try
             {
-                List<QuestionBankModel> ques = null;
-                if (questionId != null)
-                {
-                    ques = questionRepo.Select(x => x.QId == questionId);
-                }
-                else
-                {
-                    ques = questionRepo.Select(null);
-                }
+                SimpleQueryBuilder<QuestionBankModel> simpleQry = new SimpleQueryBuilder<QuestionBankModel>();
+                List<QuestionBankModel> ques  = questionRepo.Select(simpleQry.GetQuery(query).Compile());
+
                 if (ques != null && ques.Count > 0)
                 {
                     apiResult = new ApiResult(true, "", ques);
