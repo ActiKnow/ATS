@@ -1,4 +1,5 @@
-﻿using ATS.Core.Model;
+﻿using ATS.Core.Global;
+using ATS.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,26 @@ namespace ATS.Repository.Factory.Question
     {
         public IQuestion Question { get; }
         public ISelectable<QuestionBankModel> QuestionSelector { get; }
-        public QuestionFactory(string quesType)
+        public QuestionFactory(CommonType quesType)
         {
             Question = null;
-            if (quesType == Constants.OPTION)
+            switch (quesType)
             {
-                ObjectiveQues obj = new ObjectiveQues();
-                Question = obj;
-                QuestionSelector = obj;
-            }
-            else if (quesType == Constants.BOOL)
-            {
-                BoolQues obj = new BoolQues();
-                Question = obj;
-                QuestionSelector = obj;
-            }
-            else if (quesType == Constants.TEXT)
-            {
-                SubjectiveQues obj = new SubjectiveQues();
-                Question = obj;
-                QuestionSelector = obj;
+                case CommonType.OPTION:
+                    ObjectiveQues objective = new ObjectiveQues();
+                    Question = objective;
+                    QuestionSelector = objective;
+                    break;
+                case CommonType.BOOL:
+                    BoolQues boolQues = new BoolQues();
+                    Question = boolQues;
+                    QuestionSelector = boolQues;
+                    break;
+                case CommonType.TEXT:
+                    SubjectiveQues subjective = new SubjectiveQues();
+                    Question = subjective;
+                    QuestionSelector = subjective;
+                    break;
             }
         }
 

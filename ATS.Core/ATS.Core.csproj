@@ -45,12 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\CommonType.cs" />
     <Compile Include="Helper\PredicateBuilder.cs" />
     <Compile Include="Helper\Utility.cs" />
     <Compile Include="Interface\ISimpleQueryable.cs" />
     <Compile Include="Model\ApiResult.cs" />
     <Compile Include="Model\BaseModel.cs" />
-    <Compile Include="Model\Constants.cs" />
+    <Compile Include="Global\Constants.cs" />
     <Compile Include="Model\QuestionBankModel.cs" />
     <Compile Include="Model\QuestionOptionModel.cs" />
     <Compile Include="Model\QuestionOptionMapModel.cs" />

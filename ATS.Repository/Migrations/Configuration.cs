@@ -1,5 +1,6 @@
-namespace ATS.Repository.DAO.Migrations
+namespace ATS.Repository.Migrations
 {
+    using ATS.Core.Global;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -10,8 +11,6 @@ namespace ATS.Repository.DAO.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "ATS.Repository.DAO.ATSDBContext";
         }
 
         protected override void Seed(ATS.Repository.DAO.ATSDBContext context)
@@ -20,6 +19,8 @@ namespace ATS.Repository.DAO.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+           
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Text;
+using ATS.Repository.Migrations;
 using ATS.Repository.Model;
 
 
@@ -9,9 +10,14 @@ namespace ATS.Repository.DAO
 {
     public class ATSDBContext : DbContext
     {
+        static ATSDBContext()
+        {
+            Database.SetInitializer(new ATSDBInitializer());
+        }
         public ATSDBContext() : base("name=ATSDBContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.DAO.Migrations.Configuration>());
+           //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.Migrations.Configuration>());
+            //Database.SetInitializer(new CreateDatabaseIfNotExists<ATSDBContext>());
         }
 
         public virtual DbSet<UserInfo> UserInfo { get; set; }

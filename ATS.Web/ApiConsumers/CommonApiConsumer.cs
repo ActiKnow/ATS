@@ -9,7 +9,7 @@ namespace ATS.Web.ApiConsumers
 {
     public class CommonApiConsumer
     {
-        public static ApiResult SelectTypes(bool isParentDependent,Guid? parentKey=null)
+        public static ApiResult SelectTypes(bool isParentDependent,int parentKey=0)
         {
             ApiResult apiResult = null;
             try

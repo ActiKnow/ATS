@@ -5,6 +5,7 @@ using ATS.Repository.Interface;
 using System.Linq;
 using ATS.Core.Model;
 using ATS.Repository.Factory.Question;
+using ATS.Core.Global;
 
 namespace ATS.Repository.DAO
 {
@@ -162,7 +163,7 @@ namespace ATS.Repository.DAO
                            LevelTypeId = ques.LevelTypeId,
                            CategoryTypeId = ques.CategoryTypeId,
                            DefaultMark = ques.DefaultMark,
-                           QuesTypeValue =type.Value
+                           QuesTypeValue = (CommonType)type.Value
                        }).AsQueryable();
 
             if (condition != null)

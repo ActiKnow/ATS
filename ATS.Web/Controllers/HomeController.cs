@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using ATS.Core.Global;
 using ATS.Core.Model;
 
 namespace ATS.Web.Controllers
@@ -71,14 +72,14 @@ namespace ATS.Web.Controllers
             try
             { 
                 FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), false);
-                var RoleType=Session[Constants.ROLE].ToString();
+                var RoleType=(CommonType)Session[Constants.ROLE];
 
-                if (RoleType == Constants.ADMIN)
+                if (RoleType == CommonType.ADMIN)
                     return RedirectToAction("Index", "Dashboard", new { @Area = "Admin" });
-                else if (RoleType == Constants.EMPLOYEE)
-                    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
-                else if (RoleType == Constants.CANDIDATE)
-                    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
+                //else if (RoleType == Constants.EMPLOYEE)
+                //    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
+                //else if (RoleType == Constants.CANDIDATE)
+                //    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
                 else
                     apiResult = new ApiResult(false, "Role is not defiend");
 
