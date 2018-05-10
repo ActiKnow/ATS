@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ATS.Core.Model;
+using ATS.Web.Controllers;
 
 namespace ATS.Web.Areas.Admin
 {
-    public class UserSetupController : Controller
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
+    public class UserSetupController :  BaseController
     {
         // GET: Admin/UserSetup
         public ActionResult Index()
@@ -81,5 +83,36 @@ namespace ATS.Web.Areas.Admin
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }
+
+        [ActionName("UserApproval")]
+        public ActionResult UserApproval()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            List<UserInfoModel> userList = new List<UserInfoModel>();
+            ApiResult result = null;
+
+            try
+            {
+                result = ApiConsumers.UserApiConsumer.SelectUsers();
+
+                if (result.Status && result.Data != null)
+                {
+                    userList = (List<UserInfoModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("_UsersList", userList);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

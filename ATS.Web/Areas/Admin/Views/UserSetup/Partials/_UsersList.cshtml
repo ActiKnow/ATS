@@ -1,0 +1,27 @@
+﻿@model List<ATS.Core.Model.UserInfoModel>
+@{
+    var count = 1;
+}
+@foreach (var item in Model)
+{
+<tr>
+    <td>@(count++)</td>
+    <td><span class="firstName">@item.FName</span></td>
+    <td><span class="lastName">@item.LName</span></td>
+    <td><span class="mobile">@item.Mobile</span></td>
+    <td><span class="email">@item.Email</span></td>
+    <td><span class="password">pass</span></td>
+    <td><span class="createdOn">@item.CreatedDate</span></td>
+    <td><span class="roleType">@item.RoleDescription</span></td>
+    <td><span class="itemStatusDescription">@item.StatusId</span></td>
+    <td>
+        <div class="btn-group">
+            <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
+            <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
+        </div>
+        <span class="itemTypeId" style="display:none">@item.UserId</span>
+        <span class="itemParentTypeId" style="display:none">@item.RoleTypeId</span>
+        <span class="itemStatus" style="display:none">@item.StatusId</span>
+    </td>
+</tr>
+}

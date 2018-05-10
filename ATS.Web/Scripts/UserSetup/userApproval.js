@@ -1,14 +1,18 @@
-﻿var questionList = (function () {
+﻿var userApproval = (function () {
     'use strict'
     var defaults = {
-        selectContainer: '#questionContainer',
-        
+        firstName: '.firstName',
+        lastName: '.lastName',
+        mobile: '.mobile',
+        email: '.email',
+        password: '.password',
+        createdOn: '.createdOn',
+        ddlRoleType: '.roleType',
+        errorMsg: '.errorMsg',
+        successMsg: '.successMsg',
+        btnCreateUser: '.edit',
+        btnCancelUser: '.delete',
 
-    };
-    var questionTypes = {
-        option: "Option",
-        bool: "Bool",
-        text: "Text"
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -29,10 +33,11 @@
             },
         }
     }());
+
     var callBacks = (function () {
         var op = defaults;
 
-        var appendType = function (result) {
+        var appendUser = function (result) {
             if (result !== "") {
                 if (result.Status) {
                     if (result.Message) {
@@ -49,51 +54,32 @@
         }
 
         return {
-            onQuestionList: function (result) {
-                appendType(result);
+            onGetUser: function (result) {
+                appendUser(result);
             },
-            onQuestionListFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
-            },
-            onDeleteQuestion: function (result) {
-                appendType(result);
-            },
-            onDeleteQuestionFailed: function (result) {
+            onGetUserFailed: function (result) {
                 $(op.errorMsg).html(result.responseText);
             },
         }
     })();
-    var loadQuestionList = function () {
-        var op = defaults;
-        api.fireGetAjax('/Admin/Setup/GetQuestionList', {})
-            .done(callBacks.onQuestionList)
-            .fail(callBacks.onQuestionListFailed);
-    }
-    var deleteQuestion = function (qId) {
-        if (qId != null) {
-            var op = defaults;
-            api.firePostAjax('/Admin/Setup/DeleteQuestion', { qId: qId})
-                .done(callBacks.onDeleteQuestion)
-                .fail(callBacks.onDeleteQuestionFailed);
-        }
 
-    };
+    var loadUsersList = function () {
+        var op = defaults;
+
+        api.fireGetAjax('/Admin/UserSetup/GetAllUsers', {})
+            .done(callBacks.onGetUser)
+            .fail(callBacks.onGetUserFailed);      
+    }
     var bindEvents = function () {
         var op = defaults;
-        var $tableContext = $(op.tableContext);
-        $tableContext.on('click', op.btnRemoveType, function (e) {
-            var $currentRow = $(e.target).closest('tr');
-            var qId = $currentRow.find(op.Qid).html();
-                deleteQuestion(qId);
-        });
-
     };
+
     return {
         init: function (config) {
-
             $.extend(true, defaults, config);
             bindEvents();
-            loadQuestionList();
+            loadUsersList();
         }
+
     }
 })();

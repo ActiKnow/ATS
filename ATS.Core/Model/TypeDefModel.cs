@@ -11,7 +11,7 @@ namespace ATS.Core.Model
         {
             this.UserInfo = new List<UserInfoModel>();
         }
-        [Key]
+     
         public System.Guid TypeId { get; set; }
         public string Description { get; set; }      
         public string Value { get; set; }

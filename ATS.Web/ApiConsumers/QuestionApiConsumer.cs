@@ -23,6 +23,20 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
+        public static ApiResult DeleteQuestion(QuestionBankModel QId)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/Question/Delete";
+                apiResult = ConsumerMethods.Post<List<QuestionBankModel>>(url, QId);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
         public static ApiResult SelectList()
         {
             ApiResult apiResult = null;

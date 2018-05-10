@@ -102,7 +102,7 @@ namespace ATS.Repository.DAO.Migrations
                         Mobile = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Email = c.String(),
                         RoleTypeId = c.Guid(nullable: false),
-                        UserTypeId = c.Guid(),
+                        //UserTypeId = c.Guid(),
                         StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ATS.Core.Model;
 
+
 namespace ATS.Web.ApiConsumers
 {
     public class UserApiConsumer
@@ -30,6 +31,35 @@ namespace ATS.Web.ApiConsumers
             {
                 string url = "api/User/Create";
                 apiResult = ConsumerMethods.Post<UserInfoModel>(url, userInfoModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+        public static ApiResult RetrieveType(UserInfoModel userInfoModel)   // Getting UserInfo by using ID
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Retrieve";
+                apiResult = ConsumerMethods.Post<List<UserInfoModel>>(url, userInfoModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+
+        public static ApiResult SelectUsers()   // Getting Users List by using query
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Select";
+                apiResult = ConsumerMethods.Get<List<UserInfoModel>>(url);
             }
             catch
             {

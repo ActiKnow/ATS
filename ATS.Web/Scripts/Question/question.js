@@ -29,6 +29,13 @@
             });
         };
         return {
+            firePostAjax: function (url, data) {
+                return fireAjax(url, data, "POST");
+            },
+
+            fireGetAjax: function (url, data) {
+                return fireAjax(url, data, "GET");
+            },
             createQuestion: function (url, data) {
                 return fireAjax(url, data);
             },
@@ -177,7 +184,87 @@
             .done(callBacks.onQuestionAdded)
             .fail(callBacks.onQuestionFailed);
     };
+    var loadQuestionTypes = function () {
+        var op = defaults;
 
+        api.fireGetAjax('/Setup/GetQuestionTypes', {})
+            .done(res => {
+                if (res != null) {
+                    var items = "<option value=''>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message) {
+                            $(op.errorMsg).html(res.Message);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            });
+                            $(op.selectQuesQuesTypeId).html(items);
+                        }
+                    }
+                    else {
+                        $(op.errorMsg).html(res.Message);
+                    }
+                }
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
+    }
+    var loadLabelTypes = function () {
+        var op = defaults;
+
+        api.fireGetAjax('/Setup/GetLabelTypes', {})
+            .done(res => {
+                if (res != null) {
+                    var items = "<option value=''>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message) {
+                            $(op.errorMsg).html(res.Message);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            });
+                            $(op.selectQuesDiffiLevel).html(items);
+                        }
+                    }
+                    else {
+                        $(op.errorMsg).html(res.Message);
+                    }
+                }
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
+    }
+    var loadCategoryTypes = function () {
+        var op = defaults;
+
+        api.fireGetAjax('/Setup/GetCategoryTypes', {})
+            .done(res => {
+                if (res != null) {
+                    var items = "<option value=''>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message) {
+                            $(op.errorMsg).html(res.Message);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            });
+                            $(op.selectQuesSubjectId).html(items);
+                        }
+                    }
+                    else {
+                        $(op.errorMsg).html(res.Message);
+                    }
+                }
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
+    }
 
     var bindEvents = function () {
         var op = defaults;
@@ -238,6 +325,9 @@
             $(defaults.selectSubjectType).hide();
             $(defaults.btnAdd).hide();
             $(defaults.btnRemove).hide();
+            loadQuestionTypes();
+            loadLabelTypes();
+            loadCategoryTypes();
         }
 
     }

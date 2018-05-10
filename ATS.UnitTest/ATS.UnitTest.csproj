@@ -51,8 +51,11 @@
   <ItemGroup>
     <Compile Include="SimpleQueryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilityTest.cs" />
+    <Compile Include="WebTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +66,14 @@
     <ProjectReference Include="..\ATS.Repository\ATS.Repository.csproj">
       <Project>{3ac7bd83-2c07-42f8-845f-4e9028238c76}</Project>
       <Name>ATS.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATS.Service\ATS.Service.csproj">
+      <Project>{afec1761-93f1-41d2-95d3-aef0b3c30b52}</Project>
+      <Name>ATS.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATS.Web\ATS.Web.csproj">
+      <Project>{b1297600-234e-41d7-8fe8-5b27bd0c2a36}</Project>
+      <Name>ATS.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

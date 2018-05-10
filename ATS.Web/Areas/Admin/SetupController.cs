@@ -48,6 +48,7 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+     
 
         [ActionName("UserSetup")]
         public ActionResult UserCreation(QuestionBankModel QuestionView)
@@ -123,12 +124,11 @@ namespace ATS.Web.Areas.Admin
             try
             {
                 //result = ApiConsumers.TypeApiConsumer.RetrieveType(typeDef);
-                SimpleQueryModel qry = new SimpleQueryModel();
-                qry.ModelName = nameof(TypeDefModel);
-                qry.Properties = new Dictionary<string, object>();
-                qry.Properties[nameof(TypeDefModel.TypeId)] = typeDef.TypeId;
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.TypeId)] = typeDef.TypeId;
 
-                result = ApiConsumers.TypeApiConsumer.SelectType(qry);
+                result = ApiConsumers.TypeApiConsumer.SelectType(query);
             }
             catch (Exception ex)
             {
@@ -229,9 +229,76 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult DeleteQuestion(Guid qId)
+        {
+            QuestionBankModel questionBankModel = new QuestionBankModel();
+            questionBankModel.QId = qId;
+            ApiResult result = null;
+            ApiResult result1 = null;
+            try
+            {
+                result = ApiConsumers.QuestionApiConsumer.DeleteQuestion(questionBankModel);
+                if (result.Status)
+                {
+                    result1 = ApiConsumers.QuestionApiConsumer.SelectList();
+                    if (result1.Status && result1.Data != null)
+                    {
+                        var list = (List<QuestionBankModel>)result1.Data;
+
+                        result1.Data = RenderPartialViewToString("_QuestionList", list);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result1, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult EditQuestion()
         {
             return View();
+        }
+
+        public ActionResult GetQuestionTypes()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetLabelTypes()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetCategoryTypes()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201805080602140_Initial.Designer.cs">
       <DependentUpon>201805080602140_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091323262_MissingXXX.cs" />
+    <Compile Include="Migrations\201805091323262_MissingXXX.Designer.cs">
+      <DependentUpon>201805091323262_MissingXXX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\QuestionBank.cs" />
     <Compile Include="Model\QuestionOption.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805080602140_Initial.resx">
       <DependentUpon>201805080602140_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091323262_MissingXXX.resx">
+      <DependentUpon>201805091323262_MissingXXX.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
