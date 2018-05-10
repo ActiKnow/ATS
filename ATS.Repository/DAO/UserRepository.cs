@@ -42,6 +42,7 @@ namespace ATS.Repository.DAO
                             if (isCreated)
                             {
                                 UserCredential userCredential = new UserCredential();
+                                userCredential.Id = Guid.NewGuid();
                                 userCredential.EmailId = input.Email;
                                 userCredential.CurrPassword = input.UserCredentials[0].CurrPassword;
                                 userCredential.UserId = userInfo.UserId;
@@ -80,15 +81,31 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (userInfo != null)
+                        UserCredential userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        if (userCredential != null)
                         {
-                            context.UserInfo.Remove(userInfo);
+                            context.UserCredential.Remove(userCredential);
                             context.SaveChanges();
-
-                            dbContextTransaction.Commit();
                             isDeleted = true;
-                        }
+
+                            UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                            if (userInfo != null && isDeleted == true)
+                            {
+                                context.UserInfo.Remove(userInfo);
+                                context.SaveChanges();
+                                isDeleted = true;
+                            }
+                            else
+                            {
+                                isDeleted = false;
+                            }
+
+                        }                        
+                        if (isDeleted)
+                        {
+                            dbContextTransaction.Commit();
+                        }                        
+
                     }
                     catch
                     {
@@ -140,6 +157,7 @@ namespace ATS.Repository.DAO
 
             var query = (from x in context.UserInfo.AsNoTracking()
                          join y in context.TypeDef on x.RoleTypeId equals y.TypeId
+                         join z in context.UserCredential on x.UserId equals z.UserId
 
                          select new UserInfoModel
                          {
@@ -156,7 +174,8 @@ namespace ATS.Repository.DAO
                              //UserTypeId = x.UserTypeId,
                              RoleTypeId = x.RoleTypeId,
                              RoleDescription = y.Description,
-                             RoleValue = y.Value
+                             RoleValue = y.Value,
+                             CurrPassword=z.CurrPassword                             
                          });
             if (condition != null)
             {

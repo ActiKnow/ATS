@@ -29,5 +29,6 @@ namespace ATS.Core.Model
         public virtual TypeDefModel TypeDef { get; set; }
         public virtual List<UserCredentialModel> UserCredentials { get; set; }
         public virtual List<UserTestHistoryModel> UserTestHistories { get; set; }
+        public string CurrPassword { get; set; }
     }
 }

@@ -60,6 +60,12 @@
             onGetUserFailed: function (result) {
                 $(op.errorMsg).html(result.responseText);
             },
+            onUserDeleted: function (result) {
+                appendUser(result);
+            },
+            onUserDeletionFailed: function (result) {
+                $(op.errorMsg).html(result.responseText);
+            },
         }
     })();
 
@@ -70,8 +76,74 @@
             .done(callBacks.onGetUser)
             .fail(callBacks.onGetUserFailed);      
     }
+
+    var deleteUser = function () {
+
+        var UserCredentials = [];
+        var op = defaults;
+
+        var userID = $(op.userId).val();
+        var RoleID = $(op.roleTypeId).val();      
+        var email = $(op.email).val();
+
+        var item = {
+            UserId: userID.trim(),   
+            EmailId: email.trim(),   
+            RoleTypeId: RoleID.trim(),   
+        };
+        UserCredentials.push(item);
+
+        var userInfoModel = {
+            UserId: userID.trim(),   
+            RoleTypeId: RoleID.trim(),            
+            Email: email.trim(),    
+            UserCredentials: UserCredentials,
+        };
+
+            api.firePostAjax('/Admin/UserSetup/DeleteUser', { typeDef: typeDef })
+                .done(callBacks.onUserDeleted)
+                .fail(callBacks.onUserDeletionFailed);
+
+    }
+
+    var updateUser = function () {
+
+        //var UserCredentials = [];
+        //var op = defaults;
+
+        //var userID = $(op.userId).val();
+        //var RoleID = $(op.roleTypeId).val();
+        //var email = $(op.email).val();
+
+        //var item = {
+        //    UserId: userID.trim(),
+        //    EmailId: email.trim(),
+        //    RoleTypeId: RoleID.trim(),
+        //};
+        //UserCredentials.push(item);
+
+        //var userInfoModel = {
+        //    UserId: userID.trim(),
+        //    RoleTypeId: RoleID.trim(),
+        //    Email: email.trim(),
+        //    UserCredentials: UserCredentials,
+        //};    
+        alert("Edit btn click");       
+    }
+
     var bindEvents = function () {
         var op = defaults;
+
+        $(op.tableContext).on('click', op.btnEditUser, function (e) {
+
+            var $row = $(this).closest("tr");
+            var id = $row.find($(op.userId)).val();
+             
+            $(op.selectedUserId).val(id);
+            $(op.submitForm).submit();
+            //var url = '@Url.Action("UserSetup","UserSetup")';
+            //window.location.href = url + '?userId=' + 11;
+        });
     };
 
     return {
