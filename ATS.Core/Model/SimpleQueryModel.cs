@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATS.Core.Model
 {
-    public class SimpleQueryModel
+    public class SimpleQueryModel 
     {
         public string ModelName { get; set; }
         public Dictionary<string, object> Properties { get; set; }

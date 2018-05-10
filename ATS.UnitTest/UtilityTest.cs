@@ -2,8 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ATS.Service.Controllers;
-using ATS.Web.ApiConsumers;
 using ATS.Repository.Model;
 using ATS.Core.Model;
 using ATS.Core.Helper;
@@ -11,12 +9,12 @@ using ATS.Core.Helper;
 namespace ATS.UnitTest
 {
     /// <summary>
-    /// Summary description for WebTest
+    /// Summary description for UtilityTest
     /// </summary>
     [TestClass]
-    public class WebTest
+    public class UtilityTest
     {
-        public WebTest()
+        public UtilityTest()
         {
             //
             // TODO: Add constructor logic here
@@ -64,9 +62,14 @@ namespace ATS.UnitTest
         #endregion
 
         [TestMethod]
-        public void HomeTest()
+        public void CopyEntityTest()
         {
-           
+            List<TypeDef> type = new List<TypeDef>();
+            List<TypeDefModel> test = new List<TypeDefModel> { new TypeDefModel { TypeId = Guid.Empty, Description = "xxxxx" } ,
+                new TypeDefModel { TypeId = Guid.Empty, Description = "aaaaa" } };
+            Utility.CopyEntity(out type, test);
+            Assert.IsNotNull(type);
+            Assert.AreEqual(type[0].TypeId, Guid.Empty);
         }
     }
 }

@@ -8,6 +8,7 @@ using ATS.Repository.Model;
 using ATS.Repository.Interface;
 using ATS.Repository.DAO;
 using ATS.Core.Model;
+using ATS.Core.Helper;
 
 namespace ATS.Service.Controllers
 {
@@ -72,12 +73,13 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/User/Select")]
-        public IHttpActionResult Select()
+        public IHttpActionResult Select(SimpleQueryModel qry)
         {
             ApiResult apiResult = new ApiResult(false, "Records not Found");
             try
             {
-                List<UserInfoModel> user = userRepository.Select(null);
+                SimpleQueryBuilder<UserInfoModel> simpleQry = new SimpleQueryBuilder<UserInfoModel>();
+                List<UserInfoModel> user = userRepository.Select(simpleQry.GetQuery(query: qry).Compile());
                 if (user != null)
                 {
                     apiResult = new ApiResult(true, "", user);
