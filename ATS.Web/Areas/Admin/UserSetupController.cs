@@ -93,16 +93,18 @@ namespace ATS.Web.Areas.Admin
         [HttpGet]
         public ActionResult GetAllUsers()
         {
+            List<UserInfoModel> userList = new List<UserInfoModel>();
             ApiResult result = null;
+
             try
             {
                 result = ApiConsumers.UserApiConsumer.SelectUsers();
 
                 if (result.Status && result.Data != null)
                 {
-                    var list = (List<UserInfoModel>)result.Data;
+                    userList = (List<UserInfoModel>)result.Data;
 
-                    result.Data = RenderPartialViewToString("_UsersList", list);
+                    result.Data = RenderPartialViewToString("_UsersList", userList);
                 }
             }
             catch (Exception ex)

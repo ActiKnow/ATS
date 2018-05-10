@@ -140,6 +140,7 @@ namespace ATS.Repository.DAO
 
             var query = (from x in context.UserInfo.AsNoTracking()
                          join y in context.TypeDef on x.RoleTypeId equals y.TypeId
+
                          select new UserInfoModel
                          {
                              UserId = x.UserId,
