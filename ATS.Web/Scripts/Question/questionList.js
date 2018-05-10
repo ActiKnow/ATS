@@ -29,7 +29,6 @@
             },
         }
     }());
-
     var callBacks = (function () {
         var op = defaults;
 
@@ -58,7 +57,6 @@
             },
         }
     })();
-
     var loadQuestionList = function () {
 
         var op = defaults;
@@ -67,12 +65,10 @@
             .done(callBacks.onQuestionList)
             .fail(callBacks.onQuestionListFailed);
     }
-
     var bindEvents = function () {
      
 
     };
-
     return {
         init: function (config) {
 

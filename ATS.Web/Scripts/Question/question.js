@@ -68,7 +68,6 @@
         $(op.selectMCQType).html("");
         $(op.selectTFType).hide();
         $(op.selectboolradio).prop('checked', false);
-
         $(op.selectOption1).val("");
         $(op.selectOption2).val("");
         $(op.selectOption3).val("");
@@ -76,7 +75,6 @@
         $(op.selectTrue).val("");
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
-
     };
 
     var emptyOption = function () {
@@ -107,9 +105,7 @@
             "</div>";
 
         optionArray.push(rowGenrate);
-
         renderOption(optionArray);
-
         counter++;
     };
     var removeQuestion = function () {
@@ -170,21 +166,16 @@
 
         var QuestionView = {
             LevelTypeId: QuesDiffiLevel,
-            QuesTypeValue: QuesQuesTypeId,
+            QuesTypeId: QuesQuesTypeId,
             CategoryTypeId: QuesSubjectId,
             Description: QuesText,
             DefaultMark: QuesMark,
             AnsText: ansText
-
         }
-
         QuestionView.options = optionValue;
         api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
             .done(callBacks.onQuestionAdded)
             .fail(callBacks.onQuestionFailed);
-
-
-
     };
 
 
