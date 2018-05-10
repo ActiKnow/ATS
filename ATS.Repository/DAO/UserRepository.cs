@@ -152,7 +152,7 @@ namespace ATS.Repository.DAO
                              LName = x.LName,
                              Mobile = x.Mobile,
                              StatusId = x.StatusId,
-                             UserTypeId = x.UserTypeId,
+                             //UserTypeId = x.UserTypeId,
                              RoleTypeId = x.RoleTypeId,
                              RoleDescription = y.Description,
                              RoleValue = y.Value
@@ -185,7 +185,7 @@ namespace ATS.Repository.DAO
                         {
                             userInfo.LastUpdatedBy = input.LastUpdatedBy;
                             userInfo.LastUpdatedDate = input.LastUpdatedDate;
-                            userInfo.UserTypeId = input.UserTypeId;
+                            //userInfo.UserTypeId = input.UserTypeId;
                             userInfo.FName = input.FName;
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;

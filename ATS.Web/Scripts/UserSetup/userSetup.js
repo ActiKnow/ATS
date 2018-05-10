@@ -85,7 +85,6 @@
                 Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
-                UserTypeId: roleType.trim(),
                 Password: password.trim(),
                 UserCredentials: UserCredentials,
             };
