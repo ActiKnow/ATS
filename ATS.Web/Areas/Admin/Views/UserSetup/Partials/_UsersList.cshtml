@@ -16,11 +16,11 @@
     <td><span class="itemStatusDescription">@item.StatusId</span></td>
     <td>
         <div class="btn-group">
-            <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
-            <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
+            <span class="btn btn-primary btnEditUser" onclick=""><i class="fa fa-lg fa-edit"></i></span>
+            <span class="btn btn-primary btnRemoveUser"><i class="fa fa-lg fa-trash"></i></span>
         </div>
-        <span class="itemTypeId" style="display:none">@item.UserId</span>
-        <span class="itemParentTypeId" style="display:none">@item.RoleTypeId</span>
+        <input type="hidden" class="userId" value="@item.UserId" />
+        <span class="roleTypeId" style="display:none">@item.RoleTypeId</span>
         <span class="itemStatus" style="display:none">@item.StatusId</span>
     </td>
 </tr>
