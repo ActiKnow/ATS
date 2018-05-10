@@ -55,6 +55,16 @@ namespace ATS.Core.Helper
             {
                 value = (value == null) ?Guid.Empty : new Guid(value.ToString());
             }
+            else if (type.Equals(typeof(DateTime)) )
+            {
+                DateTime.TryParse(Convert.ToString(value), out DateTime date);
+                value = date;
+            }
+            else if ( type.Equals(typeof(DateTime?)))
+            {
+                DateTime.TryParse(Convert.ToString(value), out DateTime date);
+                value = (value == null) ? value : date;
+            }
             return value;
         }
     }
