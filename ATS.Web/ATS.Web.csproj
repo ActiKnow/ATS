@@ -223,6 +223,7 @@
     <Content Include="Scripts\plugins\sweetalert.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\Question\question.js" />
+    <Content Include="Scripts\Question\questionList.js" />
     <Content Include="Scripts\TypeSetup\typeSetup.js" />
     <Content Include="Scripts\UserSetup\userSetup.js" />
     <Content Include="Web.config" />

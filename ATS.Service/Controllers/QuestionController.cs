@@ -105,7 +105,7 @@ namespace ATS.Service.Controllers
                 string error = ex.GetBaseException().Message;
                 apiResult = new ApiResult(false, error);
             }
-            return Ok(apiResult);
+           return Ok(apiResult);
         }
     }
 }

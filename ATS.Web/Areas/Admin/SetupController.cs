@@ -206,6 +206,12 @@ namespace ATS.Web.Areas.Admin
 
        public ActionResult QuestionList()
         {
+            List<QuestionBankModel> quesList = new List<QuestionBankModel>();
+            return View(quesList);
+        }
+
+        public ActionResult GetQuestionList()
+        {
             ApiResult result = null;
             try
             {
