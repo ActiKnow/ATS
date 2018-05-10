@@ -31,8 +31,8 @@ namespace ATS.Repository.DAO
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
                             userInfo.StatusId = input.StatusId;
-                            userInfo.UserId = Guid.NewGuid();
-                            userInfo.UserTypeId = input.UserTypeId;
+                            userInfo.UserId = Guid.NewGuid();      
+                            userInfo.RoleTypeId = input.RoleTypeId;
 
                             context.UserInfo.Add(userInfo);
 
@@ -115,7 +115,7 @@ namespace ATS.Repository.DAO
                 }
                 return userInfo;
             }
-        }
+        } 
 
         public List<UserInfoModel> Select(Func<UserInfoModel, bool> condition)
         {
@@ -124,7 +124,7 @@ namespace ATS.Repository.DAO
             {
                 try
                 {
-                    Select(context, condition);
+                    userInfos=Select(context, condition);
                 }
                 catch
                 {
@@ -152,7 +152,7 @@ namespace ATS.Repository.DAO
                              LName = x.LName,
                              Mobile = x.Mobile,
                              StatusId = x.StatusId,
-                             UserTypeId = x.UserTypeId,
+                             //UserTypeId = x.UserTypeId,
                              RoleTypeId = x.RoleTypeId,
                              RoleDescription = y.Description,
                              RoleValue = y.Value
@@ -185,7 +185,7 @@ namespace ATS.Repository.DAO
                         {
                             userInfo.LastUpdatedBy = input.LastUpdatedBy;
                             userInfo.LastUpdatedDate = input.LastUpdatedDate;
-                            userInfo.UserTypeId = input.UserTypeId;
+                            //userInfo.UserTypeId = input.UserTypeId;
                             userInfo.FName = input.FName;
                             userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;

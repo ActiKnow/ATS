@@ -68,7 +68,7 @@
         var mobile = $(op.mobile).val();
         var password = $(op.password).val();
         var email = $(op.email).val();
-        var roleType = $(op.ddlRoleType).val();
+        var roleType = $(op.ddlRoleType).find(":selected").val();
 
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
@@ -85,7 +85,6 @@
                 Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
-                UserTypeId: roleType.trim(),
                 Password: password.trim(),
                 UserCredentials: UserCredentials,
             };
@@ -187,7 +186,7 @@
     var bindEvents = function () {
         var op = defaults;
 
-        $(".toggle-password").click(function () {
+        $(op.togglePassword).click(function () {
 
             $(this).toggleClass("fa-eye fa-eye-slash");
             var input = $($(this).attr("toggle"));
@@ -220,6 +219,5 @@
             bindEvents();
             loadRoleTypes();            
         }
-
     }
 })();

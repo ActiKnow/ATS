@@ -1,0 +1,68 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "UserApproval";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>User Approval</h1>
+        <p>You can approve a user by form below.</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">User Approval</a></li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="userApprovalContext">
+        <div class="tile tableContext">
+            <h3 class="tile-title">Users List</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Passowrd</th>
+                        <th>Created On</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/UserSetup/userApproval.js"></script>
+    <script>
+    (function ($, window, document) {
+        $(function () {
+            var config = {
+                firstName:'.firstName',
+                lastName:'.lastName',
+                mobile:'.mobile',
+                email: '.email',
+                password: '.password',
+                ddlRoleType: '.roleType',
+                errorMsg: '.errorMsg',
+                successMsg: '.successMsg',
+                tableContext:'#userApprovalContext',
+            };
+            userApproval.init(config);
+        });
+
+    }(window.jQuery, window, document));
+    </script>
+
+}
