@@ -60,7 +60,7 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("api/Question/Delete")]
         public IHttpActionResult Delete(QuestionBankModel newQues)
         {
@@ -100,7 +100,7 @@ namespace ATS.Service.Controllers
                 string error = ex.GetBaseException().Message;
                 apiResult = new ApiResult(false, error);
             }
-            return Ok(apiResult);
+           return Ok(apiResult);
         }
     }
 }

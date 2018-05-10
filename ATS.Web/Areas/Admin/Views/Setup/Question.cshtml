@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div id="questionContainer">
+
     <div class="app-title">
         <div>
             <h1><i class="fa fa-edit"></i>Setup</h1>
@@ -16,219 +16,223 @@
             <li class="breadcrumb-item"><a href="#">Question Setup</a></li>
         </ul>
     </div>
-
     <div class="row">
+        <div class="col-md-12" id="typeContext">
+            <div class="tile">
+                <div id="questionContainer">
 
-        <div class="col-md-12">
-            <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
-        </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <span class="errorMsg" @*style="display:none"*@></span>
+                            <span class="successMsg"></span>
+                        </div>
 
-        <span class="errorMsg" style="display:none"></span>
-        <span class="successMsg" style="display:none"></span>
-    </div>
+                    </div>
+                    <div class="row">
 
-    <br />
+                        <div class="col-md-12">
+                            <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                        </div>
 
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
+
+                    </div>
+
+                    <br />
+
                     <div class="col-md-12">
-                        <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                        <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
-                            <option value="">- Select -</option>
-                            <option selected="selected" value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
+                                        <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
+                                            <option value="">- Select -</option>
+                                            <option selected="selected" value="easy">Easy</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="hard">Hard</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="name-tag control-label" for="question_question_type">Question Type</label>
+                                        <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
+                                            <option value="-1">- Select -</option>
+                                            <option value="Option">Multiple Choice Question</option>
+                                            <option value="Bool">Yes/No or True/False</option>
+                                            <option value="Text">Subjective</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="name-tag control-label" for="question_subject">Subject</label>
+                                        <select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
+                                            <option value="-1">- Select -</option>
+                                            <option value="1">C</option>
+                                            <option value="2">C++</option>
+                                            <option value="2">Java</option>
+                                            <option value="2">.Net</option>
+                                            <option value="2">MVC</option>
+                                            <option value="2">AngularJs</option>
+                                            <option value="2">Angular 2</option>
+                                            <option value="2">Node JS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    @*<div class="col-md-6">
-                            <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
-                                <option value="">- Select -</option>
-                                <option selected="selected" value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>*@
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
+
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
+                        </div>
+                        <div class="col-md-8"><textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea></div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="name-tag">Answer Description</label>
+                        </div>
+                        <div class="col-md-8">
+
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
+                            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="MCQType">
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="TFType">
+                                <div class="form-group row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span>A.</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="Y">
+                                        <span>Is Correct</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span>B.</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input name="statusRadio" class="boolradio" type="radio" data-id="2" value="N">
+                                        <span>Is Correct</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
-                        <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                        <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
-                            <option value="">- Select -</option>
-                            <option value="Option">Multiple Choice Question</option>
-                            <option value="Bool">Yes/No or True/False</option>
-                            <option value="Text">Subjective</option>
-                        </select>
+                        <div id="SubjectType">
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-1">
+                                    <span>A.</span>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label class="name-tag control-label" for="question_subject">Subject</label>
-                        <select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
-                            <option value="">- Select -</option>
-                            <option value="1">C</option>
-                            <option value="2">C++</option>
-                            <option value="2">Java</option>
-                            <option value="2">.Net</option>
-                            <option value="2">MVC</option>
-                            <option value="2">AngularJs</option>
-                            <option value="2">Angular 2</option>
-                            <option value="2">Node JS</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-    </div>
+                    <br />
 
-    <br />
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="name-tag control-label" for="question_mark">Mark</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">
+                        </div>
+                    </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
-        </div>
-        <div class="col-md-8"><textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea></div>
-    </div>
 
-    <br />
-    <div class="row">
-        <div class="col-md-2">
-            <label class="name-tag">Answer Description</label>
-        </div>
-        <div class="col-md-8">
+                    <br />
+                    <div class="tile-footer">
+                        <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+                    </div>
 
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
-            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="MCQType">
-               
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div id="TFType">
-                <div class="form-group row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                        <span>A.</span>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" name="true" class="form-control input-sm" placeholder="True" id="True">
-                    </div>
-                    <div class="col-md-3">
-                        <input id="radio1" name="statusRadio" type="radio" value="Y">
-                        <span>Is Correct</span>
-                    </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                        <span>B.</span>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" name="false" class="form-control input-sm" placeholder="False" id="False">
-                    </div>
-                    <div class="col-md-3">
-                        <input id="radio1" name="statusRadio" type="radio" value="Y">
-                        <span>Is Correct</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div id="SubjectType">
-            <div class="row">
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-1">
-                    <span>A.</span>
-                </div>
-                <div class="col-md-8">
-                    <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
                 </div>
             </div>
         </div>
-    </div>
 
-    <br />
+                @section scripts {
+                    <script src="~/Scripts/Question/question.js"></script>
+                    <script>
+                        function isNumber(evt) {
+                            evt = (evt) ? evt : window.event;
+                            var charCode = (evt.which) ? evt.which : evt.keyCode;
+                            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                return false;
+                            }
+                            return true;
+                        }
+                        (function ($, window, document) {
+                            $(function () {
+                                var config = {
+                                    selectContainer: '#questionContainer',
+                                    selectQuesDiffiLevel: '#question_difficulty_level',
+                                    selectQuesQuesTypeId: '#question_question_type_id',
+                                    selectQuesSubjectId: '#question_subject_id',
+                                    selectQuesText: '#question_text',
+                                    selectQuesMark: '#question_mark',
+                                    btnCreateQuestion: '#button_create_question',
+                                    selectMCQType: '#MCQType',
+                                    selectTFType: '#TFType',
+                                    selectSubjectType: '#SubjectType',
 
-    <div class="row">
-        <div class="col-md-2">
-            <label class="name-tag control-label" for="question_mark">Mark</label>
-        </div>
-        <div class="col-md-8">
-            <input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">
-        </div>
-    </div>
+                                    selectOption1: '#Option1',
+                                    selectOption2: '#Option2',
+                                    selectOption3: '#Option3',
+                                    selectOption4: '#Option4',
+                                    selectTrue: '#True',
+                                    selectFalse: '#False',
+                                    selectSubjective_text: '#Subjective_text',
+                                    selectboolradio: '.boolradio',
 
+                                    btnAdd: '#btnAdd',
+                                    btnRemove: '#btnRemove',
+                                    rowMCQGenrate: '#rowMCQGenrate',
+                                    errorMsg: '.errorMsg',
+                                };
+                                question.init(config);
 
-    <br />
-    <div class="tile-footer">
-        <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
-    </div>
+                            });
 
-</div>
+                        }(window.jQuery, window, document));
+                    </script>
 
-
-@section scripts {
-    <script src="~/Scripts/Question/question.js"></script>
-    <script>
-        function isNumber(evt) {
-            evt = (evt) ? evt : window.event;
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
-        }
-        (function ($, window, document) {
-            $(function () {
-                var config = {
-                    selectContainer: '#questionContainer',
-                    selectQuesLangId: '#question_language_id_1',
-                    selectQuesExamModeId: '#question_exam_mode_id',
-                    selectQuesDiffiLevel: '#question_difficulty_level',
-                    selectQuesQuesTypeId: '#question_question_type_id',
-                    selectQuesSubjectId: '#question_subject_id',
-                    selectQuesText: '#question_text',
-                    selectQuesMark: '#question_mark',
-                    btnCreateQuestion: '#button_create_question',
-                    selectMCQType: '#MCQType',
-                    selectTFType: '#TFType',
-                    selectSubjectType: '#SubjectType',
-
-                    selectOption1: '#Option1',
-                    selectOption2: '#Option2',
-                    selectOption3: '#Option3',
-                    selectOption4: '#Option4',
-                    selectTrue: '#True',
-                    selectFalse: '#False',
-                    selectSubjective_text:'#Subjective_text',
-
-                    btnAdd: '#btnAdd',
-                    btnRemove:'#btnRemove',
-                    rowMCQGenrate: '#rowMCQGenrate',
-                    errorMsg: '.errorMsg',
-                };
-                question.init(config);
-
-            });
-
-        }(window.jQuery, window, document));
-    </script>
-
-}
+                }
