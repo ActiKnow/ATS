@@ -62,9 +62,12 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-form-label">Role Type<span class="fa fa-star"></span></label>
-                        <select class="form-control roleType" id="roleType">
-                            <option value="">-Select-</option>
-                        </select>
+                        @Html.DropDownList("roleType", ViewBag.userSetupRoleType as SelectList, new { @class = "form-control input-sm", id = "roleType" })
+
+                        @*@Html.DropDownList("companyName", new List<SelectListItem> { new SelectListItem { Text = "-Select Company-", Value = "", Selected = true } }, new { @class = "form-control input-sm", id = "companyName", @onchange = "validateEnterpriseBusinessLineName()" })
+                              <select class="form-control roleType" id="roleType">
+                                    <option value="">-Select-</option>
+                              </select>*@
                     </div>
                 </div>
                 <div class="col-sm-6">

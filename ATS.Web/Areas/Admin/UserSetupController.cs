@@ -21,10 +21,10 @@ namespace ATS.Web.Areas.Admin
         [HttpGet]
         public ActionResult UserSetup()
         {
-            UserInfoModel userInfo;
-            
-                userInfo = new UserInfoModel();
-           
+            UserInfoModel userInfo;            
+            userInfo = new UserInfoModel();
+            ViewBag.userSetupRoleType = RoleTypeList();
+
             return View(userInfo);
         }
 
@@ -157,5 +157,34 @@ namespace ATS.Web.Areas.Admin
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        private SelectList RoleTypeList()
+        {
+            List<ATS.Core.Model.TypeDefModel> roleTypeDef = null;
+            ApiResult result = null;
+            SelectList selectList = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+
+                if (result != null)
+                {
+                    if (result.Status && result.Data != null)
+                    {
+                        roleTypeDef = (List<ATS.Core.Model.TypeDefModel>)result.Data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+
+            if (roleTypeDef == null)
+            {
+                roleTypeDef = new List<ATS.Core.Model.TypeDefModel>(1);
+            }
+
+            return selectList = new SelectList(roleTypeDef, "TypeId", "Description");
+        }
     }
 }
