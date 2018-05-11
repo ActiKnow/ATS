@@ -3,7 +3,7 @@ namespace ATS.Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class NewMigration : DbMigration
     {
         public override void Up()
         {
