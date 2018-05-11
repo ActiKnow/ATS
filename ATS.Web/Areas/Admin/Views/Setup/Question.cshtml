@@ -1,4 +1,4 @@
-﻿@model List<ATS.Core.Model.QuestionBankModel>
+﻿@model ATS.Core.Model.QuestionBankModel
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -45,12 +45,13 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                        <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
+                                        @Html.DropDownListFor(x=>x.LevelTypeId,new SelectList(new List<SelectListItem>() { new SelectListItem {  Text = "-Select-" ,Value=""} }),new { @class = "form-control", id = "question_difficulty_level" })
+                                        @*<select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
                                             <option value="">- Select -</option>
                                             <option selected="selected" value="easy">Easy</option>
                                             <option value="medium">Medium</option>
                                             <option value="hard">Hard</option>
-                                        </select>
+                                        </select>*@
                                     </div>
 
                                 </div>
@@ -59,12 +60,12 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                        <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
+                                        @Html.DropDownListFor(x => x.QuesTypeId, new SelectList(new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }), new { @class = "form-control", id = "question_question_type_id" })
+                                       
+                                        @*<select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
                                             <option value="-1">- Select -</option>
-                                            <option value="Option">Multiple Choice Question</option>
-                                            <option value="Bool">Yes/No or True/False</option>
-                                            <option value="Text">Subjective</option>
-                                        </select>
+
+                                        </select>*@
                                     </div>
                                 </div>
                             </div>
@@ -72,17 +73,11 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_subject">Subject</label>
-                                        <select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
+                                        @Html.DropDownListFor(x => x.CategoryTypeId, new SelectList(new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }), new { @class = "form-control", id = "question_subject_id" })
+                                        @*<select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
                                             <option value="-1">- Select -</option>
-                                            <option value="1">C</option>
-                                            <option value="2">C++</option>
-                                            <option value="2">Java</option>
-                                            <option value="2">.Net</option>
-                                            <option value="2">MVC</option>
-                                            <option value="2">AngularJs</option>
-                                            <option value="2">Angular 2</option>
-                                            <option value="2">Node JS</option>
-                                        </select>
+
+                                        </select>*@
                                     </div>
                                 </div>
                             </div>

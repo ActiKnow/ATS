@@ -78,6 +78,15 @@
         }
 
     };
+    var editQuestion = function (qId) {
+        if (qId != null) {
+            var op = defaults;
+            $(op.selectedId).val(qId);
+            $(op.formSubmit).submit();            
+        }
+    };
+
+
     var bindEvents = function () {
         var op = defaults;
         var $tableContext = $(op.tableContext);
@@ -85,6 +94,11 @@
             var $currentRow = $(e.target).closest('tr');
             var qId = $currentRow.find(op.Qid).html();
                 deleteQuestion(qId);
+        });
+        $tableContext.on('click', op.btnEditType, function (e) {
+            var $currentRow = $(e.target).closest('tr');
+            var qId = $currentRow.find(op.Qid).html();
+            editQuestion(qId);
         });
 
     };

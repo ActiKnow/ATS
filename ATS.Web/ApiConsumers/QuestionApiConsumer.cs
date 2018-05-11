@@ -37,13 +37,13 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult SelectList()
+        public static ApiResult Select(SimpleQueryModel query=null)
         {
             ApiResult apiResult = null;
             try
             {
                 string url = "api/Question/Select";
-                apiResult = ConsumerMethods.Get<List<QuestionBankModel>>(url);
+                apiResult = ConsumerMethods.Post<List<QuestionBankModel>>(url,query);
             }
             catch
             {
@@ -51,6 +51,6 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-
+       
     }
 }
