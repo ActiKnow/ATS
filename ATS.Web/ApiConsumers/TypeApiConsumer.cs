@@ -67,13 +67,13 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult SelectType(SimpleQueryModel qry)   // Getting TypeDef by using query
+        public static ApiResult SelectType(SimpleQueryModel query = null)   // Getting TypeDef by using query
         {
             ApiResult apiResult = null;
             try
             {
                 string url = "api/TypeDef/Select";
-                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, qry);
+                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, query);
             }
             catch
             {
@@ -82,7 +82,7 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
-        public static ApiResult ValidateType(string typeName,string typeValue)   // Getting TypeDef by using ID
+        public static ApiResult ValidateType(string typeName,int typeValue)   // Getting TypeDef by using ID
         {
             ApiResult apiResult = null;
             try

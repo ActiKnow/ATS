@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.Model;
-using ATS.Repository.Interface;
 using ATS.Repository.DAO;
+using ATS.Repository.Interface;
 using ATS.Core.Model;
+using ATS.Core.Helper;
 
 namespace ATS.Service.Controllers
 {
@@ -72,15 +72,56 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/User/Select")]
-        public IHttpActionResult Select()
+        public IHttpActionResult Select(SimpleQueryModel qry)
         {
             ApiResult apiResult = new ApiResult(false, "Records not Found");
             try
             {
-                List<UserInfoModel> user = userRepository.Select(null);
+                SimpleQueryBuilder<UserInfoModel> simpleQry = new SimpleQueryBuilder<UserInfoModel>();
+                List<UserInfoModel> user = userRepository.Select(simpleQry.GetQuery(query: qry).Compile());
                 if (user != null)
                 {
                     apiResult = new ApiResult(true, "", user);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpPost]
+        [Route("api/User/Retrieve")]
+        public IHttpActionResult Retrieve(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = new ApiResult(false, "Record not found");
+            try
+            {
+                UserInfoModel data = userRepository.Retrieve(userInfoModel);
+                if (data != null)
+                {
+                    apiResult = new ApiResult(true, "", data);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+        [HttpPost]
+        [Route("api/User/Delete")]
+        public IHttpActionResult Delete(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = new ApiResult(false, "Not Created");
+            try
+            {
+                if (userRepository.Delete(userInfoModel))
+                {
+                    apiResult = new ApiResult(true, "Record Deleted");
                 }
             }
             catch (Exception ex)

@@ -191,6 +191,8 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Candidate\Views\web.config" />
     <Content Include="Areas\Employee\Views\web.config" />
+    <Content Include="Areas\Admin\Views\UserSetup\UserApproval.cshtml" />
+    <Content Include="Areas\Admin\Views\UserSetup\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_QuestionList.cshtml" />
     <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
@@ -225,6 +227,7 @@
     <Content Include="Scripts\Question\question.js" />
     <Content Include="Scripts\Question\questionList.js" />
     <Content Include="Scripts\TypeSetup\typeSetup.js" />
+    <Content Include="Scripts\UserSetup\userApproval.js" />
     <Content Include="Scripts\UserSetup\userSetup.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

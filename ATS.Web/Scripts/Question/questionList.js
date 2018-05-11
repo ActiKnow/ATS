@@ -29,7 +29,6 @@
             },
         }
     }());
-
     var callBacks = (function () {
         var op = defaults;
 
@@ -56,23 +55,39 @@
             onQuestionListFailed: function (result) {
                 $(op.errorMsg).html(result.responseText);
             },
+            onDeleteQuestion: function (result) {
+                appendType(result);
+            },
+            onDeleteQuestionFailed: function (result) {
+                $(op.errorMsg).html(result.responseText);
+            },
         }
     })();
-
     var loadQuestionList = function () {
-
         var op = defaults;
-
         api.fireGetAjax('/Admin/Setup/GetQuestionList', {})
             .done(callBacks.onQuestionList)
             .fail(callBacks.onQuestionListFailed);
     }
-
-    var bindEvents = function () {
-     
+    var deleteQuestion = function (qId) {
+        if (qId != null) {
+            var op = defaults;
+            api.firePostAjax('/Admin/Setup/DeleteQuestion', { qId: qId})
+                .done(callBacks.onDeleteQuestion)
+                .fail(callBacks.onDeleteQuestionFailed);
+        }
 
     };
+    var bindEvents = function () {
+        var op = defaults;
+        var $tableContext = $(op.tableContext);
+        $tableContext.on('click', op.btnRemoveType, function (e) {
+            var $currentRow = $(e.target).closest('tr');
+            var qId = $currentRow.find(op.Qid).html();
+                deleteQuestion(qId);
+        });
 
+    };
     return {
         init: function (config) {
 

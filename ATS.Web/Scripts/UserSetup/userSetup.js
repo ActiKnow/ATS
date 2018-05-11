@@ -40,9 +40,8 @@
                 if (result !== "") {
                     if (result.Status) {
                         if (result.Message) {
-                            $(op.errorMsg).html(result.Message);
-                        }
-                        else {
+                            $(op.successMsg).show();
+                            $(op.successMsg).html(result.Message);
                             resetFields();
                         }
                     }
@@ -68,7 +67,7 @@
         var mobile = $(op.mobile).val();
         var password = $(op.password).val();
         var email = $(op.email).val();
-        var roleType = $(op.ddlRoleType).val();
+        var roleType = $(op.ddlRoleType).find(":selected").val();
 
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
@@ -85,7 +84,6 @@
                 Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
-                UserTypeId: roleType.trim(),
                 Password: password.trim(),
                 UserCredentials: UserCredentials,
             };
@@ -101,23 +99,23 @@
 
         var flag = true;
         var message = "";
-
+        $(defaults.successMsg).hide();
+       
         if (!firstName || firstName.trim() == "") {
             message = "First name is required";
         }
         else if (!mobile || mobile.trim() == "") {
             message = "Mobile is required";
         }
-        else if (!password || password.trim() == "") {
-            message = "Password is required";
-        }
         else if (!email || email.trim() == "") {
             message = "Email is required";
-        }
+        }              
         else if (!roleType || roleType.trim() == "") {
             message = "Please select role type";
         }
-
+        else if (!password || password.trim() == "") {
+            message = "Password is required";
+        }
         if (message != "") {
             $(defaults.errorMsg).show();
             $(defaults.errorMsg).html(message);
@@ -126,7 +124,6 @@
 
         return flag;
     }
-
     var loadRoleTypes = function () {
         var op = defaults;
 
@@ -183,11 +180,11 @@
         $(op.mobile).val("");
         $(op.password).val("");
         $(op.ddlRoleType).val("");
-    };
+    };   
     var bindEvents = function () {
         var op = defaults;
 
-        $(".toggle-password").click(function () {
+        $(op.togglePassword).click(function () {
 
             $(this).toggleClass("fa-eye fa-eye-slash");
             var input = $($(this).attr("toggle"));
@@ -218,8 +215,9 @@
         init: function (config) {
             $.extend(true, defaults, config);
             bindEvents();
-            loadRoleTypes();            
+            loadRoleTypes();     
+            $(defaults.successMsg).hide();
+            $(defaults.errorMsg).hide();
         }
-
     }
 })();

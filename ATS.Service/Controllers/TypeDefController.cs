@@ -7,6 +7,7 @@ using System.Web.Http;
 using ATS.Repository.DAO;
 using ATS.Repository.Interface;
 using ATS.Core.Model;
+using ATS.Core.Helper;
 
 namespace ATS.Service.Controllers
 {
@@ -131,8 +132,8 @@ namespace ATS.Service.Controllers
 
 
         [HttpGet]
-        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey?}")]
-        public IHttpActionResult Select(bool isParentDependent, Guid? parentKey = null)
+        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey}")]
+        public IHttpActionResult Select(bool isParentDependent, int parentKey = 0)
         {
             ApiResult apiResult = null;
             try
@@ -166,7 +167,7 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
-        public IHttpActionResult ValidateType(string typeName, string typeValue)
+        public IHttpActionResult ValidateType(string typeName, int typeValue)
         {
             ApiResult apiResult = null;
             var status = false;
@@ -179,7 +180,7 @@ namespace ATS.Service.Controllers
                 }
                 else
                 {
-                    apiResult = new ApiResult(true, "",false);
+                    apiResult = new ApiResult(true, "", false);
                 }
             }
             catch (Exception ex)
@@ -192,17 +193,16 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TypeDef/Select")]
-        public IHttpActionResult SelectTest(SimpleQueryModel qry)
+        public IHttpActionResult Select(SimpleQueryModel query)
         {
             ApiResult apiResult = null;
             try
             {
                 List<TypeDefModel> list = new List<TypeDefModel>();
-                if (qry != null)
-                {
-                    SimpleQuery<TypeDefModel> simpleQry = new SimpleQuery<TypeDefModel>();
-                    list = repository.Select(simpleQry.GetQuery(query: qry).Compile());
-                }
+
+                SimpleQueryBuilder<TypeDefModel> simpleQry = new SimpleQueryBuilder<TypeDefModel>();
+                list = repository.Select(simpleQry.GetQuery(query).Compile());
+
 
                 if (list != null)
                 {
