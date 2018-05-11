@@ -106,31 +106,6 @@
 
     }
 
-    var updateUser = function () {
-
-        //var UserCredentials = [];
-        //var op = defaults;
-
-        //var userID = $(op.userId).val();
-        //var RoleID = $(op.roleTypeId).val();
-        //var email = $(op.email).val();
-
-        //var item = {
-        //    UserId: userID.trim(),
-        //    EmailId: email.trim(),
-        //    RoleTypeId: RoleID.trim(),
-        //};
-        //UserCredentials.push(item);
-
-        //var userInfoModel = {
-        //    UserId: userID.trim(),
-        //    RoleTypeId: RoleID.trim(),
-        //    Email: email.trim(),
-        //    UserCredentials: UserCredentials,
-        //};    
-        alert("Edit btn click");       
-    }
-
     var bindEvents = function () {
         var op = defaults;
 
@@ -138,11 +113,9 @@
 
             var $row = $(this).closest("tr");
             var id = $row.find($(op.userId)).val();
-             
+            
             $(op.selectedUserId).val(id);
             $(op.submitForm).submit();
-            //var url = '@Url.Action("UserSetup","UserSetup")';
-            //window.location.href = url + '?userId=' + 11;
         });
     };
 

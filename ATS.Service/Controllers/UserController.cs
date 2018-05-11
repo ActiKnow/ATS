@@ -116,7 +116,7 @@ namespace ATS.Service.Controllers
         [Route("api/User/Delete")]
         public IHttpActionResult Delete(UserInfoModel userInfoModel)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Created");
+            ApiResult apiResult = new ApiResult(false, "Not Deleted");
             try
             {
                 if (userRepository.Delete(userInfoModel))
@@ -131,5 +131,25 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
+        [HttpPost]
+        [Route("api/User/Update")]
+        public IHttpActionResult Update(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = new ApiResult(false, "Not Updated");
+            try
+            {
+                if (userRepository.Update(userInfoModel))
+                {
+                    apiResult = new ApiResult(true, "Record Updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
+       
     }
 }
