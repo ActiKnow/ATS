@@ -132,8 +132,8 @@ namespace ATS.Service.Controllers
 
 
         [HttpGet]
-        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey?}")]
-        public IHttpActionResult Select(bool isParentDependent, Guid? parentKey = null)
+        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey}")]
+        public IHttpActionResult Select(bool isParentDependent, int parentKey = 0)
         {
             ApiResult apiResult = null;
             try
@@ -167,7 +167,7 @@ namespace ATS.Service.Controllers
 
         [HttpGet]
         [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
-        public IHttpActionResult ValidateType(string typeName, string typeValue)
+        public IHttpActionResult ValidateType(string typeName, int typeValue)
         {
             ApiResult apiResult = null;
             var status = false;

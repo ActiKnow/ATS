@@ -112,6 +112,24 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
-
+        [HttpPost]
+        [Route("api/User/Delete")]
+        public IHttpActionResult Delete(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = new ApiResult(false, "Not Created");
+            try
+            {
+                if (userRepository.Delete(userInfoModel))
+                {
+                    apiResult = new ApiResult(true, "Record Deleted");
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.GetBaseException().Message;
+                apiResult = new ApiResult(false, error);
+            }
+            return Ok(apiResult);
+        }
     }
 }

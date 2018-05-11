@@ -1,4 +1,6 @@
-﻿@inherits System.Web.Mvc.WebViewPage
+﻿@model ATS.Core.Model.UserInfoModel
+
+@*@inherits System.Web.Mvc.WebViewPage*@
 @{
     ViewBag.Title = "UserSetup";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -21,96 +23,116 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-control-feedback" for="inputDanger1">
-                    <span class="alert-danger errorMsg" style="display:none"></span></div>                    
+                        <span class="alert-danger errorMsg" style="display:none"></span>
+                    </div>
                     <span class="alert-success successMsg" style="display:none"></span>
                 </div>
-              </div>
-                <div class="row">
-                 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">First Name</label>
-                            <input class="form-control firstName" type="text" placeholder="Enter first name">
-                        </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">First Name<span class="fa fa-star"></span></label>
+                        @Html.TextBoxFor(x => x.FName, htmlAttributes: new { @class = "form-control firstName" })
+                        @*<input class="form-control firstName" type="text" placeholder="Enter first name">*@
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">Last Name</label>
-                            <input class="form-control lastName" type="text" placeholder="Enter last name">
-                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Last Name</label>
+                        @Html.TextBoxFor(x => x.LName, htmlAttributes: new { @class = "form-control lastName" })
+                        @*<input class="form-control lastName" type="text" placeholder="Enter last name">*@
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">Mobile No</label>
-                            <input class="form-control mobile" type="text" placeholder="Enter mobile number">
-                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Mobile No<span class="fa fa-star"></span></label>
+                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control mobile" })
+                        @*<input class="form-control mobile" type="text" placeholder="Enter mobile number">*@
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input class="form-control email" placeholder="Enter email" type="email">
-                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address<span class="fa fa-star"></span></label>
+                        @*<input class="form-control email" placeholder="Enter email" type="email">*@
+                        @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control email" })
+
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label">Role Type</label>
-                            <select class="form-control roleType" id="roleType">
-                                <option value="">-Select-</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Role Type<span class="fa fa-star"></span></label>
+                        @Html.DropDownList("roleType", ViewBag.userSetupRoleType as SelectList, new { @class = "form-control input-sm", id = "roleType" })
+
+                        @*@Html.DropDownList("companyName", new List<SelectListItem> { new SelectListItem { Text = "-Select Company-", Value = "", Selected = true } }, new { @class = "form-control input-sm", id = "companyName", @onchange = "validateEnterpriseBusinessLineName()" })
+                              <select class="form-control roleType" id="roleType">
+                                    <option value="">-Select-</option>
+                              </select>*@
                     </div>
-                    <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Password<span class="fa fa-star"></span></label>
                         <div class="form-group">
-                            <label class="control-label">Password</label>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">
-                                    <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
-                                    <button class="input-group-lg input-group-append" id="refresh">
-                                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                            <div class="input-group">
+                                @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control email", @id = "password-field", @name = "password", @type = "password" })
+                                @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
+                                <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
+                                <button class="input-group-lg input-group-append" id="refresh">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="tile-footer">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-3">
-                            <button class="btn btn-primary" id="createUser" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button><button class="btn btn-secondary" id="cancelUser" type="button">
-                                <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel
-                            </button>
-                        </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3">
+                        @if (Model.UserId == null)
+                        {
+                            <button class="btn btn-primary" id="createUser" type="button">
+                            <i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" id="updateUser" type="button">
+                                <i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+                        }
+                        <button class="btn btn-secondary" id="cancelUser" type="button">
+                            <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 @section scripts
 {
-    <script src="~/Scripts/UserSetup/userSetup.js"></script>
+    <script src="~/Scripts/module/user-setup/user-setup.js"></script>
     <script>
-    (function ($, window, document) {
-        $(function () {
-            var config = {
-                firstName:'.firstName',
-                lastName:'.lastName',
-                mobile:'.mobile',
-                email: '.email',
-                password: '#password-field', 
-                btnRefresh: '#refresh',
-                ddlRoleType: '#roleType',
-                errorMsg: '.errorMsg',
-                successMsg: '.successMsg',
-                btnCreateUser: '#createUser',
-                btnCancelUser: '#cancelUser',
-                userSetupContext: "#userSetupContext",
-                togglePassword:".toggle-password",
-            };
-            userSetup.init(config);
-        });
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    firstName: '.firstName',
+                    lastName: '.lastName',
+                    mobile: '.mobile',
+                    email: '.email',
+                    password: '#password-field',
+                    btnRefresh: '#refresh',
+                    ddlRoleType: '#roleType',
+                    errorMsg: '.errorMsg',
+                    successMsg: '.successMsg',
+                    btnCreateUser: '#createUser',
+                    btnCancelUser: '#cancelUser',
+                    userSetupContext: "#userSetupContext",
+                    togglePassword: ".toggle-password",
+                };
+                userSetup.init(config);
+            });
 
-    }(window.jQuery, window, document));
+        }(window.jQuery, window, document));
     </script>
 
 }

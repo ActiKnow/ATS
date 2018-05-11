@@ -53,7 +53,7 @@ namespace ATS.Core.Helper
             }
             else if (type.Equals(typeof(Guid?)))
             {
-                value = (value == null) ?Guid.Empty : new Guid(value.ToString());
+                value = (value == null) ?value : new Guid(value.ToString());
             }
             else if (type.Equals(typeof(DateTime)) )
             {

@@ -1,4 +1,5 @@
-﻿@inherits System.Web.Mvc.WebViewPage
+﻿
+@inherits System.Web.Mvc.WebViewPage
 @{
     ViewBag.Title = "UserApproval";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -16,12 +17,14 @@
         <li class="breadcrumb-item"><a href="#">User Approval</a></li>
     </ul>
 </div>
-
+@using (Html.BeginForm("UserSetup", "UserSetup", FormMethod.Post,new { @id="submitForm" }))
+{
+ <input type="hidden" name="userID" id="selectedUserId" />
 <div class="row">
-    <div class="col-md-12" id="userApprovalContext">
-        <div class="tile tableContext">
+    <div class="col-md-12">
+        <div class="tile" id="userApprovalContext">
             <h3 class="tile-title">Users List</h3>
-            <table class="table">
+            <table class="table" id="userTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -36,15 +39,17 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+
+                </tbody>
             </table>
         </div>
     </div>
 </div>
-
+}
 @section scripts
 {
-    <script src="~/Scripts/UserSetup/userApproval.js"></script>
+    <script src="~/Scripts/module/user-setup/user-approval.js"></script>
     <script>
     (function ($, window, document) {
         $(function () {
@@ -57,7 +62,14 @@
                 ddlRoleType: '.roleType',
                 errorMsg: '.errorMsg',
                 successMsg: '.successMsg',
-                tableContext:'#userApprovalContext',
+                tableContext: '#userApprovalContext',
+                tableId:"#userTable",
+                btnEditUser: '.btnEditUser',
+                btnRemoveUser: '.btnRemoveUser',
+                userId: '.userId',
+                roleTypeId: '.roleTypeId', 
+                submitForm: '#submitForm',
+                selectedUserId:'#selectedUserId',
             };
             userApproval.init(config);
         });

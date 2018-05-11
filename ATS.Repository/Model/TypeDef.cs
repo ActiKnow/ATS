@@ -15,8 +15,8 @@ namespace ATS.Repository.Model
         [Key]
         public System.Guid TypeId { get; set; }
         public string Description { get; set; }      
-        public string Value { get; set; }
-        public Nullable<System.Guid> ParentKey { get; set; }
+        public int Value { get; set; }
+        public int ParentKey { get; set; }
         public virtual List<UserInfo> UserInfo { get; set; }
     }
 }

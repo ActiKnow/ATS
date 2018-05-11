@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using ATS.Core.Global;
 using ATS.Core.Model;
 using ATS.Web.Controllers;
 
@@ -207,7 +208,7 @@ namespace ATS.Web.Areas.Admin
         }
 
         [HttpGet]
-        public ActionResult ValidateType(string typeName, string typeValue)
+        public ActionResult ValidateType(string typeName, int typeValue)
         {
             ApiResult result = null;
             try

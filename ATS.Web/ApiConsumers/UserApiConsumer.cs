@@ -38,13 +38,13 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult RetrieveType(UserInfoModel userInfoModel)   // Getting UserInfo by using ID
+        public static ApiResult RetrieveUser(UserInfoModel userInfoModel)   // Getting UserInfo by using ID
         {
             ApiResult apiResult = null;
             try
             {
                 string url = "api/User/Retrieve";
-                apiResult = ConsumerMethods.Post<List<UserInfoModel>>(url, userInfoModel);
+                apiResult = ConsumerMethods.Post<UserInfoModel>(url, userInfoModel);
             }
             catch
             {
@@ -60,6 +60,20 @@ namespace ATS.Web.ApiConsumers
             {
                 string url = "api/User/Select";
                 apiResult = ConsumerMethods.Get<List<UserInfoModel>>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+        public static ApiResult DeleteUser(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Delete";
+                apiResult = ConsumerMethods.Post<List<UserInfoModel>>(url, userInfoModel);
             }
             catch
             {

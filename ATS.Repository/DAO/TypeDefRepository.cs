@@ -85,7 +85,7 @@ namespace ATS.Repository.DAO
                 try
                 {
                     typeDef = (from x in context.TypeDef.AsNoTracking().Where(x => x.TypeId == input.TypeId)
-                               join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId
+                               join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.Value
                                select new TypeDefModel
                                {
                                    CreatedBy = x.CreatedBy,
@@ -119,7 +119,7 @@ namespace ATS.Repository.DAO
                 try
                 {
                     var query = (from x in context.TypeDef.AsNoTracking()
-                                 join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.TypeId into parent
+                                 join y in context.TypeDef.AsNoTracking() on x.ParentKey equals y.Value into parent
                                  from p in parent.DefaultIfEmpty()
                                  select new TypeDefModel
                                  {
@@ -185,7 +185,7 @@ namespace ATS.Repository.DAO
             }
         }
 
-        public bool Validate(string typeName, string typeValue)
+        public bool Validate(string typeName, int typeValue)
         {
             var flag = false;
             using (var context = GetConnection())

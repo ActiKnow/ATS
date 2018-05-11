@@ -82,7 +82,7 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
-        public static ApiResult ValidateType(string typeName,string typeValue)   // Getting TypeDef by using ID
+        public static ApiResult ValidateType(string typeName,int typeValue)   // Getting TypeDef by using ID
         {
             ApiResult apiResult = null;
             try

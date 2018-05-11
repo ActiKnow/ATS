@@ -17,8 +17,7 @@ namespace ATS.UnitTest
             SimpleQueryBuilder<TypeDefModel> simpleQry = new SimpleQueryBuilder<TypeDefModel>();
             List<TypeDefModel> data = new List<TypeDefModel>
             {
-                new TypeDefModel{ TypeId=new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"),
-                ParentKey = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709")}
+                new TypeDefModel{ TypeId=new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709") }
             };
             SimpleQueryModel simpleModels = new SimpleQueryModel
             {
@@ -27,7 +26,7 @@ namespace ATS.UnitTest
                 Properties = new Dictionary<string, object>
                     {
                         { nameof(TypeDefModel.TypeId) , "9D2B0228-4D0D-4C23-8B49-01A698857709" },
-                         { nameof(TypeDefModel.ParentKey) , "9D2B0228-4D0D-4C23-8B49-01A698857709"}
+                         //{ nameof(TypeDefModel.ParentKey) , "9D2B0228-4D0D-4C23-8B49-01A698857709"}
                     }
             };
             var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();
@@ -43,7 +42,8 @@ namespace ATS.UnitTest
             List<TypeDefModel> data = new List<TypeDefModel>
             {
                 new TypeDefModel{ TypeId=new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"),
-                ParentKey = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709")}
+                    //ParentKey = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709")
+                }
             };
             SimpleQueryModel simpleModels = new SimpleQueryModel();
             simpleModels.ModelName = nameof(TypeDefModel);
@@ -64,7 +64,8 @@ namespace ATS.UnitTest
             List<TypeDefModel> data = new List<TypeDefModel>
             {
                 new TypeDefModel{ TypeId=new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"),
-                ParentKey = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709")}
+                    //ParentKey = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709")
+                }
             };
             SimpleQueryModel simpleModels = null;
             var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();

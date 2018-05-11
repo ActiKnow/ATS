@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ATS.Core.Global;
 using ATS.Core.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
