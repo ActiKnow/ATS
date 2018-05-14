@@ -70,7 +70,7 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Question/Select")]
         public IHttpActionResult Select(SimpleQueryModel query)
         {

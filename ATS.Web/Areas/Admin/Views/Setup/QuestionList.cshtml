@@ -15,9 +15,21 @@
         <li class="breadcrumb-item"><a href="#">Question List</a></li>
     </ul>
 </div>
+
+@using (Html.BeginForm("Question", "SetUp", FormMethod.Post, new { @id = "formSubmit" }))
+{
 <div class="row">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <span class="errorMsg" @*style="display:none"*@></span>
+            <span class="successMsg"></span>
+        </div>
+
+    </div>
     <div class="col-md-12 tableContext">
         <div class="tile">
+
+            <input type="hidden" id="selectedId" name="selectedId" />
             <h3 class="tile-title">Question List</h3>
             <table class="table">
                 <thead>
@@ -36,6 +48,7 @@
         </div>
     </div>
 </div>
+}
 
 @section scripts {
     <script src="~/Scripts/module/question/question-list.js"></script>
@@ -48,17 +61,20 @@
             }
             return true;
         }
-        (function ($, window, document) {
+        //(function ($, window, document) {
             $(function () {
                 var config = {
-                    tableContext: '.tableContext',    
+                    tableContext: '.tableContext',
                     btnRemoveType: '.btnRemoveType',
-                    Qid:'.Qid'
+                    btnEditType: '.btnEditType',
+                    Qid: '.Qid',
+                    selectedId: '#selectedId',
+                    formSubmit: '#formSubmit',
+                    errorMsg: '.errorMsg',
                 };
                 questionList.init(config);
             });
-
-        }(window.jQuery, window, document));
+        //}(window.jQuery, window, document));
     </script>
 
 }

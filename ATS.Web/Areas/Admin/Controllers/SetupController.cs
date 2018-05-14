@@ -30,8 +30,27 @@ namespace ATS.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Question()
         {
+            QuestionBankModel questionBankModel = new QuestionBankModel();
 
-            return View();
+            return View(questionBankModel);
+        }
+
+        [HttpPost]
+        public ActionResult Question(Guid selectedId)
+
+        {
+            ApiResult result = null;
+            QuestionBankModel questionBankModel = new QuestionBankModel();
+            SimpleQueryModel query = new SimpleQueryModel();
+            query.ModelName = nameof(QuestionBankModel);
+            query[nameof(QuestionBankModel.QId)] = selectedId;
+            result = ApiConsumers.QuestionApiConsumer.Select(query);
+            if (result.Status && result.Data != null)
+            {
+                var list = (List<QuestionBankModel>)result.Data;
+                questionBankModel = list.FirstOrDefault();
+            }
+            return View(questionBankModel);
         }
 
         public ActionResult CreateQuestion(QuestionBankModel QuestionView)
@@ -216,7 +235,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.QuestionApiConsumer.SelectList();
+                result = ApiConsumers.QuestionApiConsumer.Select();
                 if (result.Status && result.Data != null)
                 {
                     var list = (List<QuestionBankModel>)result.Data;
@@ -242,12 +261,17 @@ namespace ATS.Web.Areas.Admin.Controllers
                 result = ApiConsumers.QuestionApiConsumer.DeleteQuestion(questionBankModel);
                 if (result.Status)
                 {
-                    result1 = ApiConsumers.QuestionApiConsumer.SelectList();
+                    result1 = ApiConsumers.QuestionApiConsumer.Select();
                     if (result1.Status && result1.Data != null)
                     {
                         var list = (List<QuestionBankModel>)result1.Data;
 
-                        result1.Data = RenderPartialViewToString("_QuestionList", list);
+                        result.Data = RenderPartialViewToString("_QuestionList", list);
+                    }
+                    else
+                    {
+                        result.Status = result1.Status;
+                        result.Message = result1.Message;
                     }
                 }
             }
@@ -255,12 +279,23 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
-            return Json(result1, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
-        public ActionResult EditQuestion()
+        public ActionResult EditQuestion(Guid qId)
         {
-            return View();
+           
+            ApiResult result = null;
+            SimpleQueryModel query = new SimpleQueryModel();
+            query.ModelName = nameof(QuestionBankModel);
+            query[nameof(QuestionBankModel.QId)] = qId;
+            result = ApiConsumers.QuestionApiConsumer.Select(query);
+            if(result.Status && result.Data != null  )
+            {
+                var list = (List<QuestionBankModel>)result.Data;
+                
+            }
+            return RedirectToAction("Question",qId);
         }
 
         public ActionResult GetQuestionTypes()
@@ -268,7 +303,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.QUESTION));
             }
             catch (Exception ex)
             {
@@ -281,7 +316,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.LEVEL));
             }
             catch (Exception ex)
             {
@@ -294,7 +329,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.CATEGORY));
             }
             catch (Exception ex)
             {
