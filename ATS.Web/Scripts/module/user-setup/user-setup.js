@@ -63,14 +63,14 @@
             onUserUpdated: function (result) {
                 if (result !== "") {
                     if (result.Status) {
-                        if (result.Message) {
+                        if (result.Message && result.Message.Count>0) {
                             $(op.successMsg).show();
-                            $(op.successMsg).html(result.Message);
+                            $(op.successMsg).html(result.Message && result.Message.Count>0);
                             resetFields();
                         }
                     }
                     else {
-                        $(op.errorMsg).html(result.Message);
+                        $(op.errorMsg).html(result.Message && result.Message.Count>0);
                     }
                 }
             },
@@ -87,9 +87,13 @@
         api.fireGetAjax('/UserSetup/GetStatus', {})
             .done(res => {
                 if (res != null) {
+                    var msg = " ";
                     if (res.Status) {
-                        if (res.Message) {
-                            $(op.errorMsg).html(res.Message);
+                        if (res.Message && res.Message.Count>0) {
+                            $.each(res.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
                         }
                         else {
                             var items = "";
@@ -103,7 +107,10 @@
                         }
                     }
                     else {
-                        $(op.errorMsg).html(res.Message);
+                        $.each(res.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             })

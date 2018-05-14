@@ -8,7 +8,7 @@ namespace ATS.Repository.Interface
 {
     public interface ITypeDefRepository : IRepository<TypeDef>
     {
-        bool Validate(string typeName, int typeValue);
+        bool Validate(string typeName);
         IQueryable<TypeDefModel> GetByValue(int value);
         IQueryable<TypeDefModel> Select(Func<TypeDefModel,bool> condition);
     }

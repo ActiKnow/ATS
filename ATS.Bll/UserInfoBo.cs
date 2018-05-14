@@ -20,6 +20,8 @@ namespace ATS.Bll
             var flag = false;
             UserInfo userInfo = new UserInfo();
 
+            input.UserId =Guid.NewGuid();
+
             Utility.CopyEntity(out userInfo, input);
 
             using (var unitOfWork = new UnitOfWork())
@@ -39,13 +41,14 @@ namespace ATS.Bll
                         userCredential.EmailId = input.Email;
                         userCredential.StatusId = input.StatusId;
                         userCredential.UserId = input.UserId;
-                        userCredential.Id = new Guid();
+                        userCredential.Id = Guid.NewGuid();
 
                         flag = unitOfWork.UserCredentialRepo.Create(ref userCredential);
 
                         if (flag)
                         {
                             unitOfWork.Commit();
+
                             Utility.CopyEntity(out input, userInfo);
 
                             apiResult.Message.Add("User created successfully.");
@@ -69,7 +72,7 @@ namespace ATS.Bll
                         apiResult.Status = false;
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     unitOfWork.Dispose();
                 }
@@ -86,8 +89,15 @@ namespace ATS.Bll
 
             using (var unitOfWork = new UnitOfWork())
             {
-                flag = unitOfWork.UserRepo.Delete(userInfo);
+                flag = unitOfWork.UserRepo.Update(ref userInfo);
 
+                if (flag)
+                {
+                    UserCredential userCredential = new UserCredential();
+                    userCredential.UserId = input.UserId;
+                    userCredential.StatusId = input.StatusId;
+                    flag = unitOfWork.UserCredentialRepo.Update(ref userCredential);                    
+                }
                 if (flag)
                 {
                     apiResult.Message.Add("User deleted successfully.");
