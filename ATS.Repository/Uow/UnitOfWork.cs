@@ -40,10 +40,7 @@ namespace ATS.Repository.Uow
 
         public void Commit()
         {
-            using (var trans = _context.Database.BeginTransaction())
-            {
-                this._context.SaveChanges();
-            }            
+           this._context.SaveChanges();
         }
                
         public void Dispose()
