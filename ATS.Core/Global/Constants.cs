@@ -21,6 +21,8 @@ namespace ATS.Core.Global
         public const string TEXT = "Text";
         public const string ROLE = "Role";
         public const string STATUS = "Status";
+        public const string ACTIVE = "Active";
+        public const string INACTIVE = "InActive";
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }

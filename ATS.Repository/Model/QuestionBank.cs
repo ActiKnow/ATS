@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ATS.Core.Model;
 
@@ -18,15 +19,24 @@ namespace ATS.Repository.Model
         public System.Guid QId { get; set; }
         
         public string Description { get; set; }
-        public System.Guid QuesTypeId { get; set; }
-        public System.Guid LevelTypeId { get; set; }
-        public System.Guid CategoryTypeId { get; set; }
+        public int QuesTypeValue { get; set; }
+        public int LevelTypeValue { get; set; }
+        public int CategoryTypeValue { get; set; }
         public int DefaultMark { get; set; }
     
-        public virtual List<QuestionOptionMapping> QuestionOptionMappings { get; set; }
+        public List<QuestionOptionMapping> QuestionOptionMappings { get; set; }
 
-        public virtual List<TestQuestionMapping> TestQuestionMappings { get; set; }
+        public List<TestQuestionMapping> TestQuestionMappings { get; set; }
 
-        public virtual List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
+        public List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
+
+        //[ForeignKey("CategoryTypeValue")]
+        //public TypeDef CategoryType { get; set; }
+
+        //[ForeignKey("LevelTypeValue")]
+        //public TypeDef LevelType { get; set; }
+
+        //[ForeignKey("QuesTypeValue")]
+        //public TypeDef TestType { get; set; }
     }
 }

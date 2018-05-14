@@ -53,13 +53,13 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
-        public static ApiResult RetrieveType(TypeDefModel typeDef)   // Getting TypeDef by using ID
+        public static ApiResult RetrieveType(int value)   // Getting TypeDef by using ID
         {
             ApiResult apiResult = null;
             try
             {
-                string url = "api/TypeDef/Retrieve";
-                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, typeDef);
+                string url = "api/TypeDef/Retrieve/"+ value;
+                apiResult = ConsumerMethods.Get<TypeDefModel>(url);
             }
             catch
             {
@@ -67,7 +67,8 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult SelectType(SimpleQueryModel query = null)   // Getting TypeDef by using query
+
+        public static ApiResult SelectTypes(SimpleQueryModel query = null)   // Getting TypeDef by using query
         {
             ApiResult apiResult = null;
             try

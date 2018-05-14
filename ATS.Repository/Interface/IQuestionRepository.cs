@@ -1,16 +1,14 @@
 ﻿using ATS.Core.Model;
-using ATS.Repository.DAO;
 using ATS.Repository.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ATS.Repository.Interface
 {
-    public interface IQuestionRepository : ICRUD<QuestionBankModel>
+    public interface IQuestionRepository : IRepository<QuestionBank>
     {
-        void Create(ref QuestionBankModel input, ATSDBContext context);
-        void Update( QuestionBankModel input, ATSDBContext context);
-        void Delete( QuestionBankModel input, ATSDBContext context);
-        List<QuestionBankModel> Select(ATSDBContext context,Func<QuestionBankModel,bool> condition);
+        IQueryable<QuestionBankModel> Retrieve(Guid qId);
+        IQueryable<QuestionBankModel> Select(Func<QuestionBankModel,bool> condition);
     }
 }

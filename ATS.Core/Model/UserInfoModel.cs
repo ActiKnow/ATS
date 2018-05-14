@@ -19,16 +19,12 @@ namespace ATS.Core.Model
         public string LName { get; set; }
         public decimal Mobile { get; set; }
         public string Email { get; set; }
-        public System.Guid RoleTypeId { get; set; }
+        public int RoleTypeValue { get; set; }
         public string RoleDescription { get; set; }
-        public int RoleValue { get; set; }
-        public System.Guid? UserTypeId { get; set; }
-        public string UserTypeDescription { get; set; }
-        public string UserTypeValue { get; set; }
-        public virtual List<TestAssignmentModel> TestAssignments { get; set; }
-        public virtual TypeDefModel TypeDef { get; set; }
-        public virtual List<UserCredentialModel> UserCredentials { get; set; }
-        public virtual List<UserTestHistoryModel> UserTestHistories { get; set; }
+        public  List<TestAssignmentModel> TestAssignments { get; set; }
+        public  TypeDefModel TypeDef { get; set; }
+        public  List<UserCredentialModel> UserCredentials { get; set; }
+        public  List<UserTestHistoryModel> UserTestHistories { get; set; }
         public string CurrPassword { get; set; }
     }
 }

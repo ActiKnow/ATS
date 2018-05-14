@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATS.Service", "ATS.Service\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATS.UnitTest", "ATS.UnitTest\ATS.UnitTest.csproj", "{0D9199ED-B719-4F73-8A48-ABFD65F8F977}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATS.Bll", "ATS.Bll\ATS.Bll.csproj", "{C9E718BA-2D24-4BD2-8373-1D447054157C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0D9199ED-B719-4F73-8A48-ABFD65F8F977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D9199ED-B719-4F73-8A48-ABFD65F8F977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D9199ED-B719-4F73-8A48-ABFD65F8F977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E718BA-2D24-4BD2-8373-1D447054157C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E718BA-2D24-4BD2-8373-1D447054157C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E718BA-2D24-4BD2-8373-1D447054157C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E718BA-2D24-4BD2-8373-1D447054157C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

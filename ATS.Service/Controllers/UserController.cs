@@ -4,68 +4,50 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.DAO;
 using ATS.Repository.Interface;
 using ATS.Core.Model;
 using ATS.Core.Helper;
+using ATS.Bll;
 
 namespace ATS.Service.Controllers
 {
     public class UserController : ApiController
     {
-        private IUserRepository userRepository = null;
+        private UserInfoBo userInfoBo = null;
         public UserController()
         {
-            userRepository = new UserRepository();
+            //userRepository = new UserRepository();
+            userInfoBo = new UserInfoBo();
         }
 
         [HttpPost]
         [Route("api/User/Validate")]
-        public IHttpActionResult ValidateUser(UserCredentialModel userCredential)
+        public IHttpActionResult ValidateUser(UserCredentialModel input)
         {
             ApiResult apiResult = null;
             try
             {
-                var userId = userRepository.ValidateUser(userCredential);
-                if (userId != Guid.Empty)
-                {
-                    UserInfoModel userInfo = new UserInfoModel();
-                    userInfo.Email = userCredential.EmailId;
-                    userInfo.UserId = userId;
-
-                    userInfo = userRepository.Retrieve(userInfo);
-
-                    apiResult = new ApiResult(true, "", userInfo);
-                }
-                else
-                {
-                    apiResult = new ApiResult(false, "Username & Password is incorrect.");
-                }
+                apiResult = userInfoBo.Validate(input);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/User/Create")]
-        public IHttpActionResult Create(UserInfoModel userCredential)
+        public IHttpActionResult Create(UserInfoModel input)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Created");
+            ApiResult apiResult = null;
             try
             {
-                if (userRepository.Create(userCredential))
-                {
-                    apiResult = new ApiResult(true, "Record Created");
-                }
+                apiResult = userInfoBo.Create(input);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
@@ -74,20 +56,14 @@ namespace ATS.Service.Controllers
         [Route("api/User/Select")]
         public IHttpActionResult Select(SimpleQueryModel qry)
         {
-            ApiResult apiResult = new ApiResult(false, "Records not Found");
+            ApiResult apiResult = null;
             try
-            {
-                SimpleQueryBuilder<UserInfoModel> simpleQry = new SimpleQueryBuilder<UserInfoModel>();
-                List<UserInfoModel> user = userRepository.Select(simpleQry.GetQuery(query: qry).Compile());
-                if (user != null)
-                {
-                    apiResult = new ApiResult(true, "", user);
-                }
+            {              
+                apiResult = userInfoBo.Select(qry);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
@@ -96,60 +72,48 @@ namespace ATS.Service.Controllers
         [Route("api/User/Retrieve")]
         public IHttpActionResult Retrieve(UserInfoModel userInfoModel)
         {
-            ApiResult apiResult = new ApiResult(false, "Record not found");
+            ApiResult apiResult = null;
             try
             {
-                UserInfoModel data = userRepository.Retrieve(userInfoModel);
-                if (data != null)
-                {
-                    apiResult = new ApiResult(true, "", data);
-                }
+                apiResult = userInfoBo.GetById(userInfoModel.UserId);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
+
         [HttpPost]
         [Route("api/User/Delete")]
-        public IHttpActionResult Delete(UserInfoModel userInfoModel)
+        public IHttpActionResult Delete(UserInfoModel input)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Deleted");
+            ApiResult apiResult = null;
             try
             {
-                if (userRepository.Delete(userInfoModel))
-                {
-                    apiResult = new ApiResult(true, "Record Deleted");
-                }
+                apiResult = userInfoBo.Delete(input);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
+
         [HttpPost]
         [Route("api/User/Update")]
-        public IHttpActionResult Update(UserInfoModel userInfoModel)
+        public IHttpActionResult Update(UserInfoModel input)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Updated");
+            ApiResult apiResult = null;
             try
             {
-                if (userRepository.Update(userInfoModel))
-                {
-                    apiResult = new ApiResult(true, "Record Updated");
-                }
+                apiResult = userInfoBo.Update(input);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Ok(apiResult);
         }
-       
     }
 }

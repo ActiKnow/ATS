@@ -33,9 +33,13 @@
 
         var appendType = function (result) {
             if (result !== "") {
+                var msg = " ";
                 if (result.Status) {
                     if (result.Message) {
-                        $(op.errorMsg).html(result.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
@@ -44,7 +48,10 @@
                     }
                 }
                 else {
-                    $(op.errorMsg).html(result.Message);
+                    $.each(result.Message, function (index, value) {
+                        msg += value.Message;
+                    });
+                    $(op.errorMsg).html(msg);
                 }
             }
         }
@@ -154,10 +161,14 @@
         api.fireGetAjax('/Setup/GetParentTypes', { })
             .done(res => {
                 if (res != null) {
+                    var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
                         if (res.Message) {
-                            $(op.errorMsg).html(res.Message);
+                            $.each(result.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -167,7 +178,10 @@
                         }
                     }
                     else {
-                        $(op.errorMsg).html(res.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             })
@@ -182,9 +196,13 @@
         api.fireGetAjax('/Setup/GetStatus', {})
             .done(res => {
                 if (res != null) {
+                    var msg = " ";
                     if (res.Status) {
                         if (res.Message) {
-                            $(op.errorMsg).html(res.Message);
+                            $.each(result.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
                         }
                         else {
                             var items = "";
@@ -195,7 +213,10 @@
                         }
                     }
                     else {
-                        $(op.errorMsg).html(res.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             })
@@ -224,14 +245,21 @@
             api.fireGetAjax('/Admin/Setup/ValidateType', { typeName: typeName, typeValue: typeValue })
                 .done(res => {
                     if (res != null) {
+                        var msg = " ";
                         if (!res.Status) {
                             if (res.Message) {
-                                $(op.errorMsg).html(res.Message);
+                                $.each(result.Message, function (index, value) {
+                                    msg += value.Message;
+                                });
+                                $(op.errorMsg).html(msg);
                             }
                             $(op.btnCreateType).attr("disabled", "disabled");
                         }
                         else {
-                            $(op.errorMsg).html(res.Message);
+                            $.each(result.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
                         }
                     }
                 })

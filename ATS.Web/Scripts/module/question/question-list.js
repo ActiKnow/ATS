@@ -32,15 +32,24 @@
 
         var appendType = function (result) {
             if (result !== "") {
-
-                if (result.Message) {
-                    $(op.errorMsg).html(result.Message);
+                var msg = " ";
+                if (result.Status) {
+                    if (result.Message) {
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
+                    }
+                    else {
+                        $(op.tableContext).find('tbody').html(result.Data);
+                    }
                 }
-                $(op.tableContext).find('tbody').html(result.Data);
-            }
-            else {
-                $(op.errorMsg).html(result.Message);
-
+                else {
+                    $.each(result.Message, function (index, value) {
+                        msg += value.Message;
+                    });
+                    $(op.errorMsg).html(msg);
+                }
             }
         }
         return {

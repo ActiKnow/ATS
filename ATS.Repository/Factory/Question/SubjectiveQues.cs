@@ -3,57 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATS.Core.Helper;
 using ATS.Core.Model;
-using ATS.Repository.DAO;
 using ATS.Repository.Interface;
+using ATS.Repository.Model;
+using ATS.Repository.Uow;
 
 namespace ATS.Repository.Factory.Question
 {
     public class SubjectiveQues : IQuestion
     {
-        IQuestionRepository QuesDAO;
-        IMapOptionRepository MapOptionDAO;
-        public SubjectiveQues()
+        readonly UnitOfWork _unitOfWork;
+        public SubjectiveQues(UnitOfWork unitOfWork)
         {
-            QuesDAO = new QuestionRepository();
-            MapOptionDAO = new MapOptionRepository();
+            this._unitOfWork = unitOfWork;
         }
-        public void Create(QuestionBankModel input, ATSDBContext context)
+        public bool Create(QuestionBankModel input)
         {
-            QuesDAO.Create(ref input, context);
-            QuestionOptionMapModel map = new QuestionOptionMapModel
+            QuestionBank questionBank = new QuestionBank();
+            Utility.CopyEntity(out questionBank, input);
+            var flag = false;
+            flag = _unitOfWork.QuestionRepo.Create(ref questionBank);
+
+            QuestionOptionMapping map = new QuestionOptionMapping
             {
                 Answer = input.AnsText,
                 QId = input.QId,
-                OptionKeyId = input.QuesTypeId.ToString()
+                OptionKeyId = input.QuesTypeValue.ToString()
             };
-            MapOptionDAO.Create(map, context);
-
+            flag = _unitOfWork.MapOptionRepo.Create(ref map);
+            return flag;
         }
 
-        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
+        public List<QuestionBankModel> Select( Func<QuestionBankModel, bool> condition)
         {
-            List<QuestionBankModel> result = QuesDAO.Select(context, condition);
-            if (result != null)
+            var queryable1= _unitOfWork.QuestionRepo.Select(condition);
+            var resultDB = queryable1.ToList();
+            List<QuestionBankModel> result = null;
+            if (resultDB != null)
             {
-                foreach (var ques in result)
+                result = new List<QuestionBankModel>();
+                
+                foreach (var ques in resultDB)
                 {
-                    ques.MappedOptions = MapOptionDAO.Select(context, x => x.QId == ques.QId);
+                    var queryable2= _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId);
+                    var mapOp = queryable2.ToList();
+                    ques.MappedOptions = mapOp;
                 }
             }
             return result;
         }
 
-        public void Update(QuestionBankModel input, ATSDBContext context)
+        public bool Update(QuestionBankModel input)
         {
-            QuesDAO.Update(input, context);
-            if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+            QuestionBank questionBank = new QuestionBank();
+            Utility.CopyEntity(out questionBank, input);
+            var flag = false;
+            flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
+            if (flag)
             {
-                input.MappedOptions[0].Answer = input.AnsText;
-                input.MappedOptions[0].QId = input.QId;
-                input.MappedOptions[0].OptionKeyId = input.QuesTypeId.ToString();
-                MapOptionDAO.Update(input.MappedOptions[0], context);
+                if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+                {
+                    QuestionOptionMapping map = new QuestionOptionMapping
+                    {
+                        Id = input.MappedOptions[0].Id,
+                        QId = input.QId,
+                        OptionKeyId = input.QuesTypeValue.ToString(),
+                        Answer = input.AnsText,
+                    };
+                    flag = _unitOfWork.MapOptionRepo.Update(ref map);
+                }
             }
+            return flag;
         }
     }
 }

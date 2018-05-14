@@ -2,7 +2,7 @@
 
 namespace ATS.Repository.Interface
 {
-    interface IAttemptHistoryRepository : ICRUD<UserAttemptedHistory>
+    public interface IAttemptHistoryRepository : IRepository<UserAttemptedHistory>
     {
     }
 }

@@ -3,119 +3,170 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATS.Core.Helper;
 using ATS.Core.Model;
-using ATS.Repository.DAO;
 using ATS.Repository.Interface;
+using ATS.Repository.Model;
+using ATS.Repository.Uow;
 
 namespace ATS.Repository.Factory.Question
 {
     public class ObjectiveQues : IQuestion
     {
-        IQuestionRepository QuesDAO;
-        IOptionRepository OptionDAO;
-        IMapOptionRepository MapOptionDAO;
-        public ObjectiveQues()
+        readonly UnitOfWork _unitOfWork;
+        public ObjectiveQues(UnitOfWork unitOfWork)
         {
-            OptionDAO = new OptionRepository();
-            MapOptionDAO = new MapOptionRepository();
-            QuesDAO = new QuestionRepository();
+            this._unitOfWork = unitOfWork;
         }
 
-        public void Create(QuestionBankModel input, ATSDBContext context)
+        public bool Create(QuestionBankModel input)
         {
-            QuesDAO.Create(ref input, context);
-            string optionKeyId = input.QId.ToString();
-            List<Guid> answers = new List<Guid>();
+            QuestionBank questionBank = new QuestionBank();
+            Utility.CopyEntity(out questionBank, input);
+            var flag = false;
+            flag = _unitOfWork.QuestionRepo.Create(ref questionBank);
 
-
-            //Set Options
-            for (int indx = 0; indx < input.Options.Count(); indx++)
+            if (flag)
             {
-                var op = input.Options[indx];
-                op.KeyId = optionKeyId;
-                OptionDAO.Create(ref op, context);
-                if (op.IsAnswer)
+                string optionKeyId = input.QId.ToString();
+                List<Guid> answers = new List<Guid>();
+
+                for (int indx = 0; indx < input.Options.Count(); indx++)
                 {
-                    answers.Add(op.Id);
+                    var op = input.Options[indx];
+                    op.KeyId = optionKeyId;
+
+                    QuestionOption questionOption = new QuestionOption();
+                    Utility.CopyEntity(out questionOption, op);
+
+                    flag = _unitOfWork.OptionRepo.Create(ref questionOption);
+                    if (flag)
+                    {
+                        if (op.IsAnswer)
+                        {
+                            answers.Add(op.Id);
+                        }
+                    }
+                }
+
+                //Set answers
+                input.MappedOptions = new List<QuestionOptionMapModel>();
+                foreach (var ans in answers)
+                {
+                    QuestionOptionMapping map = new QuestionOptionMapping
+                    {
+                        QId = input.QId,
+                        OptionKeyId = optionKeyId,
+                        Answer = ans.ToString(),
+                    };
+                    //input.MappedOptions.Add(map);
+
+                    flag = _unitOfWork.MapOptionRepo.Create(ref map);
                 }
             }
-            //Set answers
-            input.MappedOptions = new List<QuestionOptionMapModel>();
-            foreach (var ans in answers)
-            {
-                QuestionOptionMapModel map = new QuestionOptionMapModel
-                {
-                    QId = input.QId,
-                    OptionKeyId = optionKeyId,
-                    Answer = ans.ToString(),
-                };
-                input.MappedOptions.Add(map);
-                MapOptionDAO.Create(map, context);
-            }
+            return flag;
         }
 
-        public List<QuestionBankModel> Select(ATSDBContext context, Func<QuestionBankModel, bool> condition)
+        public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
-            List<QuestionBankModel> result  = QuesDAO.Select(context, condition);
-            if (result != null)
+            var queryable = _unitOfWork.QuestionRepo.Select(condition);
+
+            var resultDB = queryable.ToList();
+            List<QuestionBankModel> result = null;
+            if (resultDB != null)
             {
-                foreach (var ques in result)
+                result = new List<QuestionBankModel>();
+                Utility.CopyEntity(out result, resultDB.ToList());
+                for (int indx= 0; indx < result.Count; indx++)
                 {
-                    ques.MappedOptions = MapOptionDAO.Select(context, x => x.QId == ques.QId);
-                    foreach (var map in ques.MappedOptions)
+                    var mapOp = _unitOfWork.MapOptionRepo.Select(x => x.QId == result[indx].QId);
+                    var mappedOptions = result[indx].MappedOptions;
+                    Utility.CopyEntity(out mappedOptions, mapOp.ToList());
+                    result[indx].MappedOptions = mappedOptions;
+                    foreach (var map in result[indx].MappedOptions)
                     {
-                        ques.Options = OptionDAO.Select(context, x => x.KeyId == map.OptionKeyId);
+                        var options = _unitOfWork.OptionRepo.Select(x => x.KeyId == map.OptionKeyId);
+                        var tmpOp = result[indx].Options;
+                        Utility.CopyEntity(out tmpOp, options.ToList());
+                        result[indx].Options = tmpOp;
                     }
                 }
             }
             return result;
         }
 
-        public void Update(QuestionBankModel input, ATSDBContext context)
+        public bool Update(QuestionBankModel input)
         {
-            QuesDAO.Update(input, context);
-            string optionKeyId = input.QId.ToString();
-            List<Guid> answers = new List<Guid>();
+            QuestionBank questionBank = new QuestionBank();
+            Utility.CopyEntity(out questionBank, input);
+            var flag = false;
+            flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
+            if (flag)
+            {
+                string optionKeyId = input.QId.ToString();
+                List<Guid> answers = new List<Guid>();
 
-            //Set Options
-            for (int indx = 0; indx < input.Options.Count(); indx++)
-            {
-                var op = input.Options[indx];
-                op.KeyId = optionKeyId;
-                var opFound = OptionDAO.Select(context, x => x.Id == op.Id);
-                if (opFound != null)
+                //Set Options
+                for (int indx = 0; indx < input.Options.Count(); indx++)
                 {
-                    OptionDAO.Update(op, context);
+                    var op = input.Options[indx];
+                    op.KeyId = optionKeyId;
+                    QuestionOption questionOption = new QuestionOption();
+                    Utility.CopyEntity(out questionOption, op);
+
+                    var opFound = _unitOfWork.OptionRepo.Select(x => x.Id == op.Id);
+                    if (opFound != null)
+                    {
+                        flag = _unitOfWork.OptionRepo.Update(ref questionOption);
+                    }
+                    else
+                    {
+                        flag = _unitOfWork.OptionRepo.Create(ref questionOption);
+                    }
+                    if (flag)
+                    {
+                        if (op.IsAnswer)
+                        {
+                            answers.Add(op.Id);
+                        }
+                    }
                 }
-                else
+                //Delete Old Map
+                var queryable = _unitOfWork.MapOptionRepo.Select(x => x.QId == input.QId);
+                var oldMaps = queryable.ToList();
+
+                List<QuestionOptionMapping> list = new List<QuestionOptionMapping>();
+
+                Utility.CopyEntity(out list, oldMaps);
+                foreach (var map in list)
                 {
-                    OptionDAO.Create(ref op, context);
+                    flag = _unitOfWork.MapOptionRepo.Delete(map);
                 }
-                if (op.IsAnswer)
+                //Set answers
+                if (flag)
                 {
-                    answers.Add(op.Id);
+                    input.MappedOptions = new List<QuestionOptionMapModel>();
+                    foreach (var ans in answers)
+                    {
+
+                        input.MappedOptions.Add(new QuestionOptionMapModel
+                        {
+                            QId = input.QId,
+                            OptionKeyId = optionKeyId,
+                            Answer = ans.ToString()
+                        });
+                        QuestionOptionMapping map = new QuestionOptionMapping
+                        {
+                            QId = input.QId,
+                            OptionKeyId = optionKeyId,
+                            Answer = ans.ToString(),
+                        };
+
+                        flag = _unitOfWork.MapOptionRepo.Create(ref map);
+                    }
                 }
             }
-            //Delete Old Map
-            var oldMaps = MapOptionDAO.Select(context, x => x.QId == input.QId);
-            foreach (var map in oldMaps)
-            {
-                MapOptionDAO.Delete(map, context);
-            }
-            //Set answers
-            input.MappedOptions = new List<QuestionOptionMapModel>();
-            foreach (var ans in answers)
-            {
-                
-                QuestionOptionMapModel map = new QuestionOptionMapModel
-                {
-                    QId = input.QId,
-                    OptionKeyId = optionKeyId,
-                    Answer = ans.ToString(),
-                };
-                input.MappedOptions.Add(map);
-                MapOptionDAO.Create(map, context);
-            }
+            return flag;
         }
     }
 }

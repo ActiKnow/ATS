@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ATS.Core.Model;
 
@@ -16,15 +17,24 @@ namespace ATS.Repository.Model
         }
         [Key]
         public System.Guid TestBankId { get; set; }
-        public System.Guid CategoryTypeId { get; set; }
-        public System.Guid LavelTypeId { get; set; }
+        public int CategoryTypeValue { get; set; }
+        public int LevelTypeValue { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }
         public decimal Duration { get; set; }
-        public System.Guid TestTypeId { get; set; }
+        public int TestTypeValue { get; set; }
         public decimal TotalMarks { get; set; }
-        public virtual List<TestAssignment> TestAssignments { get; set; }
-        public virtual List<TestQuestionMapping> TestQuestionMappings { get; set; }
-        public virtual List<UserTestHistory> UserTestHistories { get; set; }
+        public List<TestAssignment> TestAssignments { get; set; }
+        public List<TestQuestionMapping> TestQuestionMappings { get; set; }
+        public List<UserTestHistory> UserTestHistories { get; set; }
+
+        //[ForeignKey("CategoryTypeValue")]
+        //public TypeDef CategoryType { get; set; }
+
+        //[ForeignKey("LavelTypeValue")]
+        //public TypeDef LevelType { get; set; }
+
+        //[ForeignKey("TestTypeValue")]
+        //public TypeDef TestType { get; set; }
     }
 }

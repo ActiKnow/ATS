@@ -6,7 +6,7 @@ using ATS.Repository.Migrations;
 using ATS.Repository.Model;
 
 
-namespace ATS.Repository.DAO
+namespace ATS.Repository.Repo
 {
     public class ATSDBContext : DbContext
     {

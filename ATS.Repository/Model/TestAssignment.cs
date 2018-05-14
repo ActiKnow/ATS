@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ATS.Core.Model;
 
@@ -12,7 +13,11 @@ namespace ATS.Repository.Model
         public System.Guid ID { get; set; }
         public System.Guid UserId { get; set; }
         public System.Guid TestBankId { get; set; }
-        public virtual TestBank TestBank { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
+
+        [ForeignKey("TestBankId")]
+        public TestBank TestBank { get; set; }
+
+        [ForeignKey("UserId")]
+        public UserInfo UserInfo { get; set; }
     }
 }

@@ -299,6 +299,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ATS.Bll\ATS.Bll.csproj">
+      <Project>{C9E718BA-2D24-4BD2-8373-1D447054157C}</Project>
+      <Name>ATS.Bll</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ATS.Core\ATS.Core.csproj">
       <Project>{00c343c2-66a5-4e5b-8b4f-8b98beb1243f}</Project>
       <Name>ATS.Core</Name>
