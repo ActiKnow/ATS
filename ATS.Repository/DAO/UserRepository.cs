@@ -46,6 +46,7 @@ namespace ATS.Repository.DAO
                                 userCredential.EmailId = input.Email;
                                 userCredential.CurrPassword = input.UserCredentials[0].CurrPassword;
                                 userCredential.UserId = userInfo.UserId;
+                                userCredential.StatusId = input.StatusId;
                                 userCredential.CreatedBy = input.UserCredentials[0].CreatedBy;
                                 userCredential.CreatedDate = input.UserCredentials[0].CreatedDate;
                                 context.UserCredential.Add(userCredential);
@@ -80,30 +81,62 @@ namespace ATS.Repository.DAO
                 {
                     try
                     {
-                        UserCredential userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
-                        if (userCredential != null)
+                        var userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+
+                        if (userInfo != null)
                         {
-                            context.UserCredential.Remove(userCredential);
+                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
+                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
+                            userInfo.StatusId = input.StatusId;
+
                             context.SaveChanges();
                             isDeleted = true;
 
-                            UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
-                            if (userInfo != null && isDeleted == true)
+                            var userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                            if (userCredential != null && isDeleted == true)
                             {
-                                context.UserInfo.Remove(userInfo);
+                                userCredential.LastUpdatedBy = input.LastUpdatedBy;
+                                userCredential.LastUpdatedDate = input.LastUpdatedDate;
+                                userCredential.PrevPassword = userCredential.CurrPassword;
+                                userCredential.CurrPassword = input.CurrPassword;
+                                userCredential.StatusId = input.StatusId;
+
                                 context.SaveChanges();
-                                isDeleted = true;
                             }
                             else
                             {
                                 isDeleted = false;
                             }
+                            if (isDeleted)
+                            {
+                                dbContextTransaction.Commit();
+                            }
 
-                        }                        
-                        if (isDeleted)
-                        {
-                            dbContextTransaction.Commit();
-                        }                        
+                        }
+                        //UserCredential userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        //if (userCredential != null)
+                        //{
+                        //    context.UserCredential.Remove(userCredential);
+                        //    context.SaveChanges();
+                        //    isDeleted = true;
+
+                        //    UserInfo userInfo = context.UserInfo.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                        //    if (userInfo != null && isDeleted == true)
+                        //    {
+                        //        context.UserInfo.Remove(userInfo);
+                        //        context.SaveChanges();
+                        //        isDeleted = true;
+                        //    }
+                        //    else
+                        //    {
+                        //        isDeleted = false;
+                        //    }
+
+                        //}                        
+                        //if (isDeleted)
+                        //{
+                        //    dbContextTransaction.Commit();
+                        //}                        
 
                     }
                     catch
@@ -204,9 +237,10 @@ namespace ATS.Repository.DAO
                         {
                             userInfo.LastUpdatedBy = input.LastUpdatedBy;
                             userInfo.LastUpdatedDate = input.LastUpdatedDate;
-                            //userInfo.UserTypeId = input.UserTypeId;
+                            userInfo.RoleTypeId = input.RoleTypeId;
                             userInfo.Mobile = input.Mobile;
                             userInfo.StatusId = input.StatusId;
+
                             context.SaveChanges();
                             isUpdated = true;
                             var userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
@@ -216,6 +250,8 @@ namespace ATS.Repository.DAO
                                 userCredential.LastUpdatedDate = input.LastUpdatedDate;
                                 userCredential.PrevPassword = userCredential.CurrPassword;
                                 userCredential.CurrPassword = input.CurrPassword;
+                                userCredential.StatusId = input.StatusId;
+
                                 context.SaveChanges();
                             }
                             else
