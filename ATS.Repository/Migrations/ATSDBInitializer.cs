@@ -1,11 +1,11 @@
 ﻿using ATS.Core.Global;
-using ATS.Repository.DAO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATS.Repository.Repo;
 
 namespace ATS.Repository.Migrations
 {
@@ -27,10 +27,11 @@ namespace ATS.Repository.Migrations
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Subjective", Value = (int)CommonType.TEXT, ParentKey = (int)CommonType.QUESTION, CreatedBy = "Admin", CreatedDate = DateTime.Now });
             //Role Type
             Guid adminTypeId = Guid.NewGuid();
-            context.TypeDef.Add(new Model.TypeDef { TypeId = adminTypeId, Description = "Admin", Value = (int)CommonType.ADMIN , ParentKey = (int)CommonType.ROLE, CreatedBy = "Admin", CreatedDate = DateTime.Now });
+            int adminTypeValue= (int)CommonType.ADMIN;
+            context.TypeDef.Add(new Model.TypeDef { TypeId = adminTypeId, Description = "Admin", Value = adminTypeValue, ParentKey = (int)CommonType.ROLE, CreatedBy = "Admin", CreatedDate = DateTime.Now });
             //Insert Admin
             Guid adminId = Guid.NewGuid();
-            context.UserInfo.Add(new Model.UserInfo {UserId = adminId, FName="Admin" , LName = "Admin", RoleTypeId = adminTypeId,Email="admin@admin.com", CreatedBy="Admin",CreatedDate=DateTime.Now , StatusId=true});
+            context.UserInfo.Add(new Model.UserInfo {UserId = adminId, FName="Admin" , LName = "Admin", RoleTypeValue = adminTypeValue, Email="admin@admin.com", CreatedBy="Admin",CreatedDate=DateTime.Now , StatusId=true});
             context.UserCredential.Add(new Model.UserCredential { UserId = adminId, CurrPassword="admin", EmailId= "admin@admin.com", Id= Guid.NewGuid(), CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
         }
 

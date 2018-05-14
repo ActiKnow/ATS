@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ATS.Core.Model;
 
@@ -13,6 +14,10 @@ namespace ATS.Repository.Model
         public System.Guid QId { get; set; }
         public string OptionKeyId { get; set; }
         public string Answer { get; set; }
-        public virtual QuestionBank QuestionBank { get; set; }
+
+        [ForeignKey("QId")]
+        public QuestionBank QuestionBank { get; set; }
+
+        
     }
 }

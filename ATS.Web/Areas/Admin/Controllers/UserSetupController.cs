@@ -45,7 +45,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
 
             return View(userInfo);
@@ -57,11 +57,15 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] = CommonType.ROLE;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -81,7 +85,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -102,11 +106,11 @@ namespace ATS.Web.Areas.Admin.Controllers
                     chars[i] = _allowedChars[(int)((_allowedChars.Length) * randNum.NextDouble())];
                 }
                 string pwd = new string(chars);
-                result = new ApiResult(true, "", pwd);
+                result = new ApiResult(true, null, pwd);
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -137,7 +141,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -164,7 +168,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -178,7 +182,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -190,7 +194,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             SelectList selectList = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] = CommonType.ROLE;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
 
                 if (result != null)
                 {
@@ -202,7 +210,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result.Status = false;
+                result.Message.Add(ex.GetBaseException().Message);
             }
 
             if (roleTypeDef == null)
@@ -223,7 +232,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }

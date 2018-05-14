@@ -4,189 +4,123 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.DAO;
 using ATS.Repository.Interface;
 using ATS.Core.Model;
 using ATS.Core.Helper;
+using ATS.Bll;
 
 namespace ATS.Service.Controllers
 {
     public class TypeDefController : ApiController
-    {
-        private ITypeRepository repository = null;
+    {      
+        private TypeDefBo typeDefBo;
+        ApiResult apiResult = null;
         public TypeDefController()
         {
-            repository = new TypeDefRepository();
+            typeDefBo = new TypeDefBo();
+            apiResult = new ApiResult(false, new List<string>());
         }
 
         [HttpPost]
         [Route("api/TypeDef/Create")]
-        public IHttpActionResult Create(TypeDefModel typeDef)
+        public IHttpActionResult Create(TypeDefModel input)
         {
-            ApiResult apiResult = null;
-
             try
             {
-                var result = repository.Create(typeDef);
-
-                if (result)
-                {
-                    var typeDefs = repository.Select(null);
-
-                    if (typeDefs != null)
-                    {
-                        apiResult = new ApiResult(true, "", typeDefs);
-                    }
-                    else
-                    {
-                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
-                    }
-                }
-                else
-                {
-                    apiResult = new ApiResult(false, "Type not created.");
-                }
+                apiResult = typeDefBo.Create(input);
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(false, ex.GetBaseException().Message);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/TypeDef/Update")]
-        public IHttpActionResult Update(TypeDefModel typeDef)
+        public IHttpActionResult Update(TypeDefModel input)
         {
-            ApiResult apiResult = null;
-
             try
             {
-                var result = repository.Update(typeDef);
-
-                if (result)
-                {
-                    var typeDefs = repository.Select(null);
-
-                    if (typeDefs != null)
-                    {
-                        apiResult = new ApiResult(true, "", typeDefs);
-                    }
-                    else
-                    {
-                        apiResult = new ApiResult(true, "Error in fetching records.", typeDefs);
-                    }
-                }
-                else
-                {
-                    apiResult = new ApiResult(false, "Type not updated.");
-                }
+                apiResult = typeDefBo.Update(input);
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(false, ex.GetBaseException().Message);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }
 
         [HttpDelete]
         [Route("api/TypeDef/Delete")]
-        public IHttpActionResult Delete(TypeDefModel typeDef)
+        public IHttpActionResult Delete(TypeDefModel input)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Deleted");
             try
             {
-                if (repository.Delete(typeDef))
-                {
-                    apiResult = new ApiResult(true);
-                }
+                apiResult = typeDefBo.Delete(input);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }
-
-        [HttpPost]
-        [Route("api/TypeDef/Retrieve")]
-        public IHttpActionResult Retrieve(TypeDefModel typeDef)
-        {
-            ApiResult apiResult = new ApiResult(false, "Record not found");
-            try
-            {
-                TypeDefModel data = repository.Retrieve(typeDef);
-                if (data != null)
-                {
-                    apiResult = new ApiResult(true, "", data);
-                }
-            }
-            catch (Exception ex)
-            {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
-            }
-            return Ok(apiResult);
-        }
-
 
         [HttpGet]
-        [Route("api/TypeDef/Select/{isParentDependent}/{parentKey}")]
-        public IHttpActionResult Select(bool isParentDependent, int parentKey = 0)
+        [Route("api/TypeDef/Retrieve/{typeValue}")]
+        public IHttpActionResult Retrieve(int typeValue)
         {
-            ApiResult apiResult = null;
             try
             {
-                List<TypeDefModel> list = new List<TypeDefModel>();
-                if (isParentDependent)
-                {
-                    list = repository.Select(x => x.ParentKey == parentKey);
-                }
-                else
-                {
-                    list = repository.Select(null);
-                }
-
-                if (list != null)
-                {
-                    apiResult = new ApiResult(true, "", list);
-                }
-                else
-                {
-                    apiResult = new ApiResult(false, "No record found");
-                }
+                apiResult = typeDefBo.GetByValue(typeValue);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }
+
+
+        //[HttpGet]
+        //[Route("api/TypeDef/Select/{isParentDependent}/{parentKey}")]
+        //public IHttpActionResult Select(bool isParentDependent, int parentKey = 0)
+        //{
+        //    try
+        //    {
+        //        if (isParentDependent)
+        //        {
+        //            apiResult = typeDefBo.Select(x => x.ParentKey == parentKey);
+        //        }
+        //        else
+        //        {
+        //            apiResult = typeDefBo.Select(null);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        apiResult.Status = false;
+        //        apiResult.Message.Add(ex.GetBaseException().Message)  ;
+        //    }
+        //    return Ok(apiResult);
+        //}
 
         [HttpGet]
         [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
         public IHttpActionResult ValidateType(string typeName, int typeValue)
         {
-            ApiResult apiResult = null;
-            var status = false;
             try
             {
-                status = repository.Validate(typeName, typeValue);
-                if (status)
-                {
-                    apiResult = new ApiResult(false, "Type Name : " + typeName + " , Type Value :" + typeValue + " already exists.");
-                }
-                else
-                {
-                    apiResult = new ApiResult(true, "", false);
-                }
+                typeDefBo.Validate(typeName, typeValue);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }
@@ -195,28 +129,14 @@ namespace ATS.Service.Controllers
         [Route("api/TypeDef/Select")]
         public IHttpActionResult Select(SimpleQueryModel query)
         {
-            ApiResult apiResult = null;
             try
-            {
-                List<TypeDefModel> list = new List<TypeDefModel>();
-
-                SimpleQueryBuilder<TypeDefModel> simpleQry = new SimpleQueryBuilder<TypeDefModel>();
-                list = repository.Select(simpleQry.GetQuery(query).Compile());
-
-
-                if (list != null)
-                {
-                    apiResult = new ApiResult(true, "", list);
-                }
-                else
-                {
-                    apiResult = new ApiResult(false, "No record found");
-                }
+            {                
+                apiResult = typeDefBo.Select(query);               
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Status = false;
+                apiResult.Message.Add(ex.GetBaseException().Message)  ;
             }
             return Ok(apiResult);
         }

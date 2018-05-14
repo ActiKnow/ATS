@@ -2,7 +2,7 @@
 
 namespace ATS.Repository.Interface
 {
-    interface ITestHistoryRepository : ICRUD<UserTestHistory>
+    public interface ITestHistoryRepository : IRepository<UserTestHistory>
     {
     }
 }

@@ -102,7 +102,7 @@
             <div class="tile-footer">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-3">
-                        @if (Model.Email == null)
+                        @if (Model.UserId == null && Model.UserId==Guid.Empty)
                         {
                             <button class="btn btn-primary" id="createUser" type="button">
                             <i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>

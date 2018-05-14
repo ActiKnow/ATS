@@ -38,15 +38,22 @@
         return {
             onUserCreated: function (result) {
                 if (result !== "") {
+                    var msg = "";
                     if (result.Status) {
-                        if (result.Message) {
+                        if (result.Message && result.Message.Count>0) {
                             $(op.successMsg).show();
-                            $(op.successMsg).html(result.Message);
+                            $.each(result.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.successMsg).html(msg);
                             resetFields();
                         }
                     }
                     else {
-                        $(op.errorMsg).html(result.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             },
@@ -134,7 +141,8 @@
                 LName: lastName.trim(),
                 Mobile: mobile.trim(),
                 Email: email.trim(),
-                RoleTypeId: roleType.trim(),
+                
+                RoleTypeValue: roleType.trim(),
                 CurrPassword: password.trim(),
                 StatusId: status.trim(),
                 UserCredentials: UserCredentials,
@@ -240,14 +248,18 @@
         api.fireGetAjax('/UserSetup/GetRoleTypes', {})
             .done(res => {
                 if (res != null) {
+                    var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message) {
-                            $(op.errorMsg).html(res.Message);
+                        if (res.Message && res.Message.Count>0) {
+                            $.each(res.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                items += "<option value='" + value.Value + "'>" + value.Description + "</option>";
                             });
                             $(op.ddlRoleType).html(items);
                         }
@@ -258,7 +270,10 @@
 
                     }
                     else {
-                        $(op.errorMsg).html(res.Message);
+                        $.each(res.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             })
@@ -273,13 +288,15 @@
         api.fireGetAjax('/UserSetup/CreateRandomPassword', { PasswordLength:6})
             .done(result => {
                 if (result != null) {
-
-                    if (result.Status) {
-                        
+                    var msg = " ";
+                    if (result.Status) {                        
                         $(op.password).val(result.Data);
                     }
                     else {
-                        $(op.errorMsg).html(result.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                 }
             })
