@@ -50,7 +50,6 @@ namespace ATS.Repository.DAO
                                 userCredential.CreatedDate = input.UserCredentials[0].CreatedDate;
                                 context.UserCredential.Add(userCredential);
                                 context.SaveChanges();
-                                isCreated = true;
                             }
                             else
                             {
@@ -206,14 +205,28 @@ namespace ATS.Repository.DAO
                             userInfo.LastUpdatedBy = input.LastUpdatedBy;
                             userInfo.LastUpdatedDate = input.LastUpdatedDate;
                             //userInfo.UserTypeId = input.UserTypeId;
-                            userInfo.FName = input.FName;
-                            userInfo.LName = input.LName;
                             userInfo.Mobile = input.Mobile;
                             userInfo.StatusId = input.StatusId;
-
                             context.SaveChanges();
-                            dbContextTransaction.Commit();
                             isUpdated = true;
+                            var userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
+                            if (userCredential != null && isUpdated==true)
+                            {
+                                userCredential.LastUpdatedBy = input.LastUpdatedBy;
+                                userCredential.LastUpdatedDate = input.LastUpdatedDate;
+                                userCredential.PrevPassword = userCredential.CurrPassword;
+                                userCredential.CurrPassword = input.CurrPassword;
+                                context.SaveChanges();
+                            }
+                            else
+                            {
+                                isUpdated = false;
+                            }
+                            if (isUpdated)
+                            {
+                                dbContextTransaction.Commit();
+                            }
+                           
                         }
                     }
                     catch

@@ -7,7 +7,7 @@ using ATS.Core.Global;
 using ATS.Core.Model;
 using ATS.Web.Controllers;
 
-namespace ATS.Web.Areas.Admin
+namespace ATS.Web.Areas.Admin.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class UserSetupController : BaseController
@@ -145,10 +145,36 @@ namespace ATS.Web.Areas.Admin
         [HttpPost]
         public ActionResult DeleteUser(UserInfoModel userInfoModel)
         {
+            List<UserInfoModel> userList = new List<UserInfoModel>();
             ApiResult result = null;
             try
             {
                 result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
+                if (result.Status)
+                {
+                    result = ApiConsumers.UserApiConsumer.SelectUsers();
+
+                    if (result.Status && result.Data != null)
+                    {
+                        userList = (List<UserInfoModel>)result.Data;
+
+                        result.Data = RenderPartialViewToString("_UsersList", userList);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult UpdateUser(UserInfoModel userInfoModel)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.UserApiConsumer.UpdateUser(userInfoModel);
             }
             catch (Exception ex)
             {
@@ -185,6 +211,21 @@ namespace ATS.Web.Areas.Admin
             }
 
             return selectList = new SelectList(roleTypeDef, "TypeId", "Description");
+        }
+
+        [HttpGet]
+        public ActionResult GetStatus()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.GetStatus();
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

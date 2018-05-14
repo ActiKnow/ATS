@@ -16,8 +16,8 @@ namespace ATS.Repository.DAO
         }
         public ATSDBContext() : base("name=ATSDBContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.Migrations.Configuration>());
-            Database.SetInitializer(new CreateDatabaseIfNotExists<ATSDBContext>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.Migrations.Configuration>());
+            //Database.SetInitializer(new CreateDatabaseIfNotExists<ATSDBContext>());
         }
 
         public virtual DbSet<UserInfo> UserInfo { get; set; }

@@ -10,7 +10,7 @@ using ATS.Core.Global;
 using ATS.Core.Model;
 using ATS.Web.Controllers;
 
-namespace ATS.Web.Areas.Admin
+namespace ATS.Web.Areas.Admin.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class SetupController : BaseController

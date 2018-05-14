@@ -152,14 +152,18 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\DashboardController.cs" />
-    <Compile Include="Areas\Admin\SetupController.cs" />
-    <Compile Include="Areas\Admin\UserSetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserSetupController.cs" />
     <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
-    <Compile Include="Areas\Candidate\DashboardController.cs" />
+    <Compile Include="Areas\Candidate\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
+<<<<<<< HEAD
     <Compile Include="Areas\Employee\DashboardController.cs" />
     <Compile Include="Areas\Praveen\PraveenAreaRegistration.cs" />
+=======
+    <Compile Include="Areas\Employee\Controllers\DashboardController.cs" />
+>>>>>>> 476b8aeef6186f5978a40191b71d1b24210226ab
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
