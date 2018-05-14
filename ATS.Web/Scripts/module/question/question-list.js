@@ -2,8 +2,6 @@
     'use strict'
     var defaults = {
         selectContainer: '#questionContainer',
-        
-
     };
     var questionTypes = {
         option: "Option",
@@ -34,20 +32,17 @@
 
         var appendType = function (result) {
             if (result !== "") {
-                if (result.Status) {
-                    if (result.Message) {
-                        $(op.errorMsg).html(result.Message);
-                    }
-                    else {
-                        $(op.tableContext).find('tbody').html(result.Data);
-                    }
-                }
-                else {
+
+                if (result.Message) {
                     $(op.errorMsg).html(result.Message);
                 }
+                $(op.tableContext).find('tbody').html(result.Data);
+            }
+            else {
+                $(op.errorMsg).html(result.Message);
+
             }
         }
-
         return {
             onQuestionList: function (result) {
                 appendType(result);
@@ -72,11 +67,18 @@
     var deleteQuestion = function (qId) {
         if (qId != null) {
             var op = defaults;
-            api.firePostAjax('/Admin/Setup/DeleteQuestion', { qId: qId})
+            api.firePostAjax('/Admin/Setup/DeleteQuestion', { qId: qId })
                 .done(callBacks.onDeleteQuestion)
                 .fail(callBacks.onDeleteQuestionFailed);
         }
 
+    };
+    var editQuestion = function (qId) {
+        if (qId != null) {
+            var op = defaults;
+            $(op.selectedId).val(qId);
+            $(op.formSubmit).submit();
+        }
     };
     var bindEvents = function () {
         var op = defaults;
@@ -84,9 +86,13 @@
         $tableContext.on('click', op.btnRemoveType, function (e) {
             var $currentRow = $(e.target).closest('tr');
             var qId = $currentRow.find(op.Qid).html();
-                deleteQuestion(qId);
+            deleteQuestion(qId);
         });
-
+        $tableContext.on('click', op.btnEditType, function (e) {
+            var $currentRow = $(e.target).closest('tr');
+            var qId = $currentRow.find(op.Qid).html();
+            editQuestion(qId);
+        });
     };
     return {
         init: function (config) {

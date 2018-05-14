@@ -81,5 +81,19 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult UpdateUser(UserInfoModel userInfoModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Update";
+                apiResult = ConsumerMethods.Post<List<UserInfoModel>>(url, userInfoModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }

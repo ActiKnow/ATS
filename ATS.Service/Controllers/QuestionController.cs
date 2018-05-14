@@ -69,7 +69,7 @@ namespace ATS.Service.Controllers
             {
                 if (questionRepo.Delete(newQues))
                 {
-                    apiResult = new ApiResult(true);
+                    apiResult = new ApiResult(true,"Record Deleted");
                 }
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Question/Select")]
         public IHttpActionResult Select(SimpleQueryModel query)
         {

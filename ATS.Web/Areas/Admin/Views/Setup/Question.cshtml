@@ -1,4 +1,4 @@
-﻿@model List<ATS.Core.Model.QuestionBankModel>
+﻿@model ATS.Core.Model.QuestionBankModel
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -33,24 +33,16 @@
                         <div class="col-md-12">
                             <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
                         </div>
-
-
                     </div>
-
                     <br />
-
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                        <select class="form-control" required="required" name="question[difficulty_level]" id="question_difficulty_level">
-                                            <option value="">- Select -</option>
-                                            <option selected="selected" value="easy">Easy</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="hard">Hard</option>
-                                        </select>
+                                        @Html.DropDownListFor(x=>x.LevelTypeValue,new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } },new { @class = "form-control", id = "question_difficulty_level" }) 
+                                        @Html.HiddenFor(x=>x.LevelTypeValue, new {id="hiddendlllableType" })
                                     </div>
 
                                 </div>
@@ -59,12 +51,12 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                        <select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
-                                            <option value="-1">- Select -</option>
-                                            <option value="Option">Multiple Choice Question</option>
-                                            <option value="Bool">Yes/No or True/False</option>
-                                            <option value="Text">Subjective</option>
-                                        </select>
+                                        @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
+                                        @Html.HiddenFor(x => x.QuesTypeId, new { id = "hiddenddlQuestionType" })
+                                        @*<select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
+            <option value="-1">- Select -</option>
+
+        </select>*@
                                     </div>
                                 </div>
                             </div>
@@ -72,17 +64,12 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label class="name-tag control-label" for="question_subject">Subject</label>
-                                        <select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
-                                            <option value="-1">- Select -</option>
-                                            <option value="1">C</option>
-                                            <option value="2">C++</option>
-                                            <option value="2">Java</option>
-                                            <option value="2">.Net</option>
-                                            <option value="2">MVC</option>
-                                            <option value="2">AngularJs</option>
-                                            <option value="2">Angular 2</option>
-                                            <option value="2">Node JS</option>
-                                        </select>
+                                        @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
+                                        @Html.HiddenFor(x => x.CategoryTypeId, new { id = "hiddenddlCategoryType" })
+                                        @*<select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
+            <option value="-1">- Select -</option>
+
+        </select>*@
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +83,11 @@
                         <div class="col-md-2">
                             <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
                         </div>
-                        <div class="col-md-8"><textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea></div>
+                       
+                        <div class="col-md-8">
+                            @*<textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea>*@
+                                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
+                                            </div>
                     </div>
 
                     <br />
@@ -174,14 +165,23 @@
                             <label class="name-tag control-label" for="question_mark">Mark</label>
                         </div>
                         <div class="col-md-8">
-                            <input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">
+                            @*<input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">*@
+                            @Html.TextBoxFor(x=>x.DefaultMark,new { @class ="Form-control",id= "question_mark" ,placdeholder="Mark",type="number",required="required"} )
                         </div>
                     </div>
 
 
                     <br />
                     <div class="tile-footer">
-                        <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+                        @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
+                        @if (Model.QId == Guid.Empty)
+                        {
+                    <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+                        }
+                        else
+                        {
+                    <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                        }
                     </div>
 
                 </div>
@@ -222,6 +222,10 @@
                                     selectFalse: '#False',
                                     selectSubjective_text: '#Subjective_text',
                                     selectboolradio: '.boolradio',
+
+                                    selecthiddenddlCategoryType: '#hiddenddlCategoryType',
+                                    selecthiddenddlQuestionType: '#hiddenddlQuestionType',
+                                    selecthiddendlllableType:'#hiddendlllableType',
 
                                     btnAdd: '#btnAdd',
                                     btnRemove: '#btnRemove',

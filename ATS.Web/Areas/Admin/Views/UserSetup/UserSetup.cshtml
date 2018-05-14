@@ -53,21 +53,22 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address<span class="fa fa-star"></span></label>
+                        <label>Email address<span class="fa fa-star"></span></label>
                         @*<input class="form-control email" placeholder="Enter email" type="email">*@
-                        @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control email" })
-
+                        @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId" })                        
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-form-label">Role Type<span class="fa fa-star"></span></label>
-                        @Html.DropDownList("roleType", ViewBag.userSetupRoleType as SelectList, new { @class = "form-control input-sm", id = "roleType" })
+                        @*@Html.DropDownList("roleType", ViewBag.userSetupRoleType as SelectList, new { @class = "form-control input-sm", id = "roleType" })*@
 
                         @*@Html.DropDownList("companyName", new List<SelectListItem> { new SelectListItem { Text = "-Select Company-", Value = "", Selected = true } }, new { @class = "form-control input-sm", id = "companyName", @onchange = "validateEnterpriseBusinessLineName()" })
-                              <select class="form-control roleType" id="roleType">
-                                    <option value="">-Select-</option>
-                              </select>*@
+                        *@
+                        <select class="form-control roleType" id="roleType">
+                            <option value="">-Select-</option>
+                        </select>
+
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -75,7 +76,11 @@
                         <label class="control-label">Password<span class="fa fa-star"></span></label>
                         <div class="form-group">
                             <div class="input-group">
-                                @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control email", @id = "password-field", @name = "password", @type = "password" })
+                                @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password" })
+                                @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
+                                @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
+                                @Html.HiddenFor(x => x.RoleTypeId, htmlAttributes: new { @id = "hiddenRoleId" })
+                                @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
                                 @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
                                 <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
                                 <button class="input-group-lg input-group-append" id="refresh">
@@ -85,11 +90,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control ddlStatus">
+                            <option value="">-Select-</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="tile-footer">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-3">
-                        @if (Model.UserId == null)
+                        @if (Model.Email == null)
                         {
                             <button class="btn btn-primary" id="createUser" type="button">
                             <i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
@@ -118,7 +131,7 @@
                     firstName: '.firstName',
                     lastName: '.lastName',
                     mobile: '.mobile',
-                    email: '.email',
+                    email: '.emailId',
                     password: '#password-field',
                     btnRefresh: '#refresh',
                     ddlRoleType: '#roleType',
@@ -126,9 +139,15 @@
                     successMsg: '.successMsg',
                     btnCreateUser: '#createUser',
                     btnCancelUser: '#cancelUser',
+                    btnUpdateUser:'#updateUser',
                     userSetupContext: "#userSetupContext",
                     togglePassword: ".toggle-password",
-                };
+                    userId: "#userId",
+                    selectStatus: '.ddlStatus',
+                    hiddenEmail: '#hiddenEmail',
+                    hiddenRoleId: '#hiddenRoleId',
+                    hiddenStatusId: '#hiddenStatusId',
+                }; 
                 userSetup.init(config);
             });
 

@@ -13,9 +13,9 @@
 
     };
     var questionTypes = {
-        option: "Option",
-        bool: "Bool",
-        text: "Text"
+        option: "5",
+        bool: "6",
+        text: "7"
     };
     var optionArray = [];
     var counter = 1;
@@ -71,7 +71,7 @@
         $(op.selectQuesQuesTypeId).val("-1");
         $(op.selectQuesSubjectId).val("-1");
         $(op.selectQuesText).val("");
-        $(op.selectQuesMark).val(""); 
+        $(op.selectQuesMark).val("");
         $(op.selectMCQType).html("");
         $(op.selectTFType).hide();
         $(op.selectboolradio).prop('checked', false);
@@ -120,7 +120,8 @@
         optionArray.pop();
 
         renderOption(optionArray);
-        counter--;
+        if (counter > 1)
+            counter--;
     };
 
     var renderOption = function () {
@@ -134,16 +135,16 @@
         var flag = true;
         var op = defaults;
         var message = "";
-        var QuesDiffiLevel = $(op.selectQuesDiffiLevel).val();
-        var QuesQuesTypeId = $(op.selectQuesQuesTypeId).val();
-        var QuesSubjectId = $(op.selectQuesSubjectId).val();
-        var QuesText = $(op.selectQuesText).val();
-        var QuesMark = $(op.selectQuesMark).val();
-
-        var Arr = [];
+        var quesDiffiLevel = $(op.selectQuesDiffiLevel).val();
+        var $quesType = $(op.selectQuesQuesTypeId);
+        var quesTypeId = $quesType.val();
+        var quesTypeValue = $quesType.find(':selected').data('value');
+        var quesSubjectId = $(op.selectQuesSubjectId).val();
+        var quesText = $(op.selectQuesText).val();
+        var quesMark = $(op.selectQuesMark).val();
 
         var optionValue = [];
-        if (QuesQuesTypeId == questionTypes.option) {
+        if (quesTypeValue == questionTypes.option) {
             $("input[name=DynamicTextBox]").each(function () {
                 var $option = $(this);
                 var id = $option.data("id");
@@ -155,7 +156,7 @@
             });
         }
 
-        if (QuesQuesTypeId == questionTypes.bool) {
+        if (quesTypeValue == questionTypes.bool) {
             $("input[name=Booltextbox]").each(function () {
                 var $option = $(this);
                 var id = $option.data("id");
@@ -167,26 +168,29 @@
             });
         }
 
-        if (QuesQuesTypeId == questionTypes.text) {
+        if (quesTypeValue == questionTypes.text) {
             var ansText = $(op.selectSubjective_text).val();
         }
-
-        var QuestionView = {
-            LevelTypeId: QuesDiffiLevel,
-            QuesTypeId: QuesQuesTypeId,
-            CategoryTypeId: QuesSubjectId,
-            Description: QuesText,
-            DefaultMark: QuesMark,
-            AnsText: ansText
+        flag = validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark);
+        if (flag) {
+            var QuestionView = {
+                LevelTypeId: quesDiffiLevel,
+                QuesTypeId: quesTypeId,
+                QuesTypeValue: quesTypeValue,
+                CategoryTypeId: quesSubjectId,
+                Description: quesText,
+                DefaultMark: quesMark,
+                AnsText: ansText
+            }
+            QuestionView.options = optionValue;
+            api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
+                .done(callBacks.onQuestionAdded)
+                .fail(callBacks.onQuestionFailed);
         }
-        QuestionView.options = optionValue;
-        api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
-            .done(callBacks.onQuestionAdded)
-            .fail(callBacks.onQuestionFailed);
     };
     var loadQuestionTypes = function () {
         var op = defaults;
-
+        var prev = $(op.selectQuesQuesTypeId).val();
         api.fireGetAjax('/Setup/GetQuestionTypes', {})
             .done(res => {
                 if (res != null) {
@@ -197,7 +201,12 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                if (prev != "") {
+                                    items += "<option value='" + value.TypeId + "' selected data-id='" + value.Value + "'>" + value.Description + "</option>";
+                                }
+                                else {
+                                    items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
+                                }
                             });
                             $(op.selectQuesQuesTypeId).html(items);
                         }
@@ -206,6 +215,11 @@
                         $(op.errorMsg).html(res.Message);
                     }
                 }
+                var questionvalue = $(op.selecthiddenddlQuestionType).val();
+                if (questionvalue) {
+                    $(op.selectQuesQuesTypeId).val(questionvalue);
+                }
+
             })
             .fail(res => {
                 $(op.errorMsg).html(res.responseText);
@@ -213,7 +227,7 @@
     }
     var loadLabelTypes = function () {
         var op = defaults;
-
+        var prev = $(op.selectQuesDiffiLevel).val();
         api.fireGetAjax('/Setup/GetLabelTypes', {})
             .done(res => {
                 if (res != null) {
@@ -224,7 +238,12 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                if (prev != "") {
+                                    items += "<option value='" + value.TypeId + "' selected>" + value.Description + "</option>";
+                                }
+                                else {
+                                    items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                }
                             });
                             $(op.selectQuesDiffiLevel).html(items);
                         }
@@ -233,6 +252,11 @@
                         $(op.errorMsg).html(res.Message);
                     }
                 }
+                var labelvalue = $(op.selecthiddendlllableType).val();
+                if (labelvalue) {
+                    $(op.selectQuesDiffiLevel).val(labelvalue);
+                }
+
             })
             .fail(res => {
                 $(op.errorMsg).html(res.responseText);
@@ -250,9 +274,11 @@
                             $(op.errorMsg).html(res.Message);
                         }
                         else {
+
                             $.each(res.Data, function (index, value) {
                                 items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
                             });
+                            var prev = $(op.selectQuesSubjectId).val();
                             $(op.selectQuesSubjectId).html(items);
                         }
                     }
@@ -260,10 +286,42 @@
                         $(op.errorMsg).html(res.Message);
                     }
                 }
+                var categoryvalue = $(op.selecthiddenddlCategoryType).val();
+                if (categoryvalue) {
+                    $(op.selectQuesSubjectId).val(categoryvalue);
+                }
             })
             .fail(res => {
                 $(op.errorMsg).html(res.responseText);
             });
+    }
+    var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
+
+        var flag = true;
+        var message = "";
+
+        if (!quesDiffiLevel || quesDiffiLevel == "") {
+            message = "Difficulty Level is required";
+        }
+        else if (!quesTypeId || quesTypeId == "") {
+            message = "Question Type is required";
+        }
+        else if (!quesSubjectId || quesSubjectId == "") {
+            message = "Subject is required";
+        }
+        else if (!quesText || quesText.trim() == "") {
+            message = "Question Description is required";
+        }
+        else if (!quesMark || quesMark.trim() == "") {
+            message = "Mark value is required";
+        }
+
+        if (message != "") {
+            $(defaults.errorMsg).html(message);
+            flag = false;
+        }
+
+        return flag;
     }
 
     var bindEvents = function () {
@@ -274,7 +332,9 @@
         })
 
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
-            var Type = $(op.selectQuesQuesTypeId).val();
+            //var Type = $(op.selectQuesQuesTypeId).val();
+            var $type = $(this);
+            var Type = $type.find(":selected").attr('data-id');
             if (Type == questionTypes.option) {
                 $(defaults.selectMCQType).show();
                 $(defaults.selectTFType).hide();
@@ -305,7 +365,8 @@
         })
 
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
-            addQuestion();
+            if (counter < 8)
+                addQuestion();
         })
 
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
