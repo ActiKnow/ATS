@@ -152,13 +152,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\DashboardController.cs" />
-    <Compile Include="Areas\Admin\SetupController.cs" />
-    <Compile Include="Areas\Admin\UserSetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserSetupController.cs" />
     <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
-    <Compile Include="Areas\Candidate\DashboardController.cs" />
+    <Compile Include="Areas\Candidate\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
-    <Compile Include="Areas\Employee\DashboardController.cs" />
+    <Compile Include="Areas\Employee\Controllers\DashboardController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -181,8 +181,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\Backup\bootstrap.js" />
-    <Content Include="Scripts\Backup\bootstrap.min.js" />
+    <Content Include="Scripts\backup\bootstrap.js" />
+    <Content Include="Scripts\backup\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Question.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\TypeSetup.cshtml" />
@@ -195,20 +195,31 @@
     <Content Include="Areas\Admin\Views\UserSetup\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_QuestionList.cshtml" />
-    <None Include="Scripts\Backup\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Backup\jquery-1.10.2.js" />
-    <Content Include="Scripts\Backup\jquery-1.10.2.min.js" />
-    <None Include="Scripts\Backup\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\Backup\jquery.validate.js" />
-    <Content Include="Scripts\Backup\jquery.validate.min.js" />
-    <Content Include="Scripts\Backup\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\Backup\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Backup\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Backup\respond.js" />
-    <Content Include="Scripts\Backup\respond.min.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
-    <Content Include="Scripts\main.js" />
+    <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\backup\jquery-1.10.2.js" />
+    <Content Include="Scripts\backup\jquery-1.10.2.min.js" />
+    <None Include="Scripts\backup\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\backup\jquery.validate.js" />
+    <Content Include="Scripts\backup\jquery.validate.min.js" />
+    <Content Include="Scripts\backup\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\backup\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\backup\modernizr-2.6.2.js" />
+    <Content Include="Scripts\backup\respond.js" />
+    <Content Include="Scripts\backup\respond.min.js" />
+    <Content Include="Scripts\plugins\bootstrap.min.js" />
+    <Content Include="Scripts\common\alert-service.js" />
+    <Content Include="Scripts\common\app-module.js" />
+    <Content Include="Scripts\common\columnvalue-selector.js" />
+    <Content Include="Scripts\common\dialog-service.js" />
+    <Content Include="Scripts\common\form-validation-service.js" />
+    <Content Include="Scripts\common\keep-alive-service.js" />
+    <Content Include="Scripts\common\page-tracker.js" />
+    <Content Include="Scripts\common\pagination.js" />
+    <Content Include="Scripts\common\session-data.js" />
+    <Content Include="Scripts\common\utils.js" />
+    <Content Include="Scripts\common\utils\hot-keys.js" />
+    <Content Include="Scripts\plugins\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\plugins\main.js" />
     <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\plugins\bootstrap-notify.min.js" />
     <Content Include="Scripts\plugins\chart.js" />
@@ -223,12 +234,12 @@
     <Content Include="Scripts\plugins\pace.min.js" />
     <Content Include="Scripts\plugins\select2.min.js" />
     <Content Include="Scripts\plugins\sweetalert.min.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\Question\question.js" />
-    <Content Include="Scripts\Question\questionList.js" />
-    <Content Include="Scripts\TypeSetup\typeSetup.js" />
-    <Content Include="Scripts\UserSetup\userApproval.js" />
-    <Content Include="Scripts\UserSetup\userSetup.js" />
+    <Content Include="Scripts\plugins\popper.min.js" />
+    <Content Include="Scripts\module\question\question.js" />
+    <Content Include="Scripts\module\question\question-list.js" />
+    <Content Include="Scripts\module\type-setup\type-setup.js" />
+    <Content Include="Scripts\module\user-setup\user-approval.js" />
+    <Content Include="Scripts\module\user-setup\user-setup.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -258,7 +269,7 @@
     <Content Include="Views\Shared\_CandidateLayout.cshtml" />
     <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
     <Content Include="Views\Home\Registration.cshtml" />
-    <Content Include="Scripts\Backup\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\backup\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
