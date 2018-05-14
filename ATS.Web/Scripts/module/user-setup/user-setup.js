@@ -4,7 +4,7 @@
         firstName: '.firstName',
         lastName: '.lastName',
         mobile: '.mobile',
-        email: '.email',
+        email: '.emailId',
         password: '#password-field',
         btnRefresh: '#refresh',
         ddlRoleType: '#roleType',
@@ -91,6 +91,9 @@
                             });
                             $(op.selectStatus).html(items);
                         }
+                        if ($(op.hiddenEmail).val() !== null && $(op.hiddenEmail).val() !== "") {
+                            $(op.selectStatus).val($(op.hiddenStatusId).val());
+                        }
                     }
                     else {
                         $(op.errorMsg).html(res.Message);
@@ -114,6 +117,7 @@
         var password = $(op.password).val();
         var email = $(op.email).val();
         var roleType = $(op.ddlRoleType).find(":selected").val();
+        var status = $(op.selectStatus).find(":selected").val();
 
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
@@ -122,6 +126,7 @@
                 CurrPassword: password,
                 EmailId: email,
                 RoleTypeId: roleType,
+                StatusId: status.trim(),
             };
             UserCredentials.push(item);
             var userInfoModel = {
@@ -130,7 +135,8 @@
                 Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
-                Password: password.trim(),
+                CurrPassword: password.trim(),
+                StatusId: status.trim(),
                 UserCredentials: UserCredentials,
             };
 
@@ -154,6 +160,7 @@
         var password = $(op.password).val();
         var email = $(op.email).val();
         var roleType = $(op.ddlRoleType).find(":selected").val();
+        var UpdateStatus = $(op.selectStatus).find(":selected").val();
 
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
@@ -163,6 +170,7 @@
                 CurrPassword: password,
                 EmailId: email,
                 RoleTypeId: roleType,
+                StatusId: UpdateStatus.trim(),
             };
             UserCredentials.push(item);
             var userInfoModel = {
@@ -170,7 +178,8 @@
                 Mobile: mobile.trim(),
                 Email: email.trim(),
                 RoleTypeId: roleType.trim(),
-                Password: password.trim(),
+                CurrPassword: password.trim(),
+                StatusId: UpdateStatus.trim(),
                 UserCredentials: UserCredentials,
             };
 
@@ -212,11 +221,17 @@
     var setValuesReadOnly = function () {
         var op = defaults;
         var hiddenEmail = $(op.hiddenEmail).val();
-        if (hiddenEmail !== null)
-        {
+        if (hiddenEmail !== null && hiddenEmail !== "") {
             $(op.firstName).attr("disabled", true);
             $(op.lastName).attr("disabled", true);
-            $(op.email).attr("disabled", true);          
+            $(op.email).attr("disabled", true);
+         
+        }
+        else
+        {
+            $(op.firstName).attr("disabled", false);
+            $(op.lastName).attr("disabled", false);
+            $(op.email).attr("disabled", false);           
         }
     }
     var loadRoleTypes = function () {
@@ -236,6 +251,11 @@
                             });
                             $(op.ddlRoleType).html(items);
                         }
+                       
+                        if ($(op.hiddenEmail).val() !== null && $(op.hiddenEmail).val() !== "") {
+                            $(op.ddlRoleType).val($(op.hiddenRoleId).val());
+                        }
+
                     }
                     else {
                         $(op.errorMsg).html(res.Message);
