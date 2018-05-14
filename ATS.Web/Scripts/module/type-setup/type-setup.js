@@ -172,7 +172,7 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                items += "<option value='" + value.Value + "'>" + value.Description + "</option>";
                             });
                             $(op.selectParent).html(items);
                         }

@@ -62,7 +62,7 @@ namespace ATS.Repository.Migrations
                     {
                         TestBankId = c.Guid(nullable: false),
                         CategoryTypeValue = c.Int(nullable: false),
-                        LavelTypeValue = c.Int(nullable: false),
+                        LevelTypeValue = c.Int(nullable: false),
                         Description = c.String(),
                         Instructions = c.String(),
                         Duration = c.Decimal(nullable: false, precision: 18, scale: 2),

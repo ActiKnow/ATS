@@ -275,7 +275,7 @@ namespace ATS.Repository.Repo
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
                                  RoleTypeValue = x.RoleTypeValue,
-                             }) as IQueryable<UserInfoModel>;
+                             }).AsQueryable<UserInfoModel>();
 
                 return query;
             }
@@ -304,7 +304,7 @@ namespace ATS.Repository.Repo
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
                                  RoleTypeValue = x.RoleTypeValue,
-                             }).Where(condition) as IQueryable<UserInfoModel>;
+                             }).Where(condition).AsQueryable<UserInfoModel>();
 
                 return query;
             }

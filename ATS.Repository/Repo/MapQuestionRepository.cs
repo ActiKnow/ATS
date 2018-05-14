@@ -181,7 +181,7 @@ namespace ATS.Repository.Repo
                                  Marks = x.Marks,
                                  QId = x.QId,
                                  TestBankId = x.TestBankId
-                             }).Where(x => x.Id == guid) as IQueryable<TestQuestionMapModel>;
+                             }).Where(x => x.Id == guid).AsQueryable<TestQuestionMapModel>();
 
                 return query;
             }
@@ -202,7 +202,7 @@ namespace ATS.Repository.Repo
                                  Marks = x.Marks,
                                  QId = x.QId,
                                  TestBankId = x.TestBankId
-                             }).Where(condition) as IQueryable<TestQuestionMapModel>;
+                             }).Where(condition).AsQueryable<TestQuestionMapModel>();
 
                 return query;
             }

@@ -51,7 +51,7 @@ namespace ATS.Repository.Repo
                                  LastUpdatedDate = x.LastUpdatedDate,                                
                                  StatusId = x.StatusId,
                                  UserId = x.UserId,
-                             }) as IQueryable<UserCredentialModel>;
+                             }).AsQueryable<UserCredentialModel>();
 
                 return query;
             }

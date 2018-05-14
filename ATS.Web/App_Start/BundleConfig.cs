@@ -29,23 +29,23 @@ namespace ATS.Web
 
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-3.2.1.min.js"));
+                        "~/Scripts/plugins/jquery-3.2.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/popper.min.js",
-                      "~/Scripts/bootstrap.min.js",
-                     "~/Scripts/main.js"));
+                      "~/Scripts/plugins/popper.min.js",
+                      "~/Scripts/plugins/bootstrap.min.js",
+                     "~/Scripts/plugins/main.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/plugins").Include(
                       "~/Scripts/plugins/pace.min.js",
                       "~/Scripts/plugins/chart.js",
                       "~/Scripts/plugins/bootstrap-datepicker.min.js",
                       "~/Scripts/plugins/bootstrap-notify.min.js",
-                      "~/Scripts/plugins/dataTables.bootstrap.min.js",
+                     // "~/Scripts/plugins/dataTables.bootstrap.min.js",
+                      "~/Scripts/plugins/moment.min.js",
                       "~/Scripts/plugins/fullcalendar.min.js",
                       "~/Scripts/plugins/jquery-ui.custom.min.js",
                       "~/Scripts/plugins/jquery.dataTables.min.js",
-                      "~/Scripts/plugins/moment.min.js",
                       "~/Scripts/plugins/select2.min.js",
                       "~/Scripts/plugins/sweetalert.min.js"));
 

@@ -224,7 +224,7 @@ namespace ATS.Repository.Repo
         {
             try
             {
-                var query = Select().Where(x => x.QId == qId) as IQueryable<QuestionBankModel>;
+                var query = Select().Where(x => x.QId == qId).AsQueryable <QuestionBankModel>();
                 return query;
             }
             catch
@@ -237,7 +237,7 @@ namespace ATS.Repository.Repo
         {
             try
             {
-                var query = Select().Where(condition) as IQueryable<QuestionBankModel>;
+                var query = Select().Where(condition).AsQueryable<QuestionBankModel>();
                 return query;
             }
             catch
@@ -268,7 +268,7 @@ namespace ATS.Repository.Repo
                              CategoryTypeDescription = p.Description,
                              LevelTypeDescription = q.Description,
                              QuesTypeDescription = r.Description
-                         });
+                         }).AsQueryable<QuestionBankModel>();
 
             return query;
         }

@@ -228,7 +228,7 @@ namespace ATS.Repository.Repo
                                  StatusId = x.StatusId,
                                  TypeId = x.TypeId,
                                  Value = x.Value,
-                             }) as IQueryable<TypeDefModel>;
+                             }).AsQueryable<TypeDefModel>();
 
                 query = query.Where(x => x.Value == value);
                 return query;
@@ -256,7 +256,7 @@ namespace ATS.Repository.Repo
                                  StatusId = x.StatusId,
                                  TypeId = x.TypeId,
                                  Value = x.Value,
-                             }).Where(condition) as IQueryable<TypeDefModel>;
+                             }).Where(condition).AsQueryable<TypeDefModel>();
                                
                 return query;
             }

@@ -172,7 +172,7 @@ namespace ATS.Repository.Repo
                                  OptionKeyId = x.OptionKeyId,
                                  QId = x.QId,
 
-                             }).Where(condition) as IQueryable<QuestionOptionMapModel>;
+                             }).Where(condition).AsQueryable<QuestionOptionMapModel>();
                 return query;
             }
             catch

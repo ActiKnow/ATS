@@ -1,6 +1,5 @@
 namespace ATS.Repository.Migrations
 {
-    using ATS.Core.Global;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

@@ -231,7 +231,7 @@
         init: function (config) {
             $.extend(true, defaults, config);
             bindEvents();
-            loadRoleTypes();     
+            //loadRoleTypes();     
             $(defaults.successMsg).hide();
             $(defaults.errorMsg).hide();
         }

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ATS.Web.Controllers;
 
-namespace ATS.Web.Areas.Employee
+namespace ATS.Web.Areas.Employee.Controllers
 {
     public class DashboardController : BaseController
     {

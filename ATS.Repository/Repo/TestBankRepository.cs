@@ -220,7 +220,7 @@ namespace ATS.Repository.Repo
         {
             try
             {
-                var query = Select().Where(x => x.TestBankId == testBankId) as IQueryable<TestBankModel>;
+                var query = Select().Where(x => x.TestBankId == testBankId).AsQueryable<TestBankModel>();
                 return query;
             }
             catch
@@ -233,7 +233,7 @@ namespace ATS.Repository.Repo
         {
             try
             {
-                var query = Select().Where(condition) as IQueryable<TestBankModel>;
+                var query = Select().Where(condition).AsQueryable<TestBankModel>();
                 return query;
             }
             catch

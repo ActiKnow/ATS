@@ -177,7 +177,7 @@ namespace ATS.Repository.Repo
                                  LastUpdatedBy = x.LastUpdatedBy,
                                  LastUpdatedDate = x.LastUpdatedDate,
                                  StatusId = x.StatusId
-                             }).Where(condition) as IQueryable<QuestionOptionModel>;
+                             }).Where(condition).AsQueryable<QuestionOptionModel>();
                 return query;
             }
             catch

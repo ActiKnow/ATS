@@ -13,7 +13,7 @@ namespace ATS.Repository.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201805140451112_initialMigration"; }
+            get { return "201805140855572_initialMigration"; }
         }
         
         string IMigrationMetadata.Source
