@@ -6,7 +6,7 @@ using ATS.Repository.Migrations;
 using ATS.Repository.Model;
 
 
-namespace ATS.Repository.DAO
+namespace ATS.Repository.Repo
 {
     public class ATSDBContext : DbContext
     {
@@ -16,7 +16,7 @@ namespace ATS.Repository.DAO
         }
         public ATSDBContext() : base("name=ATSDBContext")
         {
-           //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ATSDBContext, ATS.Repository.Migrations.Configuration>());
             //Database.SetInitializer(new CreateDatabaseIfNotExists<ATSDBContext>());
         }
 

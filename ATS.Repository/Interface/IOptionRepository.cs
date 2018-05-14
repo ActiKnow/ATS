@@ -1,15 +1,13 @@
 ﻿using ATS.Core.Model;
-using ATS.Repository.DAO;
 using System;
 using System.Collections.Generic;
+using ATS.Repository.Model;
+using System.Linq;
 
 namespace ATS.Repository.Interface
 {
-    interface IOptionRepository : ICRUD<QuestionOptionModel>
+    public interface IOptionRepository : IRepository<QuestionOption>
     {
-        void Create(ref QuestionOptionModel input, ATSDBContext context);
-        void Update(QuestionOptionModel input, ATSDBContext context);
-        void Delete(QuestionOptionModel input, ATSDBContext context);
-        List<QuestionOptionModel> Select( ATSDBContext context, Func<QuestionOptionModel, bool> condition);
+        IQueryable<QuestionOptionModel> Select(Func<QuestionOptionModel, bool> condition);
     }
 }

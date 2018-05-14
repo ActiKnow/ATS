@@ -39,16 +39,23 @@
 
         var appendUser = function (result) {
             if (result !== "") {
+                var msg = "";
                 if (result.Status) {
                     if (result.Message) {
-                        $(op.errorMsg).html(result.Message);
+                        $.each(result.Message, function (index, value) {
+                            msg += value.Message;
+                        });
+                        $(op.errorMsg).html(msg);
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
                     }
                 }
                 else {
-                    $(op.errorMsg).html(result.Message);
+                    $.each(result.Message, function (index, value) {
+                        msg += value.Message;
+                    });
+                    $(op.errorMsg).html(msg);
                 }
             }
         }

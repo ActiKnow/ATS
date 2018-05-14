@@ -14,7 +14,7 @@ namespace ATS.Repository.Model
         public System.Guid QId { get; set; }
         public string OptionSelected_Id { get; set; }
         public string Description { get; set; }
-        public virtual QuestionBank QuestionBank { get; set; }
-        public virtual UserTestHistory UserTestHistory { get; set; }
+        public  QuestionBank QuestionBank { get; set; }
+        public  UserTestHistory UserTestHistory { get; set; }
     }
 }

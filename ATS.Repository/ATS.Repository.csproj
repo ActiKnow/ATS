@@ -47,34 +47,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\BaseRepository.cs" />
-    <Compile Include="DAO\MapOptionRepository.cs" />
-    <Compile Include="DAO\MapQuestionRepository.cs" />
-    <Compile Include="DAO\OptionRepository.cs" />
-    <Compile Include="DAO\QuestionRepository.cs" />
-    <Compile Include="DAO\TestBankRepository.cs" />
-    <Compile Include="DAO\TypeDefRepository.cs" />
     <Compile Include="Factory\Question\BoolQues.cs" />
     <Compile Include="Factory\Question\IQuestion.cs" />
     <Compile Include="Factory\Question\ISelectable.cs" />
     <Compile Include="Factory\Question\ObjectiveQues.cs" />
     <Compile Include="Factory\Question\QuestionFactory.cs" />
     <Compile Include="Factory\Question\SubjectiveQues.cs" />
-    <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Interface\IMapOptionRepository.cs" />
     <Compile Include="Interface\IMapQuestionRepository.cs" />
     <Compile Include="Interface\IAttemptHistoryRepository.cs" />
     <Compile Include="Interface\IOptionRepository.cs" />
     <Compile Include="Interface\IQuestionRepository.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\ITestAssignmentRepository.cs" />
     <Compile Include="Interface\ITestHistoryRepository.cs" />
-    <Compile Include="Interface\ITestRepository.cs" />
-    <Compile Include="Interface\ITypeRepository.cs" />
+    <Compile Include="Interface\ITestBankRepository.cs" />
+    <Compile Include="Interface\ITypeDefRepository.cs" />
     <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Migrations\201805101634224_InitialMigration.cs" />
-    <Compile Include="Migrations\201805101634224_InitialMigration.Designer.cs">
-      <DependentUpon>201805101634224_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201805140451112_initialMigration.cs" />
+    <Compile Include="Migrations\201805140451112_initialMigration.Designer.cs">
+      <DependentUpon>201805140451112_initialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -90,8 +83,21 @@
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\UserTestHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DAO\ATSDBContext.cs" />
-    <Compile Include="DAO\UserRepository.cs" />
+    <Compile Include="Repo\ATSDBContext.cs" />
+    <Compile Include="Repo\AttemptHistoryRepository.cs" />
+    <Compile Include="Repo\BaseRepository.cs" />
+    <Compile Include="Repo\MapOptionRepository.cs" />
+    <Compile Include="Repo\MapQuestionRepository.cs" />
+    <Compile Include="Repo\OptionRepository.cs" />
+    <Compile Include="Repo\QuestionRepository.cs" />
+    <Compile Include="Repo\Repository.cs" />
+    <Compile Include="Repo\TestAssignmentRepository.cs" />
+    <Compile Include="Repo\TestBankRepository.cs" />
+    <Compile Include="Repo\TestHistoryRepository.cs" />
+    <Compile Include="Repo\TypeDefRepository.cs" />
+    <Compile Include="Repo\UserCredentialRepository.cs" />
+    <Compile Include="Repo\UserRepository.cs" />
+    <Compile Include="Uow\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -104,8 +110,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805101634224_InitialMigration.resx">
-      <DependentUpon>201805101634224_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805140451112_initialMigration.resx">
+      <DependentUpon>201805140451112_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

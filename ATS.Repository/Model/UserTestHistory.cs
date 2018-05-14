@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ATS.Core.Model;
 
@@ -22,8 +23,12 @@ namespace ATS.Repository.Model
         public System.DateTime ReusableDate { get; set; }
         public Nullable<decimal> TotalDuration { get; set; }
 
-        public virtual TestBank TestBank { get; set; }
-        public virtual List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
-        public virtual UserInfo UserInfo { get; set; }
+        [ForeignKey("TestbankId")]
+        public  TestBank TestBank { get; set; }
+
+        public  List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
+
+        [ForeignKey("UserId")]
+        public  UserInfo UserInfo { get; set; }
     }
 }

@@ -40,27 +40,27 @@ namespace ATS.Web.Controllers
                             UserInfoModel userInfo=(UserInfoModel)apiResult.Data;
 
                             Session[Constants.USERID] = userInfo.UserId;
-                            Session[Constants.ROLE] = userInfo.RoleValue;
+                            Session[Constants.ROLE] = userInfo.RoleTypeValue;
 
                             return RedirectToAction("SetUserCredential");
                         }
                     }
                     else
                     {
-                        apiResult = new ApiResult(false ,"Error Occured." );
+                        apiResult = new ApiResult(false ,new List<string> { "Error Occured" } );
                     }
                 }
                 else
                 {
-                    apiResult = new ApiResult(false,"Error Occured.");
+                    apiResult = new ApiResult(false, new List<string> { "Error Occured" });
                 }
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(false,ex.GetBaseException().Message );
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message } );
             }
 
-            ViewBag.Error = apiResult.Message;
+            ViewBag.Error = apiResult.Message[0];
 
             return View("Index", userCredential);
         }
@@ -68,7 +68,7 @@ namespace ATS.Web.Controllers
         
         public ActionResult SetUserCredential()
         {
-            ApiResult apiResult = new ApiResult(false,"Invalid Credentials.");
+            ApiResult apiResult = new ApiResult(false, new List<string> { "Invalid Credentials." });
             try
             { 
                 FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), false);
@@ -81,12 +81,12 @@ namespace ATS.Web.Controllers
                 //else if (RoleType == Constants.CANDIDATE)
                 //    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
                 else
-                    apiResult = new ApiResult(false, "Role is not defiend");
+                    apiResult = new ApiResult(false, new List<string> { "Role is not defiend" });
 
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult( false,ex.GetBaseException().Message);
+                apiResult = new ApiResult( false, new List<string> { ex.GetBaseException().Message });
                 ViewBag.Error = apiResult.Message;
             }
          

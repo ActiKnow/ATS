@@ -1,5 +1,5 @@
 ﻿using ATS.Core.Model;
-using ATS.Repository.DAO;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,6 @@ namespace ATS.Repository.Factory.Question
 {
     public interface ISelectable<T>
     {
-        List<T> Select( ATSDBContext context, Func<T, bool> condition);
+        List<T> Select(Func<T, bool> condition);
     }
 }

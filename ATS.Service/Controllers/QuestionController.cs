@@ -5,77 +5,67 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.DAO;
 using ATS.Repository.Model;
 using ATS.Core.Model;
 using ATS.Core.Helper;
+using ATS.Bll;
 
 namespace ATS.Service.Controllers
 {
     public class QuestionController : ApiController
     {
-        private IQuestionRepository questionRepo = null;
+        private ApiResult apiResult;
+        private QuestionBankBo questionBankBo;
         public QuestionController()
         {
-            questionRepo = new QuestionRepository();
+            apiResult = new ApiResult(false, new List<string>());
+            questionBankBo = new QuestionBankBo();
         }
 
         [HttpPost]
         [Route("api/Question/Create")]
-        public IHttpActionResult Create(QuestionBankModel newQues)
+        public IHttpActionResult Create(QuestionBank newQues)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Created");
             try
             {
-                if (questionRepo.Create(newQues))
-                {
-                    apiResult = new ApiResult(true, "Record Created");
-                }
+                apiResult = questionBankBo.Create(newQues);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
             }
             return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/Question/Update")]
-        public IHttpActionResult Update(QuestionBankModel newQues)
+        public IHttpActionResult Update(QuestionBank newQues)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Updated");
             try
             {
-                if (questionRepo.Update(newQues))
-                {
-                    apiResult = new ApiResult(true);
-                }
+                apiResult = questionBankBo.Update(newQues);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
             }
             return Ok(apiResult);
         }
 
         [HttpPost]
         [Route("api/Question/Delete")]
-        public IHttpActionResult Delete(QuestionBankModel newQues)
+        public IHttpActionResult Delete(QuestionBank newQues)
         {
-            ApiResult apiResult = new ApiResult(false, "Not Deleted");
             try
             {
-                if (questionRepo.Delete(newQues))
-                {
-                    apiResult = new ApiResult(true);
-                }
+                apiResult = questionBankBo.Delete(newQues);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
             }
             return Ok(apiResult);
         }
@@ -84,23 +74,32 @@ namespace ATS.Service.Controllers
         [Route("api/Question/Select")]
         public IHttpActionResult Select(SimpleQueryModel query)
         {
-            ApiResult apiResult = new ApiResult(false, "Record not found");
             try
             {
-                SimpleQueryBuilder<QuestionBankModel> simpleQry = new SimpleQueryBuilder<QuestionBankModel>();
-                List<QuestionBankModel> ques  = questionRepo.Select(simpleQry.GetQuery(query).Compile());
-
-                if (ques != null && ques.Count > 0)
-                {
-                    apiResult = new ApiResult(true, "", ques);
-                }
+                apiResult = questionBankBo.Select(query);
             }
             catch (Exception ex)
             {
-                string error = ex.GetBaseException().Message;
-                apiResult = new ApiResult(false, error);
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
             }
-           return Ok(apiResult);
+            return Ok(apiResult);
+        }
+
+        [HttpGet]
+        [Route("api/Question/Retrieve/{questionId}")]
+        public IHttpActionResult Retrieve(Guid questionId)
+        {
+            try
+            {
+                apiResult = questionBankBo.GetById(questionId);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
         }
     }
 }

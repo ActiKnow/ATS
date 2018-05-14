@@ -1,18 +1,16 @@
 ﻿using ATS.Core.Model;
-using ATS.Repository.DAO;
 using ATS.Repository.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ATS.Repository.Interface
 {
-    public interface IMapQuestionRepository : ICRUD<TestQuestionMapModel>
+    public interface IMapQuestionRepository : IRepository<TestQuestionMapping>
     {
-        void Create(ref TestQuestionMapModel input, ATSDBContext context);
-        bool Create(List<TestQuestionMapModel> inputs);
-        void Delete(TestQuestionMapModel input, ATSDBContext context);
-        bool Delete(List<TestQuestionMapModel> inputs);
-        void Update(TestQuestionMapModel input, ATSDBContext context);
-        List<TestQuestionMapModel> Select(ATSDBContext context, Func<TestQuestionMapModel, bool> condition);
+        bool DeleteMappedQuestions(List<TestQuestionMapping> inputs);
+        bool MapQuotions(List<TestQuestionMapping> inputs);
+        IQueryable<TestQuestionMapModel> Retrieve(Guid guid);
+        IQueryable<TestQuestionMapModel> Select(Func<TestQuestionMapModel,bool> condition);
     }
 }

@@ -1,16 +1,17 @@
 ﻿using ATS.Core.Model;
-using ATS.Repository.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATS.Repository.Uow;
+using ATS.Repository.Model;
 
 namespace ATS.Repository.Factory.Question
 {
     public interface IQuestion: ISelectable<QuestionBankModel>
     {
-        void Create(QuestionBankModel input, ATSDBContext context);
-        void Update(QuestionBankModel input, ATSDBContext context);
+        bool Create(QuestionBankModel input);
+        bool Update(QuestionBankModel input);
     }
 }

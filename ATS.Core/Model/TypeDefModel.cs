@@ -19,6 +19,6 @@ namespace ATS.Core.Model
         public string ParentDescription { get; set; }
         public int? ParentValue { get; set; }
         public string StatusDescription { get; set; }
-        public virtual List<UserInfoModel> UserInfo { get; set; }
+        public List<UserInfoModel> UserInfo { get; set; }
     }
 }

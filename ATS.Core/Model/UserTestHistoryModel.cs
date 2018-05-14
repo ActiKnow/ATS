@@ -21,8 +21,8 @@ namespace ATS.Core.Model
         public System.DateTime ReusableDate { get; set; }
         public Nullable<decimal> TotalDuration { get; set; }
 
-        public virtual TestBankModel TestBank { get; set; }
-        public virtual List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
-        public virtual UserInfoModel UserInfo { get; set; }
+        public  TestBankModel TestBank { get; set; }
+        public  List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
+        public  UserInfoModel UserInfo { get; set; }
     }
 }

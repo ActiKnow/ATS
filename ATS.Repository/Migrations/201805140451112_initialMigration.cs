@@ -3,7 +3,7 @@ namespace ATS.Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class initialMigration : DbMigration
     {
         public override void Up()
         {
@@ -13,17 +13,20 @@ namespace ATS.Repository.Migrations
                     {
                         QId = c.Guid(nullable: false),
                         Description = c.String(),
-                        QuesTypeId = c.Guid(nullable: false),
-                        LevelTypeId = c.Guid(nullable: false),
-                        CategoryTypeId = c.Guid(nullable: false),
+                        QuesTypeValue = c.Int(nullable: false),
+                        LevelTypeValue = c.Int(nullable: false),
+                        CategoryTypeValue = c.Int(nullable: false),
                         DefaultMark = c.Int(nullable: false),
                         StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
                         LastUpdatedBy = c.String(),
+                        TypeDef_Value = c.Int(),
                     })
-                .PrimaryKey(t => t.QId);
+                .PrimaryKey(t => t.QId)
+                .ForeignKey("dbo.TypeDefs", t => t.TypeDef_Value)
+                .Index(t => t.TypeDef_Value);
             
             CreateTable(
                 "dbo.QuestionOptionMappings",
@@ -58,12 +61,12 @@ namespace ATS.Repository.Migrations
                 c => new
                     {
                         TestBankId = c.Guid(nullable: false),
-                        CategoryTypeId = c.Guid(nullable: false),
-                        LavelTypeId = c.Guid(nullable: false),
+                        CategoryTypeValue = c.Int(nullable: false),
+                        LavelTypeValue = c.Int(nullable: false),
                         Description = c.String(),
                         Instructions = c.String(),
                         Duration = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        TestTypeId = c.Guid(nullable: false),
+                        TestTypeValue = c.Int(nullable: false),
                         TotalMarks = c.Decimal(nullable: false, precision: 18, scale: 2),
                         StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
@@ -101,25 +104,24 @@ namespace ATS.Repository.Migrations
                         LName = c.String(),
                         Mobile = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Email = c.String(),
-                        RoleTypeId = c.Guid(nullable: false),
+                        RoleTypeValue = c.Int(nullable: false),
                         StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
                         LastUpdatedBy = c.String(),
-                        TypeDef_TypeId = c.Guid(),
                     })
                 .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.TypeDefs", t => t.TypeDef_TypeId)
-                .Index(t => t.TypeDef_TypeId);
+                .ForeignKey("dbo.TypeDefs", t => t.RoleTypeValue, cascadeDelete: true)
+                .Index(t => t.RoleTypeValue);
             
             CreateTable(
                 "dbo.TypeDefs",
                 c => new
                     {
+                        Value = c.Int(nullable: false, identity: true),
                         TypeId = c.Guid(nullable: false),
                         Description = c.String(),
-                        Value = c.Int(nullable: false),
                         ParentKey = c.Int(nullable: false),
                         StatusId = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
@@ -127,7 +129,8 @@ namespace ATS.Repository.Migrations
                         LastUpdatedDate = c.DateTime(),
                         LastUpdatedBy = c.String(),
                     })
-                .PrimaryKey(t => t.TypeId);
+                .PrimaryKey(t => t.Value)
+                .Index(t => t.TypeId, unique: true);
             
             CreateTable(
                 "dbo.UserCredentials",
@@ -135,7 +138,6 @@ namespace ATS.Repository.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         UserId = c.Guid(nullable: false),
-                        RoleTypeId = c.Guid(),
                         PrevPassword = c.String(),
                         CurrPassword = c.String(),
                         EmailId = c.String(),
@@ -210,7 +212,8 @@ namespace ATS.Repository.Migrations
             DropForeignKey("dbo.UserAttemptedHistories", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.UserTestHistories", "TestbankId", "dbo.TestBanks");
             DropForeignKey("dbo.UserCredentials", "UserId", "dbo.UserInfoes");
-            DropForeignKey("dbo.UserInfoes", "TypeDef_TypeId", "dbo.TypeDefs");
+            DropForeignKey("dbo.UserInfoes", "RoleTypeValue", "dbo.TypeDefs");
+            DropForeignKey("dbo.QuestionBanks", "TypeDef_Value", "dbo.TypeDefs");
             DropForeignKey("dbo.TestAssignments", "UserId", "dbo.UserInfoes");
             DropForeignKey("dbo.TestAssignments", "TestBankId", "dbo.TestBanks");
             DropForeignKey("dbo.TestQuestionMappings", "QId", "dbo.QuestionBanks");
@@ -220,12 +223,14 @@ namespace ATS.Repository.Migrations
             DropIndex("dbo.UserTestHistories", new[] { "TestbankId" });
             DropIndex("dbo.UserTestHistories", new[] { "UserId" });
             DropIndex("dbo.UserCredentials", new[] { "UserId" });
-            DropIndex("dbo.UserInfoes", new[] { "TypeDef_TypeId" });
+            DropIndex("dbo.TypeDefs", new[] { "TypeId" });
+            DropIndex("dbo.UserInfoes", new[] { "RoleTypeValue" });
             DropIndex("dbo.TestAssignments", new[] { "TestBankId" });
             DropIndex("dbo.TestAssignments", new[] { "UserId" });
             DropIndex("dbo.TestQuestionMappings", new[] { "QId" });
             DropIndex("dbo.TestQuestionMappings", new[] { "TestBankId" });
             DropIndex("dbo.QuestionOptionMappings", new[] { "QId" });
+            DropIndex("dbo.QuestionBanks", new[] { "TypeDef_Value" });
             DropTable("dbo.QuestionOptions");
             DropTable("dbo.UserAttemptedHistories");
             DropTable("dbo.UserTestHistories");
