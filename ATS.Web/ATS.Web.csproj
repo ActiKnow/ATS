@@ -159,6 +159,7 @@
     <Compile Include="Areas\Candidate\DashboardController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Areas\Employee\DashboardController.cs" />
+    <Compile Include="Areas\Praveen\PraveenAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +196,7 @@
     <Content Include="Areas\Admin\Views\UserSetup\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_QuestionList.cshtml" />
+    <Content Include="Areas\Praveen\Views\web.config" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.min.js" />
@@ -257,6 +259,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Praveen\Controllers\" />
+    <Folder Include="Areas\Praveen\Models\" />
+    <Folder Include="Areas\Praveen\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

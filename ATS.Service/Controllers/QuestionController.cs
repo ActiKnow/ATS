@@ -69,7 +69,7 @@ namespace ATS.Service.Controllers
             {
                 if (questionRepo.Delete(newQues))
                 {
-                    apiResult = new ApiResult(true);
+                    apiResult = new ApiResult(true,"Record Deleted");
                 }
             }
             catch (Exception ex)
