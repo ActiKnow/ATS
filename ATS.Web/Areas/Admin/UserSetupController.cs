@@ -156,6 +156,20 @@ namespace ATS.Web.Areas.Admin
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult UpdateUser(UserInfoModel userInfoModel)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.UserApiConsumer.UpdateUser(userInfoModel);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         private SelectList RoleTypeList()
         {
@@ -185,6 +199,21 @@ namespace ATS.Web.Areas.Admin
             }
 
             return selectList = new SelectList(roleTypeDef, "TypeId", "Description");
+        }
+
+        [HttpGet]
+        public ActionResult GetStatus()
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.CommonApiConsumer.GetStatus();
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, ex.GetBaseException().Message);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
