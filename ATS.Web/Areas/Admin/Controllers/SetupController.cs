@@ -305,7 +305,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.QUESTION));
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] =CommonType.QUESTION;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
             }
             catch (Exception ex)
             {
@@ -318,7 +322,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.LEVEL));
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] = CommonType.LEVEL;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
             }
             catch (Exception ex)
             {
@@ -331,7 +339,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.CATEGORY));
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] = CommonType.CATEGORY;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
             }
             catch (Exception ex)
             {
