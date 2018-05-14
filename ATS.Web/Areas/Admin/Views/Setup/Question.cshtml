@@ -5,238 +5,238 @@
 }
 
 
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-edit"></i>Setup</h1>
-            <p>Setup form for users</p>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item"><a href="#">Question Setup</a></li>
-        </ul>
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>Setup</h1>
+        <p>Setup form for users</p>
     </div>
-    <div class="row">
-        <div class="col-md-12" id="typeContext">
-            <div class="tile">
-                <div id="questionContainer">
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Question Setup</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12" id="typeContext">
+        <div class="tile">
+            <div id="questionContainer">
 
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <span class="errorMsg" @*style="display:none"*@></span>
-                            <span class="successMsg"></span>
-                        </div>
-
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <span class="errorMsg" @*style="display:none"*@></span>
+                        <span class="successMsg"></span>
                     </div>
-                    <div class="row">
 
-                        <div class="col-md-12">
-                            <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
-                        </div>
-                    </div>
-                    <br />
+                </div>
+                <div class="row">
+
                     <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                        @Html.DropDownListFor(x=>x.LevelTypeValue,new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } },new { @class = "form-control", id = "question_difficulty_level" }) 
-                                        @Html.HiddenFor(x=>x.LevelTypeValue, new {id="hiddendlllableType" })
-                                    </div>
-
+                        <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
+                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level" })
+                                    @Html.HiddenFor(x => x.LevelTypeValue, new { id = "hiddendlllableType" })
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                        @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
-                                        @Html.HiddenFor(x => x.QuesTypeId, new { id = "hiddenddlQuestionType" })
-                                        @*<select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
-            <option value="-1">- Select -</option>
 
-        </select>*@
-                                    </div>
-                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <label class="name-tag control-label" for="question_subject">Subject</label>
-                                        @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
-                                        @Html.HiddenFor(x => x.CategoryTypeId, new { id = "hiddenddlCategoryType" })
-                                        @*<select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
-            <option value="-1">- Select -</option>
-
-        </select>*@
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="name-tag control-label" for="question_question_type">Question Type</label>
+                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
+                                    @Html.HiddenFor(x => x.QuesTypeValue, new { id = "hiddenddlQuestionType" })
+                                    @*<select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
+                                            <option value="-1">- Select -</option>
+
+                                        </select>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="name-tag control-label" for="question_subject">Subject</label>
+                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
+                                    @Html.HiddenFor(x => x.CategoryTypeValue, new { id = "hiddenddlCategoryType" })
+                                    @*<select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
+                                            <option value="-1">- Select -</option>
+
+                                        </select>*@
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
                     </div>
 
-                    <br />
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
-                        </div>
-                       
-                        <div class="col-md-8">
-                            @*<textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea>*@
-                                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
-                                            </div>
+                    <div class="col-md-8">
+                        @*<textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea>*@
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
                     </div>
+                </div>
 
-                    <br />
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="name-tag">Answer Description</label>
-                        </div>
-                        <div class="col-md-8">
-
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
-                            <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
-                        </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="name-tag">Answer Description</label>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="MCQType">
+                    <div class="col-md-8">
 
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div id="TFType">
-                                <div class="form-group row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span>A.</span>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="Y">
-                                        <span>Is Correct</span>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span>B.</span>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input name="statusRadio" class="boolradio" type="radio" data-id="2" value="N">
-                                        <span>Is Correct</span>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
+                        <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="MCQType">
 
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div id="SubjectType">
-                            <div class="row">
+                        <div id="TFType">
+                            <div class="form-group row">
                                 <div class="col-md-1">
                                 </div>
                                 <div class="col-md-1">
                                     <span>A.</span>
                                 </div>
-                                <div class="col-md-8">
-                                    <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                                <div class="col-md-7">
+                                    <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">
                                 </div>
+                                <div class="col-md-3">
+                                    <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="Y">
+                                    <span>Is Correct</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-1">
+                                    <span>B.</span>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">
+                                </div>
+                                <div class="col-md-3">
+                                    <input name="statusRadio" class="boolradio" type="radio" data-id="2" value="N">
+                                    <span>Is Correct</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div id="SubjectType">
+                        <div class="row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-1">
+                                <span>A.</span>
+                            </div>
+                            <div class="col-md-8">
+                                <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
                             </div>
                         </div>
                     </div>
-
-                    <br />
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="name-tag control-label" for="question_mark">Mark</label>
-                        </div>
-                        <div class="col-md-8">
-                            @*<input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">*@
-                            @Html.TextBoxFor(x=>x.DefaultMark,new { @class ="Form-control",id= "question_mark" ,placdeholder="Mark",type="number",required="required"} )
-                        </div>
-                    </div>
-
-
-                    <br />
-                    <div class="tile-footer">
-                        @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
-                        @if (Model.QId == Guid.Empty)
-                        {
-                    <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
-                        }
-                        else
-                        {
-                    <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
-                        }
-                    </div>
-
                 </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="name-tag control-label" for="question_mark">Mark</label>
+                    </div>
+                    <div class="col-md-8">
+                        @*<input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">*@
+                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number", required = "required" })
+                    </div>
                 </div>
+
+
+                <br />
+                <div class="tile-footer">
+                    @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
+                    @if (Model.QId == Guid.Empty)
+                    {
+                        <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                    }
+                </div>
+
             </div>
         </div>
+    </div>
+</div>
 
-                @section scripts {
-                    <script src="~/Scripts/module/question/question.js"></script>
-                    <script>
-                        function isNumber(evt) {
-                            evt = (evt) ? evt : window.event;
-                            var charCode = (evt.which) ? evt.which : evt.keyCode;
-                            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                                return false;
-                            }
-                            return true;
-                        }
-                        (function ($, window, document) {
-                            $(function () {
-                                var config = {
-                                    selectContainer: '#questionContainer',
-                                    selectQuesDiffiLevel: '#question_difficulty_level',
-                                    selectQuesQuesTypeId: '#question_question_type_id',
-                                    selectQuesSubjectId: '#question_subject_id',
-                                    selectQuesText: '#question_text',
-                                    selectQuesMark: '#question_mark',
-                                    btnCreateQuestion: '#button_create_question',
-                                    selectMCQType: '#MCQType',
-                                    selectTFType: '#TFType',
-                                    selectSubjectType: '#SubjectType',
+@section scripts {
+    <script src="~/Scripts/module/question/question.js"></script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    selectContainer: '#questionContainer',
+                    selectQuesDiffiLevel: '#question_difficulty_level',
+                    selectQuesQuesTypeId: '#question_question_type_id',
+                    selectQuesSubjectId: '#question_subject_id',
+                    selectQuesText: '#question_text',
+                    selectQuesMark: '#question_mark',
+                    btnCreateQuestion: '#button_create_question',
+                    selectMCQType: '#MCQType',
+                    selectTFType: '#TFType',
+                    selectSubjectType: '#SubjectType',
 
-                                    selectOption1: '#Option1',
-                                    selectOption2: '#Option2',
-                                    selectOption3: '#Option3',
-                                    selectOption4: '#Option4',
-                                    selectTrue: '#True',
-                                    selectFalse: '#False',
-                                    selectSubjective_text: '#Subjective_text',
-                                    selectboolradio: '.boolradio',
+                    selectOption1: '#Option1',
+                    selectOption2: '#Option2',
+                    selectOption3: '#Option3',
+                    selectOption4: '#Option4',
+                    selectTrue: '#True',
+                    selectFalse: '#False',
+                    selectSubjective_text: '#Subjective_text',
+                    selectboolradio: '.boolradio',
 
-                                    selecthiddenddlCategoryType: '#hiddenddlCategoryType',
-                                    selecthiddenddlQuestionType: '#hiddenddlQuestionType',
-                                    selecthiddendlllableType:'#hiddendlllableType',
+                    selecthiddenddlCategoryType: '#hiddenddlCategoryType',
+                    selecthiddenddlQuestionType: '#hiddenddlQuestionType',
+                    selecthiddendlllableType: '#hiddendlllableType',
 
-                                    btnAdd: '#btnAdd',
-                                    btnRemove: '#btnRemove',
-                                    rowMCQGenrate: '#rowMCQGenrate',
-                                    errorMsg: '.errorMsg',
-                                };
-                                question.init(config);
+                    btnAdd: '#btnAdd',
+                    btnRemove: '#btnRemove',
+                    rowMCQGenrate: '#rowMCQGenrate',
+                    errorMsg: '.errorMsg',
+                };
+                question.init(config);
 
-                            });
+            });
 
-                        }(window.jQuery, window, document));
-                    </script>
+        }(window.jQuery, window, document));
+    </script>
 
-                }
+}

@@ -275,7 +275,7 @@ namespace ATS.Repository.Repo
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
                                  RoleTypeValue = x.RoleTypeValue,
-                                 UserId=x.UserId,
+                                 UserId=x.UserId
                              }).AsQueryable<UserInfoModel>();
 
                 return query;

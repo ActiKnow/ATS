@@ -40,7 +40,15 @@ namespace ATS.Repository.Uow
 
         public void Commit()
         {
-           this._context.SaveChanges();
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch
+            {
+                Dispose();
+            }
+            
         }
                
         public void Dispose()

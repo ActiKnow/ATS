@@ -83,12 +83,12 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }
 
-        public static ApiResult ValidateType(string typeName,int typeValue)   // Getting TypeDef by using ID
+        public static ApiResult ValidateType(string typeName)   // Getting TypeDef by using ID
         {
             ApiResult apiResult = null;
             try
             {
-                string url = "api/TypeDef/ValidateType/"+typeName+"/"+typeValue;
+                string url = "api/TypeDef/ValidateType/"+typeName;
                 apiResult = ConsumerMethods.Get<bool>(url);
             }
             catch
