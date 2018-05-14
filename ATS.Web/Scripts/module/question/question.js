@@ -231,7 +231,7 @@ var renderOption = function () {
     var loadLabelTypes = function () {
         var op = defaults;
 
-        api.fireGetAjax('/Setup/GetLabelTypes', {})
+        api.fireGetAjax('/Setup/GetLevelTypes', {})
             .done(res => {
                 if (res != null) {
                     var msg = " ";
