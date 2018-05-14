@@ -12,7 +12,7 @@ using ATS.Bll;
 namespace ATS.Service.Controllers
 {
     public class TypeDefController : ApiController
-    {      
+    {
         private TypeDefBo typeDefBo;
         ApiResult apiResult = null;
         public TypeDefController()
@@ -32,7 +32,7 @@ namespace ATS.Service.Controllers
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -48,7 +48,7 @@ namespace ATS.Service.Controllers
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -64,7 +64,7 @@ namespace ATS.Service.Controllers
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -80,7 +80,7 @@ namespace ATS.Service.Controllers
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -110,17 +110,17 @@ namespace ATS.Service.Controllers
         //}
 
         [HttpGet]
-        [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
-        public IHttpActionResult ValidateType(string typeName, int typeValue)
+        [Route("api/TypeDef/ValidateType/{typeName}")]
+        public IHttpActionResult ValidateType(string typeName)
         {
             try
             {
-                typeDefBo.Validate(typeName, typeValue);
+                typeDefBo.Validate(typeName);
             }
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }
@@ -130,13 +130,13 @@ namespace ATS.Service.Controllers
         public IHttpActionResult Select(SimpleQueryModel query)
         {
             try
-            {                
-                apiResult = typeDefBo.Select(query);               
+            {
+                apiResult = typeDefBo.Select(query);
             }
             catch (Exception ex)
             {
                 apiResult.Status = false;
-                apiResult.Message.Add(ex.GetBaseException().Message)  ;
+                apiResult.Message.Add(ex.GetBaseException().Message);
             }
             return Ok(apiResult);
         }

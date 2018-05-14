@@ -53,7 +53,7 @@
                 if (result !== "") {
                     var msg = "";
                     if (result.Status) {
-                        if (result.Message) {
+                        if (result.Message && result.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -70,11 +70,10 @@
             },
             onQuestionFailed: function (result) {
                 clear();
-                $(op.errorMsg).html(result.Message);
+                $(op.errorMsg).html(result.Message && result.Message.Count>0);
             }
         }        
     })();
-
     var clear = function () {
         var op = defaults;
         $(op.selectQuesDiffiLevel).val("easy");
@@ -93,7 +92,6 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-
     var emptyOption = function () {
 
         var op = defaults;
@@ -105,7 +103,6 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-
     var addQuestion = function () {
 
         var rowGenrate = "<div class='form-group row'>" +
@@ -132,14 +129,12 @@
         if (counter > 1)
             counter--;
     };
-
     var renderOption = function () {
         $(defaults.selectMCQType).html("");
         for (let i = 0; i < optionArray.length; i++) {
             $(defaults.selectMCQType).append(optionArray[i]);
         }
     }
-
     var createQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -203,7 +198,7 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -265,38 +260,37 @@
     var loadCategoryTypes = function () {
         var op = defaults;
 
-        api.fireGetAjax('/Setup/GetCategoryTypes', {})
-            .done(res => {
-                if (res != null) {
-                    var msg = " ";
-                    var items = "<option value=''>-Select-</option>";
-                    if (res.Status) {
-                        if (res.Message) {
-                            $.each(res.Message, function (index, value) {
-                                msg += value.Message;
-                            });
-                            $(op.errorMsg).html(msg);
-                        }
-                        else {
-                            $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
-                            });
-                            $(op.selectQuesSubjectId).html(items);
-                        }
-                    }
-                    else {
+    api.fireGetAjax('/Setup/GetCategoryTypes', {})
+        .done(res => {
+            if (res != null) {
+                var msg = " ";
+                var items = "<option value=''>-Select-</option>";
+                if (res.Status) {
+                    if (res.Message && res.Message.Count>0) {
                         $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
                         $(op.errorMsg).html(msg);
                     }
+                    else {
+                        $.each(res.Data, function (index, value) {
+                            items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                        });
+                        $(op.selectQuesSubjectId).html(items);
+                    }
                 }
-            })
-            .fail(res => {
-                $(op.errorMsg).html(res.responseText);
-            });
+                else {
+                    $.each(res.Message, function (index, value) {
+                        msg += value.Message;
+                    });
+                    $(op.errorMsg).html(msg);
+                }
+            }
+        })
+        .fail(res => {
+            $(op.errorMsg).html(res.responseText);
+        });
     }
-
     var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
 
         var flag = true;
@@ -325,7 +319,6 @@
 
         return flag;
     }
-
     var bindEvents = function () {
         var op = defaults;
         var $selectQuestionContainer = $(op.selectContainer);
@@ -377,7 +370,6 @@
 
 
     };
-
     return {
         init: function (config) {
 

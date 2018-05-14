@@ -12,12 +12,15 @@ namespace ATS.Core.Model
         public List<string> Message { get; set; }
         public object Data { get; set; }
 
-        public ApiResult(bool status, List<string> message, object data = null)
+        public ApiResult(bool status, List<string> message=null, object data = null)
         {
             this.Message = new List<string>();
-            foreach (var newMessage in message)
+            if (message != null)
             {
-                this.Message.Add(newMessage);
+                foreach (var newMessage in message)
+                {
+                    this.Message.Add(newMessage);
+                }
             }
             this.Status = status;
             this.Data = data;
@@ -30,15 +33,15 @@ namespace ATS.Core.Model
             this.Message = new List<string>();
         }
 
-        public static ApiResult operator +(ApiResult first, ApiResult second)
+        public static ApiResult operator+(ApiResult first, ApiResult second)
         {
             if (second != null)
             {
                 first.Status = second.Status;
 
-                foreach (var newMessage in second.Message)
+                for (var i=0;i<second.Message.Count;i++)
                 {
-                    first.Message.Add(newMessage);
+                    first.Message.Add(second.Message[i]);
                 }
 
                 first.Data = second.Data;

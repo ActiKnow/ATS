@@ -35,7 +35,7 @@
             if (result !== "") {
                 var msg = " ";
                 if (result.Status) {
-                    if (result.Message) {
+                    if (result.Message && result.Message.Count>0) {
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
@@ -79,17 +79,15 @@
         var op = defaults;
 
         var typeName = $(op.typeName).val();
-        var typeValue = $(op.typeValue).val();
         var parentKey = $(op.selectParent).val();
         var statusId = $(op.selectStatus).val();
 
-        flag = validateRequiredField(typeName, typeValue, parentKey, statusId);
+        flag = validateRequiredField(typeName, parentKey, statusId);
 
         if (flag) {
 
             var typeDef = {
                 Description: typeName.trim(),
-                Value: typeValue.trim(),
                 ParentKey: parentKey.trim(),
                 StatusId: statusId.trim()
             };
@@ -131,16 +129,13 @@
 
     }
 
-    var validateRequiredField = function (typeName, typeValue, selectParent, statusId) {
+    var validateRequiredField = function (typeName, selectParent, statusId) {
 
         var flag = true;
         var message = "";
 
         if (!typeName || typeName.trim() == "") {
             message = "Type name is required";
-        }
-        else if (!typeValue || typeValue.trim() == "") {
-            message = "Type value is required";
         }
         else if (!statusId || statusId.trim() == "") {
             message = "Please select status";
@@ -164,7 +159,7 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -198,7 +193,7 @@
                 if (res != null) {
                     var msg = " ";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -240,26 +235,27 @@
         $(op.btnCreateType).removeAttr("disabled"); 
         
         var typeName = $(op.typeName).val().trim();
-        var typeValue = $(op.typeValue).val().trim();
-        if (typeName && typeValue) {
-            api.fireGetAjax('/Admin/Setup/ValidateType', { typeName: typeName, typeValue: typeValue })
+      
+        if (typeName) {
+            api.fireGetAjax('/Admin/Setup/ValidateType', { typeName: typeName})
                 .done(res => {
                     if (res != null) {
                         var msg = " ";
                         if (!res.Status) {
-                            if (res.Message) {
+                            if (res.Message && res.Message.Count>0) {
                                 $.each(result.Message, function (index, value) {
                                     msg += value.Message;
                                 });
                                 $(op.errorMsg).html(msg);
-                            }
-                            $(op.btnCreateType).attr("disabled", "disabled");
+                                $(op.btnCreateType).attr("disabled", "disabled");
+                            }                           
                         }
                         else {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
                             $(op.errorMsg).html(msg);
+                            $(op.btnCreateType).attr("disabled", "disabled");
                         }
                     }
                 })
@@ -282,9 +278,9 @@
             validateType();
         });
 
-        $typeContext.on('focusout', op.typeValue, function (e) {
-            validateType();
-        }); 
+        //$typeContext.on('focusout', op.typeValue, function (e) {
+        //    validateType();
+        //}); 
 
         $typeContext.on('click', op.btnClearType, function (e) {
             $(defaults.typeName).val("").removeAttr("readonly");

@@ -79,7 +79,7 @@
                                 @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password" })
                                 @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
                                 @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
-                                @Html.HiddenFor(x => x.RoleTypeId, htmlAttributes: new { @id = "hiddenRoleId" })
+                                @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
                                 @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
                                 @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
                                 <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
@@ -145,7 +145,7 @@
                     userId: "#userId",
                     selectStatus: '.ddlStatus',
                     hiddenEmail: '#hiddenEmail',
-                    hiddenRoleId: '#hiddenRoleId',
+                    hiddenRoleId: '#hiddenRoleValue',
                     hiddenStatusId: '#hiddenStatusId',
                 }; 
                 userSetup.init(config);

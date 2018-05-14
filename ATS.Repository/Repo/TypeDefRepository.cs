@@ -194,14 +194,14 @@ namespace ATS.Repository.Repo
         //    }
         //}       
 
-        public bool Validate(string typeName, int typeValue)
+        public bool Validate(string typeName)
         {
             var flag = false;
             using (var context = GetConnection())
             {
                 try
                 {
-                    flag = context.TypeDef.Any(x => x.Description == typeName && x.Value == typeValue);
+                    flag = context.TypeDef.Any(x => x.Description == typeName);
                 }
                 catch
                 {

@@ -41,7 +41,7 @@
             if (result !== "") {
                 var msg = "";
                 if (result.Status) {
-                    if (result.Message) {
+                    if (result.Message && result.Message.Count>0) {
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
