@@ -12,16 +12,15 @@ namespace ATS.Bll
 {
     public class TypeDefBo
     {
-        ApiResult apiResult = new ApiResult(false, new List<string>());
-
         public ApiResult Create(TypeDefModel typeDefModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
                     TypeDef typeDef = new TypeDef();
-
+                    typeDefModel.TypeId = Guid.NewGuid();
                     Utility.CopyEntity(out typeDef, typeDefModel);
 
                     var flag = unitOfWork.TypeDefRepo.Create(ref typeDef);
@@ -29,14 +28,14 @@ namespace ATS.Bll
                     if (flag)
                     {
                         unitOfWork.Commit();
-
+                        apiResult.Status = true;
                         apiResult.Message.Add(typeDefModel.Description + " created successfully");
 
                         var result = Select(null);
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -45,9 +44,10 @@ namespace ATS.Bll
                         apiResult.Message.Add(typeDefModel.Description + " creation failed");
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }            
             return apiResult;
@@ -55,6 +55,7 @@ namespace ATS.Bll
 
         public ApiResult Delete(TypeDefModel typeDefModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             TypeDef typeDef = new TypeDef();
 
             Utility.CopyEntity(out typeDef, typeDefModel);
@@ -93,7 +94,8 @@ namespace ATS.Bll
         }
 
         public ApiResult GetByValue(int value)
-        {  
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var queryable = unitOfWork.TypeDefRepo.GetByValue(value);
@@ -116,6 +118,7 @@ namespace ATS.Bll
 
         public ApiResult Select(SimpleQueryModel qry)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 SimpleQueryBuilder<TypeDefModel> simpleQry = new SimpleQueryBuilder<TypeDefModel>();
@@ -139,6 +142,7 @@ namespace ATS.Bll
 
         public ApiResult Update(TypeDefModel typeDefModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
@@ -176,16 +180,17 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Validate(string typeName, int typeValue)
+        public ApiResult Validate(string typeName)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
-                var flag = unitOfWork.TypeDefRepo.Validate(typeName, typeValue);
+                var flag = unitOfWork.TypeDefRepo.Validate(typeName);
 
                 if (flag)
                 {
                     apiResult.Status = false;
-                    apiResult.Message.Add("Type Name : " + typeName + " , Type Value :" + typeValue + " already exists.");
+                    apiResult.Message.Add("Type Name : " + typeName + " already exists.");
                 }
                 else
                 {

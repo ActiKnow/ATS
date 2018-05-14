@@ -33,15 +33,15 @@ namespace ATS.Core.Model
             this.Message = new List<string>();
         }
 
-        public static ApiResult operator +(ApiResult first, ApiResult second)
+        public static ApiResult operator+(ApiResult first, ApiResult second)
         {
             if (second != null)
             {
                 first.Status = second.Status;
 
-                foreach (var newMessage in second.Message)
+                for (var i=0;i<second.Message.Count;i++)
                 {
-                    first.Message.Add(newMessage);
+                    first.Message.Add(second.Message[i]);
                 }
 
                 first.Data = second.Data;

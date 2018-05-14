@@ -110,12 +110,12 @@ namespace ATS.Service.Controllers
         //}
 
         [HttpGet]
-        [Route("api/TypeDef/ValidateType/{typeName}/{typeValue}")]
-        public IHttpActionResult ValidateType(string typeName, int typeValue)
+        [Route("api/TypeDef/ValidateType/{typeName}")]
+        public IHttpActionResult ValidateType(string typeName)
         {
             try
             {
-                typeDefBo.Validate(typeName, typeValue);
+                typeDefBo.Validate(typeName);
             }
             catch (Exception ex)
             {
