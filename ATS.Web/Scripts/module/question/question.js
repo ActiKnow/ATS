@@ -67,13 +67,14 @@
                         $(op.errorMsg).html(msg);
                     }
                 }
+            },
+            onQuestionFailed: function (result) {
+                clear();
+                $(op.errorMsg).html(result.Message);
             }
-        }
-        onQuestionFailed: function (result) {
-            clear();
-            $(op.errorMsg).html(result.Message);
-        }
+        }        
     })();
+
     var clear = function () {
         var op = defaults;
         $(op.selectQuesDiffiLevel).val("easy");
@@ -93,52 +94,51 @@
         $(op.selectSubjective_text).val("");
     };
 
-var emptyOption = function () {
+    var emptyOption = function () {
 
-    var op = defaults;
-    $(op.selectOption1).val("");
-    $(op.selectOption2).val("");
-    $(op.selectOption3).val("");
-    $(op.selectOption4).val("");
-    $(op.selectTrue).val("");
-    $(op.selectFalse).val("");
-    $(op.selectSubjective_text).val("");
-};
+        var op = defaults;
+        $(op.selectOption1).val("");
+        $(op.selectOption2).val("");
+        $(op.selectOption3).val("");
+        $(op.selectOption4).val("");
+        $(op.selectTrue).val("");
+        $(op.selectFalse).val("");
+        $(op.selectSubjective_text).val("");
+    };
 
-var addQuestion = function () {
+    var addQuestion = function () {
 
-    var rowGenrate = "<div class='form-group row'>" +
-        "		<div class='col-md-1'>" +
-        "		</div>" +
-        "		<div class='col-md-1'>" + counter + "</div>" +
-        "		<div class='col-md-7'>" +
-        "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value='' data-id='" + counter + "'>" +
-        "		</div>" +
-        "		<div class='col-md-3'>" +
-        "			<input name='statusRadio' type='radio' value=" + counter + " data-id='radio" + counter + "'>" +
-        "			<span>Is Correct</span>" +
-        "   	</div>" +
-        "</div>";
+        var rowGenrate = "<div class='form-group row'>" +
+            "		<div class='col-md-1'>" +
+            "		</div>" +
+            "		<div class='col-md-1'>" + counter + "</div>" +
+            "		<div class='col-md-7'>" +
+            "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value='' data-id='" + counter + "'>" +
+            "		</div>" +
+            "		<div class='col-md-3'>" +
+            "			<input name='statusRadio' type='radio' value=" + counter + " data-id='radio" + counter + "'>" +
+            "			<span>Is Correct</span>" +
+            "   	</div>" +
+            "</div>";
 
-    optionArray.push(rowGenrate);
-    renderOption(optionArray);
-    counter++;
-};
-var removeQuestion = function () {
-
-    optionArray.pop();
+        optionArray.push(rowGenrate);
+        renderOption(optionArray);
+        counter++;
+    };
+    var removeQuestion = function () {
+        optionArray.pop();
 
         renderOption(optionArray);
         if (counter > 1)
             counter--;
     };
 
-var renderOption = function () {
-    $(defaults.selectMCQType).html("");
-    for (let i = 0; i < optionArray.length; i++) {
-        $(defaults.selectMCQType).append(optionArray[i]);
+    var renderOption = function () {
+        $(defaults.selectMCQType).html("");
+        for (let i = 0; i < optionArray.length; i++) {
+            $(defaults.selectMCQType).append(optionArray[i]);
+        }
     }
-}
 
     var createQuestion = function () {
         var flag = true;
@@ -265,36 +265,36 @@ var renderOption = function () {
     var loadCategoryTypes = function () {
         var op = defaults;
 
-    api.fireGetAjax('/Setup/GetCategoryTypes', {})
-        .done(res => {
-            if (res != null) {
-                var msg = " ";
-                var items = "<option value=''>-Select-</option>";
-                if (res.Status) {
-                    if (res.Message) {
+        api.fireGetAjax('/Setup/GetCategoryTypes', {})
+            .done(res => {
+                if (res != null) {
+                    var msg = " ";
+                    var items = "<option value=''>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message) {
+                            $.each(res.Message, function (index, value) {
+                                msg += value.Message;
+                            });
+                            $(op.errorMsg).html(msg);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            });
+                            $(op.selectQuesSubjectId).html(items);
+                        }
+                    }
+                    else {
                         $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
                         $(op.errorMsg).html(msg);
                     }
-                    else {
-                        $.each(res.Data, function (index, value) {
-                            items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
-                        });
-                        $(op.selectQuesSubjectId).html(items);
-                    }
                 }
-                else {
-                    $.each(res.Message, function (index, value) {
-                        msg += value.Message;
-                    });
-                    $(op.errorMsg).html(msg);
-                }
-            }
-        })
-        .fail(res => {
-            $(op.errorMsg).html(res.responseText);
-        });
+            })
+            .fail(res => {
+                $(op.errorMsg).html(res.responseText);
+            });
     }
 
     var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
@@ -364,34 +364,33 @@ var renderOption = function () {
                 $(defaults.btnRemove).hide();
             }
 
-    })
+        })
 
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
             if (counter < 8)
                 addQuestion();
         })
 
-    $selectQuestionContainer.on('click', op.btnRemove, function (e) {
-        removeQuestion();
-    })
+        $selectQuestionContainer.on('click', op.btnRemove, function (e) {
+            removeQuestion();
+        })
 
 
-};
+    };
 
-return {
-    init: function (config) {
+    return {
+        init: function (config) {
 
-        $.extend(true, defaults, config);
-        bindEvents();
-        $(defaults.selectMCQType).hide();
-        $(defaults.selectTFType).hide();
-        $(defaults.selectSubjectType).hide();
-        $(defaults.btnAdd).hide();
-        $(defaults.btnRemove).hide();
-        loadQuestionTypes();
-        loadLabelTypes();
-        loadCategoryTypes();
+            $.extend(true, defaults, config);
+            bindEvents();
+            $(defaults.selectMCQType).hide();
+            $(defaults.selectTFType).hide();
+            $(defaults.selectSubjectType).hide();
+            $(defaults.btnAdd).hide();
+            $(defaults.btnRemove).hide();
+            loadQuestionTypes();
+            loadLabelTypes();
+            loadCategoryTypes();
+        }
     }
-
-}
 })();
