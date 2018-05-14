@@ -68,7 +68,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-     
+
 
         [ActionName("UserSetup")]
         public ActionResult UserCreation(QuestionBankModel QuestionView)
@@ -84,10 +84,10 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 result = ApiConsumers.TypeApiConsumer.CreateType(typeDef);
 
-                if(result.Status && result.Data != null)
+                if (result.Status && result.Data != null)
                 {
                     var list = (List<TypeDefModel>)result.Data;
-                    
+
                     result.Data = RenderPartialViewToString("_TypeList", list);
                 }
             }
@@ -165,7 +165,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 result = ApiConsumers.CommonApiConsumer.SelectTypes(true);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = new ApiResult(false, ex.GetBaseException().Message);
             }
@@ -224,7 +224,7 @@ namespace ATS.Web.Areas.Admin.Controllers
         }
 
 
-       public ActionResult QuestionList()
+        public ActionResult QuestionList()
         {
             List<QuestionBankModel> quesList = new List<QuestionBankModel>();
             return View(quesList);
@@ -283,18 +283,18 @@ namespace ATS.Web.Areas.Admin.Controllers
         }
         public ActionResult EditQuestion(Guid qId)
         {
-           
+
             ApiResult result = null;
             SimpleQueryModel query = new SimpleQueryModel();
             query.ModelName = nameof(QuestionBankModel);
             query[nameof(QuestionBankModel.QId)] = qId;
             result = ApiConsumers.QuestionApiConsumer.Select(query);
-            if(result.Status && result.Data != null  )
+            if (result.Status && result.Data != null)
             {
                 var list = (List<QuestionBankModel>)result.Data;
-                
+
             }
-            return RedirectToAction("Question",qId);
+            return RedirectToAction("Question", qId);
         }
 
         public ActionResult GetQuestionTypes()
@@ -302,7 +302,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.QUESTION));
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.QUESTION));
             }
             catch (Exception ex)
             {
@@ -315,7 +315,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.LEVEL));
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.LEVEL));
             }
             catch (Exception ex)
             {
@@ -328,7 +328,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.SelectTypes(true,(int)(CommonType.CATEGORY));
+                result = ApiConsumers.CommonApiConsumer.SelectTypes(true, (int)(CommonType.CATEGORY));
             }
             catch (Exception ex)
             {
@@ -344,7 +344,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             TestBankModel testModel = new TestBankModel { TestBankId = testId ?? Guid.Empty };
             try
             {
-             
+
                 result = ApiConsumers.TestBankApiConsumer.RetrieveTest(testModel);
                 if (result != null && result.Status && result.Data != null)
                 {
@@ -418,6 +418,10 @@ namespace ATS.Web.Areas.Admin.Controllers
                 result = new ApiResult(false, ex.GetBaseException().Message);
             }
             return Json(result);
+        }
+        public ActionResult MapTestQuestion()
+        {
+            return View();
         }
         #endregion
     }
