@@ -85,8 +85,6 @@ namespace ATS.Repository.DAO
 
                         if (userInfo != null)
                         {
-                            userInfo.LastUpdatedBy = input.LastUpdatedBy;
-                            userInfo.LastUpdatedDate = input.LastUpdatedDate;
                             userInfo.StatusId = input.StatusId;
 
                             context.SaveChanges();
@@ -95,10 +93,6 @@ namespace ATS.Repository.DAO
                             var userCredential = context.UserCredential.AsNoTracking().Where(x => x.UserId == input.UserId).FirstOrDefault();
                             if (userCredential != null && isDeleted == true)
                             {
-                                userCredential.LastUpdatedBy = input.LastUpdatedBy;
-                                userCredential.LastUpdatedDate = input.LastUpdatedDate;
-                                userCredential.PrevPassword = userCredential.CurrPassword;
-                                userCredential.CurrPassword = input.CurrPassword;
                                 userCredential.StatusId = input.StatusId;
 
                                 context.SaveChanges();
