@@ -29,6 +29,7 @@ namespace ATS.Repository.DAO
                     {
                         if (input != null)
                         {
+
                             QuestionFactory quesFactory = new QuestionFactory(input.QuesTypeValue);
                             if (quesFactory.Question != null)
                             {
