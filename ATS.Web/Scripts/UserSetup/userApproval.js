@@ -77,34 +77,34 @@
             .fail(callBacks.onGetUserFailed);      
     }
 
-    var deleteUser = function () {
+    //var deleteUser = function () {
 
-        var UserCredentials = [];
-        var op = defaults;
+    //    var UserCredentials = [];
+    //    var op = defaults;
 
-        var userID = $(op.userId).val();
-        var RoleID = $(op.roleTypeId).val();      
-        var email = $(op.email).val();
+    //    var userID = $(op.userId).val();
+    //    var RoleID = $(op.roleTypeId).val();      
+    //    var email = $(op.email).val();
 
-        var item = {
-            UserId: userID.trim(),   
-            EmailId: email.trim(),   
-            RoleTypeId: RoleID.trim(),   
-        };
-        UserCredentials.push(item);
+    //    var item = {
+    //        UserId: userID.trim(),   
+    //        EmailId: email.trim(),   
+    //        RoleTypeId: RoleID.trim(),   
+    //    };
+    //    UserCredentials.push(item);
 
-        var userInfoModel = {
-            UserId: userID.trim(),   
-            RoleTypeId: RoleID.trim(),            
-            Email: email.trim(),    
-            UserCredentials: UserCredentials,
-        };
+    //    var userInfoModel = {
+    //        UserId: userID.trim(),   
+    //        RoleTypeId: RoleID.trim(),            
+    //        Email: email.trim(),    
+    //        UserCredentials: UserCredentials,
+    //    };
 
-            api.firePostAjax('/Admin/UserSetup/DeleteUser', { typeDef: typeDef })
-                .done(callBacks.onUserDeleted)
-                .fail(callBacks.onUserDeletionFailed);
+    //    api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })
+    //            .done(callBacks.onUserDeleted)
+    //            .fail(callBacks.onUserDeletionFailed);
 
-    }
+    //}
 
     var bindEvents = function () {
         var op = defaults;
@@ -116,6 +116,36 @@
             
             $(op.selectedUserId).val(id);
             $(op.submitForm).submit();
+        });
+
+        $(op.tableContext).on('click', op.btnRemoveUser, function (e) {
+
+            var $row = $(this).closest("tr");
+
+            var UserCredentials = [];
+
+            var userID =  $row.find($(op.userId)).val();
+            var RoleID =  $row.find($(op.roleTypeId)).val();
+            var email =   $row.find($(op.email)).val();
+
+            var item = {
+                UserId: userID.trim(),
+                EmailId: email.trim(),
+                RoleTypeId: RoleID.trim(),
+            };
+            UserCredentials.push(item);
+
+            var userInfoModel = {
+                UserId: userID.trim(),
+                RoleTypeId: RoleID.trim(),
+                Email: email.trim(),
+                UserCredentials: UserCredentials,
+            };
+
+            api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })
+                .done(callBacks.onUserDeleted)
+                .fail(callBacks.onUserDeletionFailed);
+           
         });
     };
 

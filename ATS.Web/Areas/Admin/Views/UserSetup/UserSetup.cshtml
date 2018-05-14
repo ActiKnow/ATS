@@ -53,10 +53,9 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address<span class="fa fa-star"></span></label>
+                        <label>Email address<span class="fa fa-star"></span></label>
                         @*<input class="form-control email" placeholder="Enter email" type="email">*@
-                        @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control email" })
-
+                        @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId" })                        
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -80,6 +79,8 @@
                                 @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password" })
                                 @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
                                 @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
+                                @Html.HiddenFor(x => x.RoleTypeId, htmlAttributes: new { @id = "hiddenRoleId" })
+                                @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
                                 @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
                                 <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
                                 <button class="input-group-lg input-group-append" id="refresh">
@@ -130,7 +131,7 @@
                     firstName: '.firstName',
                     lastName: '.lastName',
                     mobile: '.mobile',
-                    email: '.email',
+                    email: '.emailId',
                     password: '#password-field',
                     btnRefresh: '#refresh',
                     ddlRoleType: '#roleType',
@@ -144,6 +145,8 @@
                     userId: "#userId",
                     selectStatus: '.ddlStatus',
                     hiddenEmail: '#hiddenEmail',
+                    hiddenRoleId: '#hiddenRoleId',
+                    hiddenStatusId: '#hiddenStatusId',
                 }; 
                 userSetup.init(config);
             });
