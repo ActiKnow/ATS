@@ -354,7 +354,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false,new List<string> { ex.GetBaseException().Message });
             }
             return View(testModel);
         }
@@ -374,7 +374,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -388,7 +388,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result);
         }
@@ -402,7 +402,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result);
         }
@@ -416,7 +416,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                result = new ApiResult(false, ex.GetBaseException().Message);
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result);
         }
