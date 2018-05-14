@@ -86,8 +86,15 @@ namespace ATS.Bll
 
             using (var unitOfWork = new UnitOfWork())
             {
-                flag = unitOfWork.UserRepo.Delete(userInfo);
+                flag = unitOfWork.UserRepo.Update(ref userInfo);
 
+                if (flag)
+                {
+                    UserCredential userCredential = new UserCredential();
+                    userCredential.UserId = input.UserId;
+                    userCredential.StatusId = input.StatusId;
+                    flag = unitOfWork.UserCredentialRepo.Update(ref userCredential);                    
+                }
                 if (flag)
                 {
                     apiResult.Message.Add("User deleted successfully.");
