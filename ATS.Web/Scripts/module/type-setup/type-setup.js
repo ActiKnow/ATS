@@ -35,7 +35,7 @@
             if (result !== "") {
                 var msg = " ";
                 if (result.Status) {
-                    if (result.Message) {
+                    if (result.Message && result.Message.Count>0) {
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
@@ -164,7 +164,7 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -198,7 +198,7 @@
                 if (res != null) {
                     var msg = " ";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -247,7 +247,7 @@
                     if (res != null) {
                         var msg = " ";
                         if (!res.Status) {
-                            if (res.Message) {
+                            if (res.Message && res.Message.Count>0) {
                                 $.each(result.Message, function (index, value) {
                                     msg += value.Message;
                                 });

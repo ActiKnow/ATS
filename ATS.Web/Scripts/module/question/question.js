@@ -53,7 +53,7 @@
                 if (result !== "") {
                     var msg = "";
                     if (result.Status) {
-                        if (result.Message) {
+                        if (result.Message && result.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -67,12 +67,13 @@
                         $(op.errorMsg).html(msg);
                     }
                 }
+            },
+
+            onQuestionFailed: function (result) {
+                clear();
+                $(op.errorMsg).html(result.Message && result.Message.Count>0);
             }
-        }
-        onQuestionFailed: function (result) {
-            clear();
-            $(op.errorMsg).html(result.Message);
-        }
+        }        
     })();
     var clear = function () {
         var op = defaults;
@@ -203,7 +204,7 @@ var renderOption = function () {
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message) {
+                        if (res.Message && res.Message.Count>0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
@@ -271,7 +272,7 @@ var renderOption = function () {
                 var msg = " ";
                 var items = "<option value=''>-Select-</option>";
                 if (res.Status) {
-                    if (res.Message) {
+                    if (res.Message && res.Message.Count>0) {
                         $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
