@@ -147,14 +147,14 @@ namespace ATS.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(UserInfoModel userInfoModel)
+        public ActionResult DisableUser(UserInfoModel userInfoModel)
         {
             List<UserInfoModel> userList = new List<UserInfoModel>();
             ApiResult result = null;
             try
             {
 
-               result = ApiConsumers.UserApiConsumer.DeleteUser(userInfoModel);
+               result = ApiConsumers.UserApiConsumer.DisableUser(userInfoModel);
 
                 if (result.Status)
                 {

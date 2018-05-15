@@ -92,5 +92,28 @@ namespace ATS.Repository.Repo
             }
         }
 
+        public bool Disable(Guid Id, Guid Userid)
+        {
+            bool isDisabled = false;
+            try
+            {
+                var userCredential = _context.UserCredential.Where(x => x.UserId == Userid && x.Id == Id).FirstOrDefault();
+                if (userCredential != null)
+                {
+                    userCredential.StatusId = false;
+                    isDisabled = true;
+                }
+                else
+                {
+                    isDisabled = false;
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            return isDisabled;
+        }
     }
 }

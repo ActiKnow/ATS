@@ -153,12 +153,12 @@
                 UserId: userID.trim(),
                 StatusId: false,
                 UserCredentials: UserCredentials,
-                //RoleTypeId: RoleID.trim(),
+                RoleTypeValue: RoleID.trim(),
                 //Email: email.trim(),
                 
             };
 
-            api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })
+            api.firePostAjax('/Admin/UserSetup/DisableUser', { userInfoModel: userInfoModel })
                 .done(callBacks.onUserDeleted)
                 .fail(callBacks.onUserDeletionFailed);
            
