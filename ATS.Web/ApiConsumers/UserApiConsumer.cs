@@ -67,12 +67,12 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult DeleteUser(UserInfoModel userInfoModel)
+        public static ApiResult DisableUser(UserInfoModel userInfoModel)
         {
             ApiResult apiResult = null;
             try
             {
-                string url = "api/User/Delete";
+                string url = "api/User/Disable";
                 apiResult = ConsumerMethods.Post<List<UserInfoModel>>(url, userInfoModel);
             }
             catch
