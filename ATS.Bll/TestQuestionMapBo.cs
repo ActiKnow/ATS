@@ -12,14 +12,16 @@ namespace ATS.Bll
 {
     public class TestQuestionMapBo
     {       
-        public ApiResult Create(List<TestQuestionMapping> input)
+        public ApiResult Create(List<TestQuestionMapModel> inputs)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
-                    var flag = unitOfWork.MapQuestionRepo.MapQuotions(input);
+                    List<TestQuestionMapping> output = new List<TestQuestionMapping>();
+                    Utility.CopyEntity(out output,inputs);
+                    var flag = unitOfWork.MapQuestionRepo.MapQuotions(output);
 
                     if (flag)
                     {
@@ -49,7 +51,7 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(List<TestQuestionMapping> inputs)
+        public ApiResult Delete(List<TestQuestionMapModel> inputs)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
@@ -57,8 +59,10 @@ namespace ATS.Bll
                 try
                 {
                     var flag = false;
+                    List<TestQuestionMapping> output = new List<TestQuestionMapping>();
+                    Utility.CopyEntity(out output, inputs);
 
-                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(inputs);
+                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(output);
 
                     if (flag)
                     {
@@ -162,14 +166,17 @@ namespace ATS.Bll
             return apiResult;            
         }
 
-        public ApiResult Update(TestQuestionMapping input)
+        public ApiResult Update(TestQuestionMapModel input)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
-                {  
-                    var flag = unitOfWork.MapQuestionRepo.Update(ref input);
+                {
+                    TestQuestionMapping output = new TestQuestionMapping();
+                    Utility.CopyEntity(out output, input);
+
+                    var flag = unitOfWork.MapQuestionRepo.Update(ref output);
 
                     if (flag)
                     {

@@ -2,6 +2,8 @@
     'use strict'
     var defaults = {
         selectContainer: '#questionContainer',
+        sampleTable: '#sampleTable',
+        mainMessageContext:'#mainMessageContext'
     };
     var questionTypes = {
         option: "Option",
@@ -34,21 +36,20 @@
             if (result !== "") {
                 var msg = " ";
                 if (result.Status) {
-                    if (result.Message && result.Message.Count>0) {
+                    if (result.Message && result.Message.length>0) {
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showSuccess(msg, mainMessageContext);
                     }
-                    else {
-                        $(op.tableContext).find('tbody').html(result.Data);
-                    }
+                    $(op.tableContext).find('tbody').html(result.Data);
+                    $(op.sampleTable).DataTable();
                 }
                 else {
                     $.each(result.Message, function (index, value) {
                         msg += value;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, mainMessageContext);
                 }
             }
         }
@@ -57,13 +58,13 @@
                 appendType(result);
             },
             onQuestionListFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, mainMessageContext);
             },
             onDeleteQuestion: function (result) {
                 appendType(result);
             },
             onDeleteQuestionFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, mainMessageContext);
             },
         }
     })();

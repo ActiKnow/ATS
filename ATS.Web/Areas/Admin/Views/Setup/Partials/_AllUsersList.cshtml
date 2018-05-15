@@ -1,0 +1,21 @@
+﻿@model List<ATS.Core.Model.UserInfoModel>
+@{
+    var count = 1;
+}
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        <input data-recId=@item.UserId type=checkbox class=checkbox id=chkAlluser name=checkAllUser>
+    </td>
+    <td><span class="firstName">@item.FName  @item.LName</span></td>
+    <td><span class="email">@item.Email</span></td>
+    <td><span class="roleType">@item.TypeDef</span></td>
+    <td>
+        <span class="createdOn">@item.Mobile</span>
+        <input type="hidden" class="userId" value="@item.UserId" />
+        <input type="hidden" class="roleTypeId" value="@item.RoleTypeValue" />
+        <input type="hidden" class="itemStatus" value="@item.StatusId" />
+    </td>    
+</tr>
+}

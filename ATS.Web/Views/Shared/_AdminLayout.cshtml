@@ -84,6 +84,7 @@
                     <li><a class="treeview-item" href='@Url.Action("UserApproval", "UserSetup", new {area = "Admin"})'><i class="icon fa fa-circle-o"></i>User Approval</a></li>
                     <li><a class="treeview-item" href='@Url.Action("TestSetup", "SetUp", new {area = "Admin"})'><i class="icon fa fa-circle-o"></i>Test Setup</a></li>
                     <li><a class="treeview-item" href='@Url.Action("MapTestQuestion", "SetUp", new {area = "Admin"})'><i class="icon fa fa-circle-o"></i>Map Test Question</a></li>
+                    <li><a class="treeview-item" href='@Url.Action("AnswerSetup", "SetUp", new {area = "Admin"})'><i class="icon fa fa-circle-o"></i>Answer List</a></li>
                 </ul>
             </li>
             @*<li class="treeview">
@@ -130,6 +131,11 @@
 
     <!-- Google analytics script-->
     <script type="text/javascript">
+        $('.modal').modal({ backdrop: 'static', keyboard: false, show: false });
+        $(".modal").draggable({
+            handle: ".modal-header"
+        });
+
         if (document.location.hostname == 'pratikborsadiya.in') {
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {

@@ -16,6 +16,30 @@ namespace ATS.Repository.Repo
             this._context = context;
         }
 
+        public bool Disable(UserInfoModel userInfoModel)
+        {
+            bool isDisabled = false;
+            try
+            {
+                var userInfo = _context.UserInfo.Where(x => x.UserId == userInfoModel.UserId).FirstOrDefault();
+                if (userInfo != null)
+                {
+                    userInfo.StatusId = false;
+                    isDisabled = true;
+                }
+                else
+                {
+                     isDisabled = false;
+                }
+                
+            }            
+            catch
+            {
+                throw;
+            }
+            return isDisabled;
+        }
+
         public IQueryable<UserInfoModel> Retrieve(Guid userId)
         {
             try

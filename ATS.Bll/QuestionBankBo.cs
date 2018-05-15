@@ -18,7 +18,7 @@ namespace ATS.Bll
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
-            {
+            {                
                 try
                 {
                     //var flag = unitOfWork.QuestionRepo.Create(ref questionBank);
@@ -52,7 +52,7 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(QuestionBank questionBank)
+        public ApiResult Delete(QuestionBankModel questionBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
@@ -60,6 +60,9 @@ namespace ATS.Bll
                 var flag = false;
                 try
                 {
+                    QuestionBank questionBank = new QuestionBank();
+                    Utility.CopyEntity(out questionBank, questionBankModel);
+
                     flag = unitOfWork.QuestionRepo.Delete(questionBank);
 
                     if (flag)

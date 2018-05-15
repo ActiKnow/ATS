@@ -10,5 +10,7 @@ namespace ATS.Repository.Interface
         Guid ValidateUser(UserCredential userCredential);
         IQueryable<UserCredentialModel> Retrieve(Guid userId);
         IQueryable<UserCredentialModel> Select(Func<UserCredentialModel, bool> condition);
+        bool Disable(Guid Id, Guid Userid);
+        
     }
 }
