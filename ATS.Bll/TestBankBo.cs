@@ -11,11 +11,10 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
    public class TestBankBo
-    {
-        ApiResult apiResult = new ApiResult(false, new List<string>());
-
+    {   
         public ApiResult Create(TestBank testBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
@@ -52,6 +51,7 @@ namespace ATS.Bll
 
         public ApiResult Delete(TestBank testBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var flag = false;
@@ -88,6 +88,7 @@ namespace ATS.Bll
 
         public ApiResult GetById(Guid guid)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                var queryable = unitOfWork.TestBankRepo.Retrieve(guid);
@@ -110,6 +111,7 @@ namespace ATS.Bll
 
         public ApiResult Select(SimpleQueryModel qry)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 SimpleQueryBuilder<TestBankModel> simpleQry = new SimpleQueryBuilder<TestBankModel>();
@@ -132,6 +134,7 @@ namespace ATS.Bll
 
         public ApiResult Update(TestBank testBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
