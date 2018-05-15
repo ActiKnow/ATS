@@ -16,13 +16,17 @@ namespace ATS.Core.Global
         public const string ADMIN = "Admin";
         public const string EMPLOYEE = "Employee";
         public const string CANDIDATE = "Candidate";
-        public const string OPTION = "Option";
-        public const string BOOL = "Bool";
-        public const string TEXT = "Text";
         public const string ROLE = "Role";
         public const string STATUS = "Status";
         public const string ACTIVE = "Active";
         public const string INACTIVE = "InActive";
+        public const CommonType OPTION = CommonType.OPTION;
+        public const CommonType BOOL = CommonType.BOOL;
+        public const CommonType TEXT = CommonType.TEXT;
+        public const CommonType CATEGORY = CommonType.CATEGORY;
+        public const CommonType LEVEL = CommonType.LEVEL;
+        public const CommonType TESTTYPE = CommonType.TESTTYPE;
+        public const int PARENT = 0;
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }

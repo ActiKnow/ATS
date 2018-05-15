@@ -16,25 +16,25 @@
     </ul>
 </div>
 <div class="row">
-    <div class="col-md-12" id="typeContext">
+    <div class="col-md-12" id="testContext">
         <div class="tile">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control categoryType"></select>
+                        <select class="form-control categoryType" id="categoryType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Level</label>
-                        <select class="form-control levelType"></select>
+                        <select class="form-control levelType" id="levelType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control testType"></select>
+                        <select class="form-control testType" id="testType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -59,7 +59,14 @@
                 </div>
             </div>
 
-
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input class="form-control testDuration" type="number" />
+                    </div>
+                </div>
+            </div>
 
             <div class="tile-footer">
                 <button class="btn btn-primary" type="button" id="btnCreateTest">Create</button>
@@ -92,3 +99,33 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/CommonTask/AppConstant"></script>
+    <script src="~/Scripts/module/test-setup/test-setup.js"></script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    selectCategory: '#categoryType',
+                    selectLevel: '#levelType',
+                    selectTestType: '#testType',
+                    createTest: '#btnCreateTest',
+                    testContext:'#testContext'
+                };
+                testBankSetup.init(config);
+
+            });
+
+        }(window.jQuery, window, document));
+    </script>
+
+}

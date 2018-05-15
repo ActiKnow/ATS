@@ -317,7 +317,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetLabelTypes()
+        public ActionResult GetLevelTypes()
         {
             ApiResult result = null;
             try
@@ -351,7 +351,21 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult GetAllSubTypes(int parentTypeValue)
+        {
+            ApiResult result = null;
+            try
+            {
+                SimpleQueryModel query = new SimpleQueryModel { ModelName = nameof(TypeDefModel) };
+                query[nameof(TypeDefModel.ParentKey)] = parentTypeValue;
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #region TestSetup
         public ActionResult TestSetup(Guid? testId)
         {
@@ -398,6 +412,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
+                test.StatusId = true;
+                test.CreatedBy = Convert.ToString (Session[Constants.USERID]);
                 result = ApiConsumers.TestBankApiConsumer.CreateTest(test);
             }
             catch (Exception ex)

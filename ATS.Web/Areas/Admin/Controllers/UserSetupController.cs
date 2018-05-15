@@ -153,7 +153,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
+                userInfoModel.StatusId = false;
+                result = ApiConsumers.UserApiConsumer.DeleteUser(userInfoModel);
                 if (result.Status)
                 {
                     result = ApiConsumers.UserApiConsumer.SelectUsers();

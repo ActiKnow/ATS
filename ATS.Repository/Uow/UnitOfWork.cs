@@ -24,6 +24,7 @@ namespace ATS.Repository.Uow
             TypeDefRepo = new TypeDefRepository(_context);
             UserCredentialRepo = new UserCredentialRepository(_context);
             UserRepo = new UserRepository(_context);
+            TestBankRepo = new TestBankRepository(_context);
         }
 
         public IAttemptHistoryRepository AttemptedHistoryRepo { get;private set; }

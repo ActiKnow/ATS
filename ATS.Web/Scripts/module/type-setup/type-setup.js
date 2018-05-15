@@ -7,6 +7,7 @@
         selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
+        messageContext: '#messageContext',
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -35,11 +36,12 @@
             if (result !== "") {
                 var msg = " ";
                 if (result.Status) {
-                    if (result.Message && result.Message.Count>0) {
+                    if (result.Message && result.Message.length > 0) {
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+
+                        alertService.showSuccess(msg, op.messageContext);  
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
@@ -51,7 +53,7 @@
                     $.each(result.Message, function (index, value) {
                         msg += value.Message;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, op.messageContext); 
                 }
             }
         }
@@ -95,7 +97,6 @@
             api.firePostAjax('/Admin/Setup/CreateType', { typeDef: typeDef })
                 .done(callBacks.onTypeCreated)
                 .fail(callBacks.onTypeCreationFailed);
-
         }
     };
 
@@ -143,10 +144,10 @@
 
         if (message != "")
         {
-            $(defaults.errorMsg).html(message);
+            alertService.showError(message, defaults.messageContext);
             flag = false;
         }
-
+       
         return flag;
     }
 
@@ -159,11 +160,11 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message && res.Message.Count>0) {
-                            $.each(result.Message, function (index, value) {
+                        if (res.Message && res.Message.length > 0) {
+                            $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -176,7 +177,7 @@
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.messageContext); 
                     }
                 }
             })
@@ -193,11 +194,11 @@
                 if (res != null) {
                     var msg = " ";
                     if (res.Status) {
-                        if (res.Message && res.Message.Count>0) {
-                            $.each(result.Message, function (index, value) {
+                        if (res.Message && res.Message.length > 0) {
+                            $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                         }
                         else {
                             var items = "";
@@ -208,10 +209,10 @@
                         }
                     }
                     else {
-                        $.each(result.Message, function (index, value) {
+                        $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.messageContext); 
                     }
                 }
             })
@@ -242,11 +243,11 @@
                     if (res != null) {
                         var msg = " ";
                         if (!res.Status) {
-                            if (res.Message && res.Message.Count>0) {
+                            if (res.Message && res.Message.length > 0) {
                                 $.each(result.Message, function (index, value) {
                                     msg += value.Message;
                                 });
-                                $(op.errorMsg).html(msg);
+                                alertService.showError(msg, op.messageContext); 
                                 $(op.btnCreateType).attr("disabled", "disabled");
                             }                           
                         }
@@ -254,13 +255,13 @@
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                             $(op.btnCreateType).attr("disabled", "disabled");
                         }
                     }
                 })
                 .fail(res => {
-                    $(op.errorMsg).html(res.responseText);
+                    alertService.showError(res.responseText, op.messageContext); 
                 });
         }
     }
