@@ -5,7 +5,7 @@
         lastName: '.lastName',
         mobile: '.mobile',
         email: '.email',
-        password: '.password',
+        //password: '.password',
         createdOn: '.createdOn',
         ddlRoleType: '.roleType',
         errorMsg: '.errorMsg',
@@ -43,7 +43,7 @@
                 if (result.Status) {
                     if (result.Message && result.Message.Count>0) {
                         $.each(result.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -53,7 +53,7 @@
                 }
                 else {
                     $.each(result.Message, function (index, value) {
-                        msg += value.Message;
+                        msg += value;
                     });
                     $(op.errorMsg).html(msg);
                 }
@@ -129,24 +129,33 @@
 
             var $row = $(this).closest("tr");
 
-            var UserCredentials = [];
+           // var UserCredentials = [];
 
             var userID =  $row.find($(op.userId)).val();
             var RoleID =  $row.find($(op.roleTypeId)).val();
             var email =   $row.find($(op.email)).html();
+            var id = $row.find($(op.hiddenId)).val();
 
-            var item = {
+            var UserCredentials = {
                 UserId: userID.trim(),
-                EmailId: email.trim(),
-                RoleTypeValue: RoleID.trim(),
+                Id: id.trim(),
+                StatusId: false,
             };
-            UserCredentials.push(item);
+
+            //var item = {
+            //    UserId: userID.trim(), 
+            //    Id: id.trim(),
+            //    //RoleTypeValue: RoleID.trim(),
+            //};
+            //UserCredentials.push(item);
 
             var userInfoModel = {
                 UserId: userID.trim(),
-                RoleTypeId: RoleID.trim(),
-                Email: email.trim(),
+                StatusId: false,
                 UserCredentials: UserCredentials,
+                //RoleTypeId: RoleID.trim(),
+                //Email: email.trim(),
+                
             };
 
             api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })

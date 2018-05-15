@@ -45,7 +45,7 @@ namespace ATS.Repository.Uow
             {
                 this._context.SaveChanges();
             }
-            catch
+            catch(Exception ex)
             {
                 Dispose();
             }

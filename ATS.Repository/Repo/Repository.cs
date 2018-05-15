@@ -31,31 +31,11 @@ namespace ATS.Repository.Repo
             _dbSet.Remove(input);
             return true;
         }
-
-        //public T Get(Guid id)
-        //{
-        //    return _dbSet.Find(id);
-        //}
-
-        //public IEnumerable<T> GetAll()
-        //{
-        //    return _dbSet.ToList();
-        //}
-
-        //public IEnumerable<T> Select(Func<T, bool> condition)
-        //{
-        //    return _dbSet.Where(condition);
-        //}
-
+        
         public bool Update(ref T input)
         {
            _context.Entry(input).State=EntityState.Modified;
             return true;
-        }
-
-        public ATSDBContext GetConnection()
-        {
-            return _context;
-        }
+        }        
     }
 }

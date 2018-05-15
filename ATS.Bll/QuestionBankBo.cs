@@ -13,8 +13,7 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
     public class QuestionBankBo
-    {        
-
+    {     
         public ApiResult Create(QuestionBank questionBank)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
@@ -70,7 +69,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -152,7 +151,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else

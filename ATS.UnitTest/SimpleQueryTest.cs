@@ -23,11 +23,6 @@ namespace ATS.UnitTest
             {
 
                 ModelName = nameof(TypeDefModel),
-                Properties = new Dictionary<string, object>
-                    {
-                        { nameof(TypeDefModel.TypeId) , "9D2B0228-4D0D-4C23-8B49-01A698857709" },
-                         //{ nameof(TypeDefModel.ParentKey) , "9D2B0228-4D0D-4C23-8B49-01A698857709"}
-                    }
             };
             var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();
             Assert.IsNotNull(results);
@@ -99,6 +94,34 @@ namespace ATS.UnitTest
             var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();
             Assert.IsNotNull(results);
             Assert.AreEqual(1 , results.Count);
+        }
+        [TestMethod]
+        public void CheckCustomQuery()
+        {
+
+            SimpleQueryBuilder<UserTestHistoryModel> simpleQry = new SimpleQueryBuilder<UserTestHistoryModel>();
+            List<UserTestHistoryModel> data = new List<UserTestHistoryModel>
+            {
+                new UserTestHistoryModel
+                {
+                    HistoryId =new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"),
+                    AssignedDate=new DateTime(2010,05,23),
+                    ReusableDate=new DateTime(2010,06,23),
+                    LastUsedDate=null
+                }
+            };
+            SimpleQueryModel simpleModels = new SimpleQueryModel
+            {
+                ModelName = nameof(UserTestHistoryModel)
+            };
+            simpleModels[nameof(UserTestHistoryModel.AssignedDate)] = new DateTime(2010, 05, 23);
+            simpleModels[nameof(UserTestHistoryModel.LastUsedDate), QueryType.And, QueryType.Equal] = null;
+            simpleModels[nameof(UserTestHistoryModel.ReusableDate),QueryType.And,QueryType.Equal] = "22/06/2010";
+           simpleModels[nameof(UserTestHistoryModel.HistoryId), QueryType.Or] = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709");
+
+            var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();
+            Assert.IsNotNull(results);
+            Assert.AreEqual(1, results.Count);
         }
     }
 }

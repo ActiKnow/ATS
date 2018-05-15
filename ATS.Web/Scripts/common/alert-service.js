@@ -48,7 +48,7 @@ var alertService = (function () {
         }
         var mAlert = $('<div class="' + defaults.className + '"/>');
         var content = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-        content += '<strong class="alert-title"></strong>';
+        content += '<strong class="alert-title">&nbsp;&nbsp;</strong>';
         content += '<span class="alert-message"></span>';
         mAlert.html(content);
         mAlert.addClass(classes);
@@ -81,16 +81,18 @@ var alertService = (function () {
                 if (alertTitle) {
                     switch (type) {
                         case AlertTypes.Success:
-                            alertTitle.text('Success! ');
+                            //alertTitle.text('Success! ');
+                            alertTitle.addClass("fa fa-check-circle-o");
                             break;
                         case AlertTypes.Error:
-                            alertTitle.text('Error! ');
+                            //alertTitle.text('Error! ');
+                            alertTitle.addClass("fa fa-times-circle-o");
                             break;
                         case AlertTypes.Warning:
-                            alertTitle.text('Warning! ');
+                            alertTitle.addClass('fa fa-exclamation-triangle');
                             break;
                         case AlertTypes.Info:
-                            alertTitle.text('');
+                            alertTitle.addClass('fa fa-info-circle');
                             break;
                     }
                 }

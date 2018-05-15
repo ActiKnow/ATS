@@ -32,7 +32,7 @@
                         <th>Last Name</th>
                         <th>Mobile</th>
                         <th>Email</th>
-                        <th>Passowrd</th>
+                        @*<th>Passowrd</th>*@
                         <th>Created On</th>
                         <th>Role</th>
                         <th>Status</th>
@@ -58,7 +58,7 @@
                 lastName:'.lastName',
                 mobile:'.mobile',
                 email: '.email',
-                password: '.password',
+                //password: '.password',
                 ddlRoleType: '.roleType',
                 errorMsg: '.errorMsg',
                 successMsg: '.successMsg',
@@ -69,7 +69,8 @@
                 userId: '.userId',
                 roleTypeId: '.roleTypeId', 
                 submitForm: '#submitForm',
-                selectedUserId:'#selectedUserId',
+                selectedUserId: '#selectedUserId',
+                hiddenId: '.hiddenId',
             };
             userApproval.init(config);
         });

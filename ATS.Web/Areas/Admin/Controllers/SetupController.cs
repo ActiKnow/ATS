@@ -106,7 +106,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                typeDef.LastUpdatedBy = Session[Constants.USERID].ToString();
+                typeDef.LastUpdatedBy =Convert.ToString(Session[Constants.USERID]);
                 typeDef.LastUpdatedDate = DateTime.Now;
 
                 result = ApiConsumers.TypeApiConsumer.UpdateType(typeDef);
@@ -124,20 +124,20 @@ namespace ATS.Web.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult DeleteType(TypeDefModel typeDef)
-        {
-            ApiResult result = null;
-            try
-            {
-                result = ApiConsumers.TypeApiConsumer.DeleteType(typeDef);
-            }
-            catch (Exception ex)
-            {
-                result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpPost]
+        //public ActionResult DeleteType(TypeDefModel typeDef)
+        //{
+        //    ApiResult result = null;
+        //    try
+        //    {
+        //        result = ApiConsumers.TypeApiConsumer.DeleteType(typeDef);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result = new ApiResult(false,  new List<string> { ex.GetBaseException().Message });
+        //    }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
         public ActionResult RetrieveType(TypeDefModel typeDef)
@@ -194,6 +194,12 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
+                //SimpleQueryModel query = new SimpleQueryModel();
+                //query.ModelName = nameof(TypeDefModel);
+                //query[nameof(TypeDefModel.ParentKey),QueryType.And,QueryType.NotEqual] =Constants.PARENT;
+                //query[nameof(TypeDefModel.ParentKey), QueryType.And, QueryType.NotEqual] = CommonType.ROLE;
+                //query[nameof(TypeDefModel.ParentKey), QueryType.And, QueryType.NotEqual] = CommonType.QUESTION;
+
                 result = ApiConsumers.TypeApiConsumer.SelectTypes(null);
 
                 if (result.Status && result.Data != null)
