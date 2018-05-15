@@ -7,7 +7,8 @@
         selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
-        messageContext: '#messageContext',
+        popupMessageContext: '#popupMessageContext',
+        mainMessageContext: '#mainMessageContext'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -37,11 +38,7 @@
                 var msg = " ";
                 if (result.Status) {
                     if (result.Message && result.Message.length > 0) {
-                        $.each(result.Message, function (index, value) {
-                            msg += value.Message;
-                        });
-
-                        alertService.showSuccess(msg, op.messageContext);  
+                        successMessageShow(result.Message, op.mainMessageContext);
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
@@ -50,10 +47,7 @@
                     }
                 }
                 else {
-                    $.each(result.Message, function (index, value) {
-                        msg += value.Message;
-                    });
-                    alertService.showError(msg, op.messageContext); 
+                    errorMessageShow(result.Message, op.popupMessageContext);
                 }
             }
         }
@@ -63,14 +57,14 @@
                 appendType(result);
             },
             onTypeCreationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                errorMessageShow(result.responseText, op.mainMessageContext);
             },
 
             onTypeUpdated: function (result) {
                 appendType(result);
             },
             onTypeUpdationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                errorMessageShow(result.responseText, op.mainMessageContext);
             },
         }
     })();
@@ -81,8 +75,8 @@
         var op = defaults;
 
         var typeName = $(op.typeName).val();
-        var parentKey = $(op.selectParent).val();
-        var statusId = $(op.selectStatus).val();
+        var parentKey = $(op.selectParent).find(":selected").val();
+        var statusId = $(op.selectStatus).find(":selected").val();
 
         flag = validateRequiredField(typeName, parentKey, statusId);
 
@@ -104,14 +98,12 @@
 
         var flag = true;
         var op = defaults;
-
-        var typeName = $(op.typeName).val();
-        var typeValue = $(op.typeValue).val();
+        var typeName = $(op.typeName).val();       
         var parentKey = $(op.selectParent).find(":selected").val();
         var statusId = $(op.selectStatus).find(":selected").val();
         var typeId = $(op.typeId).html();
 
-        flag = validateRequiredField(typeName, typeValue, parentKey, statusId);
+        flag = validateRequiredField(typeName, parentKey, statusId);
 
         if (flag) {
 
@@ -139,12 +131,15 @@
             message = "Type name is required";
         }
         else if (!statusId || statusId.trim() == "") {
-            message = "Please select status";
+            message = "Type status is required";
+        }
+        else if (!selectParent || selectParent.trim() == "") {
+            message = "Parent type is required";
         }
 
         if (message != "")
         {
-            alertService.showError(message, defaults.messageContext);
+            errorMessageShow(message, op.mainMessageContext);
             flag = false;
         }
        
@@ -164,7 +159,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            alertService.showError(msg, op.messageContext); 
+                            alertService.showError(msg, op.popupMessageContext); 
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -177,7 +172,7 @@
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        alertService.showError(msg, op.messageContext); 
+                        alertService.showError(msg, op.popupMessageContext); 
                     }
                 }
             })
@@ -198,7 +193,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            alertService.showError(msg, op.messageContext); 
+                            alertService.showError(msg, op.popupMessageContext); 
                         }
                         else {
                             var items = "";
@@ -212,7 +207,7 @@
                         $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        alertService.showError(msg, op.messageContext); 
+                        alertService.showError(msg, op.popupMessageContext); 
                     }
                 }
             })
@@ -247,7 +242,7 @@
                                 $.each(result.Message, function (index, value) {
                                     msg += value.Message;
                                 });
-                                alertService.showError(msg, op.messageContext); 
+                                alertService.showError(msg, op.popupMessageContext); 
                                 $(op.btnCreateType).attr("disabled", "disabled");
                             }                           
                         }
@@ -255,27 +250,42 @@
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            alertService.showError(msg, op.messageContext); 
+                            alertService.showError(msg, op.popupMessageContext); 
                             $(op.btnCreateType).attr("disabled", "disabled");
                         }
                     }
                 })
                 .fail(res => {
-                    alertService.showError(res.responseText, op.messageContext); 
+                    alertService.showError(res.responseText, op.popupMessageContext); 
                 });
         }
     }
 
+    var errorMessageShow = function (messageList, messageContext){
+        var msg = " ";
+        $.each(messageList, function (index, value) {
+            msg += value.Message;
+        });
+        alertService.showError(msg, messageContext);  
+    }
+    var successMessageShow = function (messageList,messageContext) {
+        var msg = " ";
+        $.each(messageList, function (index, value) {
+            msg += value.Message;
+        });
+        alertService.showSuccess(msg, messageContext);  
+    }
+
     var bindEvents = function () {
         var op = defaults;
-        var $typeContext = $(op.typeContext);
+        var $typeContextModel = $(op.typeContextModel);
         var $tableContext = $(op.tableContext);
 
-        $typeContext.on('click', op.btnCreateType, function (e) {
+        $typeContextModel.on('click', op.btnCreateType, function (e) {
             createType();
         });
 
-        $typeContext.on('focusout', op.typeName, function (e) {
+        $typeContextModel.on('focusout', op.typeName, function (e) {
             validateType();
         });
 
@@ -283,9 +293,9 @@
         //    validateType();
         //}); 
 
-        $typeContext.on('click', op.btnClearType, function (e) {
+        $typeContextModel.on('click', op.btnClearType, function (e) {
             $(defaults.typeName).val("").removeAttr("readonly");
-            $(defaults.typeValue).val("").removeAttr("readonly");
+            //$(defaults.typeValue).val("").removeAttr("readonly");
             $(defaults.selectParent).val("");
             $(defaults.selectStatus).val("True");
             $(defaults.typeId).html("");
@@ -301,13 +311,13 @@
             var $row = $(this).closest("tr");
 
             $(op.typeName).val($row.find($(op.selectedItemName)).html()).attr("readonly", "readonly");
-            $(op.typeValue).val($row.find($(op.selectedItemValue)).html()).attr("readonly", "readonly");
+            //$(op.typeValue).val($row.find($(op.selectedItemValue)).html()).attr("readonly", "readonly");
             $(op.selectParent).val($row.find($(op.selectedParentTypeId)).html());
             $(op.typeId).html($row.find($(op.selectedTypeId)).html());
             $(op.selectStatus).val($row.find($(op.selectedItemStatus)).html()); 
         });
 
-        $typeContext.on('click', op.btnUpdateType, function (e) {
+        $typeContextModel.on('click', op.btnUpdateType, function (e) {
             updateType();
         }); 
 

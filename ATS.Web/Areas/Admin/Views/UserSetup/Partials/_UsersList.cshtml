@@ -13,15 +13,17 @@
     <td><span class="password">pass</span></td>
     <td><span class="createdOn">@item.CreatedDate</span></td>
     <td><span class="roleType">@item.RoleDescription</span></td>
-    <td><span class="itemStatusDescription">@item.StatusId</span></td>
+    <td><span class="itemStatusDescription">@if (item.StatusId) {@("Active")}
+    else
+    {@("Inactive")}</span></td>
     <td>
         <div class="btn-group">
             <span class="btn btn-primary btnEditUser" onclick=""><i class="fa fa-lg fa-edit"></i></span>
             <span class="btn btn-primary btnRemoveUser"><i class="fa fa-lg fa-trash"></i></span>
         </div>
         <input type="hidden" class="userId" value="@item.UserId" />
-        <span class="roleTypeId" style="display:none">@item.RoleTypeValue</span>
-        <span class="itemStatus" style="display:none">@item.StatusId</span>
+        <input type="hidden" class="roleTypeId" value="@item.RoleTypeValue" />
+        <input type="hidden" class="itemStatus" value="@item.StatusId" />
     </td>
 </tr>
 }
