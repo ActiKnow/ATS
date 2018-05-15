@@ -89,7 +89,7 @@ namespace ATS.Service.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/TestBank/Select")]
         public IHttpActionResult Select(SimpleQueryModel query)
         {

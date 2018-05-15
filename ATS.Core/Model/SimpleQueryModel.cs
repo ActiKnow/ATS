@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace ATS.Core.Model
 {
-    public class SimpleQueryModel 
+    public enum QueryType { Or, And, Equal, NotEqual, GreaterThan, GreaterThanEqual, LessThan, LessThanEqual }
+    public class SimpleQueryModel
     {
         public string ModelName { get; set; }
-        public Dictionary<string, object> Properties { get; set; }
+        public Dictionary<ExpressionType, ExpressionType> Properties { get; set; }
 
-        public object this[string key]
+        public struct ExpressionType
+        {
+            public QueryType QueryCondition { get; set; }
+            public object DataValue { get; set; }
+        }
+        public object this[string key, QueryType queryType = QueryType.And,QueryType condition = QueryType.Equal]
         {
             get
             {
@@ -20,9 +26,10 @@ namespace ATS.Core.Model
                 {
                     return resultVal;
                 }
-                if (Properties.ContainsKey(key))
+                ExpressionType expressionKey = new ExpressionType { QueryCondition = queryType, DataValue = key };
+                if (Properties.ContainsKey(expressionKey))
                 {
-                    resultVal = Properties[key];
+                    resultVal = Properties[expressionKey];
                 }
                 return resultVal;
             }
@@ -30,9 +37,21 @@ namespace ATS.Core.Model
             {
                 if (Properties == null)
                 {
-                    Properties = new Dictionary<string, object>();
+                    Properties = new Dictionary<ExpressionType, ExpressionType>();
                 }
-                Properties[key] = value;
+                SetValue(key, value, queryType, condition);
+            }
+        }
+        private void SetValue(string key, object dataValue, QueryType qryType = QueryType.And, QueryType condition = QueryType.Equal)
+        {
+            ExpressionType expressionKey = new ExpressionType { QueryCondition = qryType, DataValue = key };
+            if (dataValue != null && dataValue.GetType() == typeof(ExpressionType))
+            {
+                Properties[expressionKey] = (ExpressionType)dataValue;
+            }
+            else
+            {
+                Properties[expressionKey] = new ExpressionType { QueryCondition = condition, DataValue = dataValue };
             }
         }
     }
