@@ -45,17 +45,18 @@
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showSuccess(msg, op.msgContext);
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
+                        $(op.tableId).DataTable();
                     }
                 }
                 else {
                     $.each(result.Message, function (index, value) {
                         msg += value;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, op.msgContext);
                 }
             }
         }
@@ -65,13 +66,13 @@
                 appendUser(result);
             },
             onGetUserFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, op.msgContext);
             },
             onUserDeleted: function (result) {
                 appendUser(result);
             },
             onUserDeletionFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showSuccess(result.responseText, op.msgContext);
             },
         }
     })();
@@ -83,35 +84,6 @@
             .done(callBacks.onGetUser)
             .fail(callBacks.onGetUserFailed);      
     }
-
-    //var deleteUser = function () {
-
-    //    var UserCredentials = [];
-    //    var op = defaults;
-
-    //    var userID = $(op.userId).val();
-    //    var RoleID = $(op.roleTypeId).val();      
-    //    var email = $(op.email).val();
-
-    //    var item = {
-    //        UserId: userID.trim(),   
-    //        EmailId: email.trim(),   
-    //        RoleTypeId: RoleID.trim(),   
-    //    };
-    //    UserCredentials.push(item);
-
-    //    var userInfoModel = {
-    //        UserId: userID.trim(),   
-    //        RoleTypeId: RoleID.trim(),            
-    //        Email: email.trim(),    
-    //        UserCredentials: UserCredentials,
-    //    };
-
-    //    api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })
-    //            .done(callBacks.onUserDeleted)
-    //            .fail(callBacks.onUserDeletionFailed);
-
-    //}
 
     var bindEvents = function () {
         var op = defaults;
@@ -142,20 +114,10 @@
                 StatusId: false,
             };
 
-            //var item = {
-            //    UserId: userID.trim(), 
-            //    Id: id.trim(),
-            //    //RoleTypeValue: RoleID.trim(),
-            //};
-            //UserCredentials.push(item);
-
             var userInfoModel = {
                 UserId: userID.trim(),
                 StatusId: false,
                 UserCredentials: UserCredentials,
-                //RoleTypeId: RoleID.trim(),
-                //Email: email.trim(),
-                
             };
 
             api.firePostAjax('/Admin/UserSetup/DeleteUser', { userInfoModel: userInfoModel })
@@ -171,6 +133,5 @@
             bindEvents();
             loadUsersList();
         }
-
     }
 })();

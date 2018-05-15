@@ -4,11 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.Interface;
 using ATS.Core.Model;
 using ATS.Core.Helper;
 using ATS.Bll;
-using ATS.Repository.Model;
 
 namespace ATS.Service.Controllers
 {
@@ -26,11 +24,11 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Create")]
-        public IHttpActionResult Create(TestBank testBank)
+        public IHttpActionResult Create(TestBankModel testBankModel)
         {
             try
             {
-                apiResult = testBankBo.Create(testBank);
+                apiResult = testBankBo.Create(testBankModel);
             }
             catch (Exception ex)
             {
@@ -42,11 +40,11 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Update")]
-        public IHttpActionResult Update(TestBank testBank)
+        public IHttpActionResult Update(TestBankModel testBankModel)
         {
             try
             {
-                apiResult = testBankBo.Update(testBank);
+                apiResult = testBankBo.Update(testBankModel);
             }
             catch (Exception ex)
             {
@@ -58,11 +56,11 @@ namespace ATS.Service.Controllers
 
         [HttpDelete]
         [Route("api/TestBank/Delete")]
-        public IHttpActionResult Delete(TestBank testBank)
+        public IHttpActionResult Delete(TestBankModel testBankModel)
         {
             try
             {
-                apiResult = testBankBo.Delete(testBank);
+                apiResult = testBankBo.Delete(testBankModel);
             }
             catch (Exception ex)
             {
@@ -74,11 +72,11 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Retrieve")]
-        public IHttpActionResult Retrieve(TestBank testBank)
+        public IHttpActionResult Retrieve(TestBankModel testBankModel)
         {
             try
             {
-                apiResult = testBankBo.GetById(testBank.TestBankId);
+                apiResult = testBankBo.GetById(testBankModel.TestBankId);
             }
             catch (Exception ex)
             {
@@ -123,7 +121,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Link/Questions")]
-        public IHttpActionResult MapQuestion(List<TestQuestionMapping> inputs)
+        public IHttpActionResult MapQuestion(List<TestQuestionMapModel> inputs)
         {
             try
             {
@@ -139,7 +137,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/TestBank/Unlink/Questions")]
-        public IHttpActionResult DeleteMapQuestion(List<TestQuestionMapping> inputs)
+        public IHttpActionResult DeleteMapQuestion(List<TestQuestionMapModel> inputs)
         {
             try
             {

@@ -12,14 +12,17 @@ namespace ATS.Bll
 {
    public class TestBankBo
     {   
-        public ApiResult Create(TestBank testBank)
+        public ApiResult Create(TestBankModel testBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
-                    testBank.TestBankId = Guid.NewGuid();
+                    testBankModel.TestBankId= Guid.NewGuid();
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+                    
                     var flag = unitOfWork.TestBankRepo.Create(ref testBank);
 
                     if (flag)
@@ -49,7 +52,7 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(TestBank testBank)
+        public ApiResult Delete(TestBankModel testBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
@@ -57,6 +60,9 @@ namespace ATS.Bll
                 var flag = false;
                 try
                 {
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+
                     flag = unitOfWork.TestBankRepo.Delete(testBank);
 
                     if (flag)
@@ -132,13 +138,16 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Update(TestBank testBank)
+        public ApiResult Update(TestBankModel testBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+
                     var flag = unitOfWork.TestBankRepo.Update(ref testBank);
 
                     if (flag)
