@@ -41,11 +41,11 @@ namespace ATS.Web
                       "~/Scripts/plugins/chart.js",
                       "~/Scripts/plugins/bootstrap-datepicker.min.js",
                       "~/Scripts/plugins/bootstrap-notify.min.js",
-                     // "~/Scripts/plugins/dataTables.bootstrap.min.js",
                       "~/Scripts/plugins/moment.min.js",
                       "~/Scripts/plugins/fullcalendar.min.js",
                       "~/Scripts/plugins/jquery-ui.custom.min.js",
                       "~/Scripts/plugins/jquery.dataTables.min.js",
+                      "~/Scripts/plugins/dataTables.bootstrap.min.js",
                       "~/Scripts/plugins/select2.min.js",
                       "~/Scripts/plugins/sweetalert.min.js"));
 

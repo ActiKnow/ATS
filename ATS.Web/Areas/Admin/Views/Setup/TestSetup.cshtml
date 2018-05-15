@@ -22,25 +22,25 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control categoryType" id="categoryType"></select>
+                        <select class="form-control " id="categoryType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Level</label>
-                        <select class="form-control levelType" id="levelType"></select>
+                        <select class="form-control " id="levelType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control testType" id="testType"></select>
+                        <select class="form-control " id="testType"></select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Marks</label>
-                        <input class="form-control testMarks" type="number" />
+                        <input class="form-control " id="testMarks" type="number" />
                     </div>
                 </div>
             </div>
@@ -48,13 +48,13 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea class="form-control testDescription" cols="40" rows="5"></textarea>
+                        <textarea class="form-control testDescription" cols="40" rows="5" id="testDescription" ></textarea>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label style="text-align:match-parent">Instruction</label>
-                        <textarea class="form-control testInstruction" cols="40" rows="5"></textarea>
+                        <textarea class="form-control testInstruction" cols="40" rows="5" id="testInstruction" ></textarea>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label>Duration</label>
-                        <input class="form-control testDuration" type="number" />
+                        <input class="form-control testDuration" type="number" id="testDuration"  />
                     </div>
                 </div>
             </div>
@@ -80,22 +80,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12 tableContext">
-        <div class="tile">
-            <h3 class="tile-title">Test List</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Test Desc</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Level</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    <div class="col-md-12 tile">
+        <h3 class="tile-title">Test List</h3>
+
+        <div class=" tableContext">
+
         </div>
     </div>
 </div>
@@ -119,7 +108,12 @@
                     selectLevel: '#levelType',
                     selectTestType: '#testType',
                     createTest: '#btnCreateTest',
-                    testContext:'#testContext'
+                    testContext: '#testContext',
+                    testMarks: '#testMarks',
+                    testDescription: '#testDescription',
+                    testInstruction: '#testInstruction',
+                    testDuration: '#testDuration',
+                    testTableContext:'.tableContext',
                 };
                 testBankSetup.init(config);
 

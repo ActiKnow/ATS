@@ -1,114 +1,132 @@
 ﻿@{
     ViewBag.Title = "TypeSetup";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";   
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="app-title">
     <div>
         <h1><i class="fa fa-edit"></i>Type Setup</h1>
         <p>Setup form for users</p>
-    </div>
-    <ul class="app-breadcrumb breadcrumb">
+    </div>   
+    <ul class="app-breadcrumb breadcrumb side">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
         <li class="breadcrumb-item">Forms</li>
-        <li class="breadcrumb-item"><a href="#">Type Setup</a></li>
+        <li class="breadcrumb-item active"><a href="#">Type Setup</a></li>
     </ul>
 </div>
-<div class="row">
-    <div class="col-md-12" id="typeContext">
-        <div class="tile">
-            <div class="row">
-                <span class="typeId" style="display:none"></span>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Type Name</label>
-                        <input class="form-control typeName" type="text" placeholder="Enter type name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelect1">Select Parent ID</label>
-                        <select class="form-control ddlParents">
-                            <option value="">-Select-</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Type Value</label>
-                        <input class="form-control typeValue" type="text" placeholder="Enter type value">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelect1">Status</label>
-                        <select class="form-control ddlStatus">
-                            <option value="">-Select-</option>
-                        </select>
-                    </div>
-                </div>
+<div id="mainMessageContext"></div>
+<div class="row">    
+    <div class="col-md-12">         
+        <div class="tile" id="tableContext">           
+            <div class="tile-title-w-btn">
+                <h3 class="title">Type List</h3>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnCreate"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Type</button>
+                </p>
             </div>
-            <div class="tile-footer">
-                <button class="btn btn-primary" type="button" id="btnCreateType">Create</button>
-                <button class="btn btn-primary" type="button" id="btnUpdateType" style="display:none">Update</button>
-                <button class="btn btn-primary" type="reset" id="btnClearType">Clear</button>
-                <span class="errorMsg" style="display:none"></span>
-                <span class="successMsg" style="display:none"></span>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" id="sampleTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type Name</th>
+                            <th>Type Value</th>
+                            <th>Parent</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 tableContext">
-        <div class="tile">
-            <h3 class="tile-title">Type List</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Type Name</th>
-                        <th>Type Value</th>
-                        <th>Parent</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
+
+<div class="modal" id="modelTypeContext" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Type Setup</h3>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="popupMessageContext"></div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <span class="typeId" style="display:none"></span>
+                        <span class="typeValue" style="display:none"></span>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Type Name</label>
+                                <input class="form-control typeName" type="text" placeholder="Enter type name">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="exampleSelect1">Select Parent Type</label>
+                                <select class="form-control ddlParents">
+                                    <option value="">-Select-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="exampleSelect1">Status</label>
+                                <select class="form-control ddlStatus">
+                                    <option value="">-Select-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" id="btnCreateType"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create</button>
+                <button class="btn btn-primary" type="button" id="btnUpdateType" style="display:none"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+                <button class="btn btn-secondary" type="reset" id="btnClearType"><i class="fa fa-fw fa-lg fa-times-circle"></i>Clear</button>
+            </div>
         </div>
     </div>
 </div>
 
 @section scripts
 {
-<script src="~/Scripts/module/type-setup/type-setup.js"></script>
+    <script src="~/Scripts/module/type-setup/type-setup.js"></script>
 
-<script>
-    (function ($, window, document) {
-        $(function () {
-            var config = {
-                typeName:'.typeName',
-                selectParent:'.ddlParents',
-                typeValue:'.typeValue',
-                selectStatus:'.ddlStatus',
-                btnCreateType: '#btnCreateType',
-                btnUpdateType:'#btnUpdateType',
-                errorMsg: '.errorMsg',
-                successMsg: '.successMsg',
-                tableContext: '.tableContext',
-                typeContext: '#typeContext',
-                btnEditType: '.btnEditType',
-                btnRemoveType: '.btnRemoveType',
-                btnClearType: '#btnClearType',
-                selectedTypeId: '.itemTypeId',
-                selectedItemName: '.itemName',
-                selectedItemValue: '.itemValue',
-                selectedParentTypeId: '.itemParentTypeId',
-                typeId: '.typeId',
-                selectedItemStatus:'.itemStatus',
-            };
-            typeSetup.init(config);
-        });
+    <script>
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    typeName: '.typeName',
+                    selectParent: '.ddlParents',
+                    typeValue: '.typeValue',
+                    typeId: '.typeId',
+                    selectStatus: '.ddlStatus',
+                    btnCreateType: '#btnCreateType',
+                    btnUpdateType: '#btnUpdateType',
+                    errorMsg: '.errorMsg',
+                    successMsg: '.successMsg',
+                    tableContext: '#tableContext',
+                    modelTypeContext: '#modelTypeContext',
+                    btnEditType: '.btnEditType',
+                    btnRemoveType: '.btnRemoveType',
+                    btnClearType: '#btnClearType',
+                    selectedTypeId: '.itemTypeId',
+                    selectedItemName: '.itemName',
+                    selectedItemValue: '.itemValue',
+                    selectedParentTypeId: '.itemParentTypeId',                    
+                    selectedItemStatus: '.itemStatus',
+                    popupMessageContext: '#popupMessageContext',
+                    mainMessageContext: '#mainMessageContext',
+                    btnCreate: '#btnCreate',
+                    sampleTable:'#sampleTable',
+                };
+                typeSetup.init(config);                
+            });
 
-    }(window.jQuery, window, document));
-</script>
+        }(window.jQuery, window, document));
+    </script>
 }
 

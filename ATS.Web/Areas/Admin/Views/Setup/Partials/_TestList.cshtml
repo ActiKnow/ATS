@@ -2,22 +2,36 @@
 @{
     var count = 1;
 }
-@foreach (var item in Model)
-{
-    <tr>
-        <td>@(count++)</td>
-        <td><span class="itemName">@item.Description</span></td>
-        <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
-        <td>@(item.TestTypeDescription )</td>
-        <td>@item.LavelTypeDescription</td>
-        <td>
-            <div class="btn-group">
-                <button class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></button>
-                <button class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></button>
-            </div>
-            
-        </td>
-    </tr>
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Test Desc</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(count++)</td>
+                <td><span class="itemName">@item.Description</span></td>
+                <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
+                <td>@(item.TestTypeDescription )</td>
+                <td>@item.LavelTypeDescription</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></button>
+                        <button class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></button>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 
