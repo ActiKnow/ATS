@@ -10,7 +10,7 @@
     <td><span class="lastName">@item.LName</span></td>
     <td><span class="mobile">@item.Mobile</span></td>
     <td><span class="email">@item.Email</span></td>
-    <td><span class="password">pass</span></td>
+    @*<td><span class="password">pass</span></td>*@
     <td><span class="createdOn">@item.CreatedDate</span></td>
     <td><span class="roleType">@item.RoleDescription</span></td>
     <td><span class="itemStatusDescription">@if (item.StatusId) {@("Active")}
@@ -24,6 +24,7 @@
         <input type="hidden" class="userId" value="@item.UserId" />
         <input type="hidden" class="roleTypeId" value="@item.RoleTypeValue" />
         <input type="hidden" class="itemStatus" value="@item.StatusId" />
+        <input type="hidden" class="hiddenId" value="@item.UserCredentials.Id" />
     </td>
 </tr>
 }

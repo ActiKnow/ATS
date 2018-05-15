@@ -42,6 +42,7 @@
                     }
                     $(op.modelTypeContext).modal('hide');
                     $(op.tableContext).find('tbody').html(result.Data);
+                    $(op.sampleTable).DataTable();
                     loadParentTypes();
                     $(op.btnClearType).trigger("click");
                 }

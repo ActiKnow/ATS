@@ -12,7 +12,6 @@ namespace ATS.Repository.Model
         public UserInfo()
         {
             this.TestAssignments = new List<TestAssignment>();
-            this.UserCredentials = new List<UserCredential>();
             this.UserTestHistories = new List<UserTestHistory>();
         }
         [Key]
@@ -26,7 +25,6 @@ namespace ATS.Repository.Model
 
         [ForeignKey("RoleTypeValue")]
         public  TypeDef TypeDef { get; set; }
-        public  List<UserCredential> UserCredentials { get; set; }
         public  List<UserTestHistory> UserTestHistories { get; set; }
     }
 }

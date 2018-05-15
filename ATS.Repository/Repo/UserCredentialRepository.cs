@@ -51,6 +51,10 @@ namespace ATS.Repository.Repo
                                  LastUpdatedDate = x.LastUpdatedDate,                                
                                  StatusId = x.StatusId,
                                  UserId = x.UserId,
+                                 Id=x.Id,
+                                 CurrPassword=x.CurrPassword,
+                                 PrevPassword=x.PrevPassword,
+                                  
                              }).AsQueryable<UserCredentialModel>();
 
                 return query;
@@ -60,5 +64,33 @@ namespace ATS.Repository.Repo
                 throw;
             }
         }
+
+        public IQueryable<UserCredentialModel> Select(Func<UserCredentialModel, bool> condition)
+        {
+            try
+            {
+                var query = (from x in _context.UserCredential                           
+                             select new UserCredentialModel
+                             {
+                                 CreatedBy = x.CreatedBy,
+                                 CreatedDate = x.CreatedDate,
+                                 EmailId = x.EmailId,
+                                 LastUpdatedBy = x.LastUpdatedBy,
+                                 LastUpdatedDate = x.LastUpdatedDate,
+                                 StatusId = x.StatusId,
+                                 UserId = x.UserId,
+                                 Id = x.Id,
+                                 CurrPassword = x.CurrPassword,
+                                 PrevPassword = x.PrevPassword,
+                             }).Where(condition).AsQueryable<UserCredentialModel>();
+
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ATS.Core.Model
@@ -12,7 +13,6 @@ namespace ATS.Core.Model
         public System.Guid UserId { get; set; }        
         public string PrevPassword { get; set; }
         public string CurrPassword { get; set; }
-        public virtual UserInfoModel UserInfo { get; set; }
         public string EmailId { get; set; }
     }
 }
