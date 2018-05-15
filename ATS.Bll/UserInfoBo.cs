@@ -102,13 +102,14 @@ namespace ATS.Bll
                 }
                 if (flag)
                 {
+                    unitOfWork.Commit();
+
                     apiResultDelete.Message.Add("User deleted successfully.");
 
                     var result = Select(null);  // Getting all records, when we will pass null in Select method.
 
                     if (result != null)
                     {
-
                         apiResultDelete+= result;
                     }
                 }

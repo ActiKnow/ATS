@@ -46,7 +46,7 @@ namespace ATS.Core.Helper
             }
             catch { throw; }
         }
-        public object GetValueByType(Type type, object value)
+        private object GetValueByType(Type type, object value)
         {
 
             if (type.Equals(typeof(Guid)))
@@ -70,7 +70,7 @@ namespace ATS.Core.Helper
             return value;
         }
 
-        public Expression GetCondition(MemberExpression prop, UnaryExpression value, QueryType expression)
+        private Expression GetCondition(MemberExpression prop, UnaryExpression value, QueryType expression)
         {
             var condition = Expression.Equal(prop, value);
             switch (expression)
@@ -98,7 +98,7 @@ namespace ATS.Core.Helper
             return condition;
         }
 
-        public Expression<Func<T, bool>> GetPredicate(Expression<Func<T, bool>> lambda, QueryType expression)
+        private Expression<Func<T, bool>> GetPredicate(Expression<Func<T, bool>> lambda, QueryType expression)
         {
             var predicate = PredicateBuilder.True<T>();
             switch (expression)

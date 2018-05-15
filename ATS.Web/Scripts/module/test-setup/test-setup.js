@@ -28,6 +28,7 @@
             },
         }
     }());
+
     var action = {
         getTestType: function () {
             api.fireGetAjax(apiUrl.getTestType, { parentTypeValue: testType })
@@ -88,7 +89,12 @@
                 TotalMarks: inputs().totalMarks
             };
             api.firePostAjax(apiUrl.createTest, parameter)
-                .done()
+                .done((result) => {
+                    if (result.Status)
+                    {
+                    }
+                        action.getTests();
+                })
                 .fail();
         },
         getTests: function () {
@@ -108,6 +114,7 @@
                 .fail();
         },
     };
+
     var render = {
         fillSelector: function ($selector, data, defaultOption, value = 'Value', text = 'Text') {
             let options = "";
@@ -126,6 +133,7 @@
             testContext.html(data);
         },
     };
+
     var loader = {
         loadSelector: function () {
             action.getTestType();
@@ -134,6 +142,7 @@
         },
         loadTest: function () { action.getTests(); },
     };
+
     var inputs = function () {
         return {
             categoryTypeValue: $(defaults.selectCategory).val(),
@@ -145,12 +154,14 @@
             totalMarks: $(defaults.testMarks).val()
         };
     };
+
     var binder = {
         bindControls: function () {
             var $testContext = $(defaults.testContext);
             $testContext.on('click', defaults.createTest, action.createTest);
         },
     };
+
     var setup = function () {
         for (let indx in loader) {
             if (typeof loader[indx] == 'function') {
@@ -163,10 +174,12 @@
             }
         }
     };
+
     var init = function (settings) {
 
         $.extend(true, defaults, settings);
         setup();
     };
+
     return { init: init };
 })();
