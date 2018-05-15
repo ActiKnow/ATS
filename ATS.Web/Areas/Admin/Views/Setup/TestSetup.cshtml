@@ -16,7 +16,7 @@
     </ul>
 </div>
 <div class="row">
-    <div class="col-md-12" id="typeContext">
+    <div class="col-md-12" id="testContext">
         <div class="tile">
             <div class="row">
                 <div class="col-lg-3">
@@ -59,7 +59,14 @@
                 </div>
             </div>
 
-
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input class="form-control testDuration" type="number" />
+                    </div>
+                </div>
+            </div>
 
             <div class="tile-footer">
                 <button class="btn btn-primary" type="button" id="btnCreateTest">Create</button>
@@ -111,6 +118,8 @@
                     selectCategory: '#categoryType',
                     selectLevel: '#levelType',
                     selectTestType: '#testType',
+                    createTest: '#btnCreateTest',
+                    testContext:'#testContext'
                 };
                 testBankSetup.init(config);
 

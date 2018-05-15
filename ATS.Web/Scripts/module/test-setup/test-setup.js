@@ -1,11 +1,12 @@
 ﻿var testBankSetup = (function () {
     'use strict';
     var defaults = {};
-    const parentType = AppConstant.PARENT;
+    const testType = AppConstant.TESTTYPE, levelType = AppConstant.LEVEL, categoryType = AppConstant.CATEGORY;
     var apiUrl = {
-        getTestType: "/Setup/GetAllSubTypes/" ,
-        getLevelType: "/Setup/GetAllSubTypes/" ,
-        getCategoryType: "/Setup/GetAllSubTypes/"
+        getTestType: "/Setup/GetAllSubTypes/",
+        getLevelType: "/Setup/GetAllSubTypes/",
+        getCategoryType: "/Setup/GetAllSubTypes/",
+        createTest:'/Setup/CreateTest/'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -28,7 +29,7 @@
     }());
     var action = {
         getTestType: function () {
-            api.fireGetAjax(apiUrl.getTestType, { parentTypeValue: parentType})
+            api.fireGetAjax(apiUrl.getTestType, { parentTypeValue: testType })
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
@@ -43,9 +44,52 @@
                 })
                 .fail();
         },
-        getLevelType: function () { },
-        getCategoryType: function () { },
+        getLevelType: function () {
+            api.fireGetAjax(apiUrl.getLevelType, { parentTypeValue: levelType })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                        }
+                        else {
+                            render.fillSelector($(defaults.selectLevel), result.Data, "--select--", 'Value', 'Description');
+                        }
+                    }
+                    else {
 
+                    }
+                })
+                .fail();
+        },
+        getCategoryType: function () {
+            api.fireGetAjax(apiUrl.getCategoryType, { parentTypeValue: categoryType })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                        }
+                        else {
+                            render.fillSelector($(defaults.selectCategory), result.Data, "--select--", 'Value', 'Description');
+                        }
+                    }
+                    else {
+
+                    }
+                })
+                .fail();
+        },
+        createTest: function () {
+            var parameter = {
+                CategoryTypeValue: $(defaults.getCategoryType).val(),
+                LevelTypeValue: $(defaults.selectLevel).val(),
+                Description:'xxxxx',
+                Instructions:'xxxx',
+                Duration:90,
+                TestTypeValue: $(defaults.selectTestType).val(),
+                TotalMarks:200
+            };
+            api.firePostAjax(apiUrl.createTest, parameter)
+                .done()
+                .fail();
+        },
     };
     var render = {
         fillSelector: function ($selector, data, defaultOption, value = 'Value', text = 'Text') {
@@ -53,8 +97,8 @@
             if (defaultOption) {
                 options = '<option>' + defaultOption + '</option>';
             }
-            $.each(data, (indx, value)=>{
-                options += '<option value="' + data[indx][value] + '">' + data[indx][text] + '</option>';
+            $.each(data, (indx, item) => {
+                options += '<option value="' + item[value] + '">' + item[text] + '</option>';
             });
             if ($selector) {
                 $selector.html(options);
@@ -69,10 +113,21 @@
         },
 
     };
+    var binder = {
+        bindControls: function () {
+            var $testContext = $(defaults.testContext);
+            $testContext.on('click', defaults.createTest, action.createTest);
+        },
+    };
     var setup = function () {
         for (let indx in loader) {
             if (typeof loader[indx] == 'function') {
                 loader[indx]();
+            }
+        }
+        for (let indx in binder) {
+            if (typeof binder[indx] == 'function') {
+                binder[indx]();
             }
         }
     };

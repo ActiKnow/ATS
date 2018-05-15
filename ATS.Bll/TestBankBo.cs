@@ -20,6 +20,7 @@ namespace ATS.Bll
             {
                 try
                 {
+                    testBank.TestBankId = Guid.NewGuid();
                     var flag = unitOfWork.TestBankRepo.Create(ref testBank);
 
                     if (flag)
@@ -43,6 +44,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;
@@ -78,6 +80,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;
@@ -156,6 +159,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;
