@@ -30,7 +30,7 @@ namespace ATS.Repository.Factory.Question
             {
                 Answer = input.AnsText,
                 QId = input.QId,
-                OptionKeyId = Constants.BOOL
+                OptionKeyId = Constants.BOOL.ToString()
             };
             flag = _unitOfWork.MapOptionRepo.Create(ref map);
 

@@ -244,6 +244,8 @@ namespace ATS.Repository.Repo
             try
             {
                 var query = (from x in _context.TypeDef
+                             join y in _context.TypeDef on x.ParentKey equals y.Value into emptyType
+                             from parent in emptyType.DefaultIfEmpty()
                              select new TypeDefModel
                              {
                                  CreatedBy = x.CreatedBy,
@@ -256,6 +258,7 @@ namespace ATS.Repository.Repo
                                  StatusId = x.StatusId,
                                  TypeId = x.TypeId,
                                  Value = x.Value,
+                                 ParentDescription = parent.Description
                              }).Where(condition).AsQueryable<TypeDefModel>();
                                
                 return query;
