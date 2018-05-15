@@ -1,11 +1,9 @@
-﻿using ATS.Repository.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ATS.Repository.Model;
 using ATS.Core.Model;
 using ATS.Core.Helper;
 using ATS.Bll;
@@ -24,11 +22,11 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Create")]
-        public IHttpActionResult Create(QuestionBank newQues)
+        public IHttpActionResult Create(QuestionBankModel newQuesModel)
         {
             try
             {
-                apiResult = questionBankBo.Create(newQues);
+                apiResult = questionBankBo.Create(newQuesModel);
             }
             catch (Exception ex)
             {
@@ -40,7 +38,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Update")]
-        public IHttpActionResult Update(QuestionBank newQues)
+        public IHttpActionResult Update(QuestionBankModel newQues)
         {
             try
             {
@@ -56,7 +54,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Delete")]
-        public IHttpActionResult Delete(QuestionBank newQues)
+        public IHttpActionResult Delete(QuestionBankModel newQues)
         {
             try
             {
