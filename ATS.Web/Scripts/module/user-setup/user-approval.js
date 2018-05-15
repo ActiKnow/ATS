@@ -133,12 +133,12 @@
 
             var userID =  $row.find($(op.userId)).val();
             var RoleID =  $row.find($(op.roleTypeId)).val();
-            var email =   $row.find($(op.email)).val();
+            var email =   $row.find($(op.email)).html();
 
             var item = {
                 UserId: userID.trim(),
                 EmailId: email.trim(),
-                RoleTypeId: RoleID.trim(),
+                RoleTypeValue: RoleID.trim(),
             };
             UserCredentials.push(item);
 
