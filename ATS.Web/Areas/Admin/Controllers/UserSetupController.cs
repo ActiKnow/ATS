@@ -153,13 +153,12 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                //userInfoModel.StatusId = false;
-                //userInfoModel.UserCredentials.StatusId = false;
-                //userInfoModel.UserCredentials.UserId = userInfoModel.UserId;
+
                result = ApiConsumers.UserApiConsumer.DeleteUser(userInfoModel);
+
                 if (result.Status)
                 {
-                    result = ApiConsumers.UserApiConsumer.SelectUsers();
+                    //result = ApiConsumers.UserApiConsumer.SelectUsers();
 
                     if (result.Status && result.Data != null)
                     {

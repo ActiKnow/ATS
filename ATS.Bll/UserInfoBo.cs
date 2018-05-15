@@ -191,17 +191,15 @@ namespace ATS.Bll
                     if (flag)
                     {
                         UserCredential userCredential = new UserCredential();
-                        userCredential.CreatedBy = input.CreatedBy;
-                        userCredential.CreatedDate = input.CreatedDate;
-                        userCredential.CurrPassword = input.CurrPassword;
-                        userCredential.EmailId = input.Email;
-                        userCredential.StatusId = input.StatusId;
-                        userCredential.UserId = input.UserId;
+
+                        Utility.CopyEntity(out userCredential, input.UserCredentials);
 
                         flag = unitOfWork.UserCredentialRepo.Update(ref userCredential);
+
                         if (flag)
                         {
                             unitOfWork.Commit();
+
                             apiResult.Message.Add("User updated successfully.");
 
                             var result = Select(null);  // Getting all records, when we will pass null in Select method.

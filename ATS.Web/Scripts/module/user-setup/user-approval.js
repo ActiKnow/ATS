@@ -139,6 +139,7 @@
             var UserCredentials = {
                 UserId: userID.trim(),
                 Id: id.trim(),
+                StatusId: false,
             };
 
             //var item = {
@@ -150,6 +151,7 @@
 
             var userInfoModel = {
                 UserId: userID.trim(),
+                StatusId: false,
                 UserCredentials: UserCredentials,
                 //RoleTypeId: RoleID.trim(),
                 //Email: email.trim(),
