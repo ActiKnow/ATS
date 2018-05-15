@@ -26,7 +26,7 @@ namespace ATS.Core.Global
         public const CommonType CATEGORY = CommonType.CATEGORY;
         public const CommonType LEVEL = CommonType.LEVEL;
         public const CommonType TESTTYPE = CommonType.TESTTYPE;
-        public const int PARENT = 0;
+        public const CommonType PARENT = CommonType.PARENT;
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }

@@ -114,10 +114,10 @@ namespace ATS.UnitTest
             {
                 ModelName = nameof(UserTestHistoryModel)
             };
-           simpleModels[nameof(UserTestHistoryModel.HistoryId),QueryType.And, QueryType.Equal] = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709");
             simpleModels[nameof(UserTestHistoryModel.AssignedDate)] = new DateTime(2010, 05, 23);
             simpleModels[nameof(UserTestHistoryModel.LastUsedDate), QueryType.And, QueryType.Equal] = null;
             simpleModels[nameof(UserTestHistoryModel.ReusableDate),QueryType.And,QueryType.Equal] = "22/06/2010";
+           simpleModels[nameof(UserTestHistoryModel.HistoryId), QueryType.Or] = new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709");
 
             var results = data.Where(simpleQry.GetQuery(simpleModels).Compile()).ToList();
             Assert.IsNotNull(results);

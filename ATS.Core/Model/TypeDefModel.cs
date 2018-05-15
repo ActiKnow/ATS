@@ -19,6 +19,7 @@ namespace ATS.Core.Model
         public string ParentDescription { get; set; }
         public int? ParentValue { get; set; }
         public string StatusDescription { get; set; }
+        public bool IsEditable { get; set; }
         public List<UserInfoModel> UserInfo { get; set; }
     }
 }
