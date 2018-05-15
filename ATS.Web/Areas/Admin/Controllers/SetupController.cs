@@ -492,6 +492,10 @@ namespace ATS.Web.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetAnswerUsers(List<UserInfoModel> allUserIdList)
+        {
+            return View();
+        }
         #endregion
     }
 }

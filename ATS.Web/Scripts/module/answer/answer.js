@@ -63,25 +63,47 @@
             .done(callBacks.onUserList)
             .fail(callBacks.onUserListFailed);
     }
-    
+    var userResult = function () {
+        var $selectTable = $(defaults.selecttblUserList);
+        var allUserIdList = [];
+        $selectTable.find(':checkbox:checked').each((index, element) => {
+            var recID = element.dataset.recid;
+            if (recID) {
+                allUserIdList.push({
+                    UserId: recID,
+                   
+                });
+            }
+        })
+        if (allUserIdList.length === 0) {
+            $(defaults.errorMsg).html("Please select at least one record to proceed");
+        }
+        else {
+            api.firePostAjax('/Admin/Setup/GetAnswerUsers', { allUserIdList: allUserIdList })
+                .done(callBacks.onAnswerSuccess)
+                .fail(callBacks.onAnswerFailed)
+        }
+    }
 
     var bindEvents = function () {
         var op = defaults;
-        var $tableContext = $(op.tableContext);
+        var $tableUserContext = $(op.tableContext);
 
-        $tableContext.on('click', op.btnchkAllUserinfo, function (event) {
+        $tableUserContext.on('click', op.btnchkAllUserinfo, function (event) {
             if (this.checked) {
-                $(op.selecttblUserList).prop(':checkbox').each(function () {
+                $(op.selecttblUserList).find(':checkbox').each(function () {
                     this.checked = true;
                 });
             }
             else {
-                $(op.selecttblUserList).prop(':checkbox').each(function () {
+                $(op.selecttblUserList).find(':checkbox').each(function () {
                     this.checked = false;
                 });
             }
         });
-
+        $tableUserContext.on('click', op.btnView, function (event) {
+            userResult();
+        });
        };
     return {
         init: function (config) {
