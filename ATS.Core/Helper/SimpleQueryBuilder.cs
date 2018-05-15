@@ -34,12 +34,12 @@ namespace ATS.Core.Helper
 
                         Type type = typeof(T);
                         var model = Expression.Parameter(typeof(T), query.ModelName);
-                        var prop = Expression.Property(model, Convert.ToString(qry.Key.DataValue));
+                        var prop = Expression.Property(model, Convert.ToString(qry.Key));
                         object valueFound = GetValueByType(prop.Type, qry.Value.DataValue);
                         var castedValue = Expression.Convert(Expression.Constant(valueFound), prop.Type);
                         var condition = GetCondition(prop, castedValue, qry.Value.QueryCondition);
                         var lambda = Expression.Lambda<Func<T, bool>>(condition, model);
-                        predicate = GetPredicate(lambda, qry.Key.QueryCondition);
+                        predicate = GetPredicate(lambda, qry.Value.QueryType);
                     }
                 }
                 return predicate;

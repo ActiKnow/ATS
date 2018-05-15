@@ -10,10 +10,11 @@ namespace ATS.Core.Model
     public class SimpleQueryModel
     {
         public string ModelName { get; set; }
-        public Dictionary<ExpressionType, ExpressionType> Properties { get; set; }
+        public Dictionary<string, ExpressionType> Properties { get; set; }
 
         public struct ExpressionType
         {
+            public QueryType QueryType { get; set; }
             public QueryType QueryCondition { get; set; }
             public object DataValue { get; set; }
         }
@@ -26,10 +27,9 @@ namespace ATS.Core.Model
                 {
                     return resultVal;
                 }
-                ExpressionType expressionKey = new ExpressionType { QueryCondition = queryType, DataValue = key };
-                if (Properties.ContainsKey(expressionKey))
+                if (Properties.ContainsKey(key))
                 {
-                    resultVal = Properties[expressionKey];
+                    resultVal = Properties[key];
                 }
                 return resultVal;
             }
@@ -37,21 +37,21 @@ namespace ATS.Core.Model
             {
                 if (Properties == null)
                 {
-                    Properties = new Dictionary<ExpressionType, ExpressionType>();
+                    Properties = new Dictionary<string, ExpressionType>();
                 }
                 SetValue(key, value, queryType, condition);
             }
         }
-        private void SetValue(string key, object dataValue, QueryType qryType = QueryType.And, QueryType condition = QueryType.Equal)
+        private void SetValue(string key, object dataValue, QueryType queryType = QueryType.And, QueryType condition = QueryType.Equal)
         {
-            ExpressionType expressionKey = new ExpressionType { QueryCondition = qryType, DataValue = key };
+         
             if (dataValue != null && dataValue.GetType() == typeof(ExpressionType))
             {
-                Properties[expressionKey] = (ExpressionType)dataValue;
+                Properties[key] = (ExpressionType)dataValue;
             }
             else
             {
-                Properties[expressionKey] = new ExpressionType { QueryCondition = condition, DataValue = dataValue };
+                Properties[key] = new ExpressionType { QueryType = queryType, QueryCondition = condition, DataValue = dataValue };
             }
         }
     }
