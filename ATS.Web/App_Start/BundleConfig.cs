@@ -40,7 +40,7 @@ namespace ATS.Web
                       "~/Scripts/plugins/pace.min.js",
                       "~/Scripts/plugins/chart.js",
                       "~/Scripts/plugins/bootstrap-datepicker.min.js",
-                      "~/Scripts/plugins/bootstrap-notify.min.js",                     
+                      "~/Scripts/plugins/bootstrap-notify.min.js",
                       "~/Scripts/plugins/moment.min.js",
                       "~/Scripts/plugins/fullcalendar.min.js",
                       "~/Scripts/plugins/jquery-ui.custom.min.js",

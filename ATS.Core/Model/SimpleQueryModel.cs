@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace ATS.Core.Model
 {
-    public class SimpleQueryModel 
+    public enum QueryType { Or, And, Equal, NotEqual, GreaterThan, GreaterThanEqual, LessThan, LessThanEqual }
+    public class SimpleQueryModel
     {
         public string ModelName { get; set; }
-        public Dictionary<string, object> Properties { get; set; }
+        public Dictionary<string, ExpressionType> Properties { get; set; }
 
-        public object this[string key]
+        public struct ExpressionType
+        {
+            public QueryType QueryType { get; set; }
+            public QueryType QueryCondition { get; set; }
+            public object DataValue { get; set; }
+        }
+        public object this[string key, QueryType queryType = QueryType.And,QueryType condition = QueryType.Equal]
         {
             get
             {
@@ -30,9 +37,21 @@ namespace ATS.Core.Model
             {
                 if (Properties == null)
                 {
-                    Properties = new Dictionary<string, object>();
+                    Properties = new Dictionary<string, ExpressionType>();
                 }
-                Properties[key] = value;
+                SetValue(key, value, queryType, condition);
+            }
+        }
+        private void SetValue(string key, object dataValue, QueryType queryType = QueryType.And, QueryType condition = QueryType.Equal)
+        {
+         
+            if (dataValue != null && dataValue.GetType() == typeof(ExpressionType))
+            {
+                Properties[key] = (ExpressionType)dataValue;
+            }
+            else
+            {
+                Properties[key] = new ExpressionType { QueryType = queryType, QueryCondition = condition, DataValue = dataValue };
             }
         }
     }
