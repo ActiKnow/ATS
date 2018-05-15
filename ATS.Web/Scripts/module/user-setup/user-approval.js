@@ -41,16 +41,15 @@
             if (result !== "") {
                 var msg = "";
                 if (result.Status) {
-                    if (result.Message && result.Message.Count>0) {
+                    if (result.Message && result.Message.length>0) {
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
                         alertService.showSuccess(msg, op.msgContext);
                     }
-                    else {
-                        $(op.tableContext).find('tbody').html(result.Data);
-                        $(op.tableId).DataTable();
-                    }
+
+                    $(op.tableContext).find('tbody').html(result.Data);
+                    $(op.tableId).DataTable();
                 }
                 else {
                     $.each(result.Message, function (index, value) {
