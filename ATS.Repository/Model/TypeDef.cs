@@ -19,7 +19,7 @@ namespace ATS.Repository.Model
 
         [Key]
         public int Value { get; set; }
-
+        public bool IsEditable { get; set; }
         public int ParentKey { get; set; }
         public List<UserInfo> UserInfo { get; set; }
         public List<QuestionBank> QuestBank { get; set; }
