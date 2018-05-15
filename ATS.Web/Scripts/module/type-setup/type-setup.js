@@ -7,7 +7,8 @@
         selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
-        messageContext: '#messageContext',
+        popupMessageContext: '#popupMessageContext',
+        mainMessageContext: '#mainMessageContext'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -37,23 +38,15 @@
                 var msg = " ";
                 if (result.Status) {
                     if (result.Message && result.Message.length > 0) {
-                        $.each(result.Message, function (index, value) {
-                            msg += value.Message;
-                        });
-
-                        alertService.showSuccess(msg, op.messageContext);  
+                        successMessageShow(result.Message, op.mainMessageContext);                        
                     }
-                    else {
-                        $(op.tableContext).find('tbody').html(result.Data);
-                        loadParentTypes();
-                        $(op.btnClearType).trigger("click");
-                    }
+                    $(op.modelTypeContext).modal('hide');
+                    $(op.tableContext).find('tbody').html(result.Data);
+                    loadParentTypes();
+                    $(op.btnClearType).trigger("click");
                 }
                 else {
-                    $.each(result.Message, function (index, value) {
-                        msg += value.Message;
-                    });
-                    alertService.showError(msg, op.messageContext); 
+                    errorMessageShow(result.Message, op.popupMessageContext);
                 }
             }
         }
@@ -63,14 +56,14 @@
                 appendType(result);
             },
             onTypeCreationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, defaults.mainMessageContext);
             },
 
             onTypeUpdated: function (result) {
                 appendType(result);
             },
             onTypeUpdationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, defaults.mainMessageContext);
             },
         }
     })();
@@ -81,8 +74,8 @@
         var op = defaults;
 
         var typeName = $(op.typeName).val();
-        var parentKey = $(op.selectParent).val();
-        var statusId = $(op.selectStatus).val();
+        var parentKey = $(op.selectParent).find(":selected").val();
+        var statusId = $(op.selectStatus).find(":selected").val();
 
         flag = validateRequiredField(typeName, parentKey, statusId);
 
@@ -104,14 +97,13 @@
 
         var flag = true;
         var op = defaults;
-
-        var typeName = $(op.typeName).val();
-        var typeValue = $(op.typeValue).val();
+        var typeName = $(op.typeName).val();       
         var parentKey = $(op.selectParent).find(":selected").val();
         var statusId = $(op.selectStatus).find(":selected").val();
         var typeId = $(op.typeId).html();
+        var typeValue = $(op.typeValue).html();
 
-        flag = validateRequiredField(typeName, typeValue, parentKey, statusId);
+        flag = validateRequiredField(typeName, parentKey, statusId);
 
         if (flag) {
 
@@ -132,6 +124,8 @@
 
     var validateRequiredField = function (typeName, selectParent, statusId) {
 
+        alertService.hide(defaults.popupMessageContext);
+
         var flag = true;
         var message = "";
 
@@ -139,12 +133,15 @@
             message = "Type name is required";
         }
         else if (!statusId || statusId.trim() == "") {
-            message = "Please select status";
+            message = "Type status is required";
+        }
+        else if (!selectParent || selectParent.trim() == "") {
+            message = "Parent type is required";
         }
 
         if (message != "")
         {
-            alertService.showError(message, defaults.messageContext);
+            alertService.showError(message, defaults.popupMessageContext);
             flag = false;
         }
        
@@ -152,8 +149,9 @@
     }
 
     var loadParentTypes = function () {
+        
         var op = defaults;
-
+        
         api.fireGetAjax('/Setup/GetParentTypes', { })
             .done(res => {
                 if (res != null) {
@@ -161,10 +159,7 @@
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
                         if (res.Message && res.Message.length > 0) {
-                            $.each(res.Message, function (index, value) {
-                                msg += value.Message;
-                            });
-                            alertService.showError(msg, op.messageContext); 
+                            errorMessageShow(res.Message, op.mainMessageContext);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -174,31 +169,24 @@
                         }
                     }
                     else {
-                        $.each(result.Message, function (index, value) {
-                            msg += value.Message;
-                        });
-                        alertService.showError(msg, op.messageContext); 
+                        errorMessageShow(res.Message, op.mainMessageContext);
                     }
                 }
             })
             .fail(res => {
-                $(op.errorMsg).html(res.responseText);
+                errorMessageShow(res.responseText, op.mainMessageContext);
             });
     }
 
     var loadStatus = function () {
         var op = defaults;
-
         api.fireGetAjax('/Setup/GetStatus', {})
             .done(res => {
                 if (res != null) {
                     var msg = " ";
                     if (res.Status) {
                         if (res.Message && res.Message.length > 0) {
-                            $.each(res.Message, function (index, value) {
-                                msg += value.Message;
-                            });
-                            alertService.showError(msg, op.messageContext); 
+                            errorMessageShow(res.Message, op.mainMessageContext); 
                         }
                         else {
                             var items = "";
@@ -209,15 +197,12 @@
                         }
                     }
                     else {
-                        $.each(res.Message, function (index, value) {
-                            msg += value.Message;
-                        });
-                        alertService.showError(msg, op.messageContext); 
+                        errorMessageShow(res.Message, op.mainMessageContext);
                     }
                 }
             })
             .fail(res => {
-                $(op.errorMsg).html(res.responseText);
+                errorMessageShow(res.responseText, op.mainMessageContext);
             });
     }
 
@@ -244,70 +229,87 @@
                         var msg = " ";
                         if (!res.Status) {
                             if (res.Message && res.Message.length > 0) {
-                                $.each(result.Message, function (index, value) {
-                                    msg += value.Message;
-                                });
-                                alertService.showError(msg, op.messageContext); 
+                                errorMessageShow(res.Message, op.popupMessageContext); 
                                 $(op.btnCreateType).attr("disabled", "disabled");
                             }                           
                         }
                         else {
-                            $.each(result.Message, function (index, value) {
-                                msg += value.Message;
-                            });
-                            alertService.showError(msg, op.messageContext); 
+                            errorMessageShow(res.Message, op.popupMessageContext);
+                            $(op.btnCreateType).attr("disabled", "disabled");
                             $(op.btnCreateType).attr("disabled", "disabled");
                         }
                     }
                 })
                 .fail(res => {
-                    alertService.showError(res.responseText, op.messageContext); 
+                    alertService.showError(res.responseText, op.popupMessageContext); 
                 });
         }
     }
 
+    var errorMessageShow = function (messageList, messageContext){
+        var msg = " ";
+        $.each(messageList, function (index, value) {
+            msg += value;
+        });
+        alertService.showError(msg, messageContext);  
+    }
+    var successMessageShow = function (messageList,messageContext) {
+        var msg = " ";
+        $.each(messageList, function (index, value) {
+            msg += value;
+        });
+        alertService.showSuccess(msg, messageContext);  
+    }
+
     var bindEvents = function () {
         var op = defaults;
-        var $typeContext = $(op.typeContext);
+        var $modelTypeContext = $(op.modelTypeContext);
         var $tableContext = $(op.tableContext);
 
-        $typeContext.on('click', op.btnCreateType, function (e) {
+        $modelTypeContext.on('click', op.btnCreateType, function (e) {
             createType();
         });
 
-        $typeContext.on('focusout', op.typeName, function (e) {
+        $modelTypeContext.on('focusout', op.typeName, function (e) {
             validateType();
         });
 
-        //$typeContext.on('focusout', op.typeValue, function (e) {
-        //    validateType();
-        //}); 
-
-        $typeContext.on('click', op.btnClearType, function (e) {
-            $(defaults.typeName).val("").removeAttr("readonly");
-            $(defaults.typeValue).val("").removeAttr("readonly");
+        $modelTypeContext.on('click', op.btnClearType, function (e) {
+            $(defaults.typeName).val("").removeAttr("readonly");           
             $(defaults.selectParent).val("");
             $(defaults.selectStatus).val("True");
             $(defaults.typeId).html("");
+            $(defaults.typeValue).html("");
             $(defaults.btnUpdateType).hide();
             $(defaults.btnCreateType).show();
+            alertService.hide(defaults.popupMessageContext);
         });
 
         $tableContext.on('click', op.btnEditType, function (e) {
-
+            alertService.hide(op.popupMessageContext);
+            alertService.hide(op.mainMessageContext);
             $(defaults.btnUpdateType).show();
             $(defaults.btnCreateType).hide();
 
             var $row = $(this).closest("tr");
 
             $(op.typeName).val($row.find($(op.selectedItemName)).html()).attr("readonly", "readonly");
-            $(op.typeValue).val($row.find($(op.selectedItemValue)).html()).attr("readonly", "readonly");
+            $(op.typeValue).html($row.find($(op.selectedItemValue)).html());
             $(op.selectParent).val($row.find($(op.selectedParentTypeId)).html());
             $(op.typeId).html($row.find($(op.selectedTypeId)).html());
             $(op.selectStatus).val($row.find($(op.selectedItemStatus)).html()); 
+            $modelTypeContext.modal('show');
         });
 
-        $typeContext.on('click', op.btnUpdateType, function (e) {
+        $tableContext.on('click', op.btnCreate, function (e) {
+            alertService.hide(op.popupMessageContext);
+            alertService.hide(op.mainMessageContext);
+            $(op.btnClearType).trigger("click");
+
+            $modelTypeContext.modal('show');
+        });
+
+        $modelTypeContext.on('click', op.btnUpdateType, function (e) {
             updateType();
         }); 
 

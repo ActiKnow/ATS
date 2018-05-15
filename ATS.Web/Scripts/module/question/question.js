@@ -55,14 +55,14 @@
                     if (result.Status) {
                         if (result.Message && result.Message.Count>0) {
                             $.each(result.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
                     }
                     else {
                         $.each(result.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -201,7 +201,7 @@
                     if (res.Status) {
                         if (res.Message && res.Message.Count>0) {
                             $.each(res.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
@@ -214,7 +214,7 @@
                     }
                     else {
                         $.each(res.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -235,7 +235,7 @@
                     if (res.Status) {
                         if (res.Message && res.Message.Count) {
                             $.each(res.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
@@ -248,7 +248,7 @@
                     }
                     else {
                         $.each(res.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -269,7 +269,7 @@
                 if (res.Status) {
                     if (res.Message && res.Message.Count>0) {
                         $.each(res.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -282,7 +282,7 @@
                 }
                 else {
                     $.each(res.Message, function (index, value) {
-                        msg += value.Message;
+                        msg += value;
                     });
                     $(op.errorMsg).html(msg);
                 }

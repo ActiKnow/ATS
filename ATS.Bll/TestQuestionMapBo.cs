@@ -32,7 +32,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -69,7 +69,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -177,7 +177,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
