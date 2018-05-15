@@ -140,10 +140,12 @@
         var op = defaults;
         var message = "";
         var quesDiffiLevel = $(op.selectQuesDiffiLevel).val();
+        var quesDiffiLevelValue = $(op.selectQuesDiffiLevel).find(':selected').attr('data-id');
         var $quesType = $(op.selectQuesQuesTypeId);
         var quesTypeId = $quesType.val();
-        var quesTypeValue = $quesType.find(':selected').data('value');
+        var quesTypeValue = $quesType.find(':selected').attr('data-id');
         var quesSubjectId = $(op.selectQuesSubjectId).val();
+        var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').attr('data-id');
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
 
@@ -172,16 +174,16 @@
             });
         }
 
-        if (QuesQuesTypeId == questionTypes.text) {
+        if (quesTypeValue == questionTypes.text) {
             var ansText = $(op.selectSubjective_text).val();
         }
 
         var QuestionView = {
-            LevelTypeId: QuesDiffiLevel,
-            QuesTypeId: QuesQuesTypeId,
-            CategoryTypeId: QuesSubjectId,
-            Description: QuesText,
-            DefaultMark: QuesMark,
+            LevelTypeValue: quesDiffiLevelValue,
+            QuesTypeValue: quesTypeValue,
+            CategoryTypeValue: quesSubjectvalue,
+            Description: quesText,
+            DefaultMark: quesMark,
             AnsText: ansText
         }
         QuestionView.options = optionValue;
@@ -191,7 +193,6 @@
     };
     var loadQuestionTypes = function () {
         var op = defaults;
-
         api.fireGetAjax('/Setup/GetQuestionTypes', {})
             .done(res => {
                 if (res != null) {
@@ -206,7 +207,7 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
                             });
                             $(op.selectQuesQuesTypeId).html(items);
                         }
@@ -240,7 +241,7 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                                items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
                             });
                             $(op.selectQuesDiffiLevel).html(items);
                         }
@@ -274,7 +275,7 @@
                     }
                     else {
                         $.each(res.Data, function (index, value) {
-                            items += "<option value='" + value.TypeId + "'>" + value.Description + "</option>";
+                            items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
                         });
                         $(op.selectQuesSubjectId).html(items);
                     }

@@ -13,11 +13,11 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
     public class QuestionBankBo
-    {
-        ApiResult apiResult = new ApiResult(false, new List<string>());
+    {        
 
         public ApiResult Create(QuestionBank questionBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
@@ -33,7 +33,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -53,6 +53,7 @@ namespace ATS.Bll
 
         public ApiResult Delete(QuestionBank questionBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var flag = false;
@@ -89,6 +90,7 @@ namespace ATS.Bll
 
         public ApiResult GetById(Guid guid)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var queryable = unitOfWork.QuestionRepo.Retrieve(guid);
@@ -110,6 +112,7 @@ namespace ATS.Bll
 
         public ApiResult Select(SimpleQueryModel qry)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 SimpleQueryBuilder<QuestionBankModel> simpleQry = new SimpleQueryBuilder<QuestionBankModel>();
@@ -133,6 +136,7 @@ namespace ATS.Bll
 
         public ApiResult Update(QuestionBank questionBank)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
@@ -168,6 +172,7 @@ namespace ATS.Bll
 
         public ApiResult SelectQuetionsByType(Guid QId)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
