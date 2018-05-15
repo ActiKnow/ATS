@@ -22,6 +22,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Create")]
+        public IHttpActionResult Create(QuestionBankModel newQues)
         public IHttpActionResult Create(QuestionBankModel newQuesModel)
         {
             try

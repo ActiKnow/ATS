@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 using ATS.Core.Global;
 using ATS.Core.Helper;
 using ATS.Core.Model;
-using ATS.Repository.Factory.Question;
+using ATS.Bll.Factory.Question;
 using ATS.Repository.Model;
 using ATS.Repository.Uow;
 
 namespace ATS.Bll
 {
     public class QuestionBankBo
-    {     
-        public ApiResult Create(QuestionBankModel questionBankModel)
+    {
+        public ApiResult Create(QuestionBankModel questionBank)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {                
                 try
                 {
-                    QuestionBank questionBank = new QuestionBank();
-                    Utility.CopyEntity(out questionBank, questionBankModel);
-
-                    var flag = unitOfWork.QuestionRepo.Create(ref questionBank);
-
+                    //var flag = unitOfWork.QuestionRepo.Create(ref questionBank);
+                    questionBank.QId = Guid.NewGuid();
+                    QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
+                    var flag = quesFactory.Question.Create(questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();
@@ -35,7 +34,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult+= result;
+                            apiResult += result;
                         }
                     }
                     else
@@ -75,7 +74,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult+= result;
+                            apiResult += result;
                         }
                     }
                     else
@@ -127,6 +126,17 @@ namespace ATS.Bll
 
                 if (listQuestion != null)
                 {
+                    foreach (var ques in listQuestion)
+                    {
+                        QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)ques.QuesTypeValue);
+                        var questionFound = quesFactory.Question.Select(x => x.QId == ques.QId).FirstOrDefault();
+                        if (questionFound != null)
+                        {
+                            ques.Options = questionFound.Options;
+                            ques.MappedOptions = questionFound.MappedOptions;
+                            ques.MappedQuestion = questionFound.MappedQuestion;
+                        }
+                    }
                     apiResult.Status = true;
                     apiResult.Data = listQuestion;
                 }
@@ -139,18 +149,16 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Update(QuestionBankModel questionBankModel)
+        public ApiResult Update(QuestionBankModel questionBank)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
-                    QuestionBank questionBank = new QuestionBank();
-                    Utility.CopyEntity(out questionBank, questionBankModel);
-
-                    var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
-
+                    //var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
+                    QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
+                    var flag = quesFactory.Question.Create(questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();
@@ -160,7 +168,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult+= result;
+                            apiResult += result;
                         }
                     }
                     else

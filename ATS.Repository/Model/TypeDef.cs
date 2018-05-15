@@ -23,5 +23,11 @@ namespace ATS.Repository.Model
         public int ParentKey { get; set; }
         public List<UserInfo> UserInfo { get; set; }
         public List<QuestionBank> QuestBank { get; set; }
+        [InverseProperty("CategoryType")]
+        public virtual ICollection<QuestionBank> QuestionCategories { get; set; }
+        [InverseProperty("LevelType")]
+        public virtual ICollection<QuestionBank> QuestionLevels { get; set; }
+        [InverseProperty("QuestionType")]
+        public virtual ICollection<QuestionBank> QuestionTypes { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using ATS.Repository.Interface;
 using ATS.Repository.Model;
 using ATS.Repository.Uow;
 
-namespace ATS.Repository.Factory.Question
+namespace ATS.Bll.Factory.Question
 {
     public class ObjectiveQues : IQuestion
     {
@@ -28,7 +28,7 @@ namespace ATS.Repository.Factory.Question
 
             if (flag)
             {
-                string optionKeyId = input.QId.ToString();
+                string optionKeyId = questionBank.QId.ToString();
                 List<Guid> answers = new List<Guid>();
 
                 for (int indx = 0; indx < input.Options.Count(); indx++)
@@ -38,13 +38,13 @@ namespace ATS.Repository.Factory.Question
 
                     QuestionOption questionOption = new QuestionOption();
                     Utility.CopyEntity(out questionOption, op);
-
+                    questionOption.Id = Guid.NewGuid();
                     flag = _unitOfWork.OptionRepo.Create(ref questionOption);
                     if (flag)
                     {
                         if (op.IsAnswer)
                         {
-                            answers.Add(op.Id);
+                            answers.Add(questionOption.Id);
                         }
                     }
                 }
@@ -55,6 +55,7 @@ namespace ATS.Repository.Factory.Question
                 {
                     QuestionOptionMapping map = new QuestionOptionMapping
                     {
+                        Id = Guid.NewGuid(),
                         QId = input.QId,
                         OptionKeyId = optionKeyId,
                         Answer = ans.ToString(),
@@ -77,7 +78,7 @@ namespace ATS.Repository.Factory.Question
             {
                 result = new List<QuestionBankModel>();
                 Utility.CopyEntity(out result, resultDB.ToList());
-                for (int indx= 0; indx < result.Count; indx++)
+                for (int indx = 0; indx < result.Count; indx++)
                 {
                     var mapOp = _unitOfWork.MapOptionRepo.Select(x => x.QId == result[indx].QId);
                     var mappedOptions = result[indx].MappedOptions;
@@ -148,19 +149,21 @@ namespace ATS.Repository.Factory.Question
                     input.MappedOptions = new List<QuestionOptionMapModel>();
                     foreach (var ans in answers)
                     {
-
-                        input.MappedOptions.Add(new QuestionOptionMapModel
-                        {
-                            QId = input.QId,
-                            OptionKeyId = optionKeyId,
-                            Answer = ans.ToString()
-                        });
                         QuestionOptionMapping map = new QuestionOptionMapping
                         {
+                            Id = Guid.NewGuid(),
                             QId = input.QId,
                             OptionKeyId = optionKeyId,
                             Answer = ans.ToString(),
                         };
+
+                        input.MappedOptions.Add(new QuestionOptionMapModel
+                        {
+                            Id = map.Id,
+                            QId = input.QId,
+                            OptionKeyId = optionKeyId,
+                            Answer = ans.ToString()
+                        });
 
                         flag = _unitOfWork.MapOptionRepo.Create(ref map);
                     }

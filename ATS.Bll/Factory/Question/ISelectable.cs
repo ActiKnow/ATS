@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATS.Repository.Factory.Question
+namespace ATS.Bll.Factory.Question
 {
     public interface ISelectable<T>
     {
