@@ -6,7 +6,8 @@
         getTestType: "/Setup/GetAllSubTypes/",
         getLevelType: "/Setup/GetAllSubTypes/",
         getCategoryType: "/Setup/GetAllSubTypes/",
-        createTest:'/Setup/CreateTest/'
+        createTest: '/Setup/CreateTest/',
+        getTests:'/Setup/GetTests/'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -78,16 +79,32 @@
         },
         createTest: function () {
             var parameter = {
-                CategoryTypeValue: $(defaults.getCategoryType).val(),
-                LevelTypeValue: $(defaults.selectLevel).val(),
-                Description:'xxxxx',
-                Instructions:'xxxx',
-                Duration:90,
-                TestTypeValue: $(defaults.selectTestType).val(),
-                TotalMarks:200
+                CategoryTypeValue: Inputs.CategoryTypeValue,
+                LevelTypeValue: Inputs.LevelTypeValue,
+                Description: Inputs.Description,
+                Instructions: Inputs.Instructions,
+                Duration: Inputs.Duration,
+                TestTypeValue: Inputs.TestTypeValue,
+                TotalMarks: Inputs.TotalMarks
             };
             api.firePostAjax(apiUrl.createTest, parameter)
                 .done()
+                .fail();
+        },
+        getTests: function(){
+            api.fireGetAjax(apiUrl.getTests, { })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                        }
+                        else {
+                            render.fillTests(result.Data);
+                        }
+                    }
+                    else {
+
+                    }
+                })
                 .fail();
         },
     };
@@ -104,6 +121,10 @@
                 $selector.html(options);
             }
         },
+        fillTests: function (data) {
+            var testContext = $(defaults.testTableContext );
+            testContext.html(data);
+        },
     };
     var loader = {
         loadSelector: function () {
@@ -111,7 +132,16 @@
             action.getLevelType();
             action.getCategoryType();
         },
-
+        loadTest: function () { action.getTests();},
+    };
+    var Inputs = {
+        CategoryTypeValue: $(defaults.getCategoryType).val(),
+        LevelTypeValue: $(defaults.selectLevel).val(),
+        Description: $(defaults.testDescription).val(),
+        Instructions: $(defaults.testInstruction).val(),
+        Duration: $(defaults.testDuration).val(),
+        TestTypeValue: $(defaults.selectTestType).val(),
+        TotalMarks: $(defaults.testMarks).val()
     };
     var binder = {
         bindControls: function () {
