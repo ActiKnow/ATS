@@ -44,7 +44,7 @@ namespace ATS.Bll
                         apiResult.Message.Add(typeDefModel.Description + " creation failed");
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
                     unitOfWork.Dispose();
                     throw;
@@ -76,7 +76,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -88,6 +88,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;
@@ -163,7 +164,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult += result;
+                            apiResult+= result;
                         }
                     }
                     else
@@ -175,6 +176,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;

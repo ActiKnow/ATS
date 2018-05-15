@@ -43,7 +43,7 @@
                         if (result.Message && result.Message.Count>0) {
                             $(op.successMsg).show();
                             $.each(result.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.successMsg).html(msg);
                             resetFields();
@@ -51,7 +51,7 @@
                     }
                     else {
                         $.each(result.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -91,7 +91,7 @@
                     if (res.Status) {
                         if (res.Message && res.Message.Count>0) {
                             $.each(res.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
@@ -108,7 +108,7 @@
                     }
                     else {
                         $.each(res.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -260,7 +260,7 @@
                     if (res.Status) {
                         if (res.Message && res.Message.Count>0) {
                             $.each(res.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
@@ -278,7 +278,7 @@
                     }
                     else {
                         $.each(res.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -301,7 +301,7 @@
                     }
                     else {
                         $.each(result.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }

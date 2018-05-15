@@ -21,8 +21,8 @@
             <div class="tile-title-w-btn">
                 <h3 class="title">Type List</h3>
                 <p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#typeContextModel"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Type</button>
-                </p>
+                    <button type="button" class="btn btn-primary" id="btnCreate"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Type</button>  @*data-toggle="modal" data-target="#modelTypeContext"*@
+                </p> 
             </div>
             <div class="tile-body">
                 <table class="table">
@@ -42,8 +42,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="modal fade" id="typeContextModel" role="dialog">
+    <div class="modal" id="modelTypeContext" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header"> 
@@ -55,6 +54,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <span class="typeId" style="display:none"></span>
+                            <span class="typeValue" style="display:none"></span>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Type Name</label>
@@ -88,7 +88,6 @@
             </div>
         </div>
     </div>
-</div>
 
 @section scripts
 {
@@ -101,24 +100,25 @@
                     typeName: '.typeName',
                     selectParent: '.ddlParents',
                     typeValue: '.typeValue',
+                    typeId: '.typeId',
                     selectStatus: '.ddlStatus',
                     btnCreateType: '#btnCreateType',
                     btnUpdateType: '#btnUpdateType',
                     errorMsg: '.errorMsg',
                     successMsg: '.successMsg',
                     tableContext: '.tableContext',
-                    typeContextModel: '#typeContextModel',
+                    modelTypeContext: '#modelTypeContext',
                     btnEditType: '.btnEditType',
                     btnRemoveType: '.btnRemoveType',
                     btnClearType: '#btnClearType',
                     selectedTypeId: '.itemTypeId',
                     selectedItemName: '.itemName',
                     selectedItemValue: '.itemValue',
-                    selectedParentTypeId: '.itemParentTypeId',
-                    typeId: '.typeId',
+                    selectedParentTypeId: '.itemParentTypeId',                    
                     selectedItemStatus: '.itemStatus',
                     popupMessageContext: '#popupMessageContext',
-                    mainMessageContext: '#mainMessageContext'
+                    mainMessageContext: '#mainMessageContext',
+                    btnCreate:'#btnCreate'
                 };
                 typeSetup.init(config);
             });
