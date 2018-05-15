@@ -455,5 +455,37 @@ namespace ATS.Web.Areas.Admin.Controllers
             return View();
         }
         #endregion
+        #region AnswerSetup
+        public ActionResult AnswerSetup()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            List<UserInfoModel> userList = new List<UserInfoModel>();
+            ApiResult result = null;
+
+            try
+            {
+                result = ApiConsumers.UserApiConsumer.SelectUsers();
+
+                if (result.Status && result.Data != null)
+                {
+                    userList = (List<UserInfoModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("_AllUsersList", userList);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }
