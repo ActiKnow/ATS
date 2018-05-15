@@ -1,0 +1,101 @@
+﻿@model List<ATS.Core.Model.UserInfoModel>
+@{
+    ViewBag.Title = "AnswerSetup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>Answer Setup</h1>
+        <p>Setup form for users</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Answer Setup</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12 tableContext">
+        <div id="mainMessageContext"></div>
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h3 class="title">Answer List</h3>
+                <p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#typeContextModel"><i class="fa fa-fw fa-lg fa-check-circle"></i>User List</button>
+                </p>
+            </div>
+            <div class="tile-body">
+                <table class="table" id="tblUserAnswerList">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User Id</th>
+                            <th>User Name</th>
+                            <th>Questions Attempted </th>
+                            <th>Questions Leave </th>
+                            <th>Mark</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="modal fade" id="typeContextModel" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Answer Setup</h3>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="popupMessageContext"></div>
+                    <div class="tile-body">
+                        <table class="table" id="tblUserList">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkbox" id="chkUserinfo" /></th>
+                                    <th>User Name</th>
+                                    <th>Email Id</th>
+                                    <th>Test Type </th>
+                                    <th>Mobile Number</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnView"><i class="fa fa-fw fa-lg fa-check-circle"></i>View Result</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/module/answer/answer.js"></script>
+    <script>
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    tableContext:'.tableContext',
+                    selecttblUserList: '#tblUserList',
+                    selecttblUserAnswerList: '#tblUserAnswerList',
+                    btnView: '#btnView',
+                    btnchkAllUserinfo: '#chkUserinfo',
+
+
+                };
+                answer.init(config);
+            });
+
+        }(window.jQuery, window, document));
+    </script>
+}
+
+
