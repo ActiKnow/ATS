@@ -13,15 +13,17 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
     public class QuestionBankBo
-    {        
-
-        public ApiResult Create(QuestionBank questionBank)
+    {     
+        public ApiResult Create(QuestionBankModel questionBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
-            {
+            {                
                 try
                 {
+                    QuestionBank questionBank = new QuestionBank();
+                    Utility.CopyEntity(out questionBank, questionBankModel);
+
                     var flag = unitOfWork.QuestionRepo.Create(ref questionBank);
 
                     if (flag)
@@ -51,7 +53,7 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(QuestionBank questionBank)
+        public ApiResult Delete(QuestionBankModel questionBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
@@ -59,6 +61,9 @@ namespace ATS.Bll
                 var flag = false;
                 try
                 {
+                    QuestionBank questionBank = new QuestionBank();
+                    Utility.CopyEntity(out questionBank, questionBankModel);
+
                     flag = unitOfWork.QuestionRepo.Delete(questionBank);
 
                     if (flag)
@@ -134,13 +139,16 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Update(QuestionBank questionBank)
+        public ApiResult Update(QuestionBankModel questionBankModel)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
+                    QuestionBank questionBank = new QuestionBank();
+                    Utility.CopyEntity(out questionBank, questionBankModel);
+
                     var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
 
                     if (flag)

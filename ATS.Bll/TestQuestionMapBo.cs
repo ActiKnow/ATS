@@ -11,16 +11,17 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
     public class TestQuestionMapBo
-    {
-        ApiResult apiResult = new ApiResult(false, new List<string>());
-
-        public ApiResult Create(List<TestQuestionMapping> input)
+    {       
+        public ApiResult Create(List<TestQuestionMapModel> inputs)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
-                    var flag = unitOfWork.MapQuestionRepo.MapQuotions(input);
+                    List<TestQuestionMapping> output = new List<TestQuestionMapping>();
+                    Utility.CopyEntity(out output,inputs);
+                    var flag = unitOfWork.MapQuestionRepo.MapQuotions(output);
 
                     if (flag)
                     {
@@ -50,15 +51,18 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(List<TestQuestionMapping> inputs)
-        {  
+        public ApiResult Delete(List<TestQuestionMapModel> inputs)
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
                     var flag = false;
+                    List<TestQuestionMapping> output = new List<TestQuestionMapping>();
+                    Utility.CopyEntity(out output, inputs);
 
-                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(inputs);
+                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(output);
 
                     if (flag)
                     {
@@ -88,6 +92,7 @@ namespace ATS.Bll
 
         public ApiResult GetById(Guid guid)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var queryable = unitOfWork.MapQuestionRepo.Retrieve(guid);
@@ -110,6 +115,7 @@ namespace ATS.Bll
 
         public ApiResult Select(SimpleQueryModel query)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {               
                 SimpleQueryBuilder<TestQuestionMapModel> simpleQry = new SimpleQueryBuilder<TestQuestionMapModel>();
@@ -160,13 +166,17 @@ namespace ATS.Bll
             return apiResult;            
         }
 
-        public ApiResult Update(TestQuestionMapping input)
+        public ApiResult Update(TestQuestionMapModel input)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
-                {  
-                    var flag = unitOfWork.MapQuestionRepo.Update(ref input);
+                {
+                    TestQuestionMapping output = new TestQuestionMapping();
+                    Utility.CopyEntity(out output, input);
+
+                    var flag = unitOfWork.MapQuestionRepo.Update(ref output);
 
                     if (flag)
                     {
@@ -193,37 +203,5 @@ namespace ATS.Bll
             }
             return apiResult;
         }
-
-
-        // TODO :
-        //public ApiResult SelectMappedQuestion(Guid testBankId)
-        //{
-        //    using (var unitOfWork = new UnitOfWork())
-        //    {
-        //        var questions = unitOfWork.MapQuestionRepo.SelectMappedQuestion(testBankId);
-
-        //        if (questions != null)
-        //        {
-        //            var list = questions.ToList();
-
-        //            if (list.Count > 0)
-        //            {
-        //                apiResult.Status = true;
-        //                apiResult.Data = list;
-        //            }
-        //            else
-        //            {
-        //                apiResult.Status = false;
-        //                apiResult.Message.Add("No record found");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            apiResult.Status = false;
-        //            apiResult.Message.Add("No record found");
-        //        }
-        //    }
-        //    return apiResult;            
-        //} 
     }
 }

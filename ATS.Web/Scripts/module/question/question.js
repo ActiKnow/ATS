@@ -53,7 +53,7 @@
                 if (result !== "") {
                     var msg = "";
                     if (result.Status) {
-                        if (result.Message && result.Message.Count>0) {
+                        if (result.Message && result.Message.length > 0) {
                             $.each(result.Message, function (index, value) {
                                 msg += value;
                             });
@@ -70,7 +70,7 @@
             },
             onQuestionFailed: function (result) {
                 clear();
-                $(op.errorMsg).html(result.Message && result.Message.Count>0);
+                $(op.errorMsg).html(result.Message && result.Message.length > 0);
             }
         }        
     })();

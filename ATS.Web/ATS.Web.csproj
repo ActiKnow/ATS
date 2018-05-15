@@ -251,6 +251,8 @@
     <Content Include="Areas\Admin\Views\Setup\MapTestQuestion.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_TestList.cshtml" />
     <Content Include="bin\ApplicationInsights.config" />
+    <Content Include="Areas\Admin\Views\Setup\Partials\_AllUsersList.cshtml" />
+    <Content Include="Areas\Admin\Views\Setup\AnswerSetup.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />
@@ -263,6 +265,7 @@
     <Content Include="Scripts\backup\modernizr-2.6.2.js" />
     <Content Include="Scripts\backup\respond.js" />
     <Content Include="Scripts\backup\respond.min.js" />
+    <Content Include="Scripts\module\answer\answer.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
     <Content Include="Scripts\plugins\bootstrap.min.js" />
     <Content Include="Scripts\common\alert-service.js" />

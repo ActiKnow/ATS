@@ -40,7 +40,7 @@
                 if (result !== "") {
                     var msg = "";
                     if (result.Status) {
-                        if (result.Message && result.Message.Count>0) {
+                        if (result.Message && result.Message.length>0) {
                             $(op.successMsg).show();
                             $.each(result.Message, function (index, value) {
                                 msg += value;
@@ -63,14 +63,14 @@
             onUserUpdated: function (result) {
                 if (result !== "") {
                     if (result.Status) {
-                        if (result.Message && result.Message.Count>0) {
+                        if (result.Message && result.Message.length>0) {
                             $(op.successMsg).show();
-                            $(op.successMsg).html(result.Message && result.Message.Count>0);                          
+                            $(op.successMsg).html(result.Message && result.Message.Count>0);
+                            resetFields();
                         }
-                        resetFields();
                     }
                     else {
-                        $(op.errorMsg).html(result.Message && result.Message.Count>0);
+                        $(op.errorMsg).html(result.Message && result.Message.length>0);
                     }
                 }
             },

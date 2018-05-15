@@ -370,10 +370,6 @@
       <Project>{00c343c2-66a5-4e5b-8b4f-8b98beb1243f}</Project>
       <Name>ATS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ATS.Repository\ATS.Repository.csproj">
-      <Project>{3ac7bd83-2c07-42f8-845f-4e9028238c76}</Project>
-      <Name>ATS.Repository</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

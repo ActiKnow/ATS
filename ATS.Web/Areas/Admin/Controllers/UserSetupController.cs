@@ -158,8 +158,6 @@ namespace ATS.Web.Areas.Admin.Controllers
 
                 if (result.Status)
                 {
-                    //result = ApiConsumers.UserApiConsumer.SelectUsers();
-
                     if (result.Status && result.Data != null)
                     {
                         userList = (List<UserInfoModel>)result.Data;

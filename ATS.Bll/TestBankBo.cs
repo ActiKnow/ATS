@@ -11,16 +11,18 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
    public class TestBankBo
-    {
-        ApiResult apiResult = new ApiResult(false, new List<string>());
-
-        public ApiResult Create(TestBank testBank)
+    {   
+        public ApiResult Create(TestBankModel testBankModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
-                    testBank.TestBankId = Guid.NewGuid();
+                    testBankModel.TestBankId= Guid.NewGuid();
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+                    
                     var flag = unitOfWork.TestBankRepo.Create(ref testBank);
 
                     if (flag)
@@ -50,13 +52,17 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(TestBank testBank)
+        public ApiResult Delete(TestBankModel testBankModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 var flag = false;
                 try
                 {
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+
                     flag = unitOfWork.TestBankRepo.Delete(testBank);
 
                     if (flag)
@@ -88,6 +94,7 @@ namespace ATS.Bll
 
         public ApiResult GetById(Guid guid)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                var queryable = unitOfWork.TestBankRepo.Retrieve(guid);
@@ -110,6 +117,7 @@ namespace ATS.Bll
 
         public ApiResult Select(SimpleQueryModel qry)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 SimpleQueryBuilder<TestBankModel> simpleQry = new SimpleQueryBuilder<TestBankModel>();
@@ -130,12 +138,16 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Update(TestBank testBank)
+        public ApiResult Update(TestBankModel testBankModel)
         {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
+                    TestBank testBank = new TestBank();
+                    Utility.CopyEntity(out testBank, testBankModel);
+
                     var flag = unitOfWork.TestBankRepo.Update(ref testBank);
 
                     if (flag)

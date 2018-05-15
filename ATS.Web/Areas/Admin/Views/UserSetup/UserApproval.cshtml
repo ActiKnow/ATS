@@ -1,5 +1,4 @@
 ﻿
-@inherits System.Web.Mvc.WebViewPage
 @{
     ViewBag.Title = "UserApproval";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -19,37 +18,33 @@
 </div>
 @using (Html.BeginForm("UserSetup", "UserSetup", FormMethod.Post,new { @id="submitForm" }))
 {
- <input type="hidden" name="userID" id="selectedUserId" />
+<input type="hidden" name="userID" id="selectedUserId" />
+<div id="msgContext"></div>
 <div class="row">
     <div class="col-md-12">
         <div class="tile" id="userApprovalContext">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-control-feedback" for="inputDanger1">
-                        <span class="alert-danger errorMsg" style="display:none"></span>
-                    </div>
-                    <span class="alert-success successMsg" style="display:none"></span>
+            <div class="tile-title-w-btn">
+                <h3 class="title">Users List</h3>
+            </div>
+            <div class="tile-body">
+                <table class="table table-hover table-bordered" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Created On</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
                 </div>
             </div>
-            <h3 class="tile-title">Users List</h3>
-            <table class="table" id="userTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Mobile</th>
-                        <th>Email</th>
-                        @*<th>Passowrd</th>*@
-                        <th>Created On</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
     </div>
 </div>
 }
@@ -66,8 +61,7 @@
                 email: '.email',
                 //password: '.password',
                 ddlRoleType: '.roleType',
-                errorMsg: '.errorMsg',
-                successMsg: '.successMsg',
+                msgContext: '#msgContext',
                 tableContext: '#userApprovalContext',
                 tableId:"#userTable",
                 btnEditUser: '.btnEditUser',

@@ -89,7 +89,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\ATSDBContext.cs" />
     <Compile Include="Repo\AttemptHistoryRepository.cs" />
-    <Compile Include="Repo\BaseRepository.cs" />
     <Compile Include="Repo\MapOptionRepository.cs" />
     <Compile Include="Repo\MapQuestionRepository.cs" />
     <Compile Include="Repo\OptionRepository.cs" />

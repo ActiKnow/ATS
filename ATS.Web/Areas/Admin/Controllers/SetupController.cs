@@ -196,8 +196,9 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 //SimpleQueryModel query = new SimpleQueryModel();
                 //query.ModelName = nameof(TypeDefModel);
-                //query[nameof(TypeDefModel.ParentKey)] = CommonType.ROLE;
-                //query[nameof(TypeDefModel.Value)] = CommonType.ROLE;
+                //query[nameof(TypeDefModel.ParentKey),QueryType.And,QueryType.NotEqual] =Constants.PARENT;
+                //query[nameof(TypeDefModel.ParentKey), QueryType.And, QueryType.NotEqual] = CommonType.ROLE;
+                //query[nameof(TypeDefModel.ParentKey), QueryType.And, QueryType.NotEqual] = CommonType.QUESTION;
 
                 result = ApiConsumers.TypeApiConsumer.SelectTypes(null);
 
@@ -456,6 +457,42 @@ namespace ATS.Web.Areas.Admin.Controllers
             return Json(result);
         }
         public ActionResult MapTestQuestion()
+        {
+            return View();
+        }
+        #endregion
+        #region AnswerSetup
+        public ActionResult AnswerSetup()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            List<UserInfoModel> userList = new List<UserInfoModel>();
+            ApiResult result = null;
+
+            try
+            {
+                result = ApiConsumers.UserApiConsumer.SelectUsers();
+
+                if (result.Status && result.Data != null)
+                {
+                    userList = (List<UserInfoModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("_AllUsersList", userList);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAnswerUsers(List<UserInfoModel> allUserIdList)
         {
             return View();
         }

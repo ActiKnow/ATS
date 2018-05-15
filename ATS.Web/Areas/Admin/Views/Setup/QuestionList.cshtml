@@ -9,7 +9,7 @@
         <h1><i class="fa fa-edit"></i>Setup</h1>
         <p>Setup form for users</p>
     </div>
-    <ul class="app-breadcrumb breadcrumb">
+    <ul class="app-breadcrumb breadcrumb side">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
         <li class="breadcrumb-item">Forms</li>
         <li class="breadcrumb-item"><a href="#">Question List</a></li>
@@ -18,36 +18,35 @@
 
 @using (Html.BeginForm("Question", "SetUp", FormMethod.Post, new { @id = "formSubmit" }))
 {
-<div class="row">
+    <div id="mainMessageContext"></div>
     <div class="row">
-        <div class="col-md-12 text-right">
-            <span class="errorMsg" @*style="display:none"*@></span>
-            <span class="successMsg"></span>
-        </div>
+        <div class="col-md-12 tableContext">
+            <div class="tile">
+                <input type="hidden" id="selectedId" name="selectedId" />
+                <div class="tile-title-w-btn">
+                    <h3 class="title">Question List</h3>
+                </div>
+                <div class="tile-body">
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Question Description</th>
+                                <th>Question Type</th>
+                                <th>Question Level</th>
+                                <th>Category</th>
+                                <th>Marks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    </div>
-    <div class="col-md-12 tableContext">
-        <div class="tile">
-
-            <input type="hidden" id="selectedId" name="selectedId" />
-            <h3 class="tile-title">Question List</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Question Description</th>
-                        <th>Question Type</th>
-                        <th>Question Level</th>
-                        <th>Category</th>
-                        <th>Marks</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 }
 
 @section scripts {
@@ -70,7 +69,8 @@
                     Qid: '.Qid',
                     selectedId: '#selectedId',
                     formSubmit: '#formSubmit',
-                    errorMsg: '.errorMsg',
+                    sampleTable: '#sampleTable',
+                    mainMessageContext:'#mainMessageContext'
                 };
                 questionList.init(config);
             });
