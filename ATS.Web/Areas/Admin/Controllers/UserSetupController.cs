@@ -78,8 +78,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 userInfoModel.CreatedDate = DateTime.Now;
                 userInfoModel.CreatedBy = Session[Constants.USERID].ToString();
-                userInfoModel.UserCredentials[0].CreatedDate = DateTime.Now;
-                userInfoModel.UserCredentials[0].CreatedBy = Session[Constants.USERID].ToString();
+                userInfoModel.UserCredentials.CreatedDate = DateTime.Now;
+                userInfoModel.UserCredentials.CreatedBy = Session[Constants.USERID].ToString();
 
                 result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
             }
@@ -153,8 +153,10 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                userInfoModel.StatusId = false;
-                result = ApiConsumers.UserApiConsumer.DeleteUser(userInfoModel);
+                //userInfoModel.StatusId = false;
+                //userInfoModel.UserCredentials.StatusId = false;
+                //userInfoModel.UserCredentials.UserId = userInfoModel.UserId;
+               result = ApiConsumers.UserApiConsumer.DeleteUser(userInfoModel);
                 if (result.Status)
                 {
                     result = ApiConsumers.UserApiConsumer.SelectUsers();

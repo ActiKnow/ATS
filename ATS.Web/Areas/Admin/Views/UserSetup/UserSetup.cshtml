@@ -78,11 +78,12 @@
                         <label class="control-label">Password<span class="fa fa-star"></span></label>
                         <div class="form-group">
                             <div class="input-group">
-                                @Html.TextBoxFor(x => x.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password" , autocomplete = "off" })
+                                @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", autocomplete = "off" })
                                 @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
                                 @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
                                 @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
                                 @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
+                                @Html.HiddenFor(x => x.UserCredentials.Id, htmlAttributes: new { @id = "hiddenId" })
                                 @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
                                 <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
                                 <button class="input-group-lg input-group-append" id="refresh">
@@ -149,7 +150,8 @@
                     hiddenEmail: '#hiddenEmail',
                     hiddenRoleId: '#hiddenRoleValue',
                     hiddenStatusId: '#hiddenStatusId',
-                    messageContext:'#messageContext',
+                    messageContext: '#messageContext',
+                    hiddenId: '#hiddenId',
                 }; 
                 userSetup.init(config);
             });

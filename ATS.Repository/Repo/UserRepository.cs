@@ -275,7 +275,7 @@ namespace ATS.Repository.Repo
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
                                  RoleTypeValue = x.RoleTypeValue,
-                                 UserId=x.UserId
+                                 UserId = x.UserId
                              }).AsQueryable<UserInfoModel>();
 
                 return query;
@@ -305,7 +305,13 @@ namespace ATS.Repository.Repo
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
                                  RoleTypeValue = x.RoleTypeValue,
-                                 UserId=x.UserId,
+                                 UserId = x.UserId,
+                                 UserCredentials = (from z in _context.UserCredential.Where(z => z.UserId == x.UserId)
+                                                    select new UserCredentialModel
+                                                    {
+                                                        Id = z.Id,
+                                                        UserId = z.UserId
+                                                    }).FirstOrDefault(),
                              }).Where(condition).AsQueryable<UserInfoModel>();
 
                 return query;

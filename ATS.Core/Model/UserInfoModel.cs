@@ -9,10 +9,11 @@ namespace ATS.Core.Model
     {
         public UserInfoModel()
         {
-            this.TestAssignments = new List<TestAssignmentModel>();
-            this.UserCredentials = new List<UserCredentialModel>();
+            this.TestAssignments = new List<TestAssignmentModel>();           
             this.UserTestHistories = new List<UserTestHistoryModel>();
+            this.UserCredentials = new UserCredentialModel();
         }
+
         [Key]
         public System.Guid UserId { get; set; }
         public string FName { get; set; }
@@ -23,7 +24,7 @@ namespace ATS.Core.Model
         public string RoleDescription { get; set; }
         public  List<TestAssignmentModel> TestAssignments { get; set; }
         public  TypeDefModel TypeDef { get; set; }
-        public  List<UserCredentialModel> UserCredentials { get; set; }
+        public UserCredentialModel UserCredentials { get; set; }
         public  List<UserTestHistoryModel> UserTestHistories { get; set; }
         public string CurrPassword { get; set; }
     }
