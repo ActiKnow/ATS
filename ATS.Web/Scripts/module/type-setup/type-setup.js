@@ -7,6 +7,7 @@
         selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
+        messageContext: '#messageContext',
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -39,7 +40,8 @@
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+
+                        alertService.showSuccess(msg, op.messageContext);  
                     }
                     else {
                         $(op.tableContext).find('tbody').html(result.Data);
@@ -51,7 +53,7 @@
                     $.each(result.Message, function (index, value) {
                         msg += value.Message;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, op.messageContext); 
                 }
             }
         }
@@ -95,7 +97,6 @@
             api.firePostAjax('/Admin/Setup/CreateType', { typeDef: typeDef })
                 .done(callBacks.onTypeCreated)
                 .fail(callBacks.onTypeCreationFailed);
-
         }
     };
 
@@ -143,10 +144,10 @@
 
         if (message != "")
         {
-            $(defaults.errorMsg).html(message);
+            alertService.showError(message, defaults.messageContext);
             flag = false;
         }
-
+       
         return flag;
     }
 
@@ -163,7 +164,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -176,7 +177,7 @@
                         $.each(result.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.messageContext); 
                     }
                 }
             })
@@ -197,7 +198,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                         }
                         else {
                             var items = "";
@@ -211,7 +212,7 @@
                         $.each(res.Message, function (index, value) {
                             msg += value.Message;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.messageContext); 
                     }
                 }
             })
@@ -246,7 +247,7 @@
                                 $.each(result.Message, function (index, value) {
                                     msg += value.Message;
                                 });
-                                $(op.errorMsg).html(msg);
+                                alertService.showError(msg, op.messageContext); 
                                 $(op.btnCreateType).attr("disabled", "disabled");
                             }                           
                         }
@@ -254,13 +255,13 @@
                             $.each(result.Message, function (index, value) {
                                 msg += value.Message;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.messageContext); 
                             $(op.btnCreateType).attr("disabled", "disabled");
                         }
                     }
                 })
                 .fail(res => {
-                    $(op.errorMsg).html(res.responseText);
+                    alertService.showError(res.responseText, op.messageContext); 
                 });
         }
     }
