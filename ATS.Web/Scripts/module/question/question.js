@@ -53,16 +53,16 @@
                 if (result !== "") {
                     var msg = "";
                     if (result.Status) {
-                        if (result.Message && result.Message.Count>0) {
+                        if (result.Message && result.Message.length > 0) {
                             $.each(result.Message, function (index, value) {
-                                msg += value.Message;
+                                msg += value;
                             });
                             $(op.errorMsg).html(msg);
                         }
                     }
                     else {
                         $.each(result.Message, function (index, value) {
-                            msg += value.Message;
+                            msg += value;
                         });
                         $(op.errorMsg).html(msg);
                     }
@@ -70,7 +70,7 @@
             },
             onQuestionFailed: function (result) {
                 clear();
-                $(op.errorMsg).html(result.Message && result.Message.Count>0);
+                $(op.errorMsg).html(result.Message && result.Message.length > 0);
             }
         }        
     })();
