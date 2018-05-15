@@ -352,7 +352,10 @@
         $userContext.on('change', op.ddlRoleType, function (e) {          
             getPassword();
         });
-
+        $userContext.on('click', op.backToList, function (e) {
+            window.location.href = '@Url.Action("UserApproval", "UserSetup")';
+        });
+        
     };
 
     return {
