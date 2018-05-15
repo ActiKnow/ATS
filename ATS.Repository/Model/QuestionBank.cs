@@ -11,9 +11,10 @@ namespace ATS.Repository.Model
     {
         public QuestionBank()
         {
-            this.QuestionOptionMappings = new List<QuestionOptionMapping>();
+            this.MappedOptions = new List<QuestionOptionMapping>();
             this.TestQuestionMappings = new List<TestQuestionMapping>();
             this.UserAttemptedHistories = new List<UserAttemptedHistory>();
+            this.Options = new List<QuestionOptionModel>();
         }
         [Key]
         public System.Guid QId { get; set; }
@@ -24,11 +25,13 @@ namespace ATS.Repository.Model
         public int CategoryTypeValue { get; set; }
         public int DefaultMark { get; set; }
     
-        public List<QuestionOptionMapping> QuestionOptionMappings { get; set; }
+        public List<QuestionOptionMapping> MappedOptions { get; set; }
 
         public List<TestQuestionMapping> TestQuestionMappings { get; set; }
 
         public List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
+
+        public List<QuestionOptionModel> Options { get; set; }       
 
         //[ForeignKey("CategoryTypeValue")]
         //public TypeDef CategoryType { get; set; }

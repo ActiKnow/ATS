@@ -1,24 +1,37 @@
-﻿@model List<ATS.Core.Model.TypeDefModel>    
+﻿@model List<ATS.Core.Model.TypeDefModel>
 @{
-        var count = 1;
-    }
-    @foreach (var item in Model)
-    {
+    var count = 1;
+}
+<table class="table">
+    <thead>
         <tr>
-            <td>@(count++)</td>
-            <td><span class="itemName">@item.Description</span></td>
-            <td><span class="itemValue">@item.Value</span></td>
-            <td>@(item.ParentDescription ?? "_")</td>
-            <td>@item.StatusDescription</td>
-            <td>
-               <div class="btn-group">
-                <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
-                <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
-               </div>
-                <span class="itemTypeId" style="display:none">@item.TypeId</span>
-                <span class="itemParentTypeId" style="display:none">@item.ParentKey</span>
-                <span class="itemStatus" style="display:none">@item.StatusId</span>
-            </td>
+            <th>#</th>
+            <th>Test Desc</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>Action</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(count++)</td>
+                <td><span class="itemName">@item.Description</span></td>
+                <td><span class="itemValue">@item.Value</span></td>
+                <td>@(item.ParentDescription ?? "_")</td>
+                <td>@item.StatusDescription</td>
+                <td>
+                    <div class="btn-group">
+                        <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
+                        <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
+                    </div>
+                    <span class="itemTypeId" style="display:none">@item.TypeId</span>
+                    <span class="itemParentTypeId" style="display:none">@item.ParentKey</span>
+                    <span class="itemStatus" style="display:none">@item.StatusId</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

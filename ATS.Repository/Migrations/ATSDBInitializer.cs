@@ -19,7 +19,7 @@ namespace ATS.Repository.Migrations
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Level", Value = (int)CommonType.LEVEL, ParentKey = 0, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Category", Value = (int)CommonType.CATEGORY, ParentKey = 0, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Question", Value = (int)CommonType.QUESTION, ParentKey = 0, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
-
+            context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Test Type", Value = (int)CommonType.TESTTYPE, ParentKey = 0, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
             //Question Type
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "DefaultQuestion", Value = (int)CommonType.DEFAULT, ParentKey = (int)CommonType.QUESTION, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });
             context.TypeDef.Add(new Model.TypeDef { TypeId = Guid.NewGuid(), Description = "Objective", Value = (int)CommonType.OPTION, ParentKey = (int)CommonType.QUESTION, CreatedBy = "Admin", CreatedDate = DateTime.Now, StatusId = true });

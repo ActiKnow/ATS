@@ -25,6 +25,7 @@ namespace ATS.Core.Global
         public const CommonType TEXT = CommonType.TEXT;
         public const CommonType CATEGORY = CommonType.CATEGORY;
         public const CommonType LEVEL = CommonType.LEVEL;
+        public const CommonType TESTTYPE = CommonType.TESTTYPE;
         public const int PARENT = 0;
         public static string ApiBaseUrl
         {

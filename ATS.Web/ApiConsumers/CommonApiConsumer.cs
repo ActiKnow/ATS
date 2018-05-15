@@ -9,21 +9,7 @@ namespace ATS.Web.ApiConsumers
 {
     public class CommonApiConsumer
     {
-        //public static ApiResult SelectTypes(bool isParentDependent,int parentKey=0)
-        //{
-        //    ApiResult apiResult = null;
-        //    try
-        //    {
-        //        string url =string.Format("api/TypeDef/Select/{0}/{1}", isParentDependent, parentKey);
-        //        apiResult = ConsumerMethods.Get<List<TypeDefModel>>(url);
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //    return apiResult;
-        //}
-
+        
         public static ApiResult GetStatus()
         {
             ApiResult apiResult = null;
@@ -38,19 +24,6 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
-        public static ApiResult Select(SimpleQueryModel query=null)
-        {
-            ApiResult apiResult = null;
-            try
-            {
-                string url = string.Format("api/TypeDef/Select");
-                apiResult = ConsumerMethods.Post<List<TypeDefModel>>(url, query);
-            }
-            catch
-            {
-                throw;
-            }
-            return apiResult;
-        }
+       
     }
 }

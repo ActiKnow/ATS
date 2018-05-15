@@ -358,7 +358,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 SimpleQueryModel query = new SimpleQueryModel { ModelName = nameof(TypeDefModel) };
                 query[nameof(TypeDefModel.ParentKey)] = parentTypeValue;
-                result = ApiConsumers.CommonApiConsumer.Select(query);
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
             }
             catch (Exception ex)
             {
@@ -412,6 +412,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
+                test.StatusId = true;
+                test.CreatedBy = Convert.ToString (Session[Constants.USERID]);
                 result = ApiConsumers.TestBankApiConsumer.CreateTest(test);
             }
             catch (Exception ex)
