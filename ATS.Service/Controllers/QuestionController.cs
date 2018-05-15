@@ -24,7 +24,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Create")]
-        public IHttpActionResult Create(QuestionBank newQues)
+        public IHttpActionResult Create(QuestionBankModel newQues)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace ATS.Service.Controllers
 
         [HttpPost]
         [Route("api/Question/Update")]
-        public IHttpActionResult Update(QuestionBank newQues)
+        public IHttpActionResult Update(QuestionBankModel newQues)
         {
             try
             {

@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ATS.Core.Global;
 using ATS.Core.Helper;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
 using ATS.Repository.Model;
 using ATS.Repository.Uow;
 
-namespace ATS.Repository.Factory.Question
+namespace ATS.Bll.Factory.Question
 {
-    public class BoolQues : IQuestion
+    public class SubjectiveQues : IQuestion
     {
         readonly UnitOfWork _unitOfWork;
-        public BoolQues(UnitOfWork unitOfWork)
+        public SubjectiveQues(UnitOfWork unitOfWork)
         {
             this._unitOfWork = unitOfWork;
         }
@@ -30,27 +29,25 @@ namespace ATS.Repository.Factory.Question
             {
                 Answer = input.AnsText,
                 QId = input.QId,
-                OptionKeyId = Constants.BOOL.ToString()
+                OptionKeyId = input.QuesTypeValue.ToString()
             };
             flag = _unitOfWork.MapOptionRepo.Create(ref map);
-
             return flag;
         }
 
-        public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
+        public List<QuestionBankModel> Select( Func<QuestionBankModel, bool> condition)
         {
-            var queryable1 = _unitOfWork.QuestionRepo.Select(condition);
+            var queryable1= _unitOfWork.QuestionRepo.Select(condition);
             var resultDB = queryable1.ToList();
             List<QuestionBankModel> result = null;
             if (resultDB != null)
             {
                 result = new List<QuestionBankModel>();
-                foreach (var ques in queryable1)
+                
+                foreach (var ques in resultDB)
                 {
-                   var queryable2 = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId);
-
+                    var queryable2= _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId);
                     var mapOp = queryable2.ToList();
-                   
                     ques.MappedOptions = mapOp;
                 }
             }

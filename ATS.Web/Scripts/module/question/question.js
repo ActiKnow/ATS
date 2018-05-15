@@ -13,9 +13,9 @@
 
     };
     var questionTypes = {
-        option: "5",
-        bool: "6",
-        text: "7"
+        option: AppConstant.OPTION,
+        bool: AppConstant.BOOL,
+        text: AppConstant.TEXT
     };
     var optionArray = [];
     var counter = 1;
