@@ -20,12 +20,7 @@
     <div class="col-md-12" id="userSetupContext">
         <div class="tile">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-control-feedback" for="inputDanger1">
-                        <span class="alert-danger errorMsg" style="display:none"></span>
-                    </div>
-                    <span class="alert-success successMsg" style="display:none"></span>
-                </div>
+                <div id="msgContext"></div>               
             </div>
             <div id="messageContext"></div>
             <div class="row">
@@ -47,7 +42,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-form-label">Mobile No<span class="fa fa-star"></span></label>
-                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control mobile" })
+                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control mobileNumber", autocomplete = "off" })
                         @*<input class="form-control mobile" type="text" placeholder="Enter mobile number">*@
                     </div>
                 </div>
@@ -80,12 +75,18 @@
                         <div class="form-group">
                             <div class="input-group">
                                 @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", autocomplete = "off" })
+
                                 @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
                                 @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
                                 @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
                                 @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
                                 @Html.HiddenFor(x => x.UserCredentials.Id, htmlAttributes: new { @id = "hiddenId" })
-                                @*<input class="form-control" id="password-field" name="password" type="password" placeholder="Enter password">*@
+                                @Html.HiddenFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @id = "prevPassword" })
+                                @Html.HiddenFor(x => x.UserCredentials.CreatedBy, htmlAttributes: new { @id = "credentialCreatedBy" })
+                                @Html.HiddenFor(x => x.UserCredentials.CreatedDate, htmlAttributes: new { @id = "credentialCreatedOn" })
+                                @Html.HiddenFor(x => x.CreatedBy, htmlAttributes: new { @id = "userInfoCreatedBy" })
+                                @Html.HiddenFor(x => x.CreatedDate, htmlAttributes: new { @id = "userInfoCreatedOn" })
+
                                 <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
                                 <button class="input-group-lg input-group-append" id="refresh">
                                     <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -116,10 +117,11 @@ else
 {
                     <button class="btn btn-primary" id="updateUser" type="button">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>Update
-                    </button>
-                    <button class="btn btn-primary" id="backToList" type="button">
+                    </button>                   
+                    @*<button class="btn btn-primary" id="backToList" type="button">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>Back To List
-                    </button>
+                    </button>*@
+                    <a href="/Admin/UserSetup/UserApproval" class="btn btn-primary" id="backToList" type="button" ><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back To List</a>
 }
                         <button class="btn btn-secondary" id="cancelUser" type="button">
                             <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel
@@ -139,13 +141,11 @@ else
                 var config = {
                     firstName: '.firstName',
                     lastName: '.lastName',
-                    mobile: '.mobile',
+                    mobile: '.mobileNumber',
                     email: '.emailId',
                     password: '#password-field',
                     btnRefresh: '#refresh',
                     ddlRoleType: '#roleType',
-                    errorMsg: '.errorMsg',
-                    successMsg: '.successMsg',
                     btnCreateUser: '#createUser',
                     btnCancelUser: '#cancelUser',
                     btnUpdateUser: '#updateUser',
@@ -158,7 +158,13 @@ else
                     hiddenStatusId: '#hiddenStatusId',
                     messageContext: '#messageContext',
                     hiddenId: '#hiddenId',
+                    prevPassword: '#prevPassword',
                     backToList: '#backToList',
+                    msgContext: '#msgContext',
+                    credentialCreatedBy: '#credentialCreatedBy',
+                    credentialCreatedOn: '#credentialCreatedOn',
+                    userInfoCreatedBy  : '#userInfoCreatedBy',
+                    userInfoCreatedOn  : '#userInfoCreatedOn', 
                 };
                 userSetup.init(config);
             });

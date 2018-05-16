@@ -7,13 +7,13 @@ namespace ATS.Repository.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class QuesRefMigration : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(QuesRefMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201805151359483_QuesRefMigration"; }
+            get { return "201805151727290_initial"; }
         }
         
         string IMigrationMetadata.Source
