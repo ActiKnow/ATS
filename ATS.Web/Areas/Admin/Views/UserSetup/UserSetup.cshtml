@@ -42,8 +42,8 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-form-label">Mobile No<span class="fa fa-star"></span></label>
-                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control mobileNumber", autocomplete = "off" })
-                        @*<input class="form-control mobile" type="text" placeholder="Enter mobile number">*@
+                        @*@Html.TextBoxFor(m => m.Mobile, new { @Value = (Model.Mobile > 0 ?Model.Mobile.ToString() :string.Empty), @class = "form-control", @id = "mobileNumber",autocomplete ="off" })*@
+                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber",autocomplete = "off" })
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -51,12 +51,12 @@
                         <label>Email address<span class="fa fa-star"></span></label>                        
                         @if (Model.Email != null && Model.Email != "")
                         {
-                            @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId", autocomplete = "off" })
+                            @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId", autocomplete = "off", @type = "text" })
                         }
                         else
                         {
-                            <input class="form-control emailId" type="email" >
-                        }
+                            <input class="form-control emailId" autocomplete="off" >
+                        }                        
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -74,7 +74,7 @@
                         <label class="control-label">Password<span class="fa fa-star"></span></label>
                         <div class="form-group">
                             <div class="input-group">
-                                @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", autocomplete = "off" })
+                                @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", @autocomplete = "new-password" })
 
                                 @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
                                 @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
@@ -141,7 +141,7 @@ else
                 var config = {
                     firstName: '.firstName',
                     lastName: '.lastName',
-                    mobile: '.mobileNumber',
+                    mobile: '#mobileNumber',
                     email: '.emailId',
                     password: '#password-field',
                     btnRefresh: '#refresh',

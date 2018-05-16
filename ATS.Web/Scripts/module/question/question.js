@@ -389,7 +389,9 @@
         $selectQuestionContainer.on('click', op.btnUpdateQuestion, function (e) {
             updateQuestion();
         })
-
+        $selectQuestionContainer.on('click', op.btnBack, function (e) {
+            document.location = '@Url.Action("QuestionList","Setup")';
+        })
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
             //var Type = $(op.selectQuesQuesTypeId).val();
             var $type = $(this);
@@ -422,17 +424,13 @@
             }
 
         })
-
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
             if (counter < 8)
                 addOption();
         })
-
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
             removeQuestion();
         })
-
-
     };
     return {
         init: function (config) {
