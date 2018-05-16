@@ -20,10 +20,17 @@
     <div class="col-md-12" id="typeContext">
         <div class="tile">
             <div id="questionContainer">
-                <div id="msgContext"></div>>
+                <div id="msgContext"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                        @if (Model.QId == Guid.Empty)
+                        {
+                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                        }
+                        else
+                        {
+                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Update Question</b></label>
+                        }
                     </div>
                 </div>
                 <br />
@@ -96,7 +103,7 @@
                                     <span>A.</span>
                                 </div>
                                 <div class="col-md-7">
-                                    <label >True/Yes</label>
+                                    <label>True/Yes</label>
                                     @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">*@
                                 </div>
                                 <div class="col-md-3">
@@ -111,7 +118,7 @@
                                     <span>B.</span>
                                 </div>
                                 <div class="col-md-7">
-                                    <label >False/No</label>
+                                    <label>False/No</label>
                                     @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">*@
                                 </div>
                                 <div class="col-md-3">
@@ -142,10 +149,10 @@
 
                 <div class="row">
                     <div class="col-md-2">
-                        <label class="name-tag control-label" for="question_mark">Mark</label>
+                        <label class="name-tag control-label">Mark</label>
                     </div>
                     <div class="col-md-8">
-                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number", required = "required" })
+                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number" })
                     </div>
                 </div>
                 <br />
@@ -154,10 +161,12 @@
                     @if (Model.QId == Guid.Empty)
                     {
                         <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+
                     }
                     else
                     {
                         <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                        <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
                     }
                 </div>
 
@@ -188,7 +197,8 @@
                     selectQuesText: '#question_text',
                     selectQuesMark: '#question_mark',
                     btnCreateQuestion: '#button_create_question',
-                    btnUpdateQuestion:'#button_update_question',
+                    btnUpdateQuestion: '#button_update_question',
+                    btnBack:'#button_back_question',
                     selectMCQType: '#MCQType',
                     selectTFType: '#TFType',
                     selectSubjectType: '#SubjectType',
@@ -205,6 +215,7 @@
                     selecthiddenddlCategoryType: '#hiddenddlCategoryType',
                     selecthiddenddlQuestionType: '#hiddenddlQuestionType',
                     selecthiddendlllableType: '#hiddendlllableType',
+                    selectlblQuestionText: '#lblQuestionText',
 
                     btnAdd: '#btnAdd',
                     btnRemove: '#btnRemove',
