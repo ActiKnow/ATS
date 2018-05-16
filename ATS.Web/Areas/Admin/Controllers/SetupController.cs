@@ -305,7 +305,6 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Question", qId);
         }
-
         public ActionResult GetQuestionTypes()
         {
             ApiResult result = null;

@@ -51,13 +51,6 @@ namespace ATS.Bll
                             Utility.CopyEntity(out input, userInfo);
                             apiResult.Status = true;
                             apiResult.Message.Add("User created successfully.");
-
-                            //var result = Select(null);  // Getting all records, when we will pass null in Select method.
-
-                            //if (result != null)
-                            //{
-                            //    apiResult+= result;
-                            //}
                         }
                         else
                         {

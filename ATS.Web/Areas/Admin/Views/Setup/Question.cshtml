@@ -26,7 +26,6 @@
                         <span class="errorMsg" @*style="display:none"*@></span>
                         <span class="successMsg"></span>
                     </div>
-
                 </div>
                 <div class="row">
 
@@ -42,7 +41,6 @@
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
                                     @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level" })
-                                    @Html.HiddenFor(x => x.LevelTypeValue, new { id = "hiddendlllableType" })
                                 </div>
 
                             </div>
@@ -52,11 +50,6 @@
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_question_type">Question Type</label>
                                     @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
-                                    @Html.HiddenFor(x => x.QuesTypeValue, new { id = "hiddenddlQuestionType" })
-                                    @*<select class="form-control" required="required" name="question[question_type_id]" id="question_question_type_id">
-                                            <option value="-1">- Select -</option>
-
-                                        </select>*@
                                 </div>
                             </div>
                         </div>
@@ -65,27 +58,19 @@
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_subject">Subject</label>
                                     @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
-                                    @Html.HiddenFor(x => x.CategoryTypeValue, new { id = "hiddenddlCategoryType" })
-                                    @*<select class="form-control" required="required" name="question[subject_id]" id="question_subject_id">
-                                            <option value="-1">- Select -</option>
-
-                                        </select>*@
+                                  
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <br />
-
                 <div class="row">
                     <div class="col-md-2">
                         <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
                     </div>
 
                     <div class="col-md-8">
-                        @*<textarea placeholder="Question" rows="3" class="form-control" name="question[question_languages_attributes][0][hint]" id="question_text"></textarea>*@
                         @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
                     </div>
                 </div>
@@ -167,12 +152,9 @@
                         <label class="name-tag control-label" for="question_mark">Mark</label>
                     </div>
                     <div class="col-md-8">
-                        @*<input placeholder="Mark" required="required" type="number" name="question[mark]" id="question_mark">*@
                         @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number", required = "required" })
                     </div>
                 </div>
-
-
                 <br />
                 <div class="tile-footer">
                     @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
