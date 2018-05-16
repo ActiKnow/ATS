@@ -14,5 +14,9 @@ namespace ATS.Core.Model
         public string PrevPassword { get; set; }
         public string CurrPassword { get; set; }
         public string EmailId { get; set; }
+        public string AuthToken { get; set; }
+        public string Roles { get; set; }
+        public string ReturnUrl { get; set; }
+        public bool RememberMe { get; set; } = false;
     }
 }

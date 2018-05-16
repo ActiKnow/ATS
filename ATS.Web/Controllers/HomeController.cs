@@ -9,13 +9,22 @@ using ATS.Core.Model;
 
 namespace ATS.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Index(string ReturnUrl)
         {
-            return View();
-        }       
+            UserCredentialModel userCredential = new UserCredentialModel();
+            if (ReturnUrl != null)
+                userCredential.ReturnUrl = ReturnUrl;
+            else
+                userCredential.ReturnUrl = "";
 
+            return View(userCredential);
+        }
+
+        [AllowAnonymous]
         public ActionResult Registration()
         {
             ViewBag.Message = "Registration page.";
@@ -23,6 +32,7 @@ namespace ATS.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult ValidateLogin(UserCredentialModel userCredential)
         {
@@ -42,7 +52,12 @@ namespace ATS.Web.Controllers
                             Session[Constants.USERID] = userInfo.UserId;
                             Session[Constants.ROLE] = userInfo.RoleTypeValue;
 
-                            return RedirectToAction("SetUserCredential");
+                            FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), userCredential.RememberMe);
+
+                            if (!string.IsNullOrEmpty(userCredential.ReturnUrl))
+                                return RedirectToAction("SetUserCredential", "Account", new { @ReturnUrl = userCredential.ReturnUrl });
+                            else
+                                return RedirectToAction("SetUserCredential", "Account");
                         }
                     }
                     else
@@ -66,22 +81,29 @@ namespace ATS.Web.Controllers
         }
 
         
-        public ActionResult SetUserCredential()
+        public ActionResult SetUserCredential(string ReturnUrl)
         {
             ApiResult apiResult = new ApiResult(false, new List<string> { "Invalid Credentials." });
             try
-            { 
-                FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), false);
-                var RoleType=(CommonType)Session[Constants.ROLE];
-
-                if (RoleType == CommonType.ADMIN)
-                    return RedirectToAction("Index", "Dashboard", new { @Area = "Admin" });
-                //else if (RoleType == Constants.EMPLOYEE)
-                //    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
-                //else if (RoleType == Constants.CANDIDATE)
-                //    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
+            {
+                if (!string.IsNullOrEmpty(ReturnUrl))
+                {
+                    var url = System.Web.HttpUtility.UrlDecode(ReturnUrl);
+                    return new RedirectResult(url);
+                }
                 else
-                    apiResult = new ApiResult(false, new List<string> { "Role is not defiend" });
+                {
+                    var RoleType = (CommonType)Session[Constants.ROLE];
+
+                    if (RoleType == CommonType.ADMIN)
+                        return RedirectToAction("Index", "Dashboard", new { @Area = "Admin" });
+                    //else if (RoleType == Constants.EMPLOYEE)
+                    //    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
+                    //else if (RoleType == Constants.CANDIDATE)
+                    //    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
+                    else
+                        apiResult = new ApiResult(false, new List<string> { "Role is not defiend" });
+                }
 
             }
             catch (Exception ex)
@@ -89,7 +111,7 @@ namespace ATS.Web.Controllers
                 apiResult = new ApiResult( false, new List<string> { ex.GetBaseException().Message });
                 ViewBag.Error = apiResult.Message;
             }
-         
+            ViewBag.Error = apiResult.Message[0];
             return View("Index");
         }
 
