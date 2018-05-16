@@ -156,6 +156,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ResultSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserSetupController.cs" />
     <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
     <Compile Include="Areas\Candidate\Controllers\DashboardController.cs" />
@@ -248,9 +249,9 @@
     <Content Include="Areas\Admin\Views\UserSetup\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\Partials\_QuestionList.cshtml" />
-    <Content Include="Areas\Admin\Views\Setup\TestSetup.cshtml" />
-    <Content Include="Areas\Admin\Views\Setup\MapTestQuestion.cshtml" />
-    <Content Include="Areas\Admin\Views\Setup\Partials\_TestList.cshtml" />
+    <Content Include="Areas\Admin\Views\TestSetup\TestSetup.cshtml" />
+    <Content Include="Areas\Admin\Views\TestSetup\MapTestQuestion.cshtml" />
+    <Content Include="Areas\Admin\Views\TestSetup\Partials\_TestList.cshtml" />
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="Areas\Admin\Views\ResultSetup\Result.cshtml" />
     <Content Include="Areas\Admin\Views\ResultSetup\Partials\_AllUsersList.cshtml" />

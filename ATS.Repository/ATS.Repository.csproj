@@ -59,17 +59,9 @@
     <Compile Include="Interface\ITypeDefRepository.cs" />
     <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Migrations\201805140855572_initialMigration.cs" />
-    <Compile Include="Migrations\201805140855572_initialMigration.Designer.cs">
-      <DependentUpon>201805140855572_initialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805151145290_IsEditableMigration.cs" />
-    <Compile Include="Migrations\201805151145290_IsEditableMigration.Designer.cs">
-      <DependentUpon>201805151145290_IsEditableMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805151359483_QuesRefMigration.cs" />
-    <Compile Include="Migrations\201805151359483_QuesRefMigration.Designer.cs">
-      <DependentUpon>201805151359483_QuesRefMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201805151727290_initial.cs" />
+    <Compile Include="Migrations\201805151727290_initial.Designer.cs">
+      <DependentUpon>201805151727290_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -111,14 +103,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805140855572_initialMigration.resx">
-      <DependentUpon>201805140855572_initialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805151145290_IsEditableMigration.resx">
-      <DependentUpon>201805151145290_IsEditableMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805151359483_QuesRefMigration.resx">
-      <DependentUpon>201805151359483_QuesRefMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805151727290_initial.resx">
+      <DependentUpon>201805151727290_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -188,12 +188,12 @@ namespace ATS.Bll
                             apiResult.Status = true;
                             apiResult.Message.Add("User updated successfully.");
 
-                            var result = Select(null);  // Getting all records, when we will pass null in Select method.
+                            //var result = Select(null);  // Getting all records, when we will pass null in Select method.
 
-                            if (result != null)
-                            {
-                                apiResult+= result;
-                            }
+                            //if (result != null)
+                            //{
+                            //    apiResult+= result;
+                            //}
                         }
                         else
                         {

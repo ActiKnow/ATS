@@ -6,8 +6,8 @@
         getTestType: "/Admin/Setup/GetAllSubTypes/",
         getLevelType: "/Admin/Setup/GetAllSubTypes/",
         getCategoryType: "/Admin/Setup/GetAllSubTypes/",
-        createTest: '/Admin/Setup/CreateTest/',
-        getTests: '/Admin/Setup/GetTests/'
+        createTest: '/Admin/TestSetup/CreateTest/',
+        getTests: '/Admin/TestSetup/GetTests/'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -90,10 +90,15 @@
             };
             api.firePostAjax(apiUrl.createTest, parameter)
                 .done((result) => {
-                    if (result.Status)
-                    {
-                    }
+                    if (result.Status) {
                         action.getTests();
+                        render.closeTestSetupPopup();
+                        alertService.showAllSuccess(result.Message, defaults.mainMessageContext);
+                    }
+                    else
+                    {
+                        alertService.showAllErrors(result.Message, defaults.popupMessageContext);
+                    }
                 })
                 .fail();
         },
@@ -132,6 +137,14 @@
             var testContext = $(defaults.testTableContext);
             testContext.html(data);
         },
+        openTestSetupPopup: function () {
+            var $modalTest = $(defaults.modalTestContext);
+            $modalTest.modal('show');
+        },
+        closeTestSetupPopup: function () {
+            var $modalTest = $(defaults.modalTestContext);
+            $modalTest.modal('hide');
+        },
     };
 
     var loader = {
@@ -158,7 +171,10 @@
     var binder = {
         bindControls: function () {
             var $testContext = $(defaults.testContext);
+            var testListContext = $(defaults.testListContext);
             $testContext.on('click', defaults.createTest, action.createTest);
+            $testContext.on('click', defaults.cancelTestSetup, render.closeTestSetupPopup);
+            testListContext.on('click', defaults.openSetup, render.openTestSetupPopup);
         },
     };
 

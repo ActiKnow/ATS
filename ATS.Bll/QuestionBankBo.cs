@@ -24,7 +24,7 @@ namespace ATS.Bll
                     //var flag = unitOfWork.QuestionRepo.Create(ref questionBank);
                     questionBank.QId = Guid.NewGuid();
                     QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
-                    var flag = quesFactory.Question.Create(questionBank);
+                    var flag = quesFactory.Question.Create(ref questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();
@@ -158,7 +158,7 @@ namespace ATS.Bll
                 {
                     //var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
                     QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
-                    var flag = quesFactory.Question.Create(questionBank);
+                    var flag = quesFactory.Question.Create(ref questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();
