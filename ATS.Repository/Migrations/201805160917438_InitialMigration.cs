@@ -3,7 +3,7 @@ namespace ATS.Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {
@@ -22,17 +22,14 @@ namespace ATS.Repository.Migrations
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
                         LastUpdatedBy = c.String(),
-                        TypeDef_Value = c.Int(),
                     })
                 .PrimaryKey(t => t.QId)
-                .ForeignKey("dbo.TypeDefs", t => t.TypeDef_Value)
                 .ForeignKey("dbo.TypeDefs", t => t.CategoryTypeValue)
                 .ForeignKey("dbo.TypeDefs", t => t.LevelTypeValue)
                 .ForeignKey("dbo.TypeDefs", t => t.QuesTypeValue)
                 .Index(t => t.QuesTypeValue)
                 .Index(t => t.LevelTypeValue)
-                .Index(t => t.CategoryTypeValue)
-                .Index(t => t.TypeDef_Value);
+                .Index(t => t.CategoryTypeValue);
             
             CreateTable(
                 "dbo.TypeDefs",
@@ -154,13 +151,12 @@ namespace ATS.Repository.Migrations
                         QId = c.Guid(nullable: false),
                         OptionSelected_Id = c.String(),
                         Description = c.String(),
-                        UserTestHistory_HistoryId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.QuestionBanks", t => t.QId, cascadeDelete: true)
-                .ForeignKey("dbo.UserTestHistories", t => t.UserTestHistory_HistoryId)
-                .Index(t => t.QId)
-                .Index(t => t.UserTestHistory_HistoryId);
+                .ForeignKey("dbo.UserTestHistories", t => t.History_Id, cascadeDelete: true)
+                .Index(t => t.History_Id)
+                .Index(t => t.QId);
             
             CreateTable(
                 "dbo.QuestionOptionMappings",
@@ -174,25 +170,6 @@ namespace ATS.Repository.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.QuestionBanks", t => t.QId, cascadeDelete: true)
                 .Index(t => t.QId);
-            
-            CreateTable(
-                "dbo.QuestionOptionModels",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        KeyId = c.String(),
-                        Description = c.String(),
-                        IsAnswer = c.Boolean(nullable: false),
-                        StatusId = c.Boolean(nullable: false),
-                        CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.String(),
-                        LastUpdatedDate = c.DateTime(),
-                        LastUpdatedBy = c.String(),
-                        QuestionBank_QId = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.QuestionBanks", t => t.QuestionBank_QId)
-                .Index(t => t.QuestionBank_QId);
             
             CreateTable(
                 "dbo.QuestionOptions",
@@ -234,25 +211,22 @@ namespace ATS.Repository.Migrations
         {
             DropForeignKey("dbo.UserCredentials", "UserId", "dbo.UserInfoes");
             DropForeignKey("dbo.QuestionBanks", "QuesTypeValue", "dbo.TypeDefs");
-            DropForeignKey("dbo.QuestionOptionModels", "QuestionBank_QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.QuestionOptionMappings", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.QuestionBanks", "LevelTypeValue", "dbo.TypeDefs");
             DropForeignKey("dbo.QuestionBanks", "CategoryTypeValue", "dbo.TypeDefs");
             DropForeignKey("dbo.UserInfoes", "RoleTypeValue", "dbo.TypeDefs");
             DropForeignKey("dbo.TestAssignments", "UserId", "dbo.UserInfoes");
             DropForeignKey("dbo.UserTestHistories", "UserId", "dbo.UserInfoes");
-            DropForeignKey("dbo.UserAttemptedHistories", "UserTestHistory_HistoryId", "dbo.UserTestHistories");
+            DropForeignKey("dbo.UserAttemptedHistories", "History_Id", "dbo.UserTestHistories");
             DropForeignKey("dbo.UserAttemptedHistories", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.UserTestHistories", "TestbankId", "dbo.TestBanks");
             DropForeignKey("dbo.TestQuestionMappings", "TestBankId", "dbo.TestBanks");
             DropForeignKey("dbo.TestQuestionMappings", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.TestAssignments", "TestBankId", "dbo.TestBanks");
-            DropForeignKey("dbo.QuestionBanks", "TypeDef_Value", "dbo.TypeDefs");
             DropIndex("dbo.UserCredentials", new[] { "UserId" });
-            DropIndex("dbo.QuestionOptionModels", new[] { "QuestionBank_QId" });
             DropIndex("dbo.QuestionOptionMappings", new[] { "QId" });
-            DropIndex("dbo.UserAttemptedHistories", new[] { "UserTestHistory_HistoryId" });
             DropIndex("dbo.UserAttemptedHistories", new[] { "QId" });
+            DropIndex("dbo.UserAttemptedHistories", new[] { "History_Id" });
             DropIndex("dbo.UserTestHistories", new[] { "TestbankId" });
             DropIndex("dbo.UserTestHistories", new[] { "UserId" });
             DropIndex("dbo.TestQuestionMappings", new[] { "QId" });
@@ -261,13 +235,11 @@ namespace ATS.Repository.Migrations
             DropIndex("dbo.TestAssignments", new[] { "UserId" });
             DropIndex("dbo.UserInfoes", new[] { "RoleTypeValue" });
             DropIndex("dbo.TypeDefs", new[] { "TypeId" });
-            DropIndex("dbo.QuestionBanks", new[] { "TypeDef_Value" });
             DropIndex("dbo.QuestionBanks", new[] { "CategoryTypeValue" });
             DropIndex("dbo.QuestionBanks", new[] { "LevelTypeValue" });
             DropIndex("dbo.QuestionBanks", new[] { "QuesTypeValue" });
             DropTable("dbo.UserCredentials");
             DropTable("dbo.QuestionOptions");
-            DropTable("dbo.QuestionOptionModels");
             DropTable("dbo.QuestionOptionMappings");
             DropTable("dbo.UserAttemptedHistories");
             DropTable("dbo.UserTestHistories");
