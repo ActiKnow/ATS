@@ -16,19 +16,13 @@
         <li class="breadcrumb-item"><a href="#">Question Setup</a></li>
     </ul>
 </div>
+<div id="msgContext"></div>
 <div class="row">
     <div class="col-md-12" id="typeContext">
         <div class="tile">
             <div id="questionContainer">
-
+                
                 <div class="row">
-                    <div class="col-md-12 text-right">
-                        <span class="errorMsg" @*style="display:none"*@></span>
-                        <span class="successMsg"></span>
-                    </div>
-                </div>
-                <div class="row">
-
                     <div class="col-md-12">
                         <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
                     </div>
@@ -58,7 +52,7 @@
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_subject">Subject</label>
                                     @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -195,6 +189,7 @@
                     selectQuesText: '#question_text',
                     selectQuesMark: '#question_mark',
                     btnCreateQuestion: '#button_create_question',
+                    btnUpdateQuestion:'#button_update_question',
                     selectMCQType: '#MCQType',
                     selectTFType: '#TFType',
                     selectSubjectType: '#SubjectType',
@@ -215,7 +210,7 @@
                     btnAdd: '#btnAdd',
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
-                    errorMsg: '.errorMsg',
+                    msgContext: '#msgContext',
                 };
                 question.init(config);
 

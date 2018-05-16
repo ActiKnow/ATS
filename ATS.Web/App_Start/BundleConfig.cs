@@ -17,7 +17,7 @@ namespace ATS.Web
                      "~/Scripts/plugins/main.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/plugins").Include(
-                    // "~/Scripts/plugins/jquery-ui.custom.min.js",
+                     "~/Scripts/plugins/jquery-ui.custom.min.js",
                       "~/Scripts/plugins/pace.min.js",
                       "~/Scripts/plugins/chart.js",
                       "~/Scripts/plugins/bootstrap-datepicker.min.js",
