@@ -18,7 +18,7 @@ namespace ATS.Bll.Factory.Question
         {
             this._unitOfWork = unitOfWork;
         }
-        public bool Create(QuestionBankModel input)
+        public bool Create(ref QuestionBankModel input)
         {
             QuestionBank questionBank = new QuestionBank();
             Utility.CopyEntity(out questionBank, input);
@@ -54,7 +54,7 @@ namespace ATS.Bll.Factory.Question
             return result;
         }
 
-        public bool Update(QuestionBankModel input)
+        public bool Update(ref QuestionBankModel input)
         {
             QuestionBank questionBank = new QuestionBank();
             Utility.CopyEntity(out questionBank, input);

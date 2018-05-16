@@ -8,9 +8,9 @@
 <tr>
     <td>@(count++)</td>
     <td><span class="itemName">@item.Description</span></td>
-    <td><span class="itemValue">@item.QuesTypeValue</span></td>
-    <td>@(item.LevelTypeValue)</td>
-    <td>@item.CategoryTypeValue</td>
+    <td><span class="itemValue">@item.QuesTypeDescription</span></td>
+    <td>@(item.LevelTypeDescription)</td>
+    <td>@item.CategoryTypeDescription</td>
     <td>
         @item.DefaultMark
         </td>
@@ -20,10 +20,7 @@
             <span class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></span>
             <span class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></span>
         </div>
-        @*<span class="itemTypeId" style="display:none">@item.TypeId</span>
-        <span class="itemParentTypeId" style="display:none">@item.ParentKey</span>*@
-        <span class="itemStatus" style="display:none">@item.StatusId</span>
-        <span class="Qid" style="display:none">@item.QId</span>
+       
     </td>
 </tr>
 }

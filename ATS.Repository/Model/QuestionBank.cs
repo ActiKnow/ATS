@@ -14,7 +14,7 @@ namespace ATS.Repository.Model
             this.MappedOptions = new List<QuestionOptionMapping>();
             this.TestQuestionMappings = new List<TestQuestionMapping>();
             this.UserAttemptedHistories = new List<UserAttemptedHistory>();
-            this.Options = new List<QuestionOptionModel>();
+            //this.Options = new List<QuestionOption>();
         }
         [Key]
         public System.Guid QId { get; set; }
@@ -31,7 +31,7 @@ namespace ATS.Repository.Model
 
         public List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
 
-        public List<QuestionOptionModel> Options { get; set; }
+        //public List<QuestionOption> Options { get; set; }
         [ForeignKey("CategoryTypeValue")]
         public virtual TypeDef CategoryType { get; set; }
         [ForeignKey("LevelTypeValue")]

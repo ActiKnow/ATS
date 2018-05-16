@@ -19,7 +19,7 @@ namespace ATS.Bll.Factory.Question
         {
             this._unitOfWork = unitOfWork;
         }
-        public bool Create(QuestionBankModel input)
+        public bool Create(ref QuestionBankModel input)
         {
             QuestionBank questionBank = new QuestionBank();
             Utility.CopyEntity(out questionBank, input);
@@ -28,9 +28,10 @@ namespace ATS.Bll.Factory.Question
 
             QuestionOptionMapping map = new QuestionOptionMapping
             {
+                Id=Guid.NewGuid(),
                 Answer = input.AnsText,
                 QId = input.QId,
-                OptionKeyId = Constants.BOOL.ToString()
+                OptionKeyId = input.QuesTypeValue.ToString()
             };
             flag = _unitOfWork.MapOptionRepo.Create(ref map);
 
@@ -39,28 +40,23 @@ namespace ATS.Bll.Factory.Question
 
         public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
-            var queryable1 = _unitOfWork.QuestionRepo.Select(condition);
-            var resultDB = queryable1.ToList();
+            var resultDB = _unitOfWork.QuestionRepo.Select(condition).ToList();
             List<QuestionBankModel> result = null;
             if (resultDB != null)
             {
                 result = new List<QuestionBankModel>();
-                foreach (var ques in queryable1)
+                foreach (var ques in resultDB)
                 {
-                   var queryable2 = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId);
-
-                    var mapOp = queryable2.ToList();
-                   
-                    ques.MappedOptions = mapOp;
+                    ques.MappedOptions = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
                 }
+                result = resultDB;
             }
             return result;
         }
 
-        public bool Update(QuestionBankModel input)
+        public bool Update(ref QuestionBankModel input)
         {
-            QuestionBank questionBank = new QuestionBank();
-            Utility.CopyEntity(out questionBank, input);
+            Utility.CopyEntity(out QuestionBank questionBank, input);
             var flag = false;
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)

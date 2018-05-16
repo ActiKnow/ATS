@@ -103,7 +103,7 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-    var addQuestion = function () {
+    var addOption = function () {
 
         var rowGenrate = "<div class='form-group row'>" +
             "		<div class='col-md-1'>" +
@@ -148,7 +148,7 @@
         var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').attr('data-id');
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
-
+        var ansText = "";
         var optionValue = [];
         if (quesTypeValue == questionTypes.option) {
             $("input[name=DynamicTextBox]").each(function () {
@@ -156,26 +156,19 @@
                 var id = $option.data("id");
                 var $radio = $("input[data-id=radio" + id + "]");
                 var isAnswer = $radio.is(':checked');
-                // var isAns = $('input[name=statusRadio]:checked').val();
-                // if (isAns==)
+               
                 optionValue.push({ Id: "", KeyId: "", Description: $(this).val(), IsAnswer: isAnswer });
             });
         }
 
         if (quesTypeValue == questionTypes.bool) {
-            $("input[name=Booltextbox]").each(function () {
-                var $option = $(this);
-                var id = $option.data("id");
-                var $radio = $("input[data-id=" + id + "]");
-                var isAnswer = $radio.is(':checked');
-                // var isAns = $('input[name=statusRadio]:checked').val();
-                // if (isAns==)
-                optionValue.push({ Id: "", KeyId: "", Description: $(this).val(), IsAnswer: isAnswer });
-            });
+
+            var $radio = $(op.selectboolradio + ':checked');
+            ansText = $radio.val();
         }
 
         if (quesTypeValue == questionTypes.text) {
-            var ansText = $(op.selectSubjective_text).val();
+             ansText = $(op.selectSubjective_text).val();
         }
 
         var QuestionView = {
@@ -337,7 +330,7 @@
                 $(defaults.selectSubjectType).hide();
                 optionArray.splice(0, optionArray.length)
                 counter = 1;
-                addQuestion();
+                addOption();
                 $(defaults.btnAdd).show();
                 $(defaults.btnRemove).show();
             }
@@ -362,7 +355,7 @@
 
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
             if (counter < 8)
-                addQuestion();
+                addOption();
         })
 
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {

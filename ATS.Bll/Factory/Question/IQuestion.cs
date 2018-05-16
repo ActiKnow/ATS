@@ -11,7 +11,7 @@ namespace ATS.Bll.Factory.Question
 {
     public interface IQuestion: ISelectable<QuestionBankModel>
     {
-        bool Create(QuestionBankModel input);
-        bool Update(QuestionBankModel input);
+        bool Create(ref QuestionBankModel input);
+        bool Update(ref QuestionBankModel input);
     }
 }
