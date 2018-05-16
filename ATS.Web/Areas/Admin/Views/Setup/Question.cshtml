@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 
@@ -21,7 +22,7 @@
     <div class="col-md-12" id="typeContext">
         <div class="tile">
             <div id="questionContainer">
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         @if (Model.QId == Guid.Empty)
@@ -50,7 +51,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" , value = Model.QuesTypeValue })
+                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
                                 </div>
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_subject">Subject</label>
                                     @*@Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })*@
-                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" ,value=Model.CategoryTypeValue})
+                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
                                 </div>
                             </div>
                         </div>
@@ -91,6 +92,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        <input type="hidden" id="optionCount" value="@Model.Options.Count"/>
+                       
+                        @foreach(var item in Model.Options)
+                        {
+                           
+                        }
+
                         <div id="MCQType">
 
                         </div>
@@ -199,7 +207,7 @@
                     selectQuesMark: '#question_mark',
                     btnCreateQuestion: '#button_create_question',
                     btnUpdateQuestion: '#button_update_question',
-                    btnBack:'#button_back_question',
+                    btnBack: '#button_back_question',
                     selectMCQType: '#MCQType',
                     selectTFType: '#TFType',
                     selectSubjectType: '#SubjectType',
@@ -222,6 +230,7 @@
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
                     msgContext: '#msgContext',
+                    optionCount:'#optionCount',
                 };
                 question.init(config);
 
