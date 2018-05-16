@@ -34,6 +34,21 @@ namespace ATS.Repository.Repo
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<QuestionBank>()
+                    .HasRequired(m => m.CategoryType)
+                    .WithMany(t => t.QuestionCategories)
+                    .HasForeignKey(m => m.CategoryTypeValue)
+                    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<QuestionBank>()
+                 .HasRequired(m => m.LevelType)
+                 .WithMany(t => t.QuestionLevels)
+                 .HasForeignKey(m => m.LevelTypeValue)
+                 .WillCascadeOnDelete(false);
+            modelBuilder.Entity<QuestionBank>()
+                 .HasRequired(m => m.QuestionType)
+                 .WithMany(t => t.QuestionTypes)
+                 .HasForeignKey(m => m.QuesTypeValue)
+                 .WillCascadeOnDelete(false);
         }
 
     }

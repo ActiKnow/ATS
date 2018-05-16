@@ -2,6 +2,8 @@
     'use strict'
     var defaults = {
         selectContainer: '#questionContainer',
+        sampleTable: '#sampleTable',
+        mainMessageContext: '#mainMessageContext'
     };
 
     var api = (function () {
@@ -34,17 +36,16 @@
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showSuccess(msg, op.popupMessageContext);
                     }
-                    else {
-                        $(op.selecttblUserList).find('tbody').html(result.Data);
-                    }
+                    $(op.selecttblUserList).find('tbody').html(result.Data);
+                    $(op.selecttblUserList).DataTable();
                 }
                 else {
                     $.each(result.Message, function (index, value) {
                         msg += value;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, op.popupMessageContext);
                 }
             }
         }
@@ -53,7 +54,7 @@
                 appendUser(result);
             },
             onUserListFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showSuccess(result.responseText, op.popupMessageContext);
             },
         }
     })();

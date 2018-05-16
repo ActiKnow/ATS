@@ -84,13 +84,13 @@ namespace ATS.Service.Controllers
         }
 
         [HttpPost]
-        [Route("api/User/Delete")]
-        public IHttpActionResult Delete(UserInfoModel input)
+        [Route("api/User/Disable")]
+        public IHttpActionResult Disable(UserInfoModel input)
         {
             ApiResult apiResult = null;
             try
             {
-                apiResult = userInfoBo.Delete(input);
+                apiResult = userInfoBo.Disable(input);
             }
             catch (Exception ex)
             {

@@ -49,7 +49,7 @@ namespace ATS.Bll
                             unitOfWork.Commit();
 
                             Utility.CopyEntity(out input, userInfo);
-
+                            apiResult.Status = true;
                             apiResult.Message.Add("User created successfully.");
 
                             //var result = Select(null);  // Getting all records, when we will pass null in Select method.
@@ -80,31 +80,23 @@ namespace ATS.Bll
             return apiResult;
         }
 
-        public ApiResult Delete(UserInfoModel input)
+        public ApiResult Disable(UserInfoModel input)
         {
             ApiResult apiResultDelete = new ApiResult(false, new List<string>());
             var flag = false;
-            UserInfo userInfo = new UserInfo();
-
-            Utility.CopyEntity(out userInfo, input);
-
             using (var unitOfWork = new UnitOfWork())
             {
-                flag = unitOfWork.UserRepo.Update(ref userInfo);
+                flag = unitOfWork.UserRepo.Disable(input);
 
                 if (flag)
                 {
-                    UserCredential userCredential = new UserCredential();
-
-                    Utility.CopyEntity(out userCredential, input.UserCredentials);
-
-                    flag = unitOfWork.UserCredentialRepo.Update(ref userCredential);                    
+                    flag = unitOfWork.UserCredentialRepo.Disable(input.UserCredentials.Id,input.UserId);
                 }
                 if (flag)
                 {
                     unitOfWork.Commit();
-
-                    apiResultDelete.Message.Add("User deleted successfully.");
+                    apiResultDelete.Status = true;
+                    apiResultDelete.Message.Add("User disabled successfully.");
 
                     var result = Select(null);  // Getting all records, when we will pass null in Select method.
 
@@ -115,7 +107,7 @@ namespace ATS.Bll
                 }
                 else
                 {
-                    apiResultDelete.Message.Add("User deletion failed.");
+                    apiResultDelete.Message.Add("User disable failed.");
                     apiResultDelete.Status = false;
                 }
             }
@@ -200,7 +192,7 @@ namespace ATS.Bll
                         if (flag)
                         {
                             unitOfWork.Commit();
-
+                            apiResult.Status = true;
                             apiResult.Message.Add("User updated successfully.");
 
                             var result = Select(null);  // Getting all records, when we will pass null in Select method.
