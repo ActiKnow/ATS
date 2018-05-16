@@ -19,26 +19,25 @@ namespace ATS.Bll.Factory.Question
             this._unitOfWork = unitOfWork;
         }
 
-        public bool Create(QuestionBankModel input)
+        public bool Create(ref QuestionBankModel input)
         {
-            QuestionBank questionBank = new QuestionBank();
-            Utility.CopyEntity(out questionBank, input);
+            Utility.CopyEntity(out QuestionBank questionBank, input);
             var flag = false;
             flag = _unitOfWork.QuestionRepo.Create(ref questionBank);
 
             if (flag)
             {
-                string optionKeyId = questionBank.QId.ToString();
+                var  optionKeyId = input.QId;
                 List<Guid> answers = new List<Guid>();
 
                 for (int indx = 0; indx < input.Options.Count(); indx++)
                 {
                     var op = input.Options[indx];
-                    op.KeyId = optionKeyId;
+                    op.KeyId = optionKeyId.ToString();
+                    op.Id = Guid.NewGuid();
 
-                    QuestionOption questionOption = new QuestionOption();
-                    Utility.CopyEntity(out questionOption, op);
-                    questionOption.Id = Guid.NewGuid();
+                    Utility.CopyEntity(out QuestionOption questionOption, op);
+                    
                     flag = _unitOfWork.OptionRepo.Create(ref questionOption);
                     if (flag)
                     {
@@ -57,10 +56,16 @@ namespace ATS.Bll.Factory.Question
                     {
                         Id = Guid.NewGuid(),
                         QId = input.QId,
-                        OptionKeyId = optionKeyId,
+                        OptionKeyId = optionKeyId.ToString(),
                         Answer = ans.ToString(),
                     };
-                    //input.MappedOptions.Add(map);
+                    input.MappedOptions.Add(new QuestionOptionMapModel
+                    {
+                        Id = map.Id,
+                        QId = input.QId,
+                        OptionKeyId = optionKeyId.ToString(),
+                        Answer = ans.ToString()
+                    });
 
                     flag = _unitOfWork.MapOptionRepo.Create(ref map);
                 }
@@ -81,22 +86,26 @@ namespace ATS.Bll.Factory.Question
                 for (int indx = 0; indx < result.Count; indx++)
                 {
                     var mapOp = _unitOfWork.MapOptionRepo.Select(x => x.QId == result[indx].QId);
-                    var mappedOptions = result[indx].MappedOptions;
-                    Utility.CopyEntity(out mappedOptions, mapOp.ToList());
-                    result[indx].MappedOptions = mappedOptions;
+                    if (mapOp != null)
+                    {
+                        Utility.CopyEntity(out List<QuestionOptionMapModel> mappedOptions, mapOp.ToList());
+                        result[indx].MappedOptions = mappedOptions;
+                    }
                     foreach (var map in result[indx].MappedOptions)
                     {
                         var options = _unitOfWork.OptionRepo.Select(x => x.KeyId == map.OptionKeyId);
-                        var tmpOp = result[indx].Options;
-                        Utility.CopyEntity(out tmpOp, options.ToList());
-                        result[indx].Options = tmpOp;
+                        if (options != null)
+                        {
+                            Utility.CopyEntity(out List<QuestionOptionModel> tmpOp, options.ToList());
+                            result[indx].Options = tmpOp;
+                        }
                     }
                 }
             }
             return result;
         }
 
-        public bool Update(QuestionBankModel input)
+        public bool Update(ref QuestionBankModel input)
         {
             QuestionBank questionBank = new QuestionBank();
             Utility.CopyEntity(out questionBank, input);
@@ -104,14 +113,14 @@ namespace ATS.Bll.Factory.Question
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)
             {
-                string optionKeyId = input.QId.ToString();
+                var optionKeyId = input.QId;
                 List<Guid> answers = new List<Guid>();
 
                 //Set Options
                 for (int indx = 0; indx < input.Options.Count(); indx++)
                 {
                     var op = input.Options[indx];
-                    op.KeyId = optionKeyId;
+                    op.KeyId = optionKeyId.ToString();
                     QuestionOption questionOption = new QuestionOption();
                     Utility.CopyEntity(out questionOption, op);
 
@@ -133,7 +142,7 @@ namespace ATS.Bll.Factory.Question
                     }
                 }
                 //Delete Old Map
-                var queryable = _unitOfWork.MapOptionRepo.Select(x => x.QId == input.QId);
+                var queryable = _unitOfWork.MapOptionRepo.Select(x => x.QId == optionKeyId);
                 var oldMaps = queryable.ToList();
 
                 List<QuestionOptionMapping> list = new List<QuestionOptionMapping>();
@@ -153,7 +162,7 @@ namespace ATS.Bll.Factory.Question
                         {
                             Id = Guid.NewGuid(),
                             QId = input.QId,
-                            OptionKeyId = optionKeyId,
+                            OptionKeyId = optionKeyId.ToString(),
                             Answer = ans.ToString(),
                         };
 
@@ -161,7 +170,7 @@ namespace ATS.Bll.Factory.Question
                         {
                             Id = map.Id,
                             QId = input.QId,
-                            OptionKeyId = optionKeyId,
+                            OptionKeyId = optionKeyId.ToString(),
                             Answer = ans.ToString()
                         });
 
