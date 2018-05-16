@@ -231,7 +231,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.msgContext);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -244,12 +244,12 @@
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             })
             .fail(res => {
-                $(op.errorMsg).html(res.responseText);
+                alertService.showError(res.responseText, op.msgContext);
             });
     }
     var loadCategoryTypes = function () {
@@ -265,7 +265,7 @@
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                     else {
                         $.each(res.Data, function (index, value) {
@@ -278,12 +278,12 @@
                     $.each(res.Message, function (index, value) {
                         msg += value;
                     });
-                    $(op.errorMsg).html(msg);
+                    alertService.showError(msg, op.msgContext);
                 }
             }
         })
         .fail(res => {
-            $(op.errorMsg).html(res.responseText);
+            alertService.showError(res.responseText, op.msgContext);
         });
     }
     var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
@@ -308,7 +308,7 @@
         }
 
         if (message != "") {
-            alertService.showError(message,messageContext);           
+            alertService.showError(message, defaults.messageContext);           
             flag = false;
         }
 
