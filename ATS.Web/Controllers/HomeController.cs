@@ -55,9 +55,9 @@ namespace ATS.Web.Controllers
                             FormsAuthentication.SetAuthCookie(Session[Constants.USERID].ToString(), userCredential.RememberMe);
 
                             if (!string.IsNullOrEmpty(userCredential.ReturnUrl))
-                                return RedirectToAction("SetUserCredential", "Account", new { @ReturnUrl = userCredential.ReturnUrl });
+                                return RedirectToAction("SetUserCredential", "Home", new { @ReturnUrl = userCredential.ReturnUrl });
                             else
-                                return RedirectToAction("SetUserCredential", "Account");
+                                return RedirectToAction("SetUserCredential", "Home");
                         }
                     }
                     else
