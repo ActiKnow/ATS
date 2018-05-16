@@ -93,10 +93,11 @@
                     if (result.Status) {
                         action.getTests();
                         render.closeTestSetupPopup();
+                        alertService.showAllSuccess(result.Message, defaults.mainMessageContext);
                     }
                     else
                     {
-
+                        alertService.showAllErrors(result.Message, defaults.popupMessageContext);
                     }
                 })
                 .fail();
