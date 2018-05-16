@@ -177,19 +177,20 @@
         if (quesTypeValue == questionTypes.text) {
             var ansText = $(op.selectSubjective_text).val();
         }
-
-        var QuestionView = {
-            LevelTypeValue: quesDiffiLevelValue,
-            QuesTypeValue: quesTypeValue,
-            CategoryTypeValue: quesSubjectvalue,
-            Description: quesText,
-            DefaultMark: quesMark,
-            AnsText: ansText
+        if (validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark)) {
+            var QuestionView = {
+                LevelTypeValue: quesDiffiLevelValue,
+                QuesTypeValue: quesTypeValue,
+                CategoryTypeValue: quesSubjectvalue,
+                Description: quesText,
+                DefaultMark: quesMark,
+                AnsText: ansText
+            }
+            QuestionView.options = optionValue;
+            api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
+                .done(callBacks.onQuestionAdded)
+                .fail(callBacks.onQuestionFailed);
         }
-        QuestionView.options = optionValue;
-        api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
-            .done(callBacks.onQuestionAdded)
-            .fail(callBacks.onQuestionFailed);
     };
     var loadQuestionTypes = function () {
         var op = defaults;
@@ -314,7 +315,7 @@
         }
 
         if (message != "") {
-            $(defaults.errorMsg).html(message);
+            alertService.showError(message,messageContext);           
             flag = false;
         }
 
