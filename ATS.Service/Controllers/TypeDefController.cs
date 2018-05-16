@@ -84,30 +84,6 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-
-        //[HttpGet]
-        //[Route("api/TypeDef/Select/{isParentDependent}/{parentKey}")]
-        //public IHttpActionResult Select(bool isParentDependent, int parentKey = 0)
-        //{
-        //    try
-        //    {
-        //        if (isParentDependent)
-        //        {
-        //            apiResult = typeDefBo.Select(x => x.ParentKey == parentKey);
-        //        }
-        //        else
-        //        {
-        //            apiResult = typeDefBo.Select(null);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        apiResult.Status = false;
-        //        apiResult.Message.Add(ex.GetBaseException().Message)  ;
-        //    }
-        //    return Ok(apiResult);
-        //}
-
         [HttpGet]
         [Route("api/TypeDef/ValidateType/{typeName}")]
         public IHttpActionResult ValidateType(string typeName)

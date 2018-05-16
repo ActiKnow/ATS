@@ -22,7 +22,7 @@ namespace ATS.Repository.Model
         public bool IsEditable { get; set; }
         public int ParentKey { get; set; }
         public List<UserInfo> UserInfo { get; set; }
-        public List<QuestionBank> QuestBank { get; set; }
+        //public List<QuestionBank> QuestBank { get; set; }
         [InverseProperty("CategoryType")]
         public virtual ICollection<QuestionBank> QuestionCategories { get; set; }
         [InverseProperty("LevelType")]
