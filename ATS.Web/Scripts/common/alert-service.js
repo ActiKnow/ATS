@@ -131,7 +131,15 @@ var alertService = (function () {
     var showSuccess = function (message, messageContext) {
         showAlert(message, AlertTypes.Success, 'alert-success alert-dismissible', messageContext);
     };
-
+    var showAllSuccess = function (messageList, messageContext) {
+        var msg = " ";
+        if (messageList && messageList.length > 0) {
+            $.each(messageList, function (index, value) {
+                msg += value;
+            });
+            showAlert(msg, AlertTypes.Success, 'alert-success alert-dismissible', messageContext);
+        }
+    };
     var showInfo = function (message, messageContext) {
         showAlert(message, AlertTypes.Info, 'alert-info alert-dismissible', messageContext);
     };
@@ -144,12 +152,23 @@ var alertService = (function () {
         showAlert(message, AlertTypes.Error, 'alert-danger alert-dismissible', messageContext);
     };
 
+    var showAllErrors = function (messageList, messageContext) {
+        var msg = " ";
+        if (messageList && messageList.length > 0) {
+            $.each(messageList, function (index, value) {
+                msg += value;
+            });
+        showAlert(msg, AlertTypes.Error, 'alert-danger alert-dismissible', messageContext);
+        }
+    }
     return {
         configure: configure,
         showInfo: showInfo,
         showSuccess: showSuccess,
+        showAllSuccess: showAllSuccess,
         showWarning: showWarning,
         showError: showError,
+        showAllErrors: showAllErrors,
         hide: hide,
         hideAll: hideAll
     }
