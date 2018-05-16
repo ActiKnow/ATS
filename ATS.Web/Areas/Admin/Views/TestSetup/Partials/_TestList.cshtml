@@ -2,34 +2,46 @@
 @{
     var count = 1;
 }
-<table class="table">
+<table class="table" id="tblTestRecords">
     <thead>
         <tr>
             <th>#</th>
-            <th>Test Desc</th>
+            <th>Test Description (Marks/Duration)</th>
             <th>Category</th>
             <th>Type</th>
             <th>Level</th>
+            <th>Status</th>
             <th>Action</th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@(count++)</td>
-                <td><span class="itemName">@item.Description</span></td>
-                <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
-                <td>@(item.TestTypeDescription )</td>
-                <td>@item.LavelTypeDescription</td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn btn-primary btnEditType"><i class="fa fa-lg fa-edit"></i></button>
-                        <button class="btn btn-primary btnRemoveType"><i class="fa fa-lg fa-trash"></i></button>
-                    </div>
-
-                </td>
-            </tr>
+        <tr>
+            <td>@(count++)</td>
+            <td><span class="itemName">@string.Format("{0} ( {1} / {2} mins )", item.Description, item.TotalMarks, item.Duration)</span></td>
+            <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
+            <td><span>@(item.TestTypeDescription )</span></td>
+            <td><span>@item.LavelTypeDescription</span></td>
+            <td><span>@(item.StatusId? ATS.Core.Global.Constants.ACTIVE: ATS.Core.Global.Constants.INACTIVE)</span></td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary test-edit"><i class="fa fa-lg fa-edit"></i></button>
+                </div>
+                <span>
+                    <input type="hidden" class="test-id" value="@item.TestBankId" />
+                    <input type="hidden" class="category-value" value="@item.CategoryTypeValue" />
+                    <input type="hidden" class="type-value" value="@item.TestTypeValue" />
+                    <input type="hidden" class="level-value" value="@item.LevelTypeValue" />
+                    <input type="hidden" class="test-marks" value="@item.TotalMarks" />
+                    <input type="hidden" class="test-description" value="@item.Description" />
+                    <input type="hidden" class="test-instruction" value="@item.Instructions" />
+                    <input type="hidden" class="test-duration" value="@item.Duration" />
+                    <input type="hidden" class="test-status" value="@item.StatusId.ToString().ToLower()" />
+                </span>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

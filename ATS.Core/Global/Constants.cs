@@ -19,7 +19,7 @@ namespace ATS.Core.Global
         public const string ROLE = "Role";
         public const string STATUS = "Status";
         public const string ACTIVE = "Active";
-        public const string INACTIVE = "InActive";
+        public const string INACTIVE = "Inactive";
         public const CommonType OPTION = CommonType.OPTION;
         public const CommonType BOOL = CommonType.BOOL;
         public const CommonType TEXT = CommonType.TEXT;

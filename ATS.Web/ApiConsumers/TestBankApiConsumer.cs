@@ -22,6 +22,20 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult UpdateTest(TestBankModel testModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TestBank/Update";
+                apiResult = ConsumerMethods.Post<List<TestBankModel>>(url, testModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
         public static ApiResult RetrieveTest(TestBankModel testModel)
         {
             ApiResult apiResult = null;
