@@ -1,9 +1,9 @@
-﻿var answer = (function () {
+﻿var result = (function () {
     'use strict'
     var defaults = {
         selectContainer: '#questionContainer',
     };
-   
+
     var api = (function () {
         var fireAjax = function (url, data, type) {
             var httpMethod = type || 'POST';
@@ -59,7 +59,7 @@
     })();
     var loadUserList = function () {
         var op = defaults;
-        api.fireGetAjax('/Admin/Setup/GetAllUsers', {})
+        api.fireGetAjax('/Admin/Result/GetAllUsers', {})
             .done(callBacks.onUserList)
             .fail(callBacks.onUserListFailed);
     }
@@ -71,7 +71,7 @@
             if (recID) {
                 allUserIdList.push({
                     UserId: recID,
-                   
+
                 });
             }
         })
@@ -79,9 +79,9 @@
             $(defaults.errorMsg).html("Please select at least one record to proceed");
         }
         else {
-            api.firePostAjax('/Admin/Setup/GetAnswerUsers', { allUserIdList: allUserIdList })
-                .done(callBacks.onAnswerSuccess)
-                .fail(callBacks.onAnswerFailed)
+            api.firePostAjax('/Admin/Result/GetResultUsers', { allUserIdList: allUserIdList })
+                .done(callBacks.onResultSuccess)
+                .fail(callBacks.onResultFailed)
         }
     }
 
@@ -104,7 +104,7 @@
         $tableUserContext.on('click', op.btnView, function (event) {
             userResult();
         });
-       };
+    };
     return {
         init: function (config) {
 
