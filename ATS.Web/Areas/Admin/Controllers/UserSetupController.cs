@@ -178,6 +178,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
+                userInfoModel.LastUpdatedDate = DateTime.Now;
+                userInfoModel.LastUpdatedBy = Session[Constants.USERID].ToString();
+                userInfoModel.UserCredentials.LastUpdatedDate = DateTime.Now;
+                userInfoModel.UserCredentials.LastUpdatedBy = Session[Constants.USERID].ToString();
+
                 result = ApiConsumers.UserApiConsumer.UpdateUser(userInfoModel);
             }
             catch (Exception ex)

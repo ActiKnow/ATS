@@ -3,13 +3,11 @@
     var defaults = {
         firstName: '.firstName',
         lastName: '.lastName',
-        mobile: '.mobile',
+        mobile: '.mobileNumber',
         email: '.emailId',
         password: '#password-field',
         btnRefresh: '#refresh',
         ddlRoleType: '#roleType',
-        errorMsg: '.errorMsg',
-        successMsg: '.successMsg',
         btnCreateUser: '#createUser',
         btnCancelUser: '#cancelUser',
     };
@@ -41,11 +39,10 @@
                     var msg = "";
                     if (result.Status) {
                         if (result.Message && result.Message.length>0) {
-                            $(op.successMsg).show();
                             $.each(result.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.successMsg).html(msg);                           
+                            alertService.showSuccess(msg, op.msgContext);                        
                         }
                         resetFields();
                     }
@@ -53,29 +50,35 @@
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             },
             onUserCreationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, op.msgContext);
             },
             onUserUpdated: function (result) {
                 if (result !== "") {
+                    var msg = "";
                     if (result.Status) {
-                        if (result.Message && result.Message.length>0) {
-                            $(op.successMsg).show();
-                            $(op.successMsg).html(result.Message && result.Message.Count>0);
+                        if (result.Message && result.Message.length > 0) {
+                            $.each(result.Message, function (index, value) {
+                                msg += value;
+                            });                            
+                            alertService.showSuccess(msg, op.msgContext);
                             resetFields();
                         }
                     }
                     else {
-                        $(op.errorMsg).html(result.Message && result.Message.length>0);
+                        $.each(result.Message, function (index, value) {
+                            msg += value;
+                        });
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             },
             onUserUpdationFailed: function (result) {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, op.msgContext);
             },
 
         }
@@ -93,7 +96,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.msgContext);
                         }
                         else {
                             var items = "";
@@ -110,12 +113,12 @@
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             })
             .fail(res => {
-                $(op.errorMsg).html(res.responseText);
+                alertService.showError(res.responseText, op.msgContext);               
             });
     }
 
@@ -139,7 +142,6 @@
             var item = {
                 CurrPassword: password,
                 EmailId: email,
-                RoleTypeId: roleType,
                 StatusId: status.trim(),
             };
             UserCredentials.push(item);
@@ -165,7 +167,7 @@
     var updateUser = function () {
 
         var flag = true;
-        var UserCredentials = [];
+        //var UserCredentials = [];
         var op = defaults;
 
         var userId = $(op.userId).val();
@@ -175,26 +177,36 @@
         var password = $(op.password).val();
         var email = $(op.email).val();
         var roleType = $(op.ddlRoleType).find(":selected").val();
-        var UpdateStatus = $(op.selectStatus).find(":selected").val();
+        var updateStatus = $(op.selectStatus).find(":selected").val();
+        var hiddenId = $(op.hiddenId).val();
+        var prevPassword = $(op.prevPassword).val();
+        
 
         flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
         if (flag) {
-            var item = {
-                UserId: userId,
+            var UserCredentials = {
+                Id: hiddenId.trim(),
+                UserId: userId.trim(),
                 CurrPassword: password,
-                EmailId: email,
-                RoleTypeId: roleType,
-                StatusId: UpdateStatus.trim(),
+                PrevPassword: prevPassword,
+                EmailId: email.trim(),
+                StatusId: updateStatus.trim(),
+                CreatedBy: $(op.credentialCreatedBy).val(),
+                CreatedDate: $(op.credentialCreatedOn).val(),
             };
-            UserCredentials.push(item);
+            //UserCredentials.push(item);
             var userInfoModel = {
                 UserId: userId,
+                FName: firstName.trim(),
+                LName: lastName.trim(),
                 Mobile: mobile.trim(),
                 Email: email.trim(),
-                RoleTypeId: roleType.trim(),
+                RoleTypeValue: roleType.trim(),
                 CurrPassword: password.trim(),
-                StatusId: UpdateStatus.trim(),
+                StatusId: updateStatus.trim(),
+                CreatedBy: $(op.userInfoCreatedBy).val(),
+                CreatedDate: $(op.userInfoCreatedOn).val(),
                 UserCredentials: UserCredentials,
             };
 
@@ -208,7 +220,6 @@
 
         var flag = true;
         var message = "";
-        $(defaults.successMsg).hide();
        
         if (!firstName || firstName.trim() === "") {
             message = "First name is required";
@@ -226,8 +237,7 @@
             message = "Password is required";
         }
         if (message !== "") {
-            $(defaults.errorMsg).show();
-            $(defaults.errorMsg).html(message);
+            alertService.showError(message, op.msgContext);
             flag = false;
         }
 
@@ -262,7 +272,7 @@
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.msgContext);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -280,12 +290,12 @@
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             })
             .fail(res => {
-                $(op.errorMsg).html(res.responseText);
+                alertService.showError(res.responseText, op.msgContext);
             });
     }
     var getPassword = function () {
@@ -298,18 +308,18 @@
                     var msg = " ";
                     if (result.Status) {                        
                         $(op.password).val(result.Data);
-                        $(op.password).attr("readonly", true);
+                        //$(op.password).attr("readonly", true);
                     }
                     else {
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             })
             .fail(result => {
-                $(op.errorMsg).html(result.responseText);
+                alertService.showError(result.responseText, op.msgContext);
             });
     }
     var resetFields = function () {
@@ -351,8 +361,7 @@
         });
         $userContext.on('change', op.ddlRoleType, function (e) {          
             getPassword();
-        });
-
+        });        
     };
 
     return {
@@ -362,8 +371,6 @@
             loadRoleTypes();     
             loadStatus();
             setValuesReadOnly();
-            $(defaults.successMsg).hide();
-            $(defaults.errorMsg).hide();
         }
     }
 })();
