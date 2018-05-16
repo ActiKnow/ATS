@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level" })
+                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
                                 </div>
 
                             </div>
@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
+                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" , value = Model.QuesTypeValue })
                                 </div>
                             </div>
                         </div>
@@ -51,8 +51,8 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_subject">Subject</label>
-                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
-
+                                    @*@Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })*@
+                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" ,value=Model.CategoryTypeValue})
                                 </div>
                             </div>
                         </div>

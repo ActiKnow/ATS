@@ -141,12 +141,12 @@
         var op = defaults;
         var message = "";
         var quesDiffiLevel = $(op.selectQuesDiffiLevel).val();
-        var quesDiffiLevelValue = $(op.selectQuesDiffiLevel).find(':selected').attr('data-id');
+        var quesDiffiLevelValue = $(op.selectQuesDiffiLevel).find(':selected').val();
         var $quesType = $(op.selectQuesQuesTypeId);
         var quesTypeId = $quesType.val();
-        var quesTypeValue = $quesType.find(':selected').attr('data-id');
+        var quesTypeValue = $quesType.find(':selected').val();
         var quesSubjectId = $(op.selectQuesSubjectId).val();
-        var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').attr('data-id');
+        var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').val();
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
         var ansText = "";
@@ -190,12 +190,12 @@
         var op = defaults;
         var message = "";
         var quesDiffiLevel = $(op.selectQuesDiffiLevel).val();
-        var quesDiffiLevelValue = $(op.selectQuesDiffiLevel).find(':selected').attr('data-id');
+        var quesDiffiLevelValue = $(op.selectQuesDiffiLevel).find(':selected').val();
         var $quesType = $(op.selectQuesQuesTypeId);
         var quesTypeId = $quesType.val();
-        var quesTypeValue = $quesType.find(':selected').attr('data-id');
+        var quesTypeValue = $quesType.find(':selected').val();
         var quesSubjectId = $(op.selectQuesSubjectId).val();
-        var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').attr('data-id');
+        var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').val();
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
         var ansText = "";
@@ -236,6 +236,7 @@
     };
     var loadQuestionTypes = function () {
         var op = defaults;
+        var previousValue = $(op.selectQuesQuesTypeId).attr('value');
         api.fireGetAjax('/Setup/GetQuestionTypes', {})
             .done(res => {
                 if (res != null) {
@@ -250,9 +251,14 @@
                         }
                         else {
                             $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
+                                items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
-                            $(op.selectQuesQuesTypeId).html(items);
+                            if (previousValue) {
+                                $(op.selectQuesQuesTypeId).html(items).val(previousValue);
+                            }
+                            else {
+                                $(op.selectQuesQuesTypeId).html(items);
+                            }
                         }
                     }
                     else {
@@ -269,7 +275,8 @@
     }
     var loadLabelTypes = function () {
         var op = defaults;
-        var ad = $(op.selectQuesDiffiLevel).val();
+        var previousValue = $(op.selectQuesDiffiLevel).attr('value');
+
         api.fireGetAjax('/Setup/GetLevelTypes', {})
             .done(res => {
                 if (res != null) {
@@ -283,10 +290,15 @@
                             alertService.showError(msg, op.msgContext);
                         }
                         else {
-                            $.each(res.Data, function (index, value) {
-                                items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
+                            $.each(res.Data, function (index, value) {                                
+                                items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
-                            $(op.selectQuesDiffiLevel).html(items);
+                            if (previousValue) {
+                                $(op.selectQuesDiffiLevel).html(items).val(previousValue);
+                            }
+                            else {
+                                $(op.selectQuesDiffiLevel).html(items);
+                            }
                         }
                     }
                     else {
@@ -303,7 +315,7 @@
     }
     var loadCategoryTypes = function () {
         var op = defaults;
-
+        var previousValue = $(op.selectQuesSubjectId).attr('value');
     api.fireGetAjax('/Setup/GetCategoryTypes', {})
         .done(res => {
             if (res != null) {
@@ -318,9 +330,14 @@
                     }
                     else {
                         $.each(res.Data, function (index, value) {
-                            items += "<option value='" + value.TypeId + "' data-id='" + value.Value + "'>" + value.Description + "</option>";
+                            items += "<option value="+ value.Value +">" + value.Description + "</option>";
                         });
-                        $(op.selectQuesSubjectId).html(items);
+                        if (previousValue) {
+                            $(op.selectQuesSubjectId).html(items).val(previousValue);
+                        }
+                        else {
+                            $(op.selectQuesSubjectId).html(items);
+                        }
                     }
                 }
                 else {
@@ -357,7 +374,7 @@
         }
 
         if (message != "") {
-            alertService.showError(message, defaults.messageContext);           
+            alertService.showError(message, defaults.msgContext);           
             flag = false;
         }
 
@@ -376,7 +393,7 @@
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
             //var Type = $(op.selectQuesQuesTypeId).val();
             var $type = $(this);
-            var Type = $type.find(":selected").attr('data-id');
+            var Type = $type.find(":selected").val();
             if (Type == questionTypes.option) {
                 $(defaults.selectMCQType).show();
                 $(defaults.selectTFType).hide();
