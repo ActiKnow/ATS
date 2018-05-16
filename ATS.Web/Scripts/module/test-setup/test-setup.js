@@ -161,6 +161,10 @@
             var $testContext = $(defaults.testTableContext);
             $testContext.html(data);
             $testContext.on('click', defaults.testEdit, render.setEditTest);
+            var $record = $(defaults.testRecords);
+            if ($record.length > 0) {
+                $record.DataTable();
+            }
         },
         openTestSetupPopup: function () {
             alertService.hide(defaults.mainMessageContext);
