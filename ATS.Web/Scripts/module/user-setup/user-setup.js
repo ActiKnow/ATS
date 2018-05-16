@@ -3,8 +3,8 @@
     var defaults = {
         firstName: '.firstName',
         lastName: '.lastName',
-        mobile: '.mobileNumber',
-        email: '.emailId',
+        //mobile: '#mobileNumber',
+        //email: '.emailId',
         password: '#password-field',
         btnRefresh: '#refresh',
         ddlRoleType: '#roleType',
