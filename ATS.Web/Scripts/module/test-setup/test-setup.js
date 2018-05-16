@@ -1,12 +1,15 @@
 ﻿var testBankSetup = (function () {
     'use strict';
     var defaults = {};
+    const update = "Update", create = "Create";
+    var testData = {} ;
     const testType = AppConstant.TESTTYPE, levelType = AppConstant.LEVEL, categoryType = AppConstant.CATEGORY;
     var apiUrl = {
         getTestType: "/Admin/Setup/GetAllSubTypes/",
         getLevelType: "/Admin/Setup/GetAllSubTypes/",
         getCategoryType: "/Admin/Setup/GetAllSubTypes/",
         createTest: '/Admin/TestSetup/CreateTest/',
+        updateTest: '/Admin/TestSetup/UpdateTest/',
         getTests: '/Admin/TestSetup/GetTests/'
     };
     var api = (function () {
@@ -78,25 +81,34 @@
                 })
                 .fail();
         },
-        createTest: function () {
+        createOrUpdateTest: function (e) {
+            if (!validationService.validateForm({ messageContext: defaults.popupMessageContext })) {
+                return false;
+            }
+            var input = inputs();
             var parameter = {
-                CategoryTypeValue: inputs().categoryTypeValue,
-                LevelTypeValue: inputs().levelTypeValue,
-                Description: inputs().description,
-                Instructions: inputs().instructions,
-                Duration: inputs().duration,
-                TestTypeValue: inputs().testTypeValue,
-                TotalMarks: inputs().totalMarks
+                CategoryTypeValue: input.categoryTypeValue.val(),
+                LevelTypeValue: input.levelTypeValue.val(),
+                Description: input.description.val().trim(),
+                Instructions: input.instructions.val().trim(),
+                Duration: input.duration.val().trim(),
+                TestTypeValue: input.testTypeValue.val(),
+                TotalMarks: input.totalMarks.val().trim(),
+                StatusId: input.status.val(),
             };
-            api.firePostAjax(apiUrl.createTest, parameter)
+            let url = apiUrl.createTest;
+            if (testData.id) {
+                url = apiUrl.updateTest;
+                $.extend(true, parameter, { TestBankId: testData.id });
+            }
+            api.firePostAjax(url, parameter)
                 .done((result) => {
                     if (result.Status) {
                         action.getTests();
                         render.closeTestSetupPopup();
                         alertService.showAllSuccess(result.Message, defaults.mainMessageContext);
                     }
-                    else
-                    {
+                    else {
                         alertService.showAllErrors(result.Message, defaults.popupMessageContext);
                     }
                 })
@@ -118,13 +130,25 @@
                 })
                 .fail();
         },
+        resetTestData: function () {
+            return {
+                id: '',
+                categoryValue: '',
+                typeValue: '',
+                levelValue: '',
+                marks: '',
+                description: '',
+                instruction: '',
+                duration: '',
+                status: 'true',
+            };
+        },
     };
-
     var render = {
         fillSelector: function ($selector, data, defaultOption, value = 'Value', text = 'Text') {
             let options = "";
             if (defaultOption) {
-                options = '<option>' + defaultOption + '</option>';
+                options = '<option value>' + defaultOption + '</option>';
             }
             $.each(data, (indx, item) => {
                 options += '<option value="' + item[value] + '">' + item[text] + '</option>';
@@ -134,16 +158,55 @@
             }
         },
         fillTests: function (data) {
-            var testContext = $(defaults.testTableContext);
-            testContext.html(data);
+            var $testContext = $(defaults.testTableContext);
+            $testContext.html(data);
+            $testContext.on('click', defaults.testEdit, render.setEditTest);
         },
         openTestSetupPopup: function () {
+            alertService.hide(defaults.mainMessageContext);
+            validationService.removeValidationError({ messageContext: defaults.popupMessageContext });
             var $modalTest = $(defaults.modalTestContext);
+            render.setTestControls();
             $modalTest.modal('show');
+            var $create = $(defaults.createTest);
+            $create.html(create);
         },
         closeTestSetupPopup: function () {
             var $modalTest = $(defaults.modalTestContext);
+            testData = action.resetTestData();
+            render.setTestControls();
             $modalTest.modal('hide');
+        },
+        setTestControls: function (data=null) {
+            data = data || action.resetTestData();
+            var input = inputs();
+            input.categoryTypeValue.val(data.categoryValue);
+            input.levelTypeValue.val(data.levelValue);
+            input.description.val(data.description);
+            input.instructions.val(data.instruction);
+            input.duration.val(data.duration);
+            input.testTypeValue.val(data.typeValue);
+            input.totalMarks.val(data.marks);
+            input.status.val(data.status);
+        },
+        setEditTest: function (e) {
+            var op = defaults;
+            var $row = $(e.target).closest('tr');
+            testData = action.resetTestData();
+            testData.id = $row.find(op.testId).val();
+            testData.categoryValue = $row.find(op.categoryValue).val();
+            testData.typeValue = $row.find(op.typeValue).val();
+            testData.levelValue = $row.find(op.levelValue).val();
+            testData.marks = $row.find(op.testMarks).val();
+            testData.description = $row.find(op.testDescription).val();
+            testData.instruction = $row.find(op.testInstruction).val();
+            testData.duration = $row.find(op.testDuration).val();
+            testData.status = $row.find(op.testStatus).val();
+
+            render.openTestSetupPopup();
+            render.setTestControls(testData);
+            var $update = $(defaults.createTest);
+            $update.html(update);
         },
     };
 
@@ -158,13 +221,14 @@
 
     var inputs = function () {
         return {
-            categoryTypeValue: $(defaults.selectCategory).val(),
-            levelTypeValue: $(defaults.selectLevel).val(),
-            description: $(defaults.testDescription).val(),
-            instructions: $(defaults.testInstruction).val(),
-            duration: $(defaults.testDuration).val(),
-            testTypeValue: $(defaults.selectTestType).val(),
-            totalMarks: $(defaults.testMarks).val()
+            categoryTypeValue: $(defaults.selectCategory),
+            levelTypeValue: $(defaults.selectLevel),
+            description: $(defaults.testDescriptionInput),
+            instructions: $(defaults.testInstructionInput),
+            duration: $(defaults.testDurationInput),
+            testTypeValue: $(defaults.selectTestType),
+            totalMarks: $(defaults.testMarksInput),
+            status: $(defaults.testStatusInput),
         };
     };
 
@@ -172,7 +236,7 @@
         bindControls: function () {
             var $testContext = $(defaults.testContext);
             var testListContext = $(defaults.testListContext);
-            $testContext.on('click', defaults.createTest, action.createTest);
+            $testContext.on('click', defaults.createTest, action.createOrUpdateTest);
             $testContext.on('click', defaults.cancelTestSetup, render.closeTestSetupPopup);
             testListContext.on('click', defaults.openSetup, render.openTestSetupPopup);
         },
