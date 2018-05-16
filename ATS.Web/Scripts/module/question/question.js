@@ -269,7 +269,7 @@
     }
     var loadLabelTypes = function () {
         var op = defaults;
-
+        var ad = $(op.selectQuesDiffiLevel).val();
         api.fireGetAjax('/Setup/GetLevelTypes', {})
             .done(res => {
                 if (res != null) {
