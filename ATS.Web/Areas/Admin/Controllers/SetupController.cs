@@ -37,7 +37,6 @@ namespace ATS.Web.Areas.Admin.Controllers
 
         [HttpPost]
         public ActionResult Question(Guid selectedId)
-
         {
             ApiResult result = null;
             QuestionBankModel questionBankModel = new QuestionBankModel();
@@ -65,6 +64,21 @@ namespace ATS.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 result = new ApiResult(false, new List<string> {   ex.GetBaseException().Message  });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult UpdateQuestion(QuestionBankModel QuestionView)
+        {
+
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.QuestionApiConsumer.UpdateQuestion(QuestionView);
+
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
