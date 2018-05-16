@@ -65,7 +65,7 @@
                     if (result.Status) {
                         if (result.Message && result.Message.length>0) {
                             $(op.successMsg).show();
-                            $(op.successMsg).html(result.Message && result.Message.Count>0);
+                            $(op.successMsg).html(result.Message && result.Message.length>0);
                             resetFields();
                         }
                     }
@@ -89,7 +89,7 @@
                 if (res !== null) {
                     var msg = " ";
                     if (res.Status) {
-                        if (res.Message && res.Message.Count>0) {
+                        if (res.Message && res.Message.length>0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
@@ -258,7 +258,7 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message && res.Message.Count>0) {
+                        if (res.Message && res.Message.length>0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });

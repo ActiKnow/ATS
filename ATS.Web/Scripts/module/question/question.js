@@ -9,7 +9,8 @@
         selectQuesSubjectId: '#question_subject_id',
         selectQuesText: '#question_text',
         selectQuesMark: '#question_mark',
-        btnCreateQuestion: '#button_create_question'
+        btnCreateQuestion: '#button_create_question',
+        msgContext: '#msgContext',
 
     };
     var questionTypes = {
@@ -57,20 +58,20 @@
                             $.each(result.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showSuccess(msg,op.msgContext);
                         }
                     }
                     else {
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             },
             onQuestionFailed: function (result) {
                 clear();
-                $(op.errorMsg).html(result.Message && result.Message.length > 0);
+                alertService.showError(result.responseText, op.msgContext);
             }
         }        
     })();
@@ -156,8 +157,6 @@
                 var id = $option.data("id");
                 var $radio = $("input[data-id=radio" + id + "]");
                 var isAnswer = $radio.is(':checked');
-                // var isAns = $('input[name=statusRadio]:checked').val();
-                // if (isAns==)
                 optionValue.push({ Id: "", KeyId: "", Description: $(this).val(), IsAnswer: isAnswer });
             });
         }
@@ -168,8 +167,6 @@
                 var id = $option.data("id");
                 var $radio = $("input[data-id=" + id + "]");
                 var isAnswer = $radio.is(':checked');
-                // var isAns = $('input[name=statusRadio]:checked').val();
-                // if (isAns==)
                 optionValue.push({ Id: "", KeyId: "", Description: $(this).val(), IsAnswer: isAnswer });
             });
         }
@@ -199,11 +196,11 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message && res.Message.Count>0) {
+                        if (res.Message && res.Message.length>0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
-                            $(op.errorMsg).html(msg);
+                            alertService.showError(msg, op.msgContext);
                         }
                         else {
                             $.each(res.Data, function (index, value) {
@@ -216,11 +213,12 @@
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
-                        $(op.errorMsg).html(msg);
+                        alertService.showError(msg, op.msgContext);
                     }
                 }
             })
             .fail(res => {
+                alertService.showError(res.responseText, op.msgContext);
                 $(op.errorMsg).html(res.responseText);
             });
     }
@@ -267,7 +265,7 @@
                 var msg = " ";
                 var items = "<option value=''>-Select-</option>";
                 if (res.Status) {
-                    if (res.Message && res.Message.Count>0) {
+                    if (res.Message && res.Message.length>0) {
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
