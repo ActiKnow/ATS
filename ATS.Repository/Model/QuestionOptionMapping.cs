@@ -16,7 +16,7 @@ namespace ATS.Repository.Model
         public string Answer { get; set; }
 
         [ForeignKey("QId")]
-        public QuestionBank QuestionBank { get; set; }
+        public virtual QuestionBank QuestionBank { get; set; }
 
         
     }

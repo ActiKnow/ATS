@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ATS.Repository.Model;
 using ATS.Repository.Uow;
 
-namespace ATS.Repository.Factory.Question
+namespace ATS.Bll.Factory.Question
 {
     public class QuestionFactory
     {       

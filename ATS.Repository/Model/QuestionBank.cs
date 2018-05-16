@@ -31,15 +31,12 @@ namespace ATS.Repository.Model
 
         public List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
 
-        public List<QuestionOptionModel> Options { get; set; }       
-
-        //[ForeignKey("CategoryTypeValue")]
-        //public TypeDef CategoryType { get; set; }
-
-        //[ForeignKey("LevelTypeValue")]
-        //public TypeDef LevelType { get; set; }
-
-        //[ForeignKey("QuesTypeValue")]
-        //public TypeDef TestType { get; set; }
+        public List<QuestionOptionModel> Options { get; set; }
+        [ForeignKey("CategoryTypeValue")]
+        public virtual TypeDef CategoryType { get; set; }
+        [ForeignKey("LevelTypeValue")]
+        public virtual TypeDef LevelType { get; set; }
+        [ForeignKey("QuesTypeValue")]
+        public virtual TypeDef QuestionType { get; set; }
     }
 }
