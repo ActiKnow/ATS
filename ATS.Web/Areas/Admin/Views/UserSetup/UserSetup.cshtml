@@ -173,3 +173,178 @@ else
     </script>
 }
 
+@model ATS.Core.Model.UserInfoModel
+
+@{
+    ViewBag.Title = "UserSetup";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-edit"></i>User Setup</h1>
+        <p>You can create a user by filling the fields in form below.</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">User Setup</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12" id="userSetupContext">
+        <div class="tile">
+            <div class="row">
+                <div id="msgContext"></div>               
+            </div>
+            <div id="messageContext"></div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">First Name<span class="fa fa-star"></span></label>
+                        @Html.TextBoxFor(x => x.FName, htmlAttributes: new { @class = "form-control firstName" })
+                        @*<input class="form-control firstName" type="text" placeholder="Enter first name">*@
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Last Name</label>
+                        @Html.TextBoxFor(x => x.LName, htmlAttributes: new { @class = "form-control lastName" })
+                        @*<input class="form-control lastName" type="text" placeholder="Enter last name">*@
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Mobile No<span class="fa fa-star"></span></label>
+                        @*@Html.TextBoxFor(m => m.Mobile, new { @Value = (Model.Mobile > 0 ?Model.Mobile.ToString() :string.Empty), @class = "form-control", @id = "mobileNumber",autocomplete ="off" })*@
+                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber",autocomplete = "off" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Email address<span class="fa fa-star"></span></label>                        
+                        @if (Model.Email != null && Model.Email != "")
+                        {
+                            @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId", autocomplete = "off", @type = "text" })
+                        }
+                        else
+                        {
+                            <input class="form-control emailId" autocomplete="off" >
+                        }                        
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Role Type<span class="fa fa-star"></span></label>
+         
+                        <select class="form-control roleType" id="roleType">
+                            <option value="">-Select-</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Password<span class="fa fa-star"></span></label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", @autocomplete = "new-password" })
+
+                                @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
+                                @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
+                                @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
+                                @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
+                                @Html.HiddenFor(x => x.UserCredentials.Id, htmlAttributes: new { @id = "hiddenId" })
+                                @Html.HiddenFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @id = "prevPassword" })
+                                @Html.HiddenFor(x => x.UserCredentials.CreatedBy, htmlAttributes: new { @id = "credentialCreatedBy" })
+                                @Html.HiddenFor(x => x.UserCredentials.CreatedDate, htmlAttributes: new { @id = "credentialCreatedOn" })
+                                @Html.HiddenFor(x => x.CreatedBy, htmlAttributes: new { @id = "userInfoCreatedBy" })
+                                @Html.HiddenFor(x => x.CreatedDate, htmlAttributes: new { @id = "userInfoCreatedOn" })
+
+                                <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
+                                <button class="input-group-lg input-group-append" id="refresh">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control ddlStatus">
+                            <option value="">-Select-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3">
+                        @if (Model.Email == null || Model.Email == "")
+    {
+                    <button class="btn btn-primary" id="createUser" type="button">
+                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Register
+                    </button>
+}
+else
+{
+                    <button class="btn btn-primary" id="updateUser" type="button">
+                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Update
+                    </button>                   
+                    @*<button class="btn btn-primary" id="backToList" type="button">
+                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Back To List
+                    </button>*@
+                    <a href="/Admin/UserSetup/UserApproval" class="btn btn-primary" id="backToList" type="button" ><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back To List</a>
+}
+                        <button class="btn btn-secondary" id="cancelUser" type="button">
+                            <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/module/user-setup/user-setup.js"></script>
+    <script>
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    firstName: '.firstName',
+                    lastName: '.lastName',
+                    mobile: '#mobileNumber',
+                    email: '.emailId',
+                    password: '#password-field',
+                    btnRefresh: '#refresh',
+                    ddlRoleType: '#roleType',
+                    btnCreateUser: '#createUser',
+                    btnCancelUser: '#cancelUser',
+                    btnUpdateUser: '#updateUser',
+                    userSetupContext: "#userSetupContext",
+                    togglePassword: ".toggle-password",
+                    userId: "#userId",
+                    selectStatus: '.ddlStatus',
+                    hiddenEmail: '#hiddenEmail',
+                    hiddenRoleId: '#hiddenRoleValue',
+                    hiddenStatusId: '#hiddenStatusId',
+                    messageContext: '#messageContext',
+                    hiddenId: '#hiddenId',
+                    prevPassword: '#prevPassword',
+                    backToList: '#backToList',
+                    msgContext: '#msgContext',
+                    credentialCreatedBy: '#credentialCreatedBy',
+                    credentialCreatedOn: '#credentialCreatedOn',
+                    userInfoCreatedBy  : '#userInfoCreatedBy',
+                    userInfoCreatedOn  : '#userInfoCreatedOn', 
+                };
+                userSetup.init(config);
+            });
+
+        }(window.jQuery, window, document));
+    </script>
+}
+
