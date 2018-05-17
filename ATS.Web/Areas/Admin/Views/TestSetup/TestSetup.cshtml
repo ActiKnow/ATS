@@ -24,46 +24,46 @@
             <p>
                 <button type="button" class="btn btn-primary" id="btnOpenSetup"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Test</button>
             </p>
-            </div>
-            <div class=" tableContext">
+        </div>
+        <div class=" tableContext">
 
-            </div>
         </div>
     </div>
+</div>
 
 <div class="modal" id="modalTestContext" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="testContext">
+        <div class="modal-content validate-form" id="testContext">
             <div class="modal-header">
                 <h3>Test Setup</h3>
-                <button type="button" class="close" data-dismiss="modal">×</button>
+                <button type="button" class="close cancel-test-setup">×</button>
             </div>
             <div class="modal-body">
                 <div id="popupMessageContext"></div>
-                <div class="col-md-12" >
+                <div class="col-md-12">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Category</label>
-                                <select class="form-control " id="categoryType"></select>
+                                <select class="form-control " id="categoryType" data-required="Category is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Level</label>
-                                <select class="form-control " id="levelType"></select>
+                                <select class="form-control " id="levelType" data-required="Level is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Type</label>
-                                <select class="form-control " id="testType"></select>
+                                <select class="form-control " id="testType" data-required="Type is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Marks</label>
-                                <input class="form-control " id="testMarks" type="number" />
+                                <input class="form-control " id="testMarks" type="number" data-required="Mark is required" placeholder="00" />
                             </div>
                         </div>
                     </div>
@@ -71,13 +71,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control testDescription" cols="40" rows="5" id="testDescription"></textarea>
+                                <textarea class="form-control testDescription" cols="40" rows="5" id="testDescription" data-required="Description is required"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label style="text-align:match-parent">Instruction</label>
-                                <textarea class="form-control testInstruction" cols="40" rows="5" id="testInstruction"></textarea>
+                                <textarea class="form-control testInstruction" cols="40" rows="5" id="testInstruction" data-required="Instruction is required"></textarea>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,16 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Duration</label>
-                                <input class="form-control testDuration" type="number" id="testDuration" />
+                                <input class="form-control testDuration" type="number" id="testDuration" placeholder="00 min(s)" data-required="Duration is required" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control " id="testStatus" data-required="Status is required">
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -95,7 +104,7 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" type="button" id="btnCreateTest">Create</button>
                 <button class="btn btn-primary" type="button" id="btnUpdateTest" style="display:none">Update</button>
-                <button class="btn btn-primary" type="reset" id="btnCancelTest">Cancel</button>
+                <button class="btn btn-primary cancel-test-setup" type="reset" id="btnCancelTest">Cancel</button>
             </div>
         </div>
     </div>
@@ -103,6 +112,7 @@
 
 @section scripts {
     <script src="~/CommonTask/AppConstant"></script>
+    <script src="~/Scripts/common/form-validation-service.js"></script>
     <script src="~/Scripts/module/test-setup/test-setup.js"></script>
     <script>
         function isNumber(evt) {
@@ -121,17 +131,29 @@
                     selectTestType: '#testType',
                     createTest: '#btnCreateTest',
                     testContext: '#testContext',
-                    testMarks: '#testMarks',
-                    testDescription: '#testDescription',
-                    testInstruction: '#testInstruction',
-                    testDuration: '#testDuration',
+                    testMarksInput: '#testMarks',
+                    testDescriptionInput: '#testDescription',
+                    testInstructionInput: '#testInstruction',
+                    testDurationInput: '#testDuration',
                     testTableContext: '.tableContext',
                     openSetup: '#btnOpenSetup',
                     modalTestContext: '#modalTestContext',
                     testListContext: '#testListContext',
-                    cancelTestSetup: '#btnCancelTest',
+                    cancelTestSetup: '.cancel-test-setup',
                     mainMessageContext: '#mainMessageContext',
-                    popupMessageContext:'#popupMessageContext'
+                    popupMessageContext: '#popupMessageContext',
+                    testId: '.test-id',
+                    categoryValue: '.category-value',
+                    typeValue: '.type-value',
+                    levelValue: '.level-value',
+                    testMarks: '.test-marks',
+                    testDescription: '.test-description',
+                    testInstruction: '.test-instruction',
+                    testDuration: '.test-duration',
+                    testStatus: '.test-status',
+                    testStatusInput: '#testStatus',
+                    testEdit: '.test-edit',
+                    testRecords:'#tblTestRecords',
                 };
                 testBankSetup.init(config);
 

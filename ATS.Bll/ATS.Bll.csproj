@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ATS.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ATS.Core\bin\Debug\ATS.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,10 +59,6 @@
     <Compile Include="UserInfoBo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ATS.Core\ATS.Core.csproj">
-      <Project>{00c343c2-66a5-4e5b-8b4f-8b98beb1243f}</Project>
-      <Name>ATS.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ATS.Repository\ATS.Repository.csproj">
       <Project>{3ac7bd83-2c07-42f8-845f-4e9028238c76}</Project>
       <Name>ATS.Repository</Name>

@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 
@@ -21,10 +22,17 @@
     <div class="col-md-12" id="typeContext">
         <div class="tile">
             <div id="questionContainer">
-                
+
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="name-tag" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                        @if (Model.QId == Guid.Empty)
+                        {
+                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
+                        }
+                        else
+                        {
+                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Update Question</b></label>
+                        }
                     </div>
                 </div>
                 <br />
@@ -34,7 +42,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level" })
+                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
                                 </div>
 
                             </div>
@@ -43,7 +51,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id" })
+                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
                                 </div>
                             </div>
                         </div>
@@ -51,8 +59,8 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="name-tag control-label" for="question_subject">Subject</label>
-                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })
-
+                                    @*@Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })*@
+                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
                                 </div>
                             </div>
                         </div>
@@ -84,6 +92,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        <input type="hidden" id="optionCount" value="@Model.Options.Count"/>
+                       
+                        @foreach(var item in Model.Options)
+                        {
+                           
+                        }
+
                         <div id="MCQType">
 
                         </div>
@@ -97,7 +112,7 @@
                                     <span>A.</span>
                                 </div>
                                 <div class="col-md-7">
-                                    <label >True/Yes</label>
+                                    <label>True/Yes</label>
                                     @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">*@
                                 </div>
                                 <div class="col-md-3">
@@ -112,7 +127,7 @@
                                     <span>B.</span>
                                 </div>
                                 <div class="col-md-7">
-                                    <label >False/No</label>
+                                    <label>False/No</label>
                                     @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">*@
                                 </div>
                                 <div class="col-md-3">
@@ -143,10 +158,10 @@
 
                 <div class="row">
                     <div class="col-md-2">
-                        <label class="name-tag control-label" for="question_mark">Mark</label>
+                        <label class="name-tag control-label">Mark</label>
                     </div>
                     <div class="col-md-8">
-                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number", required = "required" })
+                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number" })
                     </div>
                 </div>
                 <br />
@@ -155,10 +170,12 @@
                     @if (Model.QId == Guid.Empty)
                     {
                         <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+
                     }
                     else
                     {
                         <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                        <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
                     }
                 </div>
 
@@ -189,7 +206,8 @@
                     selectQuesText: '#question_text',
                     selectQuesMark: '#question_mark',
                     btnCreateQuestion: '#button_create_question',
-                    btnUpdateQuestion:'#button_update_question',
+                    btnUpdateQuestion: '#button_update_question',
+                    btnBack: '#button_back_question',
                     selectMCQType: '#MCQType',
                     selectTFType: '#TFType',
                     selectSubjectType: '#SubjectType',
@@ -206,11 +224,13 @@
                     selecthiddenddlCategoryType: '#hiddenddlCategoryType',
                     selecthiddenddlQuestionType: '#hiddenddlQuestionType',
                     selecthiddendlllableType: '#hiddendlllableType',
+                    selectlblQuestionText: '#lblQuestionText',
 
                     btnAdd: '#btnAdd',
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
                     msgContext: '#msgContext',
+                    optionCount:'#optionCount',
                 };
                 question.init(config);
 

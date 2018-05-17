@@ -77,6 +77,23 @@ namespace ATS.Web.Areas.Admin.Controllers
             return Json(result);
         }
         [HttpPost]
+        public ActionResult UpdateTest(TestBankModel test)
+        {
+            ApiResult result = null;
+            try
+            {
+               
+                test.LastUpdatedBy = Convert.ToString(Session[Constants.USERID]);
+                test.LastUpdatedDate = DateTime.Now;
+               result = ApiConsumers.TestBankApiConsumer.UpdateTest(test);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result);
+        }
+        [HttpPost]
         public ActionResult LinkTestQuestion(List<TestQuestionMapModel> linkQuestions)
         {
             ApiResult result = null;
