@@ -84,7 +84,7 @@
 
     var loadUserList = function () {
         var op = defaults;
-        api.fireGetAjax('/Admin/ResultSetup/GetAllUsers', {})
+        api.fireGetAjax('/ResultSetup/GetAllUsers', {})
             .done(callBacks.onUserListSuccess)
             .fail(callBacks.onUserListFailed);
     }
