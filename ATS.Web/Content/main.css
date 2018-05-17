@@ -14822,9 +14822,10 @@ be a descendant of the grid when it is being dragged.
     top: 0;
 }
 
-
-.required-sign {
-    content: "*";
-    float: right;
-    color: red;
+.required-sign:after {
+    content: ' ★';
+    color: red;   
+    font-size:smaller;
 }
+
+

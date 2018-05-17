@@ -6,7 +6,7 @@
 
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-edit"></i>Map Test Question</h1>
+        <h1><i class="fa fa-free-code-camp"></i> Map Test Question</h1>
         <p>Map form for Test with Question</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
@@ -16,29 +16,36 @@
     </ul>
 </div>
 <div id="mainMessageContext"></div>
-<div class="row" id="testContext">
-    <div class="col-md-12 tile">
-        <div class="tile-title-w-btn">
-            <h5 class="title">Test Detail</h5>
-            <p>
-                <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
-            </p>
-        </div>
-        <div class=" tableContext">
 
+<div class="row" id="testContext">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">Test Detail</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
+
+            </div>
         </div>
     </div>
 </div>
 <div class="row" id="quesContext">
-    <div class="col-md-12 tile">
-        <div class="tile-title-w-btn">
-            <h5 class="title">Mapped Question list</h5>
-            <p>
-                <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
-            </p>
-        </div>
-        <div class=" tableContext">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">Mapped Question list</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
 
+            </div>
         </div>
     </div>
 </div>
@@ -103,7 +110,7 @@
                     testContext: '#testContext',
                     quesContext: '#quesContext',
                     closeSelectQues: '.cancel-select-ques',
-                    closeSelectTest:'.cancel-select-test',
+                    closeSelectTest: '.cancel-select-test',
                 };
                 mapTestQuestion.init(config);
 
