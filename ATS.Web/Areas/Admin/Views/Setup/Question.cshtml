@@ -2,7 +2,7 @@
 @{
     //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    
+
 }
 
 
@@ -92,13 +92,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" id="optionCount" value="@Model.Options.Count"/>
-                       
-                        @foreach(var item in Model.Options)
-                        {
-                           
-                        }
-
+                        <input type="hidden" id="optionCount" value="@Model.Options.Count" />
+                        <div class="optvalue">
+                            @foreach (var item in Model.Options)
+                            {
+                                <input type="hidden" class="hideopt" value="@item.Description" />
+                            }
+                        </div>
                         <div id="MCQType">
 
                         </div>
@@ -188,6 +188,7 @@
     <script src="~/CommonTask/AppConstant"></script>
     <script src="~/Scripts/module/question/question.js"></script>
     <script>
+       
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -230,7 +231,8 @@
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
                     msgContext: '#msgContext',
-                    optionCount:'#optionCount',
+                    optionCount: '#optionCount',
+                    optionval:'.hideopt',
                 };
                 question.init(config);
 

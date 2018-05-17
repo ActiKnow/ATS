@@ -111,7 +111,7 @@
             "		</div>" +
             "		<div class='col-md-1'>" + counter + "</div>" +
             "		<div class='col-md-7'>" +
-            "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value='" + description+"' data-id='" + counter + "'>" +
+            "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
             "		</div>" +
             "		<div class='col-md-3'>" +
             "			<input name='statusRadio' type='radio' value=" + counter + " data-id='radio" + counter + "'>" +
@@ -261,8 +261,8 @@
                                     $(defaults.selectSubjectType).hide();
                                     optionArray.splice(0, optionArray.length)
                                     counter = 1;
-                                   // addOption();
-                                   // $(defaults.btnAdd).show();
+                                    //addOption();
+                                    //$(defaults.btnAdd).show();
                                     //$(defaults.btnRemove).show();
                                 }
                                 else if (previousValue == questionTypes.bool) {
@@ -457,11 +457,14 @@
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
             removeQuestion();
         })
+        var valueArray = $(op.optionval).map(function () {
+            return this.value;
+        }).get();
 
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
-            for (let x = 1; x <= optCount; x++) {
-                addOption("test");
+            for (let x = 0; x < valueArray.length; x++) {
+                addOption(valueArray[x]);
             }
         }
     };
