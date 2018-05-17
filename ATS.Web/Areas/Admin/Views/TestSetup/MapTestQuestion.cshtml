@@ -6,7 +6,7 @@
 
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-edit"></i>Map Test Question</h1>
+        <h1><i class="fa fa-free-code-camp"></i> Map Test Question</h1>
         <p>Map form for Test with Question</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
@@ -16,38 +16,41 @@
     </ul>
 </div>
 <div id="mainMessageContext"></div>
+
 <div class="row" id="testContext">
-    <div class="col-md-12 tile">
-        <div class="tile-title-w-btn">
-            <h5 class="title">Test Detail</h5>
-            <p>
-                <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
-            </p>
-        </div>
-        <div class=" ui-test-context">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" class="form-control" readonly="readonly"/>
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">Test Detail</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
+                </p>
+            </div>
+            <div class="tile-body ui-test-context">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" readonly="readonly" />
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Category</label>
-                        <input type="text" class="form-control" readonly="readonly"/>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" class="form-control" readonly="readonly" />
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Type</label>
-                        <input type="text" class="form-control" readonly="readonly"/>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input type="text" class="form-control" readonly="readonly" />
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Level</label>
-                        <input type="text" class="form-control" readonly="readonly"/>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Level</label>
+                            <input type="text" class="form-control" readonly="readonly" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,15 +58,18 @@
     </div>
 </div>
 <div class="row" id="quesContext">
-    <div class="col-md-12 tile">
-        <div class="tile-title-w-btn">
-            <h5 class="title">Mapped Question list</h5>
-            <p>
-                <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
-            </p>
-        </div>
-        <div class=" ui-ques-context">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">Mapped Question list</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
 
+            </div>
         </div>
     </div>
 </div>
@@ -131,7 +137,7 @@
                     closeSelectTest: '.cancel-select-test',
                     selectQuesContext: '#selectQuesContext',
                     selectTestContext: '#selectTestContext',
-                    testDataContext:'#testDataContext'
+                    testDataContext: '#testDataContext'
                 };
                 mapTestQuestion.init(config);
 
