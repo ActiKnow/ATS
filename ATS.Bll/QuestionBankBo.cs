@@ -132,6 +132,7 @@ namespace ATS.Bll
                         var questionFound = quesFactory.Question.Select(x => x.QId == ques.QId).FirstOrDefault();
                         if (questionFound != null)
                         {
+                            ques.AnsText = questionFound.AnsText;
                             ques.Options = questionFound.Options;
                             ques.MappedOptions = questionFound.MappedOptions;
                             ques.MappedQuestion = questionFound.MappedQuestion;
