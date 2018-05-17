@@ -84,7 +84,7 @@
 
     var loadUserList = function () {
         var op = defaults;
-        api.fireGetAjax('/ResultSetup/GetAllUsers', {})
+        api.fireGetAjax('/Admin/ResultSetup/GetAllUsers', {})
             .done(callBacks.onUserListSuccess)
             .fail(callBacks.onUserListFailed);
     }
@@ -93,13 +93,12 @@
 
         allUserIdList = [];
         var $selectTable = $(defaults.selecttblUserList);
-
-        $selectTable.find(':checkbox:checked').each((index, element) => {
-            var recID = element.dataset.recid;
+        var $tblBody = $selectTable.find('tbody');
+        $tblBody.find(':checkbox:checked').each(function () {
+            var recID = $(this).val();
+          
             if (recID) {
-                allUserIdList.push({
-                    UserId: recID,
-                });
+                allUserIdList.push(recID);
             }
         });
     }
@@ -112,7 +111,7 @@
             $(defaults.errorMsg).html("Please select at least one record to proceed");
         }
         else {
-            api.firePostAjax('/Admin/Result/GetConsolidatedTestResults', { allUserIdList: allUserIdList })
+            api.firePostAjax('/Admin/ResultSetup/GetConsolidatedTestResults', { allUserIdList: allUserIdList })
                 .done(callBacks.onConsolidatedResultSuccess)
                 .fail(callBacks.onConsolidatedResultFailed)
         }

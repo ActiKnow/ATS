@@ -24,7 +24,7 @@ namespace ATS.Service.Controllers
         }
 
         // GET: Result
-        [HttpGet]
+        [HttpPost]
         [Route("api/Result/Retrieve")]
         public IHttpActionResult Retrieve(List<Guid> userId)
         {
