@@ -28,10 +28,11 @@
             <hr/>
             <div class="tile-body">
                 <div class="row">
-                    <input type="hidden" id="optionCount" value="@Model.Options.Count" />                    
+                    <input type="hidden" id="optionCount" value="@Model.Options.Count" />
                     @foreach (var item in Model.Options)
                     {
                         <input type="hidden" class="hideopt" value="@item.Description" />
+                        <input type="hidden" class="optionIsAns" value="@item.IsAnswer" />
                     }
                 </div>
                 <div class="row">
@@ -45,8 +46,8 @@
                                 <label class="name-tag control-label  required-sign" for="">Answer Description</label>
                                 <p id="MCQAddRemoveButtons" style="display:none" class="btn-group">
                                     <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
-                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>  
-                                </p>                                
+                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
+                                </p>
                             </div>
                             <hr />
                             <div style="display:none" id="MCQType">
@@ -96,8 +97,8 @@
                             <label class="name-tag control-label required-sign" for="question_subject">Mark</label>
                             @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
 
+                        </div>
                     </div>
-                </div>                
                 </div>
             </div>
             <div class="tile-footer">
@@ -165,6 +166,7 @@
                     optionCount: '#optionCount',
                     optionval: '.hideopt',
                     Qid: '#Qid',
+                    optionIsAns: '.optionIsAns',
                 };
                 question.init(config);
 

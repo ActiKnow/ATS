@@ -96,7 +96,7 @@
         $(op.selectOption4).val("");
         $(op.selectTrue).val("");
         $(op.selectFalse).val("");
-       // $(op.selectSubjective_text).val("");
+        // $(op.selectSubjective_text).val("");
     };
 
     var emptyOption = function () {
@@ -110,16 +110,17 @@
         $(op.selectSubjective_text).val("");
     };
 
-    var addOption = function (description) {
+    var addOption = function (description, isOption) {
         description = description == undefined ? "" : description;
+        isOption = isOption == undefined ? "" : isOption;
         ++counter;
         var rowGenrate = "<div class='form-group'>" +
-                            "  <div class='input-group'>" +
-                            "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
-                            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
-                            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' value=" + counter + "  data-id='radio" + counter + "'>Is Correct</span></div>" +
-                            "  </div>" +
-                         "</div>";
+            "  <div class='input-group'>" +
+            "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
+            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
+            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' value=" + isOption + "  data-id='radio" + counter + "'>Is Correct</span></div>" +
+            "  </div>" +
+            "</div>";
 
         optionArray.push(rowGenrate);
         renderOption(optionArray);
@@ -435,7 +436,7 @@
         })
 
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
-          
+
             var $type = $(this);
             var Type = $type.find(":selected").val();
 
@@ -451,7 +452,7 @@
                 $(defaults.selectMCQType).show();
                 $(defaults.btnAddRemove).show();
             }
-            else if (Type == questionTypes.bool) {               
+            else if (Type == questionTypes.bool) {
                 $(defaults.selectTFType).show();
             }
             else if (Type == questionTypes.text) {
@@ -468,11 +469,13 @@
         var valueArray = $(op.optionval).map(function () {
             return this.value;
         }).get();
-
+        var valueOptIsAns = $(op.optionIsAns).map(function () {
+            return this.value;
+        }).get();
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
             for (let x = 0; x < valueArray.length; x++) {
-                addOption(valueArray[x]);
+                addOption(valueArray[x], valueOptIsAns[x]);
             }
         }
     };
@@ -483,7 +486,7 @@
             bindEvents();
             $(defaults.selectMCQType).hide();
             $(defaults.selectTFType).hide();
-            $(defaults.selectSubjectType).hide();           
+            $(defaults.selectSubjectType).hide();
             loadQuestionTypes();
             loadLabelTypes();
             loadCategoryTypes();

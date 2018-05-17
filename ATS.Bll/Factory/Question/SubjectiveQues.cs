@@ -65,16 +65,26 @@ namespace ATS.Bll.Factory.Question
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)
             {
-                if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+                //Delete Old Map
+                var oldMaps = _unitOfWork.MapOptionRepo.Select(x => x.QId == questionBank.QId).ToList();
+
+                Utility.CopyEntity(out List<QuestionOptionMapping>  list, oldMaps);
+                foreach (var map in list)
+                {
+                    flag = _unitOfWork.MapOptionRepo.Delete(map);
+                }
+
+                //Set Mapping
+                if (flag)
                 {
                     QuestionOptionMapping map = new QuestionOptionMapping
                     {
-                        Id = input.MappedOptions[0].Id,
+                        Id = Guid.NewGuid(),
                         QId = input.QId,
                         OptionKeyId = input.QuesTypeValue.ToString(),
                         Answer = input.AnsText,
                     };
-                    flag = _unitOfWork.MapOptionRepo.Update(ref map);
+                    flag = _unitOfWork.MapOptionRepo.Create(ref map);
                 }
             }
             return flag;
