@@ -1,10 +1,16 @@
 ﻿var result = (function () {
     'use strict'
     var defaults = {
-        selectContainer: '#questionContainer',
-        sampleTable: '#sampleTable',
-        mainMessageContext: '#mainMessageContext'
+        mainMessageContext: '#mainMessageContext',
+        tableContext: '#typeContextModel',
+        selecttblUserList: '#tblUserList',
+        selecttblUserAnswerList: '#tblUserAnswerList',
+        btnConsolidatedResult: '#btnConsolidatedResult',
+        btnIndividualResult: "btnIndividualResult",
+        btnchkAllUserinfo: '#chkUserinfo',
     };
+
+    var allUserIdList = [];
 
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -50,39 +56,79 @@
             }
         }
         return {
-            onUserList: function (result) {
+            onUserListSuccess: function (result) {
                 appendUser(result);
             },
             onUserListFailed: function (result) {
-                alertService.showSuccess(result.responseText, op.popupMessageContext);
+                alertService.showError(result.responseText, op.popupMessageContext);
             },
+
+            onConsolidatedResultSuccess: function (result) {
+
+            },
+
+            onConsolidatedResultFailed: function (result) {
+
+            },
+
+            onIndividualResultSuccess: function (result) {
+
+            },
+
+            onIndividualResultFailed: function (result) {
+
+            }
+
         }
     })();
+
     var loadUserList = function () {
         var op = defaults;
-        api.fireGetAjax('/Admin/Result/GetAllUsers', {})
-            .done(callBacks.onUserList)
+        api.fireGetAjax('/ResultSetup/GetAllUsers', {})
+            .done(callBacks.onUserListSuccess)
             .fail(callBacks.onUserListFailed);
     }
-    var userResult = function () {
+
+    var addUserList = function () {
+
+        allUserIdList = [];
         var $selectTable = $(defaults.selecttblUserList);
-        var allUserIdList = [];
+
         $selectTable.find(':checkbox:checked').each((index, element) => {
             var recID = element.dataset.recid;
             if (recID) {
                 allUserIdList.push({
                     UserId: recID,
-
                 });
             }
-        })
+        });
+    }
+
+    var GetConsolidatedTestResults = function () {
+
+        addUserList();
+
         if (allUserIdList.length === 0) {
             $(defaults.errorMsg).html("Please select at least one record to proceed");
         }
         else {
-            api.firePostAjax('/Admin/Result/GetResultUsers', { allUserIdList: allUserIdList })
-                .done(callBacks.onResultSuccess)
-                .fail(callBacks.onResultFailed)
+            api.firePostAjax('/Admin/Result/GetConsolidatedTestResults', { allUserIdList: allUserIdList })
+                .done(callBacks.onConsolidatedResultSuccess)
+                .fail(callBacks.onConsolidatedResultFailed)
+        }
+    }
+
+    var GetIndividualTestResults = function () {
+
+        addUserList();
+
+        if (allUserIdList.length === 0) {
+            $(defaults.errorMsg).html("Please select at least one record to proceed");
+        }
+        else {
+            api.firePostAjax('/Admin/Result/GetIndividualTestResults', { allUserIdList: allUserIdList })
+                .done(callBacks.onIndividualResultSuccess)
+                .fail(callBacks.onIndividualResultFailed)
         }
     }
 
@@ -102,13 +148,16 @@
                 });
             }
         });
-        $tableUserContext.on('click', op.btnView, function (event) {
-            userResult();
+        $tableUserContext.on('click', op.btnConsolidatedResult, function (event) {
+            GetConsolidatedTestResults();
+        });
+
+        $tableUserContext.on('click', op.btnIndividualResult, function (event) {
+            GetIndividualTestResults();
         });
     };
     return {
         init: function (config) {
-
             $.extend(true, defaults, config);
             bindEvents();
             loadUserList();

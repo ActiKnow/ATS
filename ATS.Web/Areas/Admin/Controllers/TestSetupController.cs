@@ -41,7 +41,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             return View(testModel);
         }
         [HttpGet]
-        public ActionResult GetTests()
+        public ActionResult GetTests(bool? rawTests)
         {
             ApiResult result = null;
             try
@@ -50,8 +50,10 @@ namespace ATS.Web.Areas.Admin.Controllers
                 if (result.Status && result.Data != null)
                 {
                     var list = (List<TestBankModel>)result.Data;
-
-                    result.Data = RenderPartialViewToString("_TestList", list);
+                    if (rawTests == null || (rawTests != null && !rawTests.Value))
+                    {
+                        result.Data = RenderPartialViewToString("_TestList", list);
+                    }
                 }
             }
             catch (Exception ex)
@@ -82,10 +84,10 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-               
+
                 test.LastUpdatedBy = Convert.ToString(Session[Constants.USERID]);
                 test.LastUpdatedDate = DateTime.Now;
-               result = ApiConsumers.TestBankApiConsumer.UpdateTest(test);
+                result = ApiConsumers.TestBankApiConsumer.UpdateTest(test);
             }
             catch (Exception ex)
             {

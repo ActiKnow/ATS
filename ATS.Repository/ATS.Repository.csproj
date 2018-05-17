@@ -53,6 +53,7 @@
     <Compile Include="Interface\IOptionRepository.cs" />
     <Compile Include="Interface\IQuestionRepository.cs" />
     <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Interface\IResultRepository.cs" />
     <Compile Include="Interface\ITestAssignmentRepository.cs" />
     <Compile Include="Interface\ITestHistoryRepository.cs" />
     <Compile Include="Interface\ITestBankRepository.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Repo\OptionRepository.cs" />
     <Compile Include="Repo\QuestionRepository.cs" />
     <Compile Include="Repo\Repository.cs" />
+    <Compile Include="Repo\ResultRepository.cs" />
     <Compile Include="Repo\TestAssignmentRepository.cs" />
     <Compile Include="Repo\TestBankRepository.cs" />
     <Compile Include="Repo\TestHistoryRepository.cs" />

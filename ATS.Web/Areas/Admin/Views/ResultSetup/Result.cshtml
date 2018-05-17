@@ -1,101 +1,224 @@
 ﻿@model List<ATS.Core.Model.UserInfoModel>
-    @{
-        ViewBag.Title = "Result";
-        Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    }
+@{
+    ViewBag.Title = "Result";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-edit"></i>Result Setup</h1>
-            <p>Setup form for users</p>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Forms</li>
-            <li class="breadcrumb-item"><a href="#">Result Setup</a></li>
-        </ul>
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-free-code-camp"></i> Result Setup</h1>
+        <p>Setup form for users</p>
     </div>
-    <div class="row">
-        <div class="col-md-12 tableContext">
-            <div id="mainMessageContext"></div>
-            <div class="tile">
-                <div class="tile-title-w-btn">
-                    <h3 class="title">Result List</h3>
-                    <p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#typeContextModel"><i class="fa fa-fw fa-lg fa-check-circle"></i>User List</button>
-                    </p>
-                </div>
-                <div class="tile-body">
-                    <table class="table" id="tblUserAnswerList">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>User Id</th>
-                                <th>User Name</th>
-                                <th>Questions Attempted </th>
-                                <th>Questions Leave </th>
-                                <th>Mark</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Result Setup</a></li>
+    </ul>
+</div>
+<div id="mainMessageContext"></div>
+<div class="row">
+    <div class="col-md-12 tableContext">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h3 class="title">Result List</h3>
+                <p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#typeContextModel"><i class="fa fa-fw fa-lg fa-check-circle"></i>User List</button>
+                </p>
             </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="modal fade" id="typeContextModel" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>User List</h3>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="popupMessageContext"></div>
-                        <div class="tile-body">
-                            <table class="table" id="tblUserList">
-                                <thead>
-                                    <tr>
-                                        <th><input type="checkbox" class="checkbox" id="chkUserinfo" /></th>
-                                        <th>User Name</th>
-                                        <th>Email Id</th>
-                                        <th>Test Type </th>
-                                        <th>Mobile Number</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+            <hr />
+            <div class="tile-body">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Line Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="lineChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
                         </div>
-
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" id="btnView"><i class="fa fa-fw fa-lg fa-check-circle"></i>View Result</button>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Bar Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="barChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Radar Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="radarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Polar Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="polarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Pie Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="pieChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="tile">
+                        <h3 class="tile-title">Doughnut Chart</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="doughnutChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    @section scripts
+<div class="col-md-12">
+    <div class="modal fade" id="typeContextModel" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>User List</h3>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="popupMessageContext"></div>
+                    <div class="tile-body">
+                        <table class="table table-hover table-bordered" id="tblUserList">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkbox" id="chkUserinfo" /></th>
+                                    <th>User Name</th>
+                                    <th>Email Id</th>
+                                    <th>Test Type </th>
+                                    <th>Mobile Number</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnConsolidatedResult"><i class="fa fa-fw fa-lg fa-check-circle"></i>Consolidated Result</button>
+                    <button class="btn btn-primary" type="button" id="btnIndividualResult"><i class="fa fa-fw fa-lg fa-check-circle"></i>Individual Result</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
 {
-        <script src="~/Scripts/module/result/result.js"></script>
-        <script>
-            (function ($, window, document) {
-                $(function () {
-                    var config = {
-                        tableContext: '#typeContextModel',
-                        selecttblUserList: '#tblUserList',
-                        selecttblUserAnswerList: '#tblUserAnswerList',
-                        btnView: '#btnView',
-                        btnchkAllUserinfo: '#chkUserinfo',
-                    };
-                    result.init(config);
-                });
+    <script src="~/Scripts/module/result/result.js"></script>
+    <script>
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    tableContext: '#typeContextModel',
+                    selecttblUserList: '#tblUserList',
+                    selecttblUserAnswerList: '#tblUserAnswerList',
+                    btnConsolidatedResult: '#btnConsolidatedResult',
+                    btnIndividualResult: "btnIndividualResult",
+                    btnchkAllUserinfo: '#chkUserinfo',
+                };
+                result.init(config);
+            });
 
-            }(window.jQuery, window, document));
-        </script>
-    }
+        }(window.jQuery, window, document));
+    </script>
+
+<script type="text/javascript">
+        var data = {
+            labels: ["January", "February", "March", "April", "May"],     // shown on the x-axis
+            datasets: [              // this data will populate in Line Chart , Bar Chart ,Radar Chart
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56]        // shown on y-axis
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86]
+                }
+            ]
+        };
+        var pdata = [                      // this data will populate in Polar Chart , Doughnut Chart , Pie Chart
+            {
+                value: 300,
+                color: "#F7464A",
+                highlight: "#FF5A5E",
+                label: "Red"
+            },
+            {
+                value: 50,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Green"
+            },
+            {
+                value: 100,
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "Yellow"
+            },
+            {
+                value: 360,
+                color: "#F7464A",
+                highlight: "#FF5A5E",
+                label: "Blue"
+            },
+            {
+                value: 250,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Green"
+            },
+            {
+                value: 150,
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "Yellow"
+            }
+        ]
+
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxb = $("#barChartDemo").get(0).getContext("2d");
+        var barChart = new Chart(ctxb).Bar(data);
+
+        var ctxr = $("#radarChartDemo").get(0).getContext("2d");
+        var radarChart = new Chart(ctxr).Radar(data);
+
+        var ctxpo = $("#polarChartDemo").get(0).getContext("2d");
+        var polarChart = new Chart(ctxpo).PolarArea(pdata);
+
+        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+        var pieChart = new Chart(ctxp).Pie(pdata);
+
+        var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
+        var doughnutChart = new Chart(ctxd).Doughnut(pdata);
+</script>
+}
 
 
 

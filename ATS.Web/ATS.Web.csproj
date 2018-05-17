@@ -146,6 +146,7 @@
     <Compile Include="ApiConsumers\CommonApiConsumer.cs" />
     <Compile Include="ApiConsumers\ConsumerMethods.cs" />
     <Compile Include="ApiConsumers\QuestionApiConsumer.cs" />
+    <Compile Include="ApiConsumers\ResultApiConsumer.cs" />
     <Compile Include="ApiConsumers\TestBankApiConsumer.cs" />
     <Compile Include="ApiConsumers\TypeApiConsumer.cs" />
     <Compile Include="ApiConsumers\UserApiConsumer.cs" />
@@ -158,10 +159,6 @@
     <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\TestSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserSetupController.cs" />
-    <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
-    <Compile Include="Areas\Candidate\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
-    <Compile Include="Areas\Employee\Controllers\DashboardController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonTaskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -243,8 +240,6 @@
     <Content Include="Areas\Admin\Views\Setup\Partials\_TypeList.cshtml" />
     <Content Include="Areas\Admin\Views\UserSetup\UserSetup.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Candidate\Views\web.config" />
-    <Content Include="Areas\Employee\Views\web.config" />
     <Content Include="Areas\Admin\Views\UserSetup\UserApproval.cshtml" />
     <Content Include="Areas\Admin\Views\UserSetup\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Setup\QuestionList.cshtml" />
@@ -327,8 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Candidate\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Employee\Views\Dashboard\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_CandidateLayout.cshtml" />

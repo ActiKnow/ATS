@@ -6,7 +6,7 @@
 
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-edit"></i>Test Setup</h1>
+        <h1><i class="fa fa-free-code-camp"></i> Test Setup</h1>
         <p>Setup form for Test</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
@@ -18,15 +18,18 @@
 
 <div id="mainMessageContext"></div>
 <div class="row" id="testListContext">
-    <div class="col-md-12 tile">
-        <div class="tile-title-w-btn">
-            <h3 class="tile-title">Test List</h3>
-            <p>
-                <button type="button" class="btn btn-primary" id="btnOpenSetup"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Test</button>
-            </p>
-        </div>
-        <div class=" tableContext">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h3 class="tile-title">Test List</h3>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSetup"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Test</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
 
+            </div>
         </div>
     </div>
 </div>
@@ -44,39 +47,39 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Category</label>
+                                <label class="name-tag control-label required-sign">Category</label>
                                 <select class="form-control " id="categoryType" data-required="Category is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Level</label>
+                                <label class="name-tag control-label required-sign">Level</label>
                                 <select class="form-control " id="levelType" data-required="Level is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Type</label>
+                                <label class="name-tag control-label required-sign">Type</label>
                                 <select class="form-control " id="testType" data-required="Type is required"></select>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Marks</label>
-                                <input class="form-control " id="testMarks" type="number" data-required="Mark is required" placeholder="00"  onkeypress = "return event.charCode >= 48" min = "0"/>
+                                <label class="name-tag control-label required-sign">Marks</label>
+                                <input class="form-control " id="testMarks" type="number" data-required="Mark is required" placeholder="00" onkeypress="return event.charCode >= 48" min="0" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Description</label>
+                                <label class="name-tag control-label required-sign">Description</label>
                                 <textarea class="form-control testDescription" cols="40" rows="5" id="testDescription" data-required="Description is required"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label style="text-align:match-parent">Instruction</label>
+                                <label class="name-tag control-label required-sign" style="text-align:match-parent">Instruction</label>
                                 <textarea class="form-control testInstruction" cols="40" rows="5" id="testInstruction" data-required="Instruction is required"></textarea>
                             </div>
                         </div>
@@ -85,13 +88,13 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Duration</label>
+                                <label class="name-tag control-label required-sign">Duration</label>
                                 <input class="form-control testDuration" type="number" id="testDuration" placeholder="00 min(s)" data-required="Duration is required" />
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Status</label>
+                                <label class="name-tag control-label required-sign">Status</label>
                                 <select class="form-control " id="testStatus" data-required="Status is required">
                                     <option value="true">Active</option>
                                     <option value="false">Inactive</option>
@@ -152,7 +155,7 @@
                     testStatus: '.test-status',
                     testStatusInput: '#testStatus',
                     testEdit: '.test-edit',
-                    testRecords:'#tblTestRecords',
+                    testRecords: '#tblTestRecords',
                 };
                 testBankSetup.init(config);
 

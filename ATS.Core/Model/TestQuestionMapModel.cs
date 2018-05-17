@@ -12,7 +12,6 @@ namespace ATS.Core.Model
         public System.Guid TestBankId { get; set; }
         public System.Guid QId { get; set; }
         public decimal Marks { get; set; }
-
         public QuestionBankModel QuestionBank { get; set; }
         public TestBankModel TestBank { get; set; }
     }

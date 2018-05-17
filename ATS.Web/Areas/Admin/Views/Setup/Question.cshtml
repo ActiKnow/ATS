@@ -5,7 +5,7 @@
 }
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-edit"></i>Setup</h1>
+        <h1><i class="fa fa-free-code-camp"></i> Setup</h1>
         <p>Setup form for users</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
@@ -26,7 +26,7 @@
             {
                 <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Update Question</h3>
             }
-            <hr>
+            <hr/>
             <div class="tile-body">
                 <div class="row">
                     <input type="hidden" id="optionCount" value="@Model.Options.Count" />
@@ -45,8 +45,8 @@
                         </div>
                         <div class="form-group">
                             <div class="tile-title-w-btn">
-                                <label class="name-tag control-label" for="">Answer Description</label>
-                                <p id="MCQAddRemoveButtons" style="display:none">
+                                <label class="name-tag control-label  required-sign" for="">Answer Description</label>
+                                <p id="MCQAddRemoveButtons" style="display:none" class="btn-group">
                                     <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
                                     <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
                                 </p>
@@ -84,19 +84,19 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="name-tag control-label" for="question_difficulty_level">Question Level</label>
+                            <label class="name-tag control-label required-sign" for="question_difficulty_level">Question Level</label>
                             @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
                         </div>
                         <div class="form-group">
-                            <label class="name-tag control-label" for="question_question_type">Question Type</label>
+                            <label class="name-tag control-label required-sign" for="question_question_type">Question Type</label>
                             @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
                         </div>
                         <div class="form-group">
-                            <label class="name-tag control-label" for="question_subject">Subject</label>
+                            <label class="name-tag control-label  required-sign" for="question_subject">Subject</label>
                             @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
                         </div>
                         <div class="form-group">
-                            <label class="name-tag control-label" for="question_subject">Mark</label>
+                            <label class="name-tag control-label required-sign" for="question_subject">Mark</label>
                             @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
 
                         </div>
