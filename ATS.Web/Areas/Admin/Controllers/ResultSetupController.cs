@@ -47,9 +47,17 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetResultUsers(List<UserInfoModel> allUserIdList)
+
+        [HttpPost]
+        public ActionResult GetConsolidatedTestResults(List<UserInfoModel> allUserIdList)
         {
-            return View();
+            return Json("");
+        }
+
+        [HttpPost]
+        public ActionResult GetIndividualTestResults(List<UserInfoModel> allUserIdList)
+        {
+            return Json("");
         }
     }
 }
