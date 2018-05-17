@@ -21,8 +21,7 @@ namespace ATS.Bll.Factory.Question
         }
         public bool Create(ref QuestionBankModel input)
         {
-            QuestionBank questionBank = new QuestionBank();
-            Utility.CopyEntity(out questionBank, input);
+            Utility.CopyEntity(out QuestionBank questionBank, input);
             var flag = false;
             flag = _unitOfWork.QuestionRepo.Create(ref questionBank);
 
@@ -31,7 +30,7 @@ namespace ATS.Bll.Factory.Question
                 Id=Guid.NewGuid(),
                 Answer = input.AnsText,
                 QId = input.QId,
-                OptionKeyId = input.QuesTypeValue.ToString()
+                OptionKeyId = ((int)CommonType.BOOL).ToString()
             };
             flag = _unitOfWork.MapOptionRepo.Create(ref map);
 
@@ -48,6 +47,11 @@ namespace ATS.Bll.Factory.Question
                 foreach (var ques in resultDB)
                 {
                     ques.MappedOptions = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
+                    var mapAns = ques.MappedOptions.FirstOrDefault();
+                    if (mapAns != null)
+                    {
+                        ques.AnsText = mapAns.Answer;
+                    }
                 }
                 result = resultDB;
             }
@@ -61,16 +65,26 @@ namespace ATS.Bll.Factory.Question
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)
             {
-                if (input.MappedOptions != null && input.MappedOptions.Count > 0)
+                //Delete Old Map
+                var oldMaps = _unitOfWork.MapOptionRepo.Select(x => x.QId == questionBank.QId).ToList();
+
+                Utility.CopyEntity(out List<QuestionOptionMapping> list, oldMaps);
+                foreach (var map in list)
+                {
+                    flag = _unitOfWork.MapOptionRepo.Delete(map);
+                }
+
+                //Set Mapping
+                if (flag)
                 {
                     QuestionOptionMapping map = new QuestionOptionMapping
                     {
-                        Id = input.MappedOptions[0].Id,
+                        Id = Guid.NewGuid(),
                         QId = input.QId,
-                        OptionKeyId = input.QuesTypeValue.ToString(),
+                        OptionKeyId = ((int)CommonType.BOOL).ToString(),
                         Answer = input.AnsText,
                     };
-                    flag = _unitOfWork.MapOptionRepo.Update(ref map);
+                    flag = _unitOfWork.MapOptionRepo.Create(ref map);
                 }
             }
             return flag;

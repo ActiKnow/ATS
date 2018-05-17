@@ -27,7 +27,7 @@ namespace ATS.Bll.Factory.Question
 
             if (flag)
             {
-                var  optionKeyId = input.QId;
+                var optionKeyId = input.QId;
                 List<Guid> answers = new List<Guid>();
 
                 for (int indx = 0; indx < input.Options.Count(); indx++)
@@ -37,7 +37,7 @@ namespace ATS.Bll.Factory.Question
                     op.Id = Guid.NewGuid();
 
                     Utility.CopyEntity(out QuestionOption questionOption, op);
-                    
+
                     flag = _unitOfWork.OptionRepo.Create(ref questionOption);
                     if (flag)
                     {
@@ -50,23 +50,37 @@ namespace ATS.Bll.Factory.Question
 
                 //Set answers
                 input.MappedOptions = new List<QuestionOptionMapModel>();
-                foreach (var ans in answers)
+                if (answers.Count > 0)
+                {
+                    foreach (var ans in answers)
+                    {
+                        QuestionOptionMapping map = new QuestionOptionMapping
+                        {
+                            Id = Guid.NewGuid(),
+                            QId = input.QId,
+                            OptionKeyId = optionKeyId.ToString(),
+                            Answer = ans.ToString(),
+                        };
+                        input.MappedOptions.Add(new QuestionOptionMapModel
+                        {
+                            Id = map.Id,
+                            QId = input.QId,
+                            OptionKeyId = optionKeyId.ToString(),
+                            Answer = ans.ToString()
+                        });
+
+                        flag = _unitOfWork.MapOptionRepo.Create(ref map);
+                    }
+                }
+                else
                 {
                     QuestionOptionMapping map = new QuestionOptionMapping
                     {
                         Id = Guid.NewGuid(),
                         QId = input.QId,
                         OptionKeyId = optionKeyId.ToString(),
-                        Answer = ans.ToString(),
+                        Answer = null,
                     };
-                    input.MappedOptions.Add(new QuestionOptionMapModel
-                    {
-                        Id = map.Id,
-                        QId = input.QId,
-                        OptionKeyId = optionKeyId.ToString(),
-                        Answer = ans.ToString()
-                    });
-
                     flag = _unitOfWork.MapOptionRepo.Create(ref map);
                 }
             }
@@ -101,6 +115,7 @@ namespace ATS.Bll.Factory.Question
                         }
                     }
                 }
+
             }
             return result;
         }
@@ -113,68 +128,82 @@ namespace ATS.Bll.Factory.Question
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)
             {
-                var optionKeyId = input.QId;
-                List<Guid> answers = new List<Guid>();
+                //Delete old Options
+                var oldOptions = _unitOfWork.OptionRepo.Select(x => x.KeyId == questionBank.QId.ToString()).ToList();
 
-                //Set Options
-                for (int indx = 0; indx < input.Options.Count(); indx++)
+                Utility.CopyEntity(out List<QuestionOption> optionList, oldOptions);
+                foreach (var op in optionList)
                 {
-                    var op = input.Options[indx];
-                    op.KeyId = optionKeyId.ToString();
-                    QuestionOption questionOption = new QuestionOption();
-                    Utility.CopyEntity(out questionOption, op);
-
-                    var opFound = _unitOfWork.OptionRepo.Select(x => x.Id == op.Id);
-                    if (opFound != null)
-                    {
-                        flag = _unitOfWork.OptionRepo.Update(ref questionOption);
-                    }
-                    else
-                    {
-                        flag = _unitOfWork.OptionRepo.Create(ref questionOption);
-                    }
-                    if (flag)
-                    {
-                        if (op.IsAnswer)
-                        {
-                            answers.Add(op.Id);
-                        }
-                    }
+                    flag = _unitOfWork.OptionRepo.Delete(op);
                 }
-                //Delete Old Map
-                var queryable = _unitOfWork.MapOptionRepo.Select(x => x.QId == optionKeyId);
-                var oldMaps = queryable.ToList();
-
-                List<QuestionOptionMapping> list = new List<QuestionOptionMapping>();
-
-                Utility.CopyEntity(out list, oldMaps);
-                foreach (var map in list)
-                {
-                    flag = _unitOfWork.MapOptionRepo.Delete(map);
-                }
-                //Set answers
                 if (flag)
                 {
-                    input.MappedOptions = new List<QuestionOptionMapModel>();
-                    foreach (var ans in answers)
+                    //Set Options
+                    var optionKeyId = input.QId;
+                    List<Guid> answers = new List<Guid>();
+                    for (int indx = 0; indx < input.Options.Count(); indx++)
                     {
-                        QuestionOptionMapping map = new QuestionOptionMapping
-                        {
-                            Id = Guid.NewGuid(),
-                            QId = input.QId,
-                            OptionKeyId = optionKeyId.ToString(),
-                            Answer = ans.ToString(),
-                        };
+                        var op = input.Options[indx];
+                        op.KeyId = optionKeyId.ToString();
+                        op.Id = Guid.NewGuid();
 
-                        input.MappedOptions.Add(new QuestionOptionMapModel
-                        {
-                            Id = map.Id,
-                            QId = input.QId,
-                            OptionKeyId = optionKeyId.ToString(),
-                            Answer = ans.ToString()
-                        });
+                        Utility.CopyEntity(out QuestionOption questionOption, op);
 
-                        flag = _unitOfWork.MapOptionRepo.Create(ref map);
+                        flag = _unitOfWork.OptionRepo.Create(ref questionOption);
+                        if (flag)
+                        {
+                            if (op.IsAnswer)
+                            {
+                                answers.Add(op.Id);
+                            }
+                        }
+                    }
+                    //Delete Old Map
+                    var oldMaps = _unitOfWork.MapOptionRepo.Select(x => x.QId == questionBank.QId).ToList();
+
+                    Utility.CopyEntity(out List<QuestionOptionMapping> list, oldMaps);
+                    foreach (var map in list)
+                    {
+                        flag = _unitOfWork.MapOptionRepo.Delete(map);
+                    }
+                    //Set answers
+                    if (flag)
+                    {
+                        input.MappedOptions = new List<QuestionOptionMapModel>();
+                        if (answers.Count > 0)
+                        {
+                            foreach (var ans in answers)
+                            {
+                                QuestionOptionMapping map = new QuestionOptionMapping
+                                {
+                                    Id = Guid.NewGuid(),
+                                    QId = input.QId,
+                                    OptionKeyId = optionKeyId.ToString(),
+                                    Answer = ans.ToString(),
+                                };
+
+                                input.MappedOptions.Add(new QuestionOptionMapModel
+                                {
+                                    Id = map.Id,
+                                    QId = input.QId,
+                                    OptionKeyId = optionKeyId.ToString(),
+                                    Answer = ans.ToString()
+                                });
+
+                                flag = _unitOfWork.MapOptionRepo.Create(ref map);
+                            }
+                        }
+                        else
+                        {
+                            QuestionOptionMapping map = new QuestionOptionMapping
+                            {
+                                Id = Guid.NewGuid(),
+                                QId = input.QId,
+                                OptionKeyId = optionKeyId.ToString(),
+                                Answer = null,
+                            };
+                            flag = _unitOfWork.MapOptionRepo.Create(ref map);
+                        }
                     }
                 }
             }

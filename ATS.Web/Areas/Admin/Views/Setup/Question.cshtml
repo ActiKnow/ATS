@@ -1,14 +1,10 @@
 ﻿@model ATS.Core.Model.QuestionBankModel
 @{
-    //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    
 }
-
-
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-edit"></i>Setup</h1>
+        <h1><i class="fa fa-free-code-camp"></i> Setup</h1>
         <p>Setup form for users</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
@@ -18,172 +14,108 @@
     </ul>
 </div>
 <div id="msgContext"></div>
-<div class="row">
-    <div class="col-md-12" id="typeContext">
-        <div class="tile">
-            <div id="questionContainer">
-
+<div class="row" id="typeContext">
+    <div class="col-md-12">
+        <div class="tile" id="questionContainer">
+            @if (Model.QId == Guid.Empty)
+            {
+                <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Create Question</h3>
+            }
+            else
+            {
+                <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Update Question</h3>
+            }
+            <hr/>
+            <div class="tile-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        @if (Model.QId == Guid.Empty)
-                        {
-                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Create Question</b></label>
-                        }
-                        else
-                        {
-                            <label class="name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id"><b>Update Question</b></label>
-                        }
-                    </div>
-                </div>
-                <br />
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <label class="name-tag control-label" for="question_difficulty_level">Difficulty Level</label>
-                                    @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <label class="name-tag control-label" for="question_question_type">Question Type</label>
-                                    @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <label class="name-tag control-label" for="question_subject">Subject</label>
-                                    @*@Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id" })*@
-                                    @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-2">
-                        <label class="name-tag" for="question_question_languages_attributes_0_hint">Question Description</label>
-                    </div>
-
-                    <div class="col-md-8">
-                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
-                    </div>
-                </div>
-
-                <br />
-                <div class="row">
-                    <div class="col-md-2">
-                        <label class="name-tag">Answer Description</label>
-                    </div>
-                    <div class="col-md-8">
-
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnAdd">Add</button>
-                        <button type="button" class="v-btn v-btn-primary no-round uppercase" id="btnRemove">Remove</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="hidden" id="optionCount" value="@Model.Options.Count"/>
-                       
-                        @foreach(var item in Model.Options)
-                        {
-                           
-                        }
-
-                        <div id="MCQType">
-
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div id="TFType">
-                            <div class="form-group row">
-                                <div class="col-md-1">
-                                </div>
-                                <div class="col-md-1">
-                                    <span>A.</span>
-                                </div>
-                                <div class="col-md-7">
-                                    <label>True/Yes</label>
-                                    @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="True/Yes" data-id="1" id="True">*@
-                                </div>
-                                <div class="col-md-3">
-                                    <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1">
-                                    <span>Is Correct</span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-1">
-                                </div>
-                                <div class="col-md-1">
-                                    <span>B.</span>
-                                </div>
-                                <div class="col-md-7">
-                                    <label>False/No</label>
-                                    @*<input type="text" name="Booltextbox" class="form-control input-sm" placeholder="False/No" data-id="2" id="False">*@
-                                </div>
-                                <div class="col-md-3">
-                                    <input name="statusRadio" class="boolradio" type="radio" data-id="2" value="0">
-                                    <span>Is Correct</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div id="SubjectType">
-                        <div class="row">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-1">
-                                <span>A.</span>
-                            </div>
-                            <div class="col-md-8">
-                                <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br />
-
-                <div class="row">
-                    <div class="col-md-2">
-                        <label class="name-tag control-label">Mark</label>
-                    </div>
-                    <div class="col-md-8">
-                        @Html.TextBoxFor(x => x.DefaultMark, new { @class = "Form-control", id = "question_mark", placdeholder = "Mark", type = "number" })
-                    </div>
-                </div>
-                <br />
-                <div class="tile-footer">
-                    @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
-                    @if (Model.QId == Guid.Empty)
+                    <input type="hidden" id="optionCount" value="@Model.Options.Count" />
+                    @foreach (var item in Model.Options)
                     {
-                        <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
-
-                    }
-                    else
-                    {
-                        <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
-                        <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
+                        <input type="hidden" class="hideopt" value="@item.Description" />
+                        <input type="hidden" class="optionIsAns" value="@item.IsAnswer" />
                     }
                 </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign" for="question_question_languages_attributes_0_hint">Question Description</label>
+                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
+                        </div>
+                        <div class="form-group">
+                            <div class="tile-title-w-btn">
+                                <label class="name-tag control-label  required-sign" for="">Answer Description</label>
+                                <p id="MCQAddRemoveButtons" style="display:none" class="btn-group">
+                                    <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
+                                </p>
+                            </div>
+                            <hr />
+                            <div style="display:none" id="MCQType">
 
+                            </div>
+                            <div style="display:none" id="TFType">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class='input-group'>
+                                                <div class='input-group-prepend'><span class='input-group-text'>1.</span></div>
+                                                <span class='form-control'> True</span>
+                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1">Is Correct</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class='input-group'>
+                                                <div class='input-group-prepend'><span class='input-group-text'>2.</span></div>
+                                                <span class='form-control'> False</span>
+                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="2" value="2">Is Correct</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" style="display:none" id="SubjectType">
+                                @Html.TextAreaFor(x => x.AnsText, new { @class = "form-control", id = "Subjective_text", placeholder = "Answer", rows = "3" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign" for="question_difficulty_level">Question Level</label>
+                            @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
+                        </div>
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign" for="question_question_type">Question Type</label>
+                            @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
+                        </div>
+                        <div class="form-group">
+                            <label class="name-tag control-label  required-sign" for="question_subject">Subject</label>
+                            @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
+                        </div>
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign" for="question_subject">Mark</label>
+                            @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile-footer">
+                @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
+                @if (Model.QId == Guid.Empty)
+                {
+                    <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                    <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
+                }
             </div>
         </div>
     </div>
 </div>
-
 @section scripts {
     <script src="~/CommonTask/AppConstant"></script>
     <script src="~/Scripts/module/question/question.js"></script>
@@ -230,7 +162,11 @@
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
                     msgContext: '#msgContext',
-                    optionCount:'#optionCount',
+                    btnAddRemove: '#MCQAddRemoveButtons',
+                    optionCount: '#optionCount',
+                    optionval: '.hideopt',
+                    Qid: '#Qid',
+                    optionIsAns: '.optionIsAns',
                 };
                 question.init(config);
 

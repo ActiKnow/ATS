@@ -47,6 +47,8 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
         public ActionResult GetResultUsers(List<Guid> userId)
         {
             List<TestBankModel> testBankList = new List<TestBankModel>();
@@ -68,6 +70,19 @@ namespace ATS.Web.Areas.Admin.Controllers
                 result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        public ActionResult GetConsolidatedTestResults(List<UserInfoModel> allUserIdList)
+        {
+            return Json("");
+        }
+
+        [HttpPost]
+        public ActionResult GetIndividualTestResults(List<UserInfoModel> allUserIdList)
+        {
+            return Json("");
+
         }
     }
 }

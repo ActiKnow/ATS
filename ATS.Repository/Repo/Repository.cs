@@ -28,6 +28,7 @@ namespace ATS.Repository.Repo
 
         public bool Delete(T input)
         {
+            _dbSet.Attach(input);
             _dbSet.Remove(input);
             return true;
         }

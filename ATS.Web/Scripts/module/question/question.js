@@ -13,13 +13,16 @@
         msgContext: '#msgContext',
 
     };
+
     var questionTypes = {
         option: AppConstant.OPTION,
         bool: AppConstant.BOOL,
         text: AppConstant.TEXT
     };
+
     var optionArray = [];
-    var counter = 1;
+    var counter = 0;
+
     var api = (function () {
         var fireAjax = function (url, data, type) {
             var httpMethod = type || 'POST';
@@ -42,6 +45,7 @@
             },
         }
     }());
+
     var callBacks = (function () {
         var op = defaults;
         var appendQuestion = function (result) {
@@ -75,9 +79,10 @@
             }
         }
     })();
+
     var clear = function () {
         var op = defaults;
-        $(op.selectQuesDiffiLevel).val("easy");
+        $(op.selectQuesDiffiLevel).val("-1");
         $(op.selectQuesQuesTypeId).val("-1");
         $(op.selectQuesSubjectId).val("-1");
         $(op.selectQuesText).val("");
@@ -91,10 +96,10 @@
         $(op.selectOption4).val("");
         $(op.selectTrue).val("");
         $(op.selectFalse).val("");
-        $(op.selectSubjective_text).val("");
+        // $(op.selectSubjective_text).val("");
     };
-    var emptyOption = function () {
 
+    var emptyOption = function () {
         var op = defaults;
         $(op.selectOption1).val("");
         $(op.selectOption2).val("");
@@ -104,38 +109,40 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-    var addOption = function (description) {
+
+    var addOption = function (description, isOption) {
         description = description == undefined ? "" : description;
-        var rowGenrate = "<div class='form-group row'>" +
-            "		<div class='col-md-1'>" +
-            "		</div>" +
-            "		<div class='col-md-1'>" + counter + "</div>" +
-            "		<div class='col-md-7'>" +
-            "			<input type='text' name='DynamicTextBox' class='form-control input-sm' placeholder='Option' id='Option" + counter + "' value='" + description+"' data-id='" + counter + "'>" +
-            "		</div>" +
-            "		<div class='col-md-3'>" +
-            "			<input name='statusRadio' type='radio' value=" + counter + " data-id='radio" + counter + "'>" +
-            "			<span>Is Correct</span>" +
-            "   	</div>" +
+        isOption = isOption == undefined ? "" : isOption;
+        ++counter;
+        var rowGenrate = "<div class='form-group' id='option"+counter +"'>" +
+            "  <div class='input-group'>" +
+            "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
+            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
+            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' value=" + isOption + "  data-id='radio" + counter + "'>Is Correct</span></div>" +
+            "  </div>" +
             "</div>";
 
         optionArray.push(rowGenrate);
-        renderOption(optionArray);
-        counter++;
+        $(defaults.selectMCQType).append(rowGenrate);
+        //renderOption(optionArray);
     };
-    var removeQuestion = function () {
-        optionArray.pop();
 
-        renderOption(optionArray);
-        if (counter > 1)
+    var removeOption = function () {
+        if (counter >= 1) {
+            optionArray.pop();
+            //renderOption(optionArray);
+            $("#option" + counter).remove();
             counter--;
+        }
     };
+
     var renderOption = function () {
         $(defaults.selectMCQType).html("");
         for (let i = 0; i < optionArray.length; i++) {
             $(defaults.selectMCQType).append(optionArray[i]);
         }
     }
+
     var createQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -185,6 +192,7 @@
                 .fail(callBacks.onQuestionFailed);
         }
     };
+
     var updateQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -198,6 +206,7 @@
         var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').val();
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
+        var QId = $(op.Qid).val();
         var ansText = "";
         var optionValue = [];
         if (quesTypeValue == questionTypes.option) {
@@ -226,7 +235,8 @@
                 CategoryTypeValue: quesSubjectvalue,
                 Description: quesText,
                 DefaultMark: quesMark,
-                AnsText: ansText
+                AnsText: ansText,
+                QId: QId
             }
             QuestionView.options = optionValue;
             api.createQuestion('/Setup/UpdateQuestion', { QuestionView: QuestionView })
@@ -234,7 +244,9 @@
                 .fail(callBacks.onQuestionFailed);
         }
     };
+
     var loadQuestionTypes = function () {
+
         var op = defaults;
         var previousValue = $(op.selectQuesQuesTypeId).attr('value');
         api.fireGetAjax('/Setup/GetQuestionTypes', {})
@@ -253,7 +265,7 @@
                             $.each(res.Data, function (index, value) {
                                 items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
-                            if (previousValue) {
+                            if (previousValue && previousValue != 0) {
                                 $(op.selectQuesQuesTypeId).html(items).val(previousValue);
                                 if (previousValue == questionTypes.option) {
                                     $(defaults.selectMCQType).show();
@@ -261,15 +273,14 @@
                                     $(defaults.selectSubjectType).hide();
                                     optionArray.splice(0, optionArray.length)
                                     counter = 1;
-                                   // addOption();
-                                   // $(defaults.btnAdd).show();
+                                    //addOption();
+                                    //$(defaults.btnAdd).show();
                                     //$(defaults.btnRemove).show();
                                 }
                                 else if (previousValue == questionTypes.bool) {
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).show();
                                     $(defaults.selectSubjectType).hide();
-                                    emptyOption();
                                     $(defaults.btnAdd).hide();
                                     $(defaults.btnRemove).hide();
                                 }
@@ -277,7 +288,6 @@
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).show();
-                                    emptyOption();
                                     $(defaults.btnAdd).hide();
                                     $(defaults.btnRemove).hide();
                                 }
@@ -299,6 +309,7 @@
                 alertService.showError(res.responseText, op.msgContext);
             });
     }
+
     var loadLabelTypes = function () {
         var op = defaults;
         var previousValue = $(op.selectQuesDiffiLevel).attr('value');
@@ -319,7 +330,7 @@
                             $.each(res.Data, function (index, value) {
                                 items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
-                            if (previousValue) {
+                            if (previousValue && previousValue != 0) {
                                 $(op.selectQuesDiffiLevel).html(items).val(previousValue);
                             }
                             else {
@@ -339,9 +350,12 @@
                 alertService.showError(res.responseText, op.msgContext);
             });
     }
+
     var loadCategoryTypes = function () {
+
         var op = defaults;
         var previousValue = $(op.selectQuesSubjectId).attr('value');
+
         api.fireGetAjax('/Setup/GetCategoryTypes', {})
             .done(res => {
                 if (res != null) {
@@ -358,7 +372,7 @@
                             $.each(res.Data, function (index, value) {
                                 items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
-                            if (previousValue) {
+                            if (previousValue && previousValue != 0) {
                                 $(op.selectQuesSubjectId).html(items).val(previousValue);
                             }
                             else {
@@ -378,6 +392,7 @@
                 alertService.showError(res.responseText, op.msgContext);
             });
     }
+
     var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
 
         var flag = true;
@@ -406,62 +421,63 @@
 
         return flag;
     }
+
     var bindEvents = function () {
         var op = defaults;
         var $selectQuestionContainer = $(op.selectContainer);
         $selectQuestionContainer.on('click', op.btnCreateQuestion, function (e) {
             createQuestion();
         })
+
         $selectQuestionContainer.on('click', op.btnUpdateQuestion, function (e) {
             updateQuestion();
         })
+
         $selectQuestionContainer.on('click', op.btnBack, function (e) {
             document.location = '@Url.Action("QuestionList","Setup")';
         })
+
         $selectQuestionContainer.on('change', op.selectQuesQuesTypeId, function (e) {
-            //var Type = $(op.selectQuesQuesTypeId).val();
+
             var $type = $(this);
             var Type = $type.find(":selected").val();
+
+            $(defaults.selectMCQType).hide();
+            $(defaults.selectTFType).hide();
+            $(defaults.selectSubjectType).hide();
+            $(defaults.btnAddRemove).hide();
+            optionArray = [];
+
             if (Type == questionTypes.option) {
-                $(defaults.selectMCQType).show();
-                $(defaults.selectTFType).hide();
-                $(defaults.selectSubjectType).hide();
-                optionArray.splice(0, optionArray.length)
-                counter = 1;
+                counter = 0;
                 addOption();
-                $(defaults.btnAdd).show();
-                $(defaults.btnRemove).show();
+                $(defaults.selectMCQType).show();
+                $(defaults.btnAddRemove).show();
             }
             else if (Type == questionTypes.bool) {
-                $(defaults.selectMCQType).hide();
                 $(defaults.selectTFType).show();
-                $(defaults.selectSubjectType).hide();
-                emptyOption();
-                $(defaults.btnAdd).hide();
-                $(defaults.btnRemove).hide();
             }
-            else {
-                $(defaults.selectMCQType).hide();
-                $(defaults.selectTFType).hide();
+            else if (Type == questionTypes.text) {
                 $(defaults.selectSubjectType).show();
-                emptyOption();
-                $(defaults.btnAdd).hide();
-                $(defaults.btnRemove).hide();
             }
-
         })
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
             if (counter < 8)
                 addOption();
         })
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
-            removeQuestion();
+            removeOption();
         })
-
+        var valueArray = $(op.optionval).map(function () {
+            return this.value;
+        }).get();
+        var valueOptIsAns = $(op.optionIsAns).map(function () {
+            return this.value;
+        }).get();
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
-            for (let x = 1; x <= optCount; x++) {
-                addOption("test");
+            for (let x = 0; x < valueArray.length; x++) {
+                addOption(valueArray[x], valueOptIsAns[x]);
             }
         }
     };
@@ -473,8 +489,6 @@
             $(defaults.selectMCQType).hide();
             $(defaults.selectTFType).hide();
             $(defaults.selectSubjectType).hide();
-            $(defaults.btnAdd).hide();
-            $(defaults.btnRemove).hide();
             loadQuestionTypes();
             loadLabelTypes();
             loadCategoryTypes();

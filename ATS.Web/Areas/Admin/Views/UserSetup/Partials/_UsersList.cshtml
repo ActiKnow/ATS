@@ -16,10 +16,9 @@
     else
     {@("Inactive")}</span></td>
     <td>
-        <div class="btn-group">
-            <span class="btn btn-primary btnEditUser" onclick=""><i class="fa fa-lg fa-edit"></i></span>
-            <span class="btn btn-primary btnRemoveUser"><i class="fa fa-lg fa-trash"></i></span>
-        </div>
+        <span class="btn-primary btn-sm btnEditUser" id="btnAdd"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+        <span class="btn-primary btn-sm btnRemoveUser" id="btnRemove"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+       
         <input type="hidden" class="userId" value="@item.UserId" />
         <input type="hidden" class="roleTypeId" value="@item.RoleTypeValue" />
         <input type="hidden" class="itemStatus" value="@item.StatusId" />

@@ -132,6 +132,7 @@ namespace ATS.Bll
                         var questionFound = quesFactory.Question.Select(x => x.QId == ques.QId).FirstOrDefault();
                         if (questionFound != null)
                         {
+                            ques.AnsText = questionFound.AnsText;
                             ques.Options = questionFound.Options;
                             ques.MappedOptions = questionFound.MappedOptions;
                             ques.MappedQuestion = questionFound.MappedQuestion;
@@ -158,7 +159,7 @@ namespace ATS.Bll
                 {
                     //var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
                     QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
-                    var flag = quesFactory.Question.Create(ref questionBank);
+                    var flag = quesFactory.Question.Update(ref questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();
