@@ -47,9 +47,27 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetResultUsers(List<UserInfoModel> allUserIdList)
+        public ActionResult GetResultUsers(List<Guid> userId)
         {
-            return View();
+            List<TestBankModel> testBankList = new List<TestBankModel>();
+            ApiResult result = null;
+
+            try
+            {
+                result = ApiConsumers.ResultApiConsumer.RetrieveResult(userId);
+
+                if (result.Status && result.Data != null)
+                {
+                    testBankList = (List<TestBankModel>)result.Data;
+
+                    result.Data = RenderPartialViewToString("", testBankList);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

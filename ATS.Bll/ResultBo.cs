@@ -14,19 +14,24 @@ namespace ATS.Bll
 {
    public class ResultBo
     {
-        public ApiResult Retrieve(List<UserInfoModel> userInfoModel)
+        public ApiResult Retrieve(List<Guid>  userId)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
-                try
-                {
+                var queryable = unitOfWork.ResultRepo.Retrieve(userId);
 
-                }
-                catch
+               List<TestBankModel> testBankModel = queryable.ToList();
+
+                if (testBankModel != null)
                 {
-                    unitOfWork.Dispose();
-                    throw;
+                    apiResult.Status = true;
+                    apiResult.Data = testBankModel;
+                }
+                else
+                {
+                    apiResult.Status = false;
+                    apiResult.Message.Add("No record found for this user.");
                 }
             }
             return apiResult;

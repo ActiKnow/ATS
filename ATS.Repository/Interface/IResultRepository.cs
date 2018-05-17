@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ATS.Core.Model;
+using ATS.Repository.Model;
+using ATS.Repository.Repo;
 
 namespace ATS.Repository.Interface
 {
-    interface IResultRepository
+   public interface IResultRepository : IRepository<TestBankModel>
     {
+        IQueryable<TestBankModel> Retrieve(List<Guid> userId);
 
     }
 }

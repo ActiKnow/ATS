@@ -8,14 +8,14 @@ namespace ATS.Web.ApiConsumers
 {
     public class ResultApiConsumer
     {
-        public static ApiResult RetrieveResult(List<UserInfoModel> userInfoModel)
+        public static ApiResult RetrieveResult(List<Guid> userId)
         {
             ApiResult apiResult = null;
             try
             {
                 string url = string.Format("api/Result/Retrieve");     
                 
-                apiResult = ConsumerMethods.Post<List<UserTestHistoryModel>>(url, userInfoModel);
+                apiResult = ConsumerMethods.Post<List<UserTestHistoryModel>>(url, userId);
             }
             catch
             {
