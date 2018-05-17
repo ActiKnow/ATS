@@ -114,32 +114,33 @@
         description = description == undefined ? "" : description;
         isOption = isOption == undefined ? "" : isOption;
         ++counter;
-        var rowGenrate = "<div class='form-group'>" +
+        var rowGenrate = "<div class='form-group' id='option" + counter + "'>" +
             "  <div class='input-group'>" +
             "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
             "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
-            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' value=" + isOption + "  data-id='radio" + counter + "'>Is Correct</span></div>" +
+            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' id='radiovale" + counter+"' value='" + isOption + "'  data-id='radio" + counter + "'>Is Correct</span></div>" +
             "  </div>" +
             "</div>";
 
-        optionArray.push(rowGenrate);
-        renderOption(optionArray);
+        var optid = '#radiovale'+counter;
+
+        $(defaults.selectMCQType).append(rowGenrate);
+        $(optid).prop("checked", (isOption == 'true'));
     };
 
     var removeOption = function () {
         if (counter >= 1) {
-            optionArray.pop();
-            renderOption(optionArray);
+            $('#option'+counter).remove();
             counter--;
         }
     };
 
-    var renderOption = function () {
-        $(defaults.selectMCQType).html("");
-        for (let i = 0; i < optionArray.length; i++) {
-            $(defaults.selectMCQType).append(optionArray[i]);
-        }
-    }
+    //var renderOption = function () {
+    //    $(defaults.selectMCQType).html("");
+    //    for (let i = 0; i < optionArray.length; i++) {
+    //        $(defaults.selectMCQType).append(optionArray[i]);
+    //    }
+    //}
 
     var createQuestion = function () {
         var flag = true;
@@ -444,7 +445,7 @@
             $(defaults.selectTFType).hide();
             $(defaults.selectSubjectType).hide();
             $(defaults.btnAddRemove).hide();
-            optionArray = [];
+            $(defaults.selectMCQType).empty();
 
             if (Type == questionTypes.option) {
                 counter = 0;
@@ -463,19 +464,27 @@
             if (counter < 8)
                 addOption();
         })
+
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
             removeOption();
         })
+
         var valueArray = $(op.optionval).map(function () {
             return this.value;
         }).get();
+
         var valueOptIsAns = $(op.optionIsAns).map(function () {
             return this.value;
         }).get();
+
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
-            for (let x = 0; x < valueArray.length; x++) {
-                addOption(valueArray[x], valueOptIsAns[x]);
+            for (let x = 1; x <= optCount; x++) {
+                var $opData = $(op.optionData).find(":nth-child("+x+")");
+                var desc = $opData.attr("data-description");
+                var selectedValue = $opData.attr("data-selected");
+                var optval = selectedValue.toLowerCase();
+                addOption(desc, optval);
             }
         }
     };
