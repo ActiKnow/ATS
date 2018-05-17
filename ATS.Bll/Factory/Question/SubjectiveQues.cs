@@ -20,13 +20,13 @@ namespace ATS.Bll.Factory.Question
         }
         public bool Create(ref QuestionBankModel input)
         {
-            QuestionBank questionBank = new QuestionBank();
-            Utility.CopyEntity(out questionBank, input);
+            Utility.CopyEntity(out QuestionBank questionBank, input);
             var flag = false;
             flag = _unitOfWork.QuestionRepo.Create(ref questionBank);
 
             QuestionOptionMapping map = new QuestionOptionMapping
             {
+                Id = Guid.NewGuid(),
                 Answer = input.AnsText,
                 QId = input.QId,
                 OptionKeyId = input.QuesTypeValue.ToString()
@@ -35,29 +35,32 @@ namespace ATS.Bll.Factory.Question
             return flag;
         }
 
-        public List<QuestionBankModel> Select( Func<QuestionBankModel, bool> condition)
+        public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
-            var queryable1= _unitOfWork.QuestionRepo.Select(condition);
-            var resultDB = queryable1.ToList();
+            var resultDB = _unitOfWork.QuestionRepo.Select(condition).ToList();
             List<QuestionBankModel> result = null;
             if (resultDB != null)
             {
                 result = new List<QuestionBankModel>();
-                
+
                 foreach (var ques in resultDB)
                 {
-                    var queryable2= _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId);
-                    var mapOp = queryable2.ToList();
-                    ques.MappedOptions = mapOp;
+                   
+                    ques.MappedOptions = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
+                    var mapAns = ques.MappedOptions.FirstOrDefault();
+                    if (mapAns != null)
+                    {
+                        ques.AnsText = mapAns.Answer;
+                    }
                 }
+                result = resultDB;
             }
             return result;
         }
 
         public bool Update(ref QuestionBankModel input)
         {
-            QuestionBank questionBank = new QuestionBank();
-            Utility.CopyEntity(out questionBank, input);
+            Utility.CopyEntity(out QuestionBank questionBank, input);
             var flag = false;
             flag = _unitOfWork.QuestionRepo.Update(ref questionBank);
             if (flag)

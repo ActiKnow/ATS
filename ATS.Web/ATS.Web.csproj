@@ -269,6 +269,7 @@
     <Content Include="Scripts\backup\respond.min.js" />
     <Content Include="Scripts\module\result\result.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
+    <Content Include="Scripts\module\test-setup\map-test-question.js" />
     <Content Include="Scripts\plugins\bootstrap.min.js" />
     <Content Include="Scripts\common\alert-service.js" />
     <Content Include="Scripts\common\app-module.js" />

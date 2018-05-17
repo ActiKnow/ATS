@@ -203,6 +203,7 @@
         var quesSubjectvalue = $(op.selectQuesSubjectId).find(':selected').val();
         var quesText = $(op.selectQuesText).val();
         var quesMark = $(op.selectQuesMark).val();
+        var QId = $(op.Qid).val();
         var ansText = "";
         var optionValue = [];
         if (quesTypeValue == questionTypes.option) {
@@ -231,7 +232,8 @@
                 CategoryTypeValue: quesSubjectvalue,
                 Description: quesText,
                 DefaultMark: quesMark,
-                AnsText: ansText
+                AnsText: ansText,
+                QId: QId
             }
             QuestionView.options = optionValue;
             api.createQuestion('/Setup/UpdateQuestion', { QuestionView: QuestionView })

@@ -48,6 +48,11 @@ namespace ATS.Bll.Factory.Question
                 foreach (var ques in resultDB)
                 {
                     ques.MappedOptions = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
+                    var mapAns = ques.MappedOptions.FirstOrDefault();
+                    if (mapAns != null)
+                    {
+                        ques.AnsText = mapAns.Answer;
+                    }
                 }
                 result = resultDB;
             }
