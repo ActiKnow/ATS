@@ -20,15 +20,15 @@ namespace ATS.Repository.Repo
         public IQueryable<TestBankModel> Retrieve(List<Guid> userId)
         {
 
-            var records = (from Ta in _context.TestAssignment.Where(x => userId.Contains(x.UserId))
+            var records = (from Ta in _context.TestAssignment.Where(x => userId.Contains(x.UserId)).DefaultIfEmpty()
                            select new TestAssignmentModel
                            {
                                UserId = Ta.UserId,
                                TestBankId = Ta.TestBankId
                            }
-                          ).ToList();//AsQueryable<TestAssignmentModel>(); 
+                          ).AsQueryable<TestAssignmentModel>(); //ToList();
 
-            var query = (from x in _context.TestBank
+            var query = (from x in _context.TestBank.DefaultIfEmpty()
                          join b in records on x.TestBankId equals b.TestBankId
                          //join p in _context.TestAssignment on x.TestBankId equals p.TestBankId
                          // join q in _context.UserInfo on p.UserId equals q.UserId
@@ -46,8 +46,8 @@ namespace ATS.Repository.Repo
                              LevelTypeValue = x.LevelTypeValue,
                              TestBankId = x.TestBankId,
                              TestTypeValue = x.TestTypeValue,
-                             TotalMarks = x.TotalMarks,
-                             TestAssignments = records,
+                             TotalMarks = x.TotalMarks
+                             //TestAssignments = records,
 
                          }).AsQueryable<TestBankModel>();
 

@@ -15,13 +15,21 @@ namespace ATS.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(string ReturnUrl)
         {
-            UserCredentialModel userCredential = new UserCredentialModel();
-            if (ReturnUrl != null)
-                userCredential.ReturnUrl = ReturnUrl;
+            if (User.Identity.IsAuthenticated)
+            {
+                Session[Constants.USERID] = User.Identity.Name;
+                return RedirectToAction("SetUserCredential", ReturnUrl);
+            }
             else
-                userCredential.ReturnUrl = "";
+            {
+                UserCredentialModel userCredential = new UserCredentialModel();
+                if (ReturnUrl != null)
+                    userCredential.ReturnUrl = ReturnUrl;
+                else
+                    userCredential.ReturnUrl = "";
 
-            return View(userCredential);
+                return View(userCredential);
+            }
         }
 
         [AllowAnonymous]
@@ -47,7 +55,7 @@ namespace ATS.Web.Controllers
                     {
                         if (apiResult.Status && apiResult.Data != null)
                         {
-                            UserInfoModel userInfo=(UserInfoModel)apiResult.Data;
+                            UserInfoModel userInfo = (UserInfoModel)apiResult.Data;
 
                             Session[Constants.USERID] = userInfo.UserId;
                             Session[Constants.ROLE] = userInfo.RoleTypeValue;
@@ -62,7 +70,7 @@ namespace ATS.Web.Controllers
                     }
                     else
                     {
-                        apiResult = new ApiResult(false ,new List<string> { "Error Occured" } );
+                        apiResult = new ApiResult(false, new List<string> { "Error Occured" });
                     }
                 }
                 else
@@ -72,7 +80,7 @@ namespace ATS.Web.Controllers
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message } );
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
 
             ViewBag.Error = apiResult.Message[0];
@@ -80,7 +88,7 @@ namespace ATS.Web.Controllers
             return View("Index", userCredential);
         }
 
-        
+
         public ActionResult SetUserCredential(string ReturnUrl)
         {
             ApiResult apiResult = new ApiResult(false, new List<string> { "Invalid Credentials." });
@@ -93,22 +101,12 @@ namespace ATS.Web.Controllers
                 }
                 else
                 {
-                    var RoleType = (CommonType)Session[Constants.ROLE];
-
-                    if (RoleType == CommonType.ADMIN)
-                        return RedirectToAction("Index", "Dashboard", new { @Area = "Admin" });
-                    //else if (RoleType == Constants.EMPLOYEE)
-                    //    return RedirectToAction("Index", "Dashboard", new { @Area = "Employee" });
-                    //else if (RoleType == Constants.CANDIDATE)
-                    //    return RedirectToAction("Index", "Dashboard", new { @Area = "Candidate" });
-                    else
-                        apiResult = new ApiResult(false, new List<string> { "Role is not defiend" });
+                    return RedirectToAction("Index", "Dashboard", new { @Area = "Admin" });
                 }
-
             }
             catch (Exception ex)
             {
-                apiResult = new ApiResult( false, new List<string> { ex.GetBaseException().Message });
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
                 ViewBag.Error = apiResult.Message;
             }
             ViewBag.Error = apiResult.Message[0];
@@ -122,6 +120,6 @@ namespace ATS.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-      
+
     }
 }

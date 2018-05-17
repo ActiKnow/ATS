@@ -15,7 +15,7 @@ namespace ATS.Web.ApiConsumers
             {
                 string url = string.Format("api/Result/Retrieve");     
                 
-                apiResult = ConsumerMethods.Post<List<UserTestHistoryModel>>(url, userId);
+                apiResult = ConsumerMethods.Post<List<TestBankModel>>(url, userId);
             }
             catch
             {
