@@ -14813,3 +14813,11 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+.vl {
+    border-left: 1px solid #ced4da;
+    min-height: 50px;
+    left: 50%;
+    margin-left: 0px;
+    top: 0;
+}
