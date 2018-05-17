@@ -114,7 +114,7 @@
         description = description == undefined ? "" : description;
         isOption = isOption == undefined ? "" : isOption;
         ++counter;
-        var rowGenrate = "<div class='form-group'>" +
+        var rowGenrate = "<div class='form-group' id='option"+counter +"'>" +
             "  <div class='input-group'>" +
             "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
             "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
@@ -123,13 +123,15 @@
             "</div>";
 
         optionArray.push(rowGenrate);
-        renderOption(optionArray);
+        $(defaults.selectMCQType).append(rowGenrate);
+        //renderOption(optionArray);
     };
 
     var removeOption = function () {
         if (counter >= 1) {
             optionArray.pop();
-            renderOption(optionArray);
+            //renderOption(optionArray);
+            $("#option" + counter).remove();
             counter--;
         }
     };

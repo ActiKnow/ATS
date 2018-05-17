@@ -24,8 +24,33 @@
                 <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
             </p>
         </div>
-        <div class=" tableContext">
-
+        <div class=" ui-test-context">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" class="form-control" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input type="text" class="form-control" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Level</label>
+                        <input type="text" class="form-control" readonly="readonly"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -37,7 +62,7 @@
                 <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
             </p>
         </div>
-        <div class=" tableContext">
+        <div class=" ui-ques-context">
 
         </div>
     </div>
@@ -46,12 +71,12 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content validate-test-form" id="selectTestContext">
             <div class="modal-header">
-                <h3>Select Test</h3>
+                <h5 class="title">Select Test</h5>
                 <button type="button" class="close cancel-select-test">×</button>
             </div>
             <div class="modal-body">
                 <div id="testMessageContext"></div>
-                <div class="col-md-12">
+                <div class="col-md-12" id="testDataContext">
 
                 </div>
             </div>
@@ -65,7 +90,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content validate-ques-form" id="selectQuesContext">
             <div class="modal-header">
-                <h3>Select Questions</h3>
+                <h5 class="title">Select Questions</h5>
                 <button type="button" class="close cancel-select-ques">×</button>
             </div>
             <div class="modal-body">
@@ -103,7 +128,10 @@
                     testContext: '#testContext',
                     quesContext: '#quesContext',
                     closeSelectQues: '.cancel-select-ques',
-                    closeSelectTest:'.cancel-select-test',
+                    closeSelectTest: '.cancel-select-test',
+                    selectQuesContext: '#selectQuesContext',
+                    selectTestContext: '#selectTestContext',
+                    testDataContext:'#testDataContext'
                 };
                 mapTestQuestion.init(config);
 
