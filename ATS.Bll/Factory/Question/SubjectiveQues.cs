@@ -35,18 +35,23 @@ namespace ATS.Bll.Factory.Question
             return flag;
         }
 
-        public List<QuestionBankModel> Select( Func<QuestionBankModel, bool> condition)
+        public List<QuestionBankModel> Select(Func<QuestionBankModel, bool> condition)
         {
             var resultDB = _unitOfWork.QuestionRepo.Select(condition).ToList();
             List<QuestionBankModel> result = null;
             if (resultDB != null)
             {
                 result = new List<QuestionBankModel>();
-                
+
                 foreach (var ques in resultDB)
                 {
-                    var mapOp = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
-                    ques.MappedOptions = mapOp;
+                   
+                    ques.MappedOptions = _unitOfWork.MapOptionRepo.Select(x => x.QId == ques.QId).ToList();
+                    var mapAns = ques.MappedOptions.FirstOrDefault();
+                    if (mapAns != null)
+                    {
+                        ques.AnsText = mapAns.Answer;
+                    }
                 }
                 result = resultDB;
             }
