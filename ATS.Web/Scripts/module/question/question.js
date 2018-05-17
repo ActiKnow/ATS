@@ -460,7 +460,9 @@
         var valueArray = $(op.optionval).map(function () {
             return this.value;
         }).get();
-
+        var valueOptIsAns = $(op.optionIsAns).map(function () {
+            return this.value;
+        }).get();
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
             for (let x = 0; x < valueArray.length; x++) {

@@ -98,6 +98,7 @@
                             @foreach (var item in Model.Options)
                             {
                                 <input type="hidden" class="hideopt" value="@item.Description" />
+                                <input type="hidden" class="optionIsAns" value="@item.IsAnswer" />
                             }
                         </div>
                         <div id="MCQType">
@@ -235,6 +236,7 @@
                     optionCount: '#optionCount',
                     optionval: '.hideopt',
                     Qid: '#Qid',
+                    optionIsAns:'.optionIsAns',
                 };
                 question.init(config);
 
