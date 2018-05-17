@@ -13,11 +13,13 @@
         msgContext: '#msgContext',
 
     };
+
     var questionTypes = {
         option: AppConstant.OPTION,
         bool: AppConstant.BOOL,
         text: AppConstant.TEXT
     };
+
     var optionArray = [];
     var counter = 0;
 
@@ -43,6 +45,7 @@
             },
         }
     }());
+
     var callBacks = (function () {
         var op = defaults;
         var appendQuestion = function (result) {
@@ -59,7 +62,7 @@
                             $.each(result.Message, function (index, value) {
                                 msg += value;
                             });
-                            alertService.showSuccess(msg,op.msgContext);
+                            alertService.showSuccess(msg, op.msgContext);
                         }
                     }
                     else {
@@ -74,11 +77,12 @@
                 clear();
                 alertService.showError(result.responseText, op.msgContext);
             }
-        }        
+        }
     })();
+
     var clear = function () {
         var op = defaults;
-        $(op.selectQuesDiffiLevel).val("easy");
+        $(op.selectQuesDiffiLevel).val("-1");
         $(op.selectQuesQuesTypeId).val("-1");
         $(op.selectQuesSubjectId).val("-1");
         $(op.selectQuesText).val("");
@@ -94,8 +98,8 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-    var emptyOption = function () {
 
+    var emptyOption = function () {
         var op = defaults;
         $(op.selectOption1).val("");
         $(op.selectOption2).val("");
@@ -105,12 +109,14 @@
         $(op.selectFalse).val("");
         $(op.selectSubjective_text).val("");
     };
-    var addOption = function () {
+
+    var addOption = function (description) {
+        description = description == undefined ? "" : description;
         ++counter;
         var rowGenrate = "<div class='form-group'>" +
                             "  <div class='input-group'>" +
                             "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
-                            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='' data-id='" + counter + "'>" +
+                            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
                             "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' value=" + counter + "  data-id='radio" + counter + "'>Is Correct</span></div>" +
                             "  </div>" +
                          "</div>";
@@ -118,6 +124,7 @@
         optionArray.push(rowGenrate);
         renderOption(optionArray);
     };
+
     var removeOption = function () {
         if (counter >= 1) {
             optionArray.pop();
@@ -125,12 +132,14 @@
             counter--;
         }
     };
+
     var renderOption = function () {
         $(defaults.selectMCQType).html("");
         for (let i = 0; i < optionArray.length; i++) {
             $(defaults.selectMCQType).append(optionArray[i]);
         }
     }
+
     var createQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -163,7 +172,7 @@
         }
 
         if (quesTypeValue == questionTypes.text) {
-             ansText = $(op.selectSubjective_text).val();
+            ansText = $(op.selectSubjective_text).val();
         }
         if (validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark)) {
             var QuestionView = {
@@ -180,6 +189,7 @@
                 .fail(callBacks.onQuestionFailed);
         }
     };
+
     var updateQuestion = function () {
         var flag = true;
         var op = defaults;
@@ -229,7 +239,9 @@
                 .fail(callBacks.onQuestionFailed);
         }
     };
+
     var loadQuestionTypes = function () {
+
         var op = defaults;
         var previousValue = $(op.selectQuesQuesTypeId).attr('value');
         api.fireGetAjax('/Setup/GetQuestionTypes', {})
@@ -238,7 +250,7 @@
                     var msg = " ";
                     var items = "<option value=''>-Select-</option>";
                     if (res.Status) {
-                        if (res.Message && res.Message.length>0) {
+                        if (res.Message && res.Message.length > 0) {
                             $.each(res.Message, function (index, value) {
                                 msg += value;
                             });
@@ -250,6 +262,32 @@
                             });
                             if (previousValue && previousValue != 0) {
                                 $(op.selectQuesQuesTypeId).html(items).val(previousValue);
+                                if (previousValue == questionTypes.option) {
+                                    $(defaults.selectMCQType).show();
+                                    $(defaults.selectTFType).hide();
+                                    $(defaults.selectSubjectType).hide();
+                                    optionArray.splice(0, optionArray.length)
+                                    counter = 1;
+                                    //addOption();
+                                    //$(defaults.btnAdd).show();
+                                    //$(defaults.btnRemove).show();
+                                }
+                                else if (previousValue == questionTypes.bool) {
+                                    $(defaults.selectMCQType).hide();
+                                    $(defaults.selectTFType).show();
+                                    $(defaults.selectSubjectType).hide();
+                                    emptyOption();
+                                    $(defaults.btnAdd).hide();
+                                    $(defaults.btnRemove).hide();
+                                }
+                                else {
+                                    $(defaults.selectMCQType).hide();
+                                    $(defaults.selectTFType).hide();
+                                    $(defaults.selectSubjectType).show();
+                                    emptyOption();
+                                    $(defaults.btnAdd).hide();
+                                    $(defaults.btnRemove).hide();
+                                }
                             }
                             else {
                                 $(op.selectQuesQuesTypeId).html(items);
@@ -268,6 +306,7 @@
                 alertService.showError(res.responseText, op.msgContext);
             });
     }
+
     var loadLabelTypes = function () {
         var op = defaults;
         var previousValue = $(op.selectQuesDiffiLevel).attr('value');
@@ -285,7 +324,7 @@
                             alertService.showError(msg, op.msgContext);
                         }
                         else {
-                            $.each(res.Data, function (index, value) {                                
+                            $.each(res.Data, function (index, value) {
                                 items += "<option value=" + value.Value + ">" + value.Description + "</option>";
                             });
                             if (previousValue && previousValue != 0) {
@@ -310,43 +349,45 @@
     }
 
     var loadCategoryTypes = function () {
+
         var op = defaults;
         var previousValue = $(op.selectQuesSubjectId).attr('value');
-    api.fireGetAjax('/Setup/GetCategoryTypes', {})
-        .done(res => {
-            if (res != null) {
-                var msg = " ";
-                var items = "<option value=''>-Select-</option>";
-                if (res.Status) {
-                    if (res.Message && res.Message.length>0) {
+
+        api.fireGetAjax('/Setup/GetCategoryTypes', {})
+            .done(res => {
+                if (res != null) {
+                    var msg = " ";
+                    var items = "<option value=''>-Select-</option>";
+                    if (res.Status) {
+                        if (res.Message && res.Message.length > 0) {
+                            $.each(res.Message, function (index, value) {
+                                msg += value;
+                            });
+                            alertService.showError(msg, op.msgContext);
+                        }
+                        else {
+                            $.each(res.Data, function (index, value) {
+                                items += "<option value=" + value.Value + ">" + value.Description + "</option>";
+                            });
+                            if (previousValue && previousValue != 0) {
+                                $(op.selectQuesSubjectId).html(items).val(previousValue);
+                            }
+                            else {
+                                $(op.selectQuesSubjectId).html(items);
+                            }
+                        }
+                    }
+                    else {
                         $.each(res.Message, function (index, value) {
                             msg += value;
                         });
                         alertService.showError(msg, op.msgContext);
                     }
-                    else {
-                        $.each(res.Data, function (index, value) {
-                            items += "<option value="+ value.Value +">" + value.Description + "</option>";
-                        });
-                        if (previousValue && previousValue!=0) {
-                            $(op.selectQuesSubjectId).html(items).val(previousValue);
-                        }
-                        else {
-                            $(op.selectQuesSubjectId).html(items);
-                        }
-                    }
                 }
-                else {
-                    $.each(res.Message, function (index, value) {
-                        msg += value;
-                    });
-                    alertService.showError(msg, op.msgContext);
-                }
-            }
-        })
-        .fail(res => {
-            alertService.showError(res.responseText, op.msgContext);
-        });
+            })
+            .fail(res => {
+                alertService.showError(res.responseText, op.msgContext);
+            });
     }
 
     var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
@@ -371,7 +412,7 @@
         }
 
         if (message != "") {
-            alertService.showError(message, defaults.msgContext);           
+            alertService.showError(message, defaults.msgContext);
             flag = false;
         }
 
@@ -424,6 +465,16 @@
         $selectQuestionContainer.on('click', op.btnRemove, function (e) {
             removeOption();
         })
+        var valueArray = $(op.optionval).map(function () {
+            return this.value;
+        }).get();
+
+        var optCount = $(defaults.optionCount).val();
+        if (optCount && optCount != "0") {
+            for (let x = 0; x < valueArray.length; x++) {
+                addOption(valueArray[x]);
+            }
+        }
     };
     return {
         init: function (config) {

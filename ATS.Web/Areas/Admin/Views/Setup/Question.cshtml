@@ -1,10 +1,7 @@
 ﻿@model ATS.Core.Model.QuestionBankModel
 @{
-    //ViewBag.Title = "Question";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-
 <div class="app-title">
     <div>
         <h1><i class="fa fa-edit"></i>Setup</h1>
@@ -31,9 +28,16 @@
             <hr>
             <div class="tile-body">
                 <div class="row">
+                    <input type="hidden" id="optionCount" value="@Model.Options.Count" />                    
+                    @foreach (var item in Model.Options)
+                    {
+                        <input type="hidden" class="hideopt" value="@item.Description" />
+                    }
+                </div>
+                <div class="row">
                     <div class="col-md-9">
                         <div class="form-group">
-                            <label class="name-tag control-label" for="question_question_languages_attributes_0_hint">Question Description</label>
+                            <label class="name-tag control-label required-sign" for="question_question_languages_attributes_0_hint">Question Description</label>
                             @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
                         </div>
                         <div class="form-group">
@@ -41,13 +45,14 @@
                                 <label class="name-tag control-label" for="">Answer Description</label>
                                 <p id="MCQAddRemoveButtons" style="display:none">
                                     <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
-                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
-                                </p>
+                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>  
+                                </p>                                
                             </div>
+                            <hr />
                             <div style="display:none" id="MCQType">
 
                             </div>
-                            <div style="display:none" id="TFType"> 
+                            <div style="display:none" id="TFType">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -67,10 +72,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                             
+                                </div>
                             </div>
                             <div class="" style="display:none" id="SubjectType">
-                                <textarea placeholder="Answer" rows="3" class="form-control" id="Subjective_text"></textarea>
+                                @Html.TextAreaFor(x => x.AnsText, new { @class = "form-control", id = "Subjective_text", placeholder = "Answer", rows = "3" })
                             </div>
                         </div>
                     </div>
@@ -91,7 +96,6 @@
                             <label class="name-tag control-label" for="question_subject">Mark</label>
                             @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -157,7 +161,9 @@
                     btnRemove: '#btnRemove',
                     rowMCQGenrate: '#rowMCQGenrate',
                     msgContext: '#msgContext',
-                    btnAddRemove:'#MCQAddRemoveButtons',
+                    btnAddRemove: '#MCQAddRemoveButtons',
+                    optionCount: '#optionCount',
+                    optionval: '.hideopt',
                 };
                 question.init(config);
 

@@ -14821,3 +14821,10 @@ be a descendant of the grid when it is being dragged.
     margin-left: 0px;
     top: 0;
 }
+
+
+.required-sign {
+    content: "*";
+    float: right;
+    color: red;
+}
