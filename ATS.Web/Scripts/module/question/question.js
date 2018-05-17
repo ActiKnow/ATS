@@ -96,7 +96,7 @@
         $(op.selectOption4).val("");
         $(op.selectTrue).val("");
         $(op.selectFalse).val("");
-        $(op.selectSubjective_text).val("");
+       // $(op.selectSubjective_text).val("");
     };
 
     var emptyOption = function () {
@@ -278,7 +278,6 @@
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).show();
                                     $(defaults.selectSubjectType).hide();
-                                    emptyOption();
                                     $(defaults.btnAdd).hide();
                                     $(defaults.btnRemove).hide();
                                 }
@@ -286,7 +285,6 @@
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).show();
-                                    emptyOption();
                                     $(defaults.btnAdd).hide();
                                     $(defaults.btnRemove).hide();
                                 }

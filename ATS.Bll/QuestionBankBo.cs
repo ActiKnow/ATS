@@ -159,7 +159,7 @@ namespace ATS.Bll
                 {
                     //var flag = unitOfWork.QuestionRepo.Update(ref questionBank);
                     QuestionFactory quesFactory = new QuestionFactory(unitOfWork, (CommonType)questionBank.QuesTypeValue);
-                    var flag = quesFactory.Question.Create(ref questionBank);
+                    var flag = quesFactory.Question.Update(ref questionBank);
                     if (flag)
                     {
                         unitOfWork.Commit();

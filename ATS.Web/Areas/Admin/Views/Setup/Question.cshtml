@@ -95,8 +95,9 @@
                         <div class="form-group">
                             <label class="name-tag control-label" for="question_subject">Mark</label>
                             @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
-                        </div>
+
                     </div>
+                </div>                
                 </div>
             </div>
             <div class="tile-footer">
@@ -114,7 +115,6 @@
         </div>
     </div>
 </div>
-
 @section scripts {
     <script src="~/CommonTask/AppConstant"></script>
     <script src="~/Scripts/module/question/question.js"></script>
@@ -164,6 +164,7 @@
                     btnAddRemove: '#MCQAddRemoveButtons',
                     optionCount: '#optionCount',
                     optionval: '.hideopt',
+                    Qid: '#Qid',
                 };
                 question.init(config);
 
