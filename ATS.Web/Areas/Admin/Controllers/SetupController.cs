@@ -48,6 +48,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 var list = (List<QuestionBankModel>)result.Data;
                 questionBankModel = list.FirstOrDefault();
+                foreach (var ques in questionBankModel.Options)
+                {
+                    var ans = questionBankModel.MappedOptions.Where(x => x.Answer == ques.Id.ToString()).FirstOrDefault();
+                    ques.IsAnswer = (ans != null);
+                }
             }
             return View(questionBankModel);
         }
