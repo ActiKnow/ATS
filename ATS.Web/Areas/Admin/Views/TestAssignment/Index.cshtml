@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Test Assignment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-free-code-camp"></i> Test Assignment</h1>
+        <p>Assign Test to Users</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item"><a href="#">Test Assignment</a></li>
+    </ul>
+</div>
+<div id="mainMessageContext"></div>
+
+<div class="row" id="testContext">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">User Details</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select User</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="quesContext">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-title-w-btn">
+                <h5 class="title">Assigned Test list</h5>
+                <p>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
+                </p>
+            </div>
+            <hr />
+            <div class="tile-body tableContext">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalSelectTestContext" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content validate-test-form" id="selectTestContext">
+            <div class="modal-header">
+                <h3>Select Test</h3>
+                <button type="button" class="close cancel-select-test">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="testMessageContext"></div>
+                <div class="col-md-12">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalSelectQuesContext" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content validate-ques-form" id="selectQuesContext">
+            <div class="modal-header">
+                <h3>Select Questions</h3>
+                <button type="button" class="close cancel-select-ques">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="quesMessageContext"></div>
+                <div class="col-md-12">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/CommonTask/AppConstant"></script>
+    <script src="~/Scripts/common/form-validation-service.js"></script>
+    <script src="~/Scripts/module/test-setup/map-test-question.js"></script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        (function ($, window, document) {
+            $(function () {
+                var config = {
+                    openSelectTest: '#btnOpenSelectTest',
+                    openSelectQues: '#btnOpenSelectQues',
+                    modalSelectTestContext: '#modalSelectTestContext',
+                    modalSelectQuesContext: '#modalSelectQuesContext',
+                    testContext: '#testContext',
+                    quesContext: '#quesContext',
+                    closeSelectQues: '.cancel-select-ques',
+                    closeSelectTest: '.cancel-select-test',
+                };
+                mapTestQuestion.init(config);
+
+            });
+
+        }(window.jQuery, window, document));
+    </script>
+
+}
+
+

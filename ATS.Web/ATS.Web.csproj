@@ -146,6 +146,7 @@
     <Compile Include="ApiConsumers\CommonApiConsumer.cs" />
     <Compile Include="ApiConsumers\ConsumerMethods.cs" />
     <Compile Include="ApiConsumers\QuestionApiConsumer.cs" />
+    <Compile Include="ApiConsumers\ResultApiConsumer.cs" />
     <Compile Include="ApiConsumers\TestBankApiConsumer.cs" />
     <Compile Include="ApiConsumers\TypeApiConsumer.cs" />
     <Compile Include="ApiConsumers\UserApiConsumer.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ResultSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TestAssignmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\TestSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserSetupController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -251,6 +253,7 @@
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="Areas\Admin\Views\ResultSetup\Result.cshtml" />
     <Content Include="Areas\Admin\Views\ResultSetup\Partials\_AllUsersList.cshtml" />
+    <Content Include="Areas\Admin\Views\TestAssignment\Index.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />

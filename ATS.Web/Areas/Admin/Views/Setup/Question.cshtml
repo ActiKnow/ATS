@@ -1,6 +1,7 @@
 ﻿@model ATS.Core.Model.QuestionBankModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var i = 0;
 }
 <div class="app-title">
     <div>
@@ -29,11 +30,12 @@
             <div class="tile-body">
                 <div class="row">
                     <input type="hidden" id="optionCount" value="@Model.Options.Count" />
-                    @foreach (var item in Model.Options)
-                    {
-                        <input type="hidden" class="hideopt" value="@item.Description" />
-                        <input type="hidden" class="optionIsAns" value="@item.IsAnswer" />
-                    }
+                    <ul id="optionData">
+                        @foreach (var item in Model.Options)
+                        {
+                            <li style="display:none" data-description="@item.Description" data-selected=@item.IsAnswer></li>
+                        }
+                    </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-9">
@@ -51,7 +53,7 @@
                             </div>
                             <hr />
                             <div style="display:none" id="MCQType">
-
+                                
                             </div>
                             <div style="display:none" id="TFType">
                                 <div class="row">
@@ -167,6 +169,7 @@
                     optionval: '.hideopt',
                     Qid: '#Qid',
                     optionIsAns: '.optionIsAns',
+                    optionData:'#optionData'
                 };
                 question.init(config);
 
