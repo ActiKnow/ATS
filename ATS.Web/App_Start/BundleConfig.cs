@@ -25,12 +25,15 @@ namespace ATS.Web
                       "~/Scripts/plugins/moment.min.js",
                       "~/Scripts/plugins/fullcalendar.min.js",
                       "~/Scripts/plugins/jquery.dataTables.min.js",
-                      "~/Scripts/plugins/dataTables.bootstrap.min.js",
+                      "~/Scripts/plugins/dataTables.bootstrap4.min.js",
+                      "~/Scripts/plugins/dataTables.fixedHeader.min.js",
                       "~/Scripts/plugins/select2.min.js",
                       "~/Scripts/plugins/sweetalert.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/main.css"));
+                      "~/Content/css/main.css",
+                      "~/Content/css/dataTables.bootstrap4.min.css",
+                      "~/Content/css/fixedHeader.bootstrap4.min.css"));
         }
     }
 }
