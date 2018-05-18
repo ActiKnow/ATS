@@ -2,6 +2,9 @@
     'use strict';
     var defaults = {};
     const activeText = AppConstant.ACTIVE, inactiveText = AppConstant.INACTIVE;
+    var selectedUserList = [];
+    var _prevItemRow = null;
+
     var apiUrl = {
         getTests: '/Admin/TestAssignment/GetTests/'
     };
@@ -29,7 +32,7 @@
 
         var appendUser = function (result) {
             if (result !== "") {
-                var msg = " ";
+                var msg = " ";                
                 if (result.Status) {
                     if (result.Message && result.Message.length > 0) {
                         $.each(result.Message, function (index, value) {
@@ -58,8 +61,9 @@
                         });
                         alertService.showSuccess(msg, op.popupTestMessageContext);
                     }
-                    $(op.modalSelectTestContext).find('tbody').html(result.Data);
+                    $(op.selecttblTestList).find('tbody').html(result.Data);
                     $(op.selecttblTestList).DataTable();
+                    $(op.modalSelectTestContext).show();
                 }
                 else {
                     $.each(result.Message, function (index, value) {
@@ -101,6 +105,7 @@
     var addUserList = function () {
 
         allUserIdList = [];
+        var listUser = "";
         var $selectTable = $(defaults.selecttblUserList);
         var $tblBody = $selectTable.find('tbody');
         $tblBody.find(':checkbox:checked').each(function () {
@@ -109,9 +114,32 @@
             if (recID) {
                 allUserIdList.push(recID);
             }
+
+             listUser += "<tr>" +
+                 "<td><span class='FirstLastName'>" + FName + "</span></td>" +
+                 "<td><span class='Email'>" + Email + "</span></td>" +
+                 "<td><span class='RoleType'>" + RoleDescription + "</span></td>" +
+                 "<td><span class='Mobile'>" + Mobile + "</span>< input type = 'hidden' class='userId' value = '" + recID + "' />< input type='hidden' class='roleTypeId' value='" + RoleTypeValue + "' /></td > " +
+                 "</tr>";
+
+        });
+
+        $(defaults.tblSelectedUsersList).find('tbody').html(listUser);
+         //$(op.tblSelectedUsersList).DataTable();
+    }
+    var addTestList = function () {
+
+        allTestBankIdList = [];
+        var $selectTable = $(defaults.selecttblTestList);
+        var $tblBody = $selectTable.find('tbody');
+        $tblBody.find(':checkbox:checked').each(function () {
+            var recID = $(this).val();
+
+            if (recID) {
+                allTestBankIdList.push(recID);
+            }
         });
     }
-
     var render = {
         openUserList: function () {
             var op = defaults;
@@ -122,6 +150,7 @@
         openTestList: function () {
             var op = defaults;
             var $testModal = $(op.modalSelectTestContext);
+            loadTestList();
             $testModal.modal('show');
         },
         closeSelectUser: function () {
