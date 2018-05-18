@@ -15,167 +15,196 @@
     </ul>
 </div>
 <div id="msgContext"></div>
-<div class="row" id="typeContext">
-    <div class="col-md-12">
-        <div class="tile" id="questionContainer">
-            @if (Model.QId == Guid.Empty)
+<div class="modal-content validate-form" id="testContext">
+    <div class="row" id="typeContext">
+        <div id="popupMessageContext"></div>
+        <div class="col-md-12">
+            <div class="tile" id="questionContainer">
+                @if (Model.QId == Guid.Empty)
             {
                 <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Create Question</h3>
-            }
-            else
-            {
-                <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Update Question</h3>
-            }
-            <hr/>
-            <div class="tile-body">
-                <div class="row">
-                    <input type="hidden" id="optionCount" value="@Model.Options.Count" />
-                    <ul id="optionData">
-                        @foreach (var item in Model.Options)
+        }
+        else
+        {
+            <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Update Question</h3>
+    }
+                <hr />
+                <div class="tile-body">
+                    <div class="row">
+                        <input type="hidden" id="optionCount" value="@Model.Options.Count" />
+                        <ul id="optionData">
+                            @foreach (var item in Model.Options)
                         {
                             <li style="display:none" data-description="@item.Description" data-selected=@item.IsAnswer></li>
-                        }
-                    </ul>
-                </div>
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="form-group">
-                            <label class="name-tag control-label required-sign" for="question_question_languages_attributes_0_hint">Question Description</label>
-                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question" })
-                        </div>
-                        <div class="form-group">
-                            <div class="tile-title-w-btn">
-                                <label class="name-tag control-label  required-sign" for="">Answer Description</label>
-                                <p id="MCQAddRemoveButtons" style="display:none" class="btn-group">
-                                    <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
-                                    <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
-                                </p>
+                    }
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label class="name-tag control-label required-sign" for="question_question_languages_attributes_0_hint">Question Description</label>
+                                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", id = "question_text", placeholder = "Question", @data_required = "Question is required" })
                             </div>
-                            <hr />
-                            <div style="display:none" id="MCQType">
-                                
-                            </div>
-                            <div style="display:none" id="TFType">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class='input-group'>
-                                                <div class='input-group-prepend'><span class='input-group-text'>1.</span></div>
-                                                <span class='form-control'> True</span>
-                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1">Is Correct</span></div>
+                            <div class="form-group">
+                                <div class="tile-title-w-btn">
+                                    <label class="name-tag control-label  required-sign" for="">Answer Description</label>
+                                    <p id="MCQAddRemoveButtons" style="display:none" class="btn-group">
+                                        <button class="btn btn-primary btn-sm" type="button" id="btnAdd"><i class="fa fa-plus"></i></button>
+                                        <button class="btn btn-primary btn-sm" type="button" id="btnRemove"><i class="fa fa-minus"></i></button>
+                                    </p>
+                                </div>
+                                <hr />
+                                <div style="display:none" id="MCQType">
+
+                                </div>
+                                <div style="display:none" id="TFType">
+                                    <div class="row">
+                                        @{var ischecked1 = false; var ischecked2 = false;
+                                        if (Model.AnsText == "1")
+                                        {
+                                            ischecked1 = true;
+                                        }
+                                        else
+                                        {
+                                            ischecked2 = true;
+                                        }
+                                        }
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class='input-group'>
+                                                    <div class='input-group-prepend'><span class='input-group-text'>1.</span></div>
+                                                    <span class='form-control'> True</span>
+                                                    <div class='input-group-append'>
+                                                        <span class='input-group-text'>
+                                                            <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1" @if (Model.AnsText == "1") { <text> checked='checked' </text> }>
+                                                            Is Correct
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class='input-group'>
-                                                <div class='input-group-prepend'><span class='input-group-text'>2.</span></div>
-                                                <span class='form-control'> False</span>
-                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="2" value="2">Is Correct</span></div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class='input-group'>
+                                                    <div class='input-group-prepend'><span class='input-group-text'>2.</span></div>
+                                                    <span class='form-control'> False</span>
+                                                    <div class='input-group-append'>
+                                                        <span class='input-group-text'>
+                                                            <input name="statusRadio" type="radio" class="boolradio" data-id="0" value="0" @if (Model.AnsText == "0") { <text> checked='checked' </text> }>Is Correct
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="" style="display:none" id="SubjectType">
+                                    @Html.TextAreaFor(x => x.AnsText, new { @class = "form-control", id = "Subjective_text", placeholder = "Answer", rows = "3" })
+                                </div>
                             </div>
-                            <div class="" style="display:none" id="SubjectType">
-                                @Html.TextAreaFor(x => x.AnsText, new { @class = "form-control", id = "Subjective_text", placeholder = "Answer", rows = "3" })
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="name-tag control-label required-sign" for="question_difficulty_level">Question Level</label>
+                                @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue, @data_required = "Question Level is required" })
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="name-tag control-label required-sign" for="question_difficulty_level">Question Level</label>
-                            @Html.DropDownListFor(x => x.LevelTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_difficulty_level", value = Model.LevelTypeValue })
-                        </div>
-                        <div class="form-group">
-                            <label class="name-tag control-label required-sign" for="question_question_type">Question Type</label>
-                            @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue })
-                        </div>
-                        <div class="form-group">
-                            <label class="name-tag control-label  required-sign" for="question_subject">Subject</label>
-                            @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue })
-                        </div>
-                        <div class="form-group">
-                            <label class="name-tag control-label required-sign" for="question_subject">Mark</label>
-                            @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0" })
+                            <div class="form-group">
+                                <label class="name-tag control-label required-sign" for="question_question_type">Question Type</label>
+                                @Html.DropDownListFor(x => x.QuesTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_question_type_id", value = Model.QuesTypeValue, @data_required = "Question Type is required" })
+                            </div>
+                            <div class="form-group">
+                                <label class="name-tag control-label  required-sign" for="question_subject">Subject</label>
+                                @Html.DropDownListFor(x => x.CategoryTypeValue, new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, new { @class = "form-control", id = "question_subject_id", value = Model.CategoryTypeValue, @data_required = "Subject is required" })
+                            </div>
+                            <div class="form-group">
+                                <label class="name-tag control-label required-sign" for="question_subject">Mark</label>
+                                @Html.TextBoxFor(x => x.DefaultMark, new { @class = "form-control", id = "question_mark", placdeholder = "Mark", type = "number", onkeypress = "return event.charCode >= 48", min = "0", @data_required = "Mark is required" })
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tile-footer">
-                @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
-                @if (Model.QId == Guid.Empty)
+                <div class="tile-footer">
+                    @Html.HiddenFor(x => x.QId, new { id = "hiddenQid" })
+                    @if (Model.QId == Guid.Empty)
                 {
                     <button class="btn btn-primary" id="button_create_question" type="submit">Create</button>
-                }
-                else
-                {
-                    <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
-                    <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
-                }
+            }
+            else
+            {
+                <button class="btn btn-primary" id="button_update_question" type="submit">Update</button>
+                <a href="~/Admin/Setup/QuestionList" class="btn btn-primary">Back</a>
+        }
+                </div>
             </div>
         </div>
     </div>
-</div>
-@section scripts {
-    <script src="~/CommonTask/AppConstant"></script>
-    <script src="~/Scripts/module/question/question.js"></script>
-    <script>
-        function isNumber(evt) {
-            evt = (evt) ? evt : window.event;
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
+    </div>
+    @section scripts {
+        <script src="~/CommonTask/AppConstant"></script>
+        <script src="~/Scripts/module/question/question.js"></script>
+        <script>
+            function isNumber(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
             }
-            return true;
-        }
-        (function ($, window, document) {
-            $(function () {
-                var config = {
-                    selectContainer: '#questionContainer',
-                    selectQuesDiffiLevel: '#question_difficulty_level',
-                    selectQuesQuesTypeId: '#question_question_type_id',
-                    selectQuesSubjectId: '#question_subject_id',
-                    selectQuesText: '#question_text',
-                    selectQuesMark: '#question_mark',
-                    btnCreateQuestion: '#button_create_question',
-                    btnUpdateQuestion: '#button_update_question',
-                    btnBack: '#button_back_question',
-                    selectMCQType: '#MCQType',
-                    selectTFType: '#TFType',
-                    selectSubjectType: '#SubjectType',
+            (function ($, window, document) {
+                $(function () {
+                    var config = {
+                        selectContainer: '#questionContainer',
+                        selectQuesDiffiLevel: '#question_difficulty_level',
+                        selectQuesQuesTypeId: '#question_question_type_id',
+                        selectQuesSubjectId: '#question_subject_id',
+                        selectQuesText: '#question_text',
+                        selectQuesMark: '#question_mark',
+                        btnCreateQuestion: '#button_create_question',
+                        btnUpdateQuestion: '#button_update_question',
+                        btnBack: '#button_back_question',
+                        selectMCQType: '#MCQType',
+                        selectTFType: '#TFType',
+                        selectSubjectType: '#SubjectType',
 
-                    selectOption1: '#Option1',
-                    selectOption2: '#Option2',
-                    selectOption3: '#Option3',
-                    selectOption4: '#Option4',
-                    selectTrue: '#True',
-                    selectFalse: '#False',
-                    selectSubjective_text: '#Subjective_text',
-                    selectboolradio: '.boolradio',
+                        selectOption1: '#Option1',
+                        selectOption2: '#Option2',
+                        selectOption3: '#Option3',
+                        selectOption4: '#Option4',
+                        selectTrue: '#True',
+                        selectFalse: '#False',
+                        selectSubjective_text: '#Subjective_text',
+                        selectboolradio: '.boolradio',
 
-                    selecthiddenddlCategoryType: '#hiddenddlCategoryType',
-                    selecthiddenddlQuestionType: '#hiddenddlQuestionType',
-                    selecthiddendlllableType: '#hiddendlllableType',
-                    selectlblQuestionText: '#lblQuestionText',
+                        selecthiddenddlCategoryType: '#hiddenddlCategoryType',
+                        selecthiddenddlQuestionType: '#hiddenddlQuestionType',
+                        selecthiddendlllableType: '#hiddendlllableType',
+                        selectlblQuestionText: '#lblQuestionText',
 
-                    btnAdd: '#btnAdd',
-                    btnRemove: '#btnRemove',
-                    rowMCQGenrate: '#rowMCQGenrate',
-                    msgContext: '#msgContext',
-                    btnAddRemove: '#MCQAddRemoveButtons',
-                    optionCount: '#optionCount',
-                    optionval: '.hideopt',
-                    Qid: '#Qid',
-                    optionIsAns: '.optionIsAns',
-                    optionData:'#optionData'
-                };
-                question.init(config);
+                        btnAdd: '#btnAdd',
+                        btnRemove: '#btnRemove',
+                        rowMCQGenrate: '#rowMCQGenrate',
+                        msgContext: '#msgContext',
+                        btnAddRemove: '#MCQAddRemoveButtons',
+                        optionCount: '#optionCount',
+                        optionval: '.hideopt',
+                        Qid: '#hiddenQid',
+                        optionIsAns: '.optionIsAns',
+                        optionData: '#optionData',
 
-            });
+                        popupMessageContext:'#popupMessageContext'
+                    };
+                    question.init(config);
 
-        }(window.jQuery, window, document));
-    </script>
+                });
 
-}
+            }(window.jQuery, window, document));
+        </script>
+
+    }

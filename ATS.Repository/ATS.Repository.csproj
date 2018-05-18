@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201805160917438_InitialMigration.Designer.cs">
       <DependentUpon>201805160917438_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.cs" />
+    <Compile Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.Designer.cs">
+      <DependentUpon>201805180816028_added_MarksObtained_inTestAssignment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\QuestionBank.cs" />
@@ -107,6 +111,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805160917438_InitialMigration.resx">
       <DependentUpon>201805160917438_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.resx">
+      <DependentUpon>201805180816028_added_MarksObtained_inTestAssignment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

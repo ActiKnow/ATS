@@ -21,7 +21,7 @@ namespace ATS.Bll
             {
                 var queryable = unitOfWork.ResultRepo.Retrieve(userId);
 
-               List<TestBankModel> testBankModel = queryable.ToList();
+               List<TestAssignmentModel> testBankModel = queryable.ToList();
 
                 if (testBankModel != null)
                 {

@@ -9,7 +9,7 @@ namespace ATS.Repository.Interface
 {
    public interface IResultRepository : IRepository<TestBankModel>
     {
-        IQueryable<TestBankModel> Retrieve(List<Guid> userId);
+        IQueryable<TestAssignmentModel> Retrieve(List<Guid> userId);
 
     }
 }
