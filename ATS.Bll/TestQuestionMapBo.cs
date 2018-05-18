@@ -25,15 +25,20 @@ namespace ATS.Bll
                     if (flag)
                     {
                         unitOfWork.Commit();
-
+                        apiResult.Status = true;
                         apiResult.Message.Add("Created successfully");
+                        //var map = output.FirstOrDefault();
+                        //if (map != null)
+                        //{
+                        //    SimpleQueryModel query = new SimpleQueryModel { ModelName = nameof(TestQuestionMapping) };
+                        //    query[nameof(TestQuestionMapping.TestBankId)] = map.TestBankId;
+                        //    var result = Select(query);
 
-                        var result = Select(null);
-
-                        if (result != null)
-                        {
-                            apiResult+= result;
-                        }
+                        //    if (result != null)
+                        //    {
+                        //        apiResult += result;
+                        //    }
+                        //}
                     }
                     else
                     {
@@ -134,9 +139,12 @@ namespace ATS.Bll
                         {
                             if (result.Status && result.Data!=null)
                             {
-                                var quesFound=(QuestionBankModel)result.Data;
-                                quesFound.MappedQuestion = map;
-                                questions.Add(quesFound);
+                                var quesFound=((List<QuestionBankModel>)result.Data).FirstOrDefault();
+                                if (quesFound != null)
+                                {
+                                    quesFound.MappedQuestion = map;
+                                    questions.Add(quesFound);
+                                }
                             }
                         }
                     }

@@ -194,8 +194,7 @@ namespace ATS.Bll
             {
                 try
                 {
-                    var queryable = unitOfWork.QuestionRepo.Retrieve(QId);
-                    var dataFound = queryable.FirstOrDefault();
+                    var dataFound = unitOfWork.QuestionRepo.Retrieve(QId).FirstOrDefault();
 
                     if (dataFound != null)
                     {
@@ -204,7 +203,7 @@ namespace ATS.Bll
 
                         if (res != null && res.Status && res.Data != null)
                         {
-                            var typeDef = (TypeDef)res.Data;
+                            var typeDef = (TypeDefModel)res.Data;
                             CommonType type = (CommonType)typeDef.Value;
                             var result = new List<QuestionBankModel>();
                             QuestionFactory selector = new QuestionFactory(unitOfWork, type);
