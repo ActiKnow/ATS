@@ -17,72 +17,99 @@
 </div>
 <div id="mainMessageContext"></div>
 
-<div class="row" id="testContext">
+<div class="row" id="userContext">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-title-w-btn">
                 <h5 class="title">User Details</h5>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select User</button>
+                    <button type="button" class="btn btn-primary" id="btnOpenUserList"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select User</button>
                 </p>
             </div>
             <hr />
-            <div class="tile-body tableContext">
+            <div class="tile-body tableContextUser">
 
             </div>
         </div>
     </div>
 </div>
-<div class="row" id="quesContext">
+<div class="row" id="testContext">
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-title-w-btn">
                 <h5 class="title">Assigned Test list</h5>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
+                    <button type="button" class="btn btn-primary" id="btnOpenTestList"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
                 </p>
             </div>
             <hr />
-            <div class="tile-body tableContext">
+            <div class="tile-body tableContextTest">
 
             </div>
         </div>
     </div>
 </div>
+
+<div class="col-md-12">
+    <div class="modal fade" id="modalSelectUserContext" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>User List</h3>
+                    <button type="button" class="close cancel-select-user" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="popupUserMessageContext"></div>
+                    <div class="tile-body">
+                        <table class="table table-striped table-sm table-bordered table-hover" id="tblUserList">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkbox" id="chkUserinfo" /></th>
+                                    <th>User Name</th>
+                                    <th>Email Id</th>
+                                    <th>Test Type </th>
+                                    <th>Mobile Number</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnSubmitUsersList"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="modalSelectTestContext" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content validate-test-form" id="selectTestContext">
+        <div class="modal-content validate-ques-form" id="selectTestContext">
             <div class="modal-header">
                 <h3>Select Test</h3>
-                <button type="button" class="close cancel-select-test">×</button>
+                <button type="button" class="close cancel-select-test" data-dismiss="modal" aria-label="Close">×</button>
             </div>
             <div class="modal-body">
-                <div id="testMessageContext"></div>
-                <div class="col-md-12">
-
-                </div>
+                <div id="popupTestMessageContext"></div>
+                <div class="tile-body">
+                    <table class="table table-striped table-sm table-bordered table-hover" id="tblTestList">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="checkbox" id="chkTestinfo" /></th>
+                                <th>Test Description</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>                
             </div>
             <div class="modal-footer">
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal" id="modalSelectQuesContext" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content validate-ques-form" id="selectQuesContext">
-            <div class="modal-header">
-                <h3>Select Questions</h3>
-                <button type="button" class="close cancel-select-ques">×</button>
-            </div>
-            <div class="modal-body">
-                <div id="quesMessageContext"></div>
-                <div class="col-md-12">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-
+                <button class="btn btn-primary" type="button" id="btnSubmitTestList"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
             </div>
         </div>
     </div>
@@ -90,7 +117,7 @@
 @section scripts {
     <script src="~/CommonTask/AppConstant"></script>
     <script src="~/Scripts/common/form-validation-service.js"></script>
-    <script src="~/Scripts/module/test-setup/map-test-question.js"></script>
+    <script src="~/Scripts/module/test-setup/map-test-user.js"></script>
     <script>
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -103,16 +130,23 @@
         (function ($, window, document) {
             $(function () {
                 var config = {
-                    openSelectTest: '#btnOpenSelectTest',
-                    openSelectQues: '#btnOpenSelectQues',
-                    modalSelectTestContext: '#modalSelectTestContext',
-                    modalSelectQuesContext: '#modalSelectQuesContext',
+                    openUserList: '#btnOpenUserList',
+                    openTestList: '#btnOpenTestList',
+                    modalSelectUserContext: '#modalSelectUserContext',
+                    modalselectTestContext: '#modalselectTestContext',
                     testContext: '#testContext',
-                    quesContext: '#quesContext',
-                    closeSelectQues: '.cancel-select-ques',
+                    userContext: '#userContext',
+                    btnchkAllUserinfo: '#chkUserinfo', 
+                    btnchkAllTestinfo: '#chkTestinfo', 
+                    selecttblUserList: '#tblUserList',
+                    selecttblTestList: '#tblTestList',
+                    popupTestMessageContext:'#popupTestMessageContext',
+                    popupUserMessageContext: '#popupUserMessageContext',
+                    mainMessageContext:'#mainMessageContext',
                     closeSelectTest: '.cancel-select-test',
+                    closeSelectUser: '.cancel-select-user',
                 };
-                mapTestQuestion.init(config);
+                mapTestUser.init(config);
 
             });
 
