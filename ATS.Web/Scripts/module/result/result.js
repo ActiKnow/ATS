@@ -12,6 +12,52 @@
 
     var allUserIdList = [];
 
+    var data = {
+        labels: ["January", "February", "March", "April", "May"],     // shown on the x-axis
+        datasets: [              // this data will populate in Line Chart , Bar Chart ,Radar Chart
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56]        // shown on y-axis
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86]
+            }
+        ]
+    };
+    var pdata = [                      // this data will populate in Polar Chart , Doughnut Chart , Pie Chart
+        {
+            value: 300,
+            color: "#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+        },
+        {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+        },
+        {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        }
+    ]
+
     var api = (function () {
         var fireAjax = function (url, data, type) {
             var httpMethod = type || 'POST';
@@ -55,6 +101,49 @@
                 }
             }
         }
+
+        var reInitializeCartValue = function (result) {
+
+            var testData = result.Data;
+            var _labels = [];
+            var _internalData = [];
+
+            $.each(testData, function (index1, value1) {
+                _labels.push(value1.Description);
+                $.each(value1.TestAssignments, function (index2, value2) {
+                    _internalData.push(value2.userId);
+                });
+            });
+
+            data = {
+                
+                labels: _labels,     // shown on the x-axis
+                datasets: [              // this data will populate in Line Chart , Bar Chart ,Radar Chart
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: _internalData        // shown on y-axis
+                    },
+                    {
+                        label: "My Second dataset",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: [28, 48, 40, 19, 86]
+                    }
+                ]
+            };
+        }
+
+
         return {
             onUserListSuccess: function (result) {
                 appendUser(result);
@@ -64,7 +153,7 @@
             },
 
             onConsolidatedResultSuccess: function (result) {
-
+                reInitializeCartValue(result);
             },
 
             onConsolidatedResultFailed: function (result) {
@@ -131,6 +220,26 @@
         }
     }
 
+    var renderChart = function () {
+        var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+        var lineChart = new Chart(ctxl).Line(data);
+
+        var ctxb = $("#barChartDemo").get(0).getContext("2d");
+        var barChart = new Chart(ctxb).Bar(data);
+
+        var ctxr = $("#radarChartDemo").get(0).getContext("2d");
+        var radarChart = new Chart(ctxr).Radar(data);
+
+        var ctxpo = $("#polarChartDemo").get(0).getContext("2d");
+        var polarChart = new Chart(ctxpo).PolarArea(pdata);
+
+        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+        var pieChart = new Chart(ctxp).Pie(pdata);
+
+        var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
+        var doughnutChart = new Chart(ctxd).Doughnut(pdata);
+    }
+
     var bindEvents = function () {
         var op = defaults;
         var $tableUserContext = $(op.tableContext);
@@ -155,9 +264,15 @@
             GetIndividualTestResults();
         });
     };
+
+    var init = function () {
+        renderChart();
+    }
+
     return {
         init: function (config) {
             $.extend(true, defaults, config);
+            init();
             bindEvents();
             loadUserList();
         }
