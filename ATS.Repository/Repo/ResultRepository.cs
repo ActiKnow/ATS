@@ -22,32 +22,35 @@ namespace ATS.Repository.Repo
 
             var records = (from Ta in _context.TestAssignment.Where(x => userId.Contains(x.UserId)).DefaultIfEmpty()
                            select new TestAssignmentModel
-                           {
+                           {                           
                                UserId = Ta.UserId,
                                TestBankId = Ta.TestBankId
                            }
                           ).AsQueryable<TestAssignmentModel>(); //ToList();
 
-            var query = (from x in _context.TestBank.DefaultIfEmpty()
+            var query = (from x in _context.TestBank
                          join b in records on x.TestBankId equals b.TestBankId
-                         //join p in _context.TestAssignment on x.TestBankId equals p.TestBankId
-                         // join q in _context.UserInfo on p.UserId equals q.UserId
+                         group new { x, b } by new { x.TestBankId } into pg
+                         let firsttestgroup = pg.FirstOrDefault()
+                         let test = firsttestgroup.x
+                         let test_user = firsttestgroup.b
                          select new TestBankModel
                          {
-                             CreatedBy = x.CreatedBy,
-                             CreatedDate = x.CreatedDate,
-                             Description = x.Description,
-                             LastUpdatedBy = x.LastUpdatedBy,
-                             LastUpdatedDate = x.LastUpdatedDate,
-                             StatusId = x.StatusId,
-                             CategoryTypeValue = x.CategoryTypeValue,
-                             Duration = x.Duration,
-                             Instructions = x.Instructions,
-                             LevelTypeValue = x.LevelTypeValue,
-                             TestBankId = x.TestBankId,
-                             TestTypeValue = x.TestTypeValue,
-                             TotalMarks = x.TotalMarks
-                             //TestAssignments = records,
+
+                             //CreatedBy = test.CreatedBy,
+                             //CreatedDate = test.CreatedDate,
+                             //Description = test.Description,
+                             //LastUpdatedBy = test.LastUpdatedBy,
+                             //LastUpdatedDate = test.LastUpdatedDate,
+                             StatusId = test.StatusId,
+                             CategoryTypeValue = test.CategoryTypeValue,
+                             Duration = test.Duration,
+                             Instructions = test.Instructions,
+                             LevelTypeValue = test.LevelTypeValue,
+                             TestBankId = test.TestBankId,
+                             TestTypeValue = test.TestTypeValue,
+                             TotalMarks = test.TotalMarks,
+                             TestAssignments = records.ToList(),
 
                          }).AsQueryable<TestBankModel>();
 
