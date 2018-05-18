@@ -81,7 +81,7 @@ namespace ATS.Web.Areas.Admin.Controllers
                 userInfoModel.UserCredentials.CreatedDate = DateTime.Now;
                 userInfoModel.UserCredentials.CreatedBy = Session[Constants.USERID].ToString();
 
-                result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
+               result = ApiConsumers.UserApiConsumer.RegisterUser(userInfoModel);
             }
             catch (Exception ex)
             {

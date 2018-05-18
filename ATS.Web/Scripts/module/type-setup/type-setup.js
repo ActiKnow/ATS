@@ -77,8 +77,11 @@
         var typeName = $(op.typeName).val();
         var parentKey = $(op.selectParent).find(":selected").val();
         var statusId = $(op.selectStatus).find(":selected").val();
+        if (!validationService.validateForm({ messageContext: defaults.popupMessageContext })) {
+            return false;
+        }
 
-        flag = validateRequiredField(typeName, parentKey, statusId);
+        //flag = validateRequiredField(typeName, parentKey, statusId);
 
         if (flag) {
 
@@ -104,7 +107,10 @@
         var typeId = $(op.typeId).html();
         var typeValue = $(op.typeValue).html();
 
-        flag = validateRequiredField(typeName, parentKey, statusId);
+        if (!validationService.validateForm({ messageContext: defaults.popupMessageContext })) {
+            return false;
+        }
+        //flag = validateRequiredField(typeName, parentKey, statusId);
 
         if (flag) {
 
