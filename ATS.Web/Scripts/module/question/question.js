@@ -98,6 +98,7 @@
         $(op.selectTrue).val("");
         $(op.btnAddRemove).hide();
         $(op.selectSubjective_text).val("");
+        $(op.btnUpdateQuestion).hide();
     };
 
     var addOption = function (description, isOption) {
