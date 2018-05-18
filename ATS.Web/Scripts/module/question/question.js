@@ -82,9 +82,10 @@
 
     var clear = function () {
         var op = defaults;
-        $(op.selectQuesDiffiLevel).val("-1");
-        $(op.selectQuesQuesTypeId).val("-1");
-        $(op.selectQuesSubjectId).val("-1");
+        counter = 0;
+        $(op.selectQuesDiffiLevel).val("");
+        $(op.selectQuesQuesTypeId).val("");
+        $(op.selectQuesSubjectId).val("");
         $(op.selectQuesText).val("");
         $(op.selectQuesMark).val("");
         $(op.selectMCQType).html("");
@@ -95,8 +96,8 @@
         $(op.selectOption3).val("");
         $(op.selectOption4).val("");
         $(op.selectTrue).val("");
-        $(op.selectFalse).val("");
-         $(op.selectSubjective_text).val("");
+        $(op.btnAddRemove).hide();
+        $(op.selectSubjective_text).val("");
     };
 
     var addOption = function (description, isOption) {
@@ -183,7 +184,7 @@
             api.createQuestion('/Setup/CreateQuestion', { QuestionView: QuestionView })
                 .done(callBacks.onQuestionAdded)
                 .fail(callBacks.onQuestionFailed);
-       }
+        }
     };
 
     var updateQuestion = function () {
@@ -221,7 +222,11 @@
         if (quesTypeValue == questionTypes.text) {
             ansText = $(op.selectSubjective_text).val();
         }
-        if (validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark)) {
+        if (!validationService.validateForm({ messageContext: defaults.msgContext })) {
+            return false;
+        }
+
+        if (validateRequiredField(optionValue, ansText)) {
             var QuestionView = {
                 LevelTypeValue: quesDiffiLevelValue,
                 QuesTypeValue: quesTypeValue,
@@ -265,24 +270,18 @@
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).hide();
                                     optionArray.splice(0, optionArray.length)
-                                    counter = 1;
-                                    //addOption();
-                                    //$(defaults.btnAdd).show();
-                                    //$(defaults.btnRemove).show();
+                                    $(defaults.btnAddRemove).show();
                                 }
                                 else if (previousValue == questionTypes.bool) {
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).show();
                                     $(defaults.selectSubjectType).hide();
-                                    $(defaults.btnAdd).hide();
-                                    $(defaults.btnRemove).hide();
                                 }
                                 else {
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).show();
-                                    $(defaults.btnAdd).hide();
-                                    $(defaults.btnRemove).hide();
+                                    $(op.selectSubjective_text).attr('data-required', "Answer Description is required");
                                 }
                             }
                             else {
@@ -386,28 +385,26 @@
             });
     }
 
-    var validateRequiredField = function (optionValue, ansText)
-    {
+    var validateRequiredField = function (optionValue, ansText) {
         var flag = true;
         var message = "";
         var quesTypeValue = $(defaults.selectQuesQuesTypeId).find(':selected').val();
-         if (quesTypeValue == questionTypes.bool) {
+        if (quesTypeValue == questionTypes.bool) {
             if (!ansText || ansText.trim() == "") {
                 message = "Answer Description is required";
             }
         }
-         else if (quesTypeValue == questionTypes.option) {
-             var count = 0;
-             for (var i = 0; i < optionValue.length; ++i) 
-             {
-                 if (optionValue[i].IsAnswer) {
-                     count++;
-                 }
-                 
-             }
-             if (count == 0) {
-                 message = "Answer Description is required";
-             }
+        else if (quesTypeValue == questionTypes.option) {
+            var count = 0;
+            for (var i = 0; i < optionValue.length; ++i) {
+                if (optionValue[i].IsAnswer) {
+                    count++;
+                }
+
+            }
+            if (count == 0) {
+                message = "Answer Description is required";
+            }
         }
         if (message != "") {
             alertService.showError(message, defaults.msgContext);

@@ -63,7 +63,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-               // result = ApiConsumers.QuestionApiConsumer.CreateQuestion(QuestionView);
+                result = ApiConsumers.QuestionApiConsumer.CreateQuestion(QuestionView);
 
             }
             catch (Exception ex)
