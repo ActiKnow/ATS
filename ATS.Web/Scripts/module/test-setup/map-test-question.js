@@ -4,10 +4,16 @@
     const activeText = AppConstant.ACTIVE, inactiveText = AppConstant.INACTIVE;
     var selectedTest = {};
     var selectedQues = [];
+    var testQuestions = [];
+    var dataTable = {
+        testQuestions: null,
+        selectQuestions: null,
+    }
     var apiUrl = {
         getTests: '/Admin/TestSetup/GetTests/',
         getQuestions: '/Admin/Setup/GetQuestionList/',
         mapQuestions: '/Admin/TestSetup/LinkTestQuestion/',
+        getTestQuestions: '/Admin/TestSetup/GetTestQuestions/',
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -45,6 +51,24 @@
                 })
                 .fail();
         },
+        getTestQuestions: function () {
+         
+            api.fireGetAjax(apiUrl.getTestQuestions, { testBankId: selectedTest.id })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                        }
+                        else {
+                            render.fillTestQuestions(result.Data);
+                        }
+                    }
+                    else {
+                        render.fillTestQuestions();
+                    }
+                })
+                .fail()
+                .always((result) => { action.getQuestions();});
+        },
         getQuestions: function () {
             api.fireGetAjax(apiUrl.getQuestions, { rawQuestion: true })
                 .done((result) => {
@@ -72,6 +96,7 @@
             selectedTest.status = $row.find('.' + op.testStatus).text();
             render.fillSelectedTest(selectedTest);
             render.closeSelectTest();
+            action.getTestQuestions();
         },
         resetSelectedTest: function () {
             return {
@@ -108,6 +133,7 @@
             selectedQues.splice(selectedQues.indexOf(question), 1);
         },
         mapQuestions: function () {
+            var op = defaults;
             var linkQuestions = [];
             for (let indx in selectedQues) {
                 let map = action.getEmptyMapping();
@@ -116,29 +142,33 @@
                 map.Marks = selectedQues[indx].marks;
                 linkQuestions.push(map);
             }
+            if (linkQuestions.length <= 0) {
+                alertService.showError("Question is required", op.quesMessageContext);
+                return false;
+            }
             api.firePostAjax(apiUrl.mapQuestions, { linkQuestions: linkQuestions })
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
+                            alertService.showAllSuccess(result.Message, op.mainMessageContext);
                         }
-                        else {
-                            //render.fillSelectTest(result.Data);
-                        }
+                        render.closeSelectQues();
+                        action.getTestQuestions();
                     }
                     else {
-
+                        alertService.showAllErrors(result.Message, op.quesMessageContext);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showAllErrors(result.responseText, op.quesMessageContext); });
         },
         onSelectQuestion: function (e) {
             var op = defaults;
             var $selection = $(this);
             var $row = $(e.target).closest('tr');
-           
+
             var question = action.getEmptyQues();
-            question.id = $row.find('.'+op.quesId).val();
-            question.marks = parseInt( $row.find('.' +op.quesMarks).text(),10);
+            question.id = $row.find('.' + op.quesId).val();
+            question.marks = parseInt($row.find('.' + op.quesMarks).text(), 10);
             if ($selection.is(':checked')) {
                 action.addQuestions(question);
             }
@@ -146,7 +176,8 @@
                 action.removeQuestions(question);
             }
             console.log(selectedQues);
-        }
+        },
+          onDeleteQuestion: function (e) { }
     };
     var render = {
         openSelectTest: function () {
@@ -155,9 +186,12 @@
             $testModal.modal('show');
         },
         opernSelectQues: function () {
+       
             var op = defaults;
+            alertService.hide(op.quesMessageContext);
             var $quesModal = $(op.modalSelectQuesContext);
             $quesModal.modal('show');
+            selectedQues = [];
         },
         closeSelectTest: function () {
             var op = defaults;
@@ -166,8 +200,10 @@
         },
         closeSelectQues: function () {
             var op = defaults;
+            alertService.hide(op.quesMessageContext);
             var $quesModal = $(op.modalSelectQuesContext);
             $quesModal.modal('hide');
+            selectedQues = [];
         },
         fillSelectTest: function (data) {
             var op = defaults;
@@ -197,26 +233,97 @@
             var op = defaults;
             var $tblQuesRecord = $(op.tblQuesRecord);
             var selectQues = '';
+            var rowContents = [];
+            if (dataTable.selectQuestions) {
+                dataTable.selectQuestions.clear();
+            }
+            else {
+                dataTable.selectQuestions = $tblQuesRecord.DataTable({
+                    "order": [],
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    }]
+                });
+            }
             $.each(data, (indx, value) => {
-                selectQues += `<tr><td><span> <input type="checkbox" class='` + op.selectedQues + `'/></span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `'/></td>
+                if (testQuestions && (testQuestions.indexOf(value.QId) == -1)) {
+
+
+                    selectQues += `<tr><td><span> <input type="checkbox" class='` + op.selectedQues + `'/></span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `'/></td>
                                             <td><span class='` + op.quesDesc + `'>` + value.Description + `</span> </td>
                                             <td><span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> </td></tr>`;
+                    rowContents = [];
+                    rowContents.push(`<span> <input type="checkbox" class='` + op.selectedQues + `'/></span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `'/>`);
+                    rowContents.push(`<span class='` + op.quesDesc + `'>` + value.Description + `</span>`);
+                    rowContents.push(`<span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span>`);
+                    rowContents.push(`<span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> `);
+                    rowContents.push(`<span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span>`);
+                    rowContents.push(`<span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> `);
+                    if (dataTable.selectQuestions) {
+                        dataTable.selectQuestions.row.add(rowContents);
+                    }
+                }
 
             });
-            $tblQuesRecord.find('tbody').html(selectQues);
-            $tblQuesRecord.on('change','.'+ op.selectedQues, action.onSelectQuestion);
-            $tblQuesRecord.DataTable({
-                "order": [],
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false,
-                }]
-            });
+
+            if (dataTable.selectQuestions) {
+                dataTable.selectQuestions.search('').draw();
+            }
+            else {
+                $tblQuesRecord.find('tbody').html(selectQues);
+            }
+            $tblQuesRecord.off('change', '.' + op.selectedQues, action.onSelectQuestion);
+            $tblQuesRecord.on('change', '.' + op.selectedQues, action.onSelectQuestion);
+
         },
+        fillTestQuestions: function (data) {
+            var op = defaults;
+            var $tblQuesRecord = $(op.testQuestions);
+            var selectQues = '';
+            var rowContents = [];
 
+            if (dataTable.testQuestions) {
+                dataTable.testQuestions.clear();
+            }
+            else {
+                dataTable.testQuestions = $tblQuesRecord.DataTable();
+            }
+            testQuestions = [];
+            $.each(data, (indx, value) => {
+                selectQues += `<tr><td><span> ` + (indx + 1) + `</span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `'/></td>
+                                            <td><span class='` + op.quesDesc + `'>` + value.Description + `</span> </td>
+                                            <td><span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span> </td>
+                                            <td><span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> </td>
+                                            <td><span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span> </td>
+                                            <td><span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> </td>
+                                            <td>  <button class="btn-primary btn-xs ` + op.deleteQuestion +`"><i class="fa fa-remove" aria-hidden="true"></i></button></td></tr >`;
+                testQuestions.push(value.QId);
+                rowContents = [];
+                rowContents.push(`<span> ` + (indx + 1) + `</span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `' />`);
+                rowContents.push(`<span class='` + op.quesDesc + `'>` + value.Description + `</span>`);
+                rowContents.push(`<span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span>`);
+                rowContents.push(`<span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> `);
+                rowContents.push(`<span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span>`);
+                rowContents.push(`<span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> `);
+                rowContents.push(` <button class="btn-primary btn-xs ` + op.deleteQuestion +`"><i class="fa fa-remove" aria-hidden="true"></i></button>`);
+                if (dataTable.testQuestions) {
+                    dataTable.testQuestions.row.add(rowContents);
+                }
+            });
+
+            if (dataTable.testQuestions) {
+                dataTable.testQuestions.search('').draw();
+            }
+            else {
+                $tblQuesRecord.find('tbody').html(selectQues);
+            }
+            $tblQuesRecord.off('change', '.' + op.deleteQuestion, action.onDeleteQuestion);
+            $tblQuesRecord.on('change', '.' + op.deleteQuestion, action.onDeleteQuestion);
+        }
     };
     var loader = {
         loadEvents: function () {
@@ -241,7 +348,7 @@
         },
         loadApiData: function () {
             action.getTests();
-            action.getQuestions();
+            //action.getQuestions();
         }
     };
     var setup = function () {
