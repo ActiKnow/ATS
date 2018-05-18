@@ -330,6 +330,10 @@
         $(op.mobile).val("");
         $(op.password).val("");
         $(op.ddlRoleType).val("");
+        $(op.hiddenEmail).val("");
+        $(op.hiddenId).val("");
+        $(op.hiddenRoleId).val("");
+        $(op.hiddenStatusId).val("");
     };   
     var bindEvents = function () {
         var op = defaults;
@@ -355,8 +359,10 @@
         });
         $userContext.on('click', op.btnCancelUser, function (e) {
             resetFields();
+            setValuesReadOnly();
         });
         $userContext.on('click', op.btnUpdateUser, function (e) {
+            setValuesReadOnly();
             updateUser();
         });
         $userContext.on('change', op.ddlRoleType, function (e) {          
