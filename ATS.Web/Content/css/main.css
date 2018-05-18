@@ -14830,4 +14830,4 @@ be a descendant of the grid when it is being dragged.
     font-size:smaller;
 }
 
-
+ .row-active  td { background-color: #17a2b8; color: #ffffff; }

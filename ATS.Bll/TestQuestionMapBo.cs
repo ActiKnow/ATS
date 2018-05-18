@@ -19,9 +19,8 @@ namespace ATS.Bll
             {
                 try
                 {
-                    List<TestQuestionMapping> output = new List<TestQuestionMapping>();
-                    Utility.CopyEntity(out output,inputs);
-                    var flag = unitOfWork.MapQuestionRepo.MapQuotions(output);
+                    Utility.CopyEntity(out List<TestQuestionMapping> output,inputs);
+                    var flag = unitOfWork.MapQuestionRepo.MapQuestions(output);
 
                     if (flag)
                     {
