@@ -226,8 +226,10 @@
     <Content Include="Content\Backup\bootstrap.css" />
     <Content Include="Content\Backup\bootstrap.min.css" />
     <Content Include="Content\Backup\Site.css" />
-    <Content Include="Content\main.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\css\fixedHeader.bootstrap4.min.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -264,6 +266,7 @@
     <Content Include="Scripts\backup\modernizr-2.6.2.js" />
     <Content Include="Scripts\backup\respond.js" />
     <Content Include="Scripts\backup\respond.min.js" />
+    <Content Include="Scripts\common\advanced-table.js" />
     <Content Include="Scripts\module\result\result.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
     <Content Include="Scripts\module\test-setup\map-test-question.js" />
@@ -279,12 +282,13 @@
     <Content Include="Scripts\common\session-data.js" />
     <Content Include="Scripts\common\utils.js" />
     <Content Include="Scripts\common\utils\hot-keys.js" />
+    <Content Include="Scripts\plugins\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\plugins\dataTables.fixedHeader.min.js" />
     <Content Include="Scripts\plugins\jquery-3.2.1.min.js" />
     <Content Include="Scripts\plugins\main.js" />
     <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\plugins\bootstrap-notify.min.js" />
     <Content Include="Scripts\plugins\chart.js" />
-    <Content Include="Scripts\plugins\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\plugins\fullcalendar.min.js" />
     <Content Include="Scripts\plugins\jquery-ui.custom.min.js" />
     <Content Include="Scripts\plugins\jquery.dataTables.min.js" />

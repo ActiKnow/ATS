@@ -26,7 +26,7 @@
             {
                 <h3 class="tile-title name-tag" id="lblQuestionText" style="font-size:larger " for="question_language_id">Update Question</h3>
             }
-            <hr/>
+            <hr />
             <div class="tile-body">
                 <div class="row">
                     <input type="hidden" id="optionCount" value="@Model.Options.Count" />
@@ -53,25 +53,49 @@
                             </div>
                             <hr />
                             <div style="display:none" id="MCQType">
-                                
+
                             </div>
                             <div style="display:none" id="TFType">
                                 <div class="row">
+                                    @{var ischecked1 = false; var ischecked2 = false;
+                                        if (Model.AnsText == "1")
+                                        {
+                                            ischecked1 = true;
+                                        }
+                                        else
+                                        {
+                                            ischecked2 = true;
+                                        }
+                                    }
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class='input-group'>
                                                 <div class='input-group-prepend'><span class='input-group-text'>1.</span></div>
                                                 <span class='form-control'> True</span>
-                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1">Is Correct</span></div>
+                                                <div class='input-group-append'>
+                                                    <span class='input-group-text'>
+                                                        <input name="statusRadio" type="radio" class="boolradio" data-id="1" value="1" @if (Model.AnsText == "1") { <text> checked='checked' </text> }>
+                                                        Is Correct
+                                                    </span>
+
+                                                </div>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class='input-group'>
                                                 <div class='input-group-prepend'><span class='input-group-text'>2.</span></div>
                                                 <span class='form-control'> False</span>
-                                                <div class='input-group-append'><span class='input-group-text'><input name="statusRadio" type="radio" class="boolradio" data-id="2" value="2">Is Correct</span></div>
+                                                <div class='input-group-append'>
+                                                    <span class='input-group-text'>
+                                                        <input name="statusRadio" type="radio" class="boolradio" data-id="0" value="0" @if (Model.AnsText == "0") { <text> checked='checked' </text> }>Is Correct
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +193,7 @@
                     optionval: '.hideopt',
                     Qid: '#Qid',
                     optionIsAns: '.optionIsAns',
-                    optionData:'#optionData'
+                    optionData: '#optionData'
                 };
                 question.init(config);
 
