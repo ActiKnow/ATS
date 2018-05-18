@@ -11,7 +11,7 @@ using ATS.Repository.Uow;
 namespace ATS.Bll
 {
     public class TestQuestionMapBo
-    {       
+    {
         public ApiResult Create(List<TestQuestionMapModel> inputs)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
@@ -19,7 +19,7 @@ namespace ATS.Bll
             {
                 try
                 {
-                    Utility.CopyEntity(out List<TestQuestionMapping> output,inputs);
+                    Utility.CopyEntity(out List<TestQuestionMapping> output, inputs);
                     var flag = unitOfWork.MapQuestionRepo.MapQuestions(output);
 
                     if (flag)
@@ -65,9 +65,24 @@ namespace ATS.Bll
                     var flag = false;
                     List<TestQuestionMapping> output = new List<TestQuestionMapping>();
                     Utility.CopyEntity(out output, inputs);
-
-                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(output);
-
+                    var withoutId = output.Where(x => x.Id == Guid.Empty).ToList();
+                    foreach (var map in withoutId)
+                    {
+                        if (map.Id == Guid.Empty)
+                        {
+                            var result = unitOfWork.MapQuestionRepo.Select(x=>x.TestBankId == map.TestBankId && x.QId == map.QId).ToList();
+                            if (result != null)
+                            {
+                                var data = (result as List<TestQuestionMapModel>).FirstOrDefault();
+                                if (data != null)
+                                {
+                                    map.Id = data.Id;
+                                    flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestion(map);
+                                }
+                            }
+                        }
+                    }
+                   // flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(output);
                     if (flag)
                     {
                         apiResult.Message.Add("Deleted successfully.");
@@ -77,7 +92,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult+= result;
+                            apiResult += result;
                         }
                     }
                     else
@@ -89,6 +104,7 @@ namespace ATS.Bll
                 catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;
@@ -121,12 +137,12 @@ namespace ATS.Bll
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
-            {               
+            {
                 SimpleQueryBuilder<TestQuestionMapModel> simpleQry = new SimpleQueryBuilder<TestQuestionMapModel>();
                 var queryable = unitOfWork.MapQuestionRepo.Select(simpleQry.GetQuery(query).Compile());
 
                 var dataMaps = queryable.ToList();
-                List<QuestionBankModel> questions = null;               
+                List<QuestionBankModel> questions = null;
 
                 if (dataMaps != null)
                 {
@@ -137,9 +153,9 @@ namespace ATS.Bll
                         var result = questionBankBo.SelectQuetionsByType(map.QId);
                         if (result != null)
                         {
-                            if (result.Status && result.Data!=null)
+                            if (result.Status && result.Data != null)
                             {
-                                var quesFound=((List<QuestionBankModel>)result.Data).FirstOrDefault();
+                                var quesFound = ((List<QuestionBankModel>)result.Data).FirstOrDefault();
                                 if (quesFound != null)
                                 {
                                     quesFound.MappedQuestion = map;
@@ -168,9 +184,9 @@ namespace ATS.Bll
                 {
                     apiResult.Status = false;
                     apiResult.Message.Add("No record found");
-                }                
+                }
             }
-            return apiResult;            
+            return apiResult;
         }
 
         public ApiResult Update(TestQuestionMapModel input)
@@ -194,7 +210,7 @@ namespace ATS.Bll
 
                         if (result != null)
                         {
-                            apiResult+= result;
+                            apiResult += result;
                         }
                     }
                     else
