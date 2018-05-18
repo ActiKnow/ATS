@@ -17,44 +17,43 @@ namespace ATS.Repository.Repo
             this._context = context;
         }
 
-        public IQueryable<TestBankModel> Retrieve(List<Guid> userId)
+        public IQueryable<TestAssignmentModel> Retrieve(List<Guid> userId)
         {
 
-            var records = (from Ta in _context.TestAssignment.Where(x => userId.Contains(x.UserId)).DefaultIfEmpty()
-                           select new TestAssignmentModel
-                           {
-                               UserId = Ta.UserId,
-                               TestBankId = Ta.TestBankId
-                           }
-                          ).AsQueryable<TestAssignmentModel>(); //ToList();
-
-            var query = (from x in _context.TestBank.DefaultIfEmpty()
-                         join b in records on x.TestBankId equals b.TestBankId
-                         //join p in _context.TestAssignment on x.TestBankId equals p.TestBankId
-                         // join q in _context.UserInfo on p.UserId equals q.UserId
-                         select new TestBankModel
+            var query = (from x in _context.TestAssignment
+                         select new TestAssignmentModel
                          {
-                             CreatedBy = x.CreatedBy,
-                             CreatedDate = x.CreatedDate,
-                             Description = x.Description,
-                             LastUpdatedBy = x.LastUpdatedBy,
-                             LastUpdatedDate = x.LastUpdatedDate,
-                             StatusId = x.StatusId,
-                             CategoryTypeValue = x.CategoryTypeValue,
-                             Duration = x.Duration,
-                             Instructions = x.Instructions,
-                             LevelTypeValue = x.LevelTypeValue,
-                             TestBankId = x.TestBankId,
-                             TestTypeValue = x.TestTypeValue,
-                             TotalMarks = x.TotalMarks
-                             //TestAssignments = records,
 
-                         }).AsQueryable<TestBankModel>();
+                         }).AsQueryable<TestAssignmentModel>();
 
             return query;
-         
+
+            //return query;
+
+            //var query = (from x in _context.TestBank
+            //             select new TestBankModel
+            //             {
+            //                 CreatedBy = x.CreatedBy,
+            //                 CreatedDate = x.CreatedDate,
+            //                 Description = x.Description,
+            //                 LastUpdatedBy = x.LastUpdatedBy,
+            //                 LastUpdatedDate = x.LastUpdatedDate,
+            //                 StatusId = x.StatusId,
+            //                 CategoryTypeValue = x.CategoryTypeValue,
+            //                 Duration = x.Duration,
+            //                 Instructions = x.Instructions,
+            //                 LevelTypeValue = x.LevelTypeValue,
+            //                 TestBankId = x.TestBankId,
+            //                 TestTypeValue = x.TestTypeValue,
+            //                 TotalMarks = x.TotalMarks,
+            //                 TestAssignments =(from y in _context.TestAssignment
+            //                                   select new TestAssignmentModel{
+            //                                       UserId = y.UserId,
+            //                                       TestBankId = y.TestBankId
+            //                                   }).Where(y=>y.TestBankId==x.TestBankId && userId.Contains(y.UserId)).ToList(),
+            //             }).AsQueryable<TestBankModel>();
+            //return query;
+
         }
-
-
     }
 }

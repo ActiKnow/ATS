@@ -27,54 +27,54 @@
             </div>
             <hr />
             <div class="tile-body">
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Line Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="lineChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                <div class="col-md-12" id="chartContainer">
+                    @*<div class="tile">
+                            <h3 class="tile-title">Line Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="lineChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
+                        </div>*@
+                </div>
+                @*<div class="col-md-12">
+                        <div class="tile">
+                            <h3 class="tile-title">Bar Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="barChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Bar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="barChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                    <div class="col-md-12">
+                        <div class="tile">
+                            <h3 class="tile-title">Radar Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="radarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Radar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="radarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                    <div class="col-md-12">
+                        <div class="tile">
+                            <h3 class="tile-title">Polar Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="polarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Polar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="polarChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                    <div class="col-md-12">
+                        <div class="tile">
+                            <h3 class="tile-title">Pie Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="pieChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Pie Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="pieChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                    <div class="col-md-12">
+                        <div class="tile">
+                            <h3 class="tile-title">Doughnut Chart</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <canvas class="embed-responsive-item" id="doughnutChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="tile">
-                        <h3 class="tile-title">Doughnut Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="doughnutChartDemo" width="475" height="267" style="width: 475px; height: 267px;"></canvas>
-                        </div>
-                    </div>
-                </div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -118,11 +118,12 @@
 @section scripts
 {
     <script src="~/Scripts/module/result/result.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script>
         (function ($, window, document) {
             $(function () {
                 var config = {
-                    tableContext: '#typeContextModel',
+                    typeContextModel: '#typeContextModel',
                     selecttblUserList: '#tblUserList',
                     selecttblUserAnswerList: '#tblUserAnswerList',
                     btnConsolidatedResult: '#btnConsolidatedResult',
