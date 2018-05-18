@@ -269,6 +269,7 @@
     <Content Include="Scripts\backup\respond.js" />
     <Content Include="Scripts\backup\respond.min.js" />
     <Content Include="Scripts\common\advanced-table.js" />
+    <Content Include="Scripts\module\result\resultBackup.js" />
     <Content Include="Scripts\module\result\result.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
     <Content Include="Scripts\module\test-setup\map-test-user.js" />

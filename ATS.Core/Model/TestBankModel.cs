@@ -17,7 +17,7 @@ namespace ATS.Core.Model
         public System.Guid TestBankId { get; set; }
         public string CategoryTypeDescription { get; set; }
         public int CategoryTypeValue { get; set; }
-        public string LavelTypeDescription { get; set; }
+        public string LevelTypeDescription { get; set; }
         public int LevelTypeValue { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }

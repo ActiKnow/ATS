@@ -56,14 +56,7 @@ namespace ATS.Web.Areas.Admin.Controllers
 
             try
             {
-                result = ApiConsumers.ResultApiConsumer.RetrieveResult(allUserIdList);
-
-                if (result.Status && result.Data != null)
-                {
-                    testBankList = (List<TestBankModel>)result.Data;
-
-                    result.Data = RenderPartialViewToString("", testBankList);
-                }
+                result = ApiConsumers.ResultApiConsumer.RetrieveResult(allUserIdList);                
             }
             catch (Exception ex)
             {

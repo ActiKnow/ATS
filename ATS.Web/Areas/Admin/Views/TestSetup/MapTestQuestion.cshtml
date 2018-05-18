@@ -31,25 +31,25 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control" readonly="readonly" />
+                            <input type="text" class="form-control" readonly="readonly" id="selectedTestDesc"/>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Category</label>
-                            <input type="text" class="form-control" readonly="readonly" />
+                            <input type="text" class="form-control" readonly="readonly" id="selectedTestCategory"/>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Type</label>
-                            <input type="text" class="form-control" readonly="readonly" />
+                            <input type="text" class="form-control" readonly="readonly" id="selectedTestType"/>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Level</label>
-                            <input type="text" class="form-control" readonly="readonly" />
+                            <input type="text" class="form-control" readonly="readonly" id="selectedTestLevel"/>
                         </div>
                     </div>
                 </div>
@@ -113,12 +113,24 @@
             </div>
             <div class="modal-body">
                 <div id="quesMessageContext"></div>
-                <div class="col-md-12">
-
+                <div class="col-md-12" id="quesDataContext">
+                    <table class="table table-striped table-sm table-bordered table-hover" id="tblQuesRecord">
+                        <thead>
+                            <tr>
+                                <th class="no-sort"><input type="checkbox" id="selectAllQuestion"/></th>
+                                <th> Qestion Description</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Level</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
-
+                <button type="button" class="btn btn-primary" id="btnAddQuestion"><i class="fa fa-fw fa-lg fa-check-circle"></i>Map Question</button>
             </div>
         </div>
     </div>
@@ -148,7 +160,29 @@
                     selectQuesContext: '#selectQuesContext',
                     selectTestContext: '#selectTestContext',
                     testDataContext: '#testDataContext',
-                    tblTestRecord: '#tblTestRecord'
+                    tblTestRecord: '#tblTestRecord',
+                    testId: 'testId',
+                    testDesc: 'testDesc',
+                    testCategory: 'testCategory',
+                    testLevel: 'testLevel',
+                    testType: 'testType',
+                    testStatus: 'testStatus',
+                    quesId: 'quesId',
+                    quesDesc: 'quesDesc',
+                    quesCategory: 'quesCategory',
+                    quesLevel: 'quesLevel',
+                    quesType: 'quesType',
+                    quesMarks: 'quesMarks',
+                    selectedTestDesc: '#selectedTestDesc',
+                    selectedTestCategory: '#selectedTestCategory',
+                    selectedTestType: '#selectedTestType',
+                    selectedTestLevel: '#selectedTestLevel',
+                    quesDataContext:'#quesDataContext',
+                    tblQuesRecord: '#tblQuesRecord',
+                    selectedQues: 'selectedQues',
+                    selectAllQuestion: '#selectAllQuestion',
+                    addQuestion:'#btnAddQuestion',
+
                 };
                 mapTestQuestion.init(config);
 

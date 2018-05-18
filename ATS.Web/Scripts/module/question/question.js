@@ -82,9 +82,10 @@
 
     var clear = function () {
         var op = defaults;
-        $(op.selectQuesDiffiLevel).val("-1");
-        $(op.selectQuesQuesTypeId).val("-1");
-        $(op.selectQuesSubjectId).val("-1");
+        counter = 0;
+        $(op.selectQuesDiffiLevel).val("");
+        $(op.selectQuesQuesTypeId).val("");
+        $(op.selectQuesSubjectId).val("");
         $(op.selectQuesText).val("");
         $(op.selectQuesMark).val("");
         $(op.selectMCQType).html("");
@@ -95,18 +96,7 @@
         $(op.selectOption3).val("");
         $(op.selectOption4).val("");
         $(op.selectTrue).val("");
-        $(op.selectFalse).val("");
-        // $(op.selectSubjective_text).val("");
-    };
-
-    var emptyOption = function () {
-        var op = defaults;
-        $(op.selectOption1).val("");
-        $(op.selectOption2).val("");
-        $(op.selectOption3).val("");
-        $(op.selectOption4).val("");
-        $(op.selectTrue).val("");
-        $(op.selectFalse).val("");
+        $(op.btnAddRemove).hide();
         $(op.selectSubjective_text).val("");
     };
 
@@ -117,12 +107,12 @@
         var rowGenrate = "<div class='form-group' id='option" + counter + "'>" +
             "  <div class='input-group'>" +
             "	<div class='input-group-prepend'><span class='input-group-text'>" + counter + "</span></div>" +
-            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
-            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' id='radiovale" + counter+"' value='" + isOption + "'  data-id='radio" + counter + "'>Is Correct</span></div>" +
+            "	<input type='text' name='DynamicTextBox' class='form-control' placeholder='Option' , data-required ='Answer Description is required' , id='Option" + counter + "' value='" + description + "' data-id='" + counter + "'>" +
+            "	<div class='input-group-append'><span class='input-group-text'><input name='statusRadio' type='radio' id='radiovale" + counter + "' value='" + isOption + "'  data-id='radio" + counter + "'>Is Correct</span></div>" +
             "  </div>" +
             "</div>";
 
-        var optid = '#radiovale'+counter;
+        var optid = '#radiovale' + counter;
 
         $(defaults.selectMCQType).append(rowGenrate);
         $(optid).prop("checked", (isOption == 'true'));
@@ -130,7 +120,7 @@
 
     var removeOption = function () {
         if (counter >= 1) {
-            $('#option'+counter).remove();
+            $('#option' + counter).remove();
             counter--;
         }
     };
@@ -176,7 +166,12 @@
         if (quesTypeValue == questionTypes.text) {
             ansText = $(op.selectSubjective_text).val();
         }
-        if (validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark)) {
+
+        if (!validationService.validateForm({ messageContext: defaults.msgContext })) {
+            return false;
+        }
+
+        if (validateRequiredField(optionValue, ansText)) {
             var QuestionView = {
                 LevelTypeValue: quesDiffiLevelValue,
                 QuesTypeValue: quesTypeValue,
@@ -227,7 +222,11 @@
         if (quesTypeValue == questionTypes.text) {
             ansText = $(op.selectSubjective_text).val();
         }
-        if (validateRequiredField(quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark)) {
+        if (!validationService.validateForm({ messageContext: defaults.msgContext })) {
+            return false;
+        }
+
+        if (validateRequiredField(optionValue, ansText)) {
             var QuestionView = {
                 LevelTypeValue: quesDiffiLevelValue,
                 QuesTypeValue: quesTypeValue,
@@ -271,24 +270,18 @@
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).hide();
                                     optionArray.splice(0, optionArray.length)
-                                    counter = 1;
-                                    //addOption();
-                                    //$(defaults.btnAdd).show();
-                                    //$(defaults.btnRemove).show();
+                                    $(defaults.btnAddRemove).show();
                                 }
                                 else if (previousValue == questionTypes.bool) {
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).show();
                                     $(defaults.selectSubjectType).hide();
-                                    $(defaults.btnAdd).hide();
-                                    $(defaults.btnRemove).hide();
                                 }
                                 else {
                                     $(defaults.selectMCQType).hide();
                                     $(defaults.selectTFType).hide();
                                     $(defaults.selectSubjectType).show();
-                                    $(defaults.btnAdd).hide();
-                                    $(defaults.btnRemove).hide();
+                                    $(op.selectSubjective_text).attr('data-required', "Answer Description is required");
                                 }
                             }
                             else {
@@ -392,32 +385,31 @@
             });
     }
 
-    var validateRequiredField = function (quesDiffiLevel, quesTypeId, quesSubjectId, quesText, quesMark) {
-
+    var validateRequiredField = function (optionValue, ansText) {
         var flag = true;
         var message = "";
+        var quesTypeValue = $(defaults.selectQuesQuesTypeId).find(':selected').val();
+        if (quesTypeValue == questionTypes.bool) {
+            if (!ansText || ansText.trim() == "") {
+                message = "Answer Description is required";
+            }
+        }
+        else if (quesTypeValue == questionTypes.option) {
+            var count = 0;
+            for (var i = 0; i < optionValue.length; ++i) {
+                if (optionValue[i].IsAnswer) {
+                    count++;
+                }
 
-        if (!quesDiffiLevel || quesDiffiLevel == "") {
-            message = "Difficulty Level is required";
+            }
+            if (count == 0) {
+                message = "Answer Description is required";
+            }
         }
-        else if (!quesTypeId || quesTypeId == "") {
-            message = "Question Type is required";
-        }
-        else if (!quesSubjectId || quesSubjectId == "") {
-            message = "Subject is required";
-        }
-        else if (!quesText || quesText.trim() == "") {
-            message = "Question Description is required";
-        }
-        else if (!quesMark || quesMark.trim() == "") {
-            message = "Mark value is required";
-        }
-
         if (message != "") {
             alertService.showError(message, defaults.msgContext);
             flag = false;
         }
-
         return flag;
     }
 
@@ -452,12 +444,15 @@
                 addOption();
                 $(defaults.selectMCQType).show();
                 $(defaults.btnAddRemove).show();
+                $(op.selectSubjective_text).removeAttr('data-required');
             }
             else if (Type == questionTypes.bool) {
                 $(defaults.selectTFType).show();
+                $(op.selectSubjective_text).removeAttr('data-required');
             }
             else if (Type == questionTypes.text) {
                 $(defaults.selectSubjectType).show();
+                $(op.selectSubjective_text).attr('data-required', "Answer Description is required");
             }
         })
         $selectQuestionContainer.on('click', op.btnAdd, function (e) {
@@ -480,7 +475,7 @@
         var optCount = $(defaults.optionCount).val();
         if (optCount && optCount != "0") {
             for (let x = 1; x <= optCount; x++) {
-                var $opData = $(op.optionData).find(":nth-child("+x+")");
+                var $opData = $(op.optionData).find(":nth-child(" + x + ")");
                 var desc = $opData.attr("data-description");
                 var selectedValue = $opData.attr("data-selected");
                 var optval = selectedValue.toLowerCase();
