@@ -1,18 +1,18 @@
 ﻿
 @{
-    ViewBag.Title = "MapTestQuestion";
+    ViewBag.Title = "Test Assignment";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="app-title">
     <div>
-        <h1><i class="fa fa-free-code-camp"></i> Map Test Question</h1>
-        <p>Map form for Test with Question</p>
+        <h1><i class="fa fa-free-code-camp"></i> Test Assignment</h1>
+        <p>Assign Test to Users</p>
     </div>
     <ul class="app-breadcrumb breadcrumb">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
         <li class="breadcrumb-item">Forms</li>
-        <li class="breadcrumb-item"><a href="#">Map Test Question</a></li>
+        <li class="breadcrumb-item"><a href="#">Test Assignment</a></li>
     </ul>
 </div>
 <div id="mainMessageContext"></div>
@@ -21,38 +21,14 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-title-w-btn">
-                <h5 class="title">Test Detail</h5>
+                <h5 class="title">User Details</h5>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectTest"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select User</button>
                 </p>
             </div>
-            <div class="tile-body ui-test-context">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" class="form-control" readonly="readonly" />
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Category</label>
-                            <input type="text" class="form-control" readonly="readonly" />
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control" readonly="readonly" />
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Level</label>
-                            <input type="text" class="form-control" readonly="readonly" />
-                        </div>
-                    </div>
-                </div>
+            <hr />
+            <div class="tile-body tableContext">
+
             </div>
         </div>
     </div>
@@ -61,9 +37,9 @@
     <div class="col-md-12">
         <div class="tile">
             <div class="tile-title-w-btn">
-                <h5 class="title">Mapped Question list</h5>
+                <h5 class="title">Assigned Test list</h5>
                 <p>
-                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Question</button>
+                    <button type="button" class="btn btn-primary" id="btnOpenSelectQues"><i class="fa fa-fw fa-lg fa-check-circle"></i>Select Test</button>
                 </p>
             </div>
             <hr />
@@ -77,25 +53,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content validate-test-form" id="selectTestContext">
             <div class="modal-header">
-                <h5 class="title">Select Test</h5>
+                <h3>Select Test</h3>
                 <button type="button" class="close cancel-select-test">×</button>
             </div>
             <div class="modal-body">
                 <div id="testMessageContext"></div>
-                <div class="col-md-12" id="testDataContext">
-                    <table class="table table-striped table-sm table-bordered table-hover" id="tblTestRecord">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th> Test Description (Marks / Duration)</th>
-                                <th>Category</th>
-                                <th>Type</th>
-                                <th>Level</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="col-md-12">
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -108,7 +72,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content validate-ques-form" id="selectQuesContext">
             <div class="modal-header">
-                <h5 class="title">Select Questions</h5>
+                <h3>Select Questions</h3>
                 <button type="button" class="close cancel-select-ques">×</button>
             </div>
             <div class="modal-body">
@@ -124,6 +88,8 @@
     </div>
 </div>
 @section scripts {
+    <script src="~/CommonTask/AppConstant"></script>
+    <script src="~/Scripts/common/form-validation-service.js"></script>
     <script src="~/Scripts/module/test-setup/map-test-question.js"></script>
     <script>
         function isNumber(evt) {
@@ -145,10 +111,6 @@
                     quesContext: '#quesContext',
                     closeSelectQues: '.cancel-select-ques',
                     closeSelectTest: '.cancel-select-test',
-                    selectQuesContext: '#selectQuesContext',
-                    selectTestContext: '#selectTestContext',
-                    testDataContext: '#testDataContext',
-                    tblTestRecord: '#tblTestRecord'
                 };
                 mapTestQuestion.init(config);
 
@@ -158,3 +120,5 @@
     </script>
 
 }
+
+

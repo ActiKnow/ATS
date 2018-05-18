@@ -1,6 +1,7 @@
 ﻿var mapTestQuestion = (function () {
     'use strict';
     var defaults = {};
+    const activeText = AppConstant.ACTIVE, inactiveText = AppConstant.INACTIVE;
     var apiUrl = {
         getTests: '/Admin/TestSetup/GetTests/'
     };
@@ -25,7 +26,7 @@
     }());
     var action = {
         getTests: function () {
-            api.fireGetAjax(apiUrl.getTests, { rawTests : true})
+            api.fireGetAjax(apiUrl.getTests, { rawTests: true })
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
@@ -64,11 +65,19 @@
         },
         fillSelectTest: function (data) {
             var op = defaults;
-            var $testDataContext = $(op.testDataContext);
-            var selectTest = "<table class='table'><thead> <tr> <th>#</th> <th>Test Description (Marks/Duration)</th><th>Category</th> <th>Type</th>  <th>Level</th> <th>Status</th><th>Action</th></tr> </thead ><tbody>";
+            var $tblTestRecord = $(op.tblTestRecord);
+            var selectTest = '';
+            $.each(data, (indx, value) => {
+                selectTest += `<tr><td><span> ` + (indx +1)+ `</td>
+                                            <td><span>`+ value.Description + ' ( ' + value.TotalMarks + ' / ' + value.Duration + ' mins ) ' + `</span> </td>
+                                            <td><span>`+ value.CategoryTypeDescription + `</span> </td>
+                                            <td><span>`+ value.TestTypeDescription + `</span> </td>
+                                            <td><span>`+ value.LavelTypeDescription + `</span> </td>
+                                            <td><span>`+ (value.StatusId ? activeText : inactiveText) + `</span> </td></tr>`;
 
-                selectTest += "</tbody></table>";
-            $testDataContext.html(selectTest);
+            });
+            $tblTestRecord.find('tbody').html(selectTest);
+            $(op.tblTestRecord).DataTable();
         },
         fillSelectQuestion: function () { },
     };
@@ -79,12 +88,17 @@
             var $quesContext = $(op.quesContext);
             var $selectQuesContext = $(op.selectQuesContext);
             var $selectTestContext = $(op.selectTestContext);
+            var $testDataContext = $(op.testDataContext);
 
             $testContext.on('click', op.openSelectTest, render.openSelectTest);
             $quesContext.on('click', op.openSelectQues, render.opernSelectQues);
 
             $selectQuesContext.on('click', op.closeSelectQues, render.closeSelectQues);
             $selectTestContext.on('click', op.closeSelectTest, render.closeSelectTest);
+
+            $testDataContext.advancedTable({
+                rowActiveClass:'btn-primary',
+            } );
         },
         loadApiData: function () {
             action.getTests();
