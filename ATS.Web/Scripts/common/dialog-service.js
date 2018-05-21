@@ -42,8 +42,8 @@
         html += body;
         html += '</div>';
         html += '<div class="modal-footer">'; // Modal footer
-        html += '<button type="button" id="okButton" class="v-btn v-btn-primary btn-sm">' + (okLabel ? okLabel : 'OK') + '</button>';
-        html += '<button type="button" id="cancelButton" class="v-btn v-btn-default btn-sm" data-dismiss="modal">' + (cancelLabel ? cancelLabel : 'Cancel') + '</button>';
+        html += '<button type="button" id="okButton" class="btn btn-primary btn-sm">' + (okLabel ? okLabel : 'OK') + '</button>';
+        html += '<button type="button" id="cancelButton" class="btn btn-default btn-sm" data-dismiss="modal">' + (cancelLabel ? cancelLabel : 'Cancel') + '</button>';
         html += '</div>'; // Modal footer
         html += '</div>'; // Modal content
         html += '</div'; // Modal dialog

@@ -160,6 +160,7 @@ namespace ATS.Bll
                                 if (quesFound != null)
                                 {
                                     quesFound.MappedQuestion = map;
+                                    quesFound.DefaultMark = map.Marks;
                                     questions.Add(quesFound);
                                 }
                             }
