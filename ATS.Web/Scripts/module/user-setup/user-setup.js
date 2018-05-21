@@ -136,8 +136,10 @@
         var roleType = $(op.ddlRoleType).find(":selected").val();
         var status = $(op.selectStatus).find(":selected").val();
 
-        flag = validateRequiredField(firstName, mobile, password, email, roleType);
-
+       // flag = validateRequiredField(firstName, mobile, password, email, roleType);
+        if (!validationService.validateForm({ messageContext: defaults.messageContext })) {
+            return false;
+        }
         if (flag) {
             var item = {
                 CurrPassword: password,
@@ -181,8 +183,10 @@
         var hiddenId = $(op.hiddenId).val();
         var prevPassword = $(op.prevPassword).val();
         
-
-        flag = validateRequiredField(firstName, mobile, password, email, roleType);
+        if (!validationService.validateForm({ messageContext: defaults.messageContext })) {
+            return false;
+        }
+     //   flag = validateRequiredField(firstName, mobile, password, email, roleType);
 
         if (flag) {
             var UserCredentials = {

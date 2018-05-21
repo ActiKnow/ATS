@@ -9,7 +9,8 @@ namespace ATS.Repository.Interface
     public interface IMapQuestionRepository : IRepository<TestQuestionMapping>
     {
         bool DeleteMappedQuestions(List<TestQuestionMapping> inputs);
-        bool MapQuotions(List<TestQuestionMapping> inputs);
+        bool DeleteMappedQuestion(TestQuestionMapping input);
+        bool MapQuestions(List<TestQuestionMapping> inputs);
         IQueryable<TestQuestionMapModel> Retrieve(Guid guid);
         IQueryable<TestQuestionMapModel> Select(Func<TestQuestionMapModel,bool> condition);
     }

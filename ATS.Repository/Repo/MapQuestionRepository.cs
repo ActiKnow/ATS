@@ -16,7 +16,7 @@ namespace ATS.Repository.Repo
             this._context = context;
         }
 
-        public bool MapQuotions(List<TestQuestionMapping> inputs)
+        public bool MapQuestions(List<TestQuestionMapping> inputs)
         {
             bool isCreated = false;
             try
@@ -24,6 +24,7 @@ namespace ATS.Repository.Repo
                 for (int indx = 0; indx < inputs.Count; indx++)
                 {
                     var map = inputs[indx];
+                    map.Id = Guid.NewGuid();
                     isCreated = Create(ref map);
                 }
             }
@@ -52,7 +53,20 @@ namespace ATS.Repository.Repo
             }
             return isDeleted;
         }
-
+        public bool DeleteMappedQuestion(TestQuestionMapping input)
+        {
+            bool isDeleted = false;
+            try
+            {
+                Delete(input);
+                isDeleted = true;
+            }
+            catch
+            {
+                throw;
+            }
+            return isDeleted;
+        }
         public IQueryable<TestQuestionMapModel> Retrieve(Guid guid)
         {
             try

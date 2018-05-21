@@ -127,6 +127,21 @@ namespace ATS.Web.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult GetTestQuestions(Guid testBankId) {
+            ApiResult result = null;
+            try
+            {
+                SimpleQueryModel query = new SimpleQueryModel { ModelName = nameof(TestBankModel)};
+                query[nameof(TestBankModel.TestBankId)] = testBankId;
+                result = ApiConsumers.TestBankApiConsumer.TestQuestionsSelect(query);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

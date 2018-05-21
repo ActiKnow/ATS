@@ -65,7 +65,7 @@ namespace ATS.Repository.Repo
                              TestTypeValue = x.TestTypeValue,
                              TotalMarks = x.TotalMarks,
                              CategoryTypeDescription = p.Description,
-                             LavelTypeDescription = q.Description,
+                             LevelTypeDescription = q.Description,
                              TestTypeDescription = r.Description,
                          });
 
