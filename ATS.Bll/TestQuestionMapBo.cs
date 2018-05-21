@@ -85,15 +85,16 @@ namespace ATS.Bll
                    // flag = unitOfWork.MapQuestionRepo.DeleteMappedQuestions(output);
                     if (flag)
                     {
+                        apiResult.Status = true;
                         apiResult.Message.Add("Deleted successfully.");
                         unitOfWork.Commit();
 
-                        var result = Select(null);
+                        //var result = Select(null);
 
-                        if (result != null)
-                        {
-                            apiResult += result;
-                        }
+                        //if (result != null)
+                        //{
+                        //    apiResult += result;
+                        //}
                     }
                     else
                     {
