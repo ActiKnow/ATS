@@ -32,15 +32,15 @@ namespace ATS.Web.Areas.Admin.Controllers
 
                 if (result.Status && result.Data != null)
                 {
-                    userList = (List<UserInfoModel>)result.Data;
-
+                    userList = (List<UserInfoModel>)result.Data;                   
                     result.Data = RenderPartialViewToString("_UsersList", userList);
                 }
-            }
+            }            
             catch (Exception ex)
             {
                 result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
+            TempData["ModelName"] = userList;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -48,16 +48,17 @@ namespace ATS.Web.Areas.Admin.Controllers
         public ActionResult GetTests(bool? rawTests)
         {
             ApiResult result = null;
+            var liiii = TempData["ModelName"];
             try
             {
                 result = ApiConsumers.TestBankApiConsumer.Select();
                 if (result.Status && result.Data != null)
                 {
                     var list = (List<TestBankModel>)result.Data;
-                    if (rawTests == null || (rawTests != null && !rawTests.Value))
-                    {
+                    //if (rawTests == null || (rawTests != null && !rawTests.Value))
+                    //{
                         result.Data = RenderPartialViewToString("_TestList", list);
-                    }
+                    //}
                 }
             }
             catch (Exception ex)

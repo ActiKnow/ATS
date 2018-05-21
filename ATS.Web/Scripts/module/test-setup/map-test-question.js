@@ -13,6 +13,7 @@
         getTests: '/Admin/TestSetup/GetTests/',
         getQuestions: '/Admin/Setup/GetQuestionList/',
         mapQuestions: '/Admin/TestSetup/LinkTestQuestion/',
+        unlinkQuestions: '/Admin/TestSetup/UnlinkTestQuestion/',
         getTestQuestions: '/Admin/TestSetup/GetTestQuestions/',
     };
     var api = (function () {
@@ -126,10 +127,10 @@
                 Marks: 0,
             };
         },
-        addQuestions: function (question) {
+        addSelectedQuestions: function (question) {
             selectedQues.push(question)
         },
-        removeQuestions: function (question) {
+        removeSelectedQuestions: function (question) {
             selectedQues.splice(selectedQues.indexOf(question), 1);
         },
         mapQuestions: function () {
@@ -161,6 +162,24 @@
                 })
                 .fail((result) => { alertService.showAllErrors(result.responseText, op.quesMessageContext); });
         },
+        unlinkQuestions: function (testId, qId) {
+            var op = defaults;
+            var unlinkQuestions = [];
+            unlinkQuestions.push({ TestBankId: testId, QId: qId })
+            api.firePostAjax(apiUrl.unlinkQuestions, { unlinkQuestions: unlinkQuestions })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                            alertService.showAllSuccess(result.Message, op.mainMessageContext);
+                        }
+                        action.getTestQuestions();
+                    }
+                    else {
+                        alertService.showAllErrors(result.Message, op.mainMessageContext);
+                    }
+                })
+                .fail((result) => { alertService.showAllErrors(result.responseText, op.mainMessageContext); });
+        },
         onSelectQuestion: function (e) {
             var op = defaults;
             var $selection = $(this);
@@ -170,14 +189,21 @@
             question.id = $row.find('.' + op.quesId).val();
             question.marks = parseInt($row.find('.' + op.quesMarks).text(), 10);
             if ($selection.is(':checked')) {
-                action.addQuestions(question);
+                action.addSelectedQuestions(question);
             }
             else {
-                action.removeQuestions(question);
+                action.removeSelectedQuestions(question);
             }
             console.log(selectedQues);
         },
-          onDeleteQuestion: function (e) { }
+        onDeleteQuestion: function (e) {
+            var op = defaults;
+            var $selection = $(this);
+            var $row = $(e.target).closest('tr');
+            var question = action.getEmptyQues();
+            question.id = $row.find('.' + op.quesId).val();
+            action.unlinkQuestions(selectedTest.id, question.id);
+        }
     };
     var render = {
         openSelectTest: function () {
@@ -321,8 +347,8 @@
             else {
                 $tblQuesRecord.find('tbody').html(selectQues);
             }
-            $tblQuesRecord.off('change', '.' + op.deleteQuestion, action.onDeleteQuestion);
-            $tblQuesRecord.on('change', '.' + op.deleteQuestion, action.onDeleteQuestion);
+            $tblQuesRecord.off('click', '.' + op.deleteQuestion, action.onDeleteQuestion);
+            $tblQuesRecord.on('click', '.' + op.deleteQuestion, action.onDeleteQuestion);
         }
     };
     var loader = {

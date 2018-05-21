@@ -53,7 +53,20 @@ namespace ATS.Repository.Repo
             }
             return isDeleted;
         }
-
+        public bool DeleteMappedQuestion(TestQuestionMapping input)
+        {
+            bool isDeleted = false;
+            try
+            {
+                Delete(input);
+                isDeleted = true;
+            }
+            catch
+            {
+                throw;
+            }
+            return isDeleted;
+        }
         public IQueryable<TestQuestionMapModel> Retrieve(Guid guid)
         {
             try

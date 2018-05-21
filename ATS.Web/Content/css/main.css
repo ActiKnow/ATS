@@ -11874,7 +11874,7 @@ body.stop-scrolling {
 }
 
 .pace .pace-progress {
-  background: #96000e;
+  background: #fa1e08;
   position: fixed;
   z-index: 2000;
   top: 0;
@@ -14831,3 +14831,7 @@ be a descendant of the grid when it is being dragged.
 }
 
  .row-active  td { background-color: #17a2b8; color: #ffffff; }
+
+.pre-loader { position: fixed; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; z-index: 99999; background: rgba(28, 25, 29, 0.46); display: none; }
+
+.pre-loader .inner { color: #fff; font-size: 2em; text-align: center; margin-top: 20%; font-weight: bold; line-height: 24px; }
