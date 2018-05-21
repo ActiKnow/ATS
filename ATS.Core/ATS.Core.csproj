@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global\CommonType.cs" />
+    <Compile Include="Helper\LineChart.cs" />
     <Compile Include="Helper\PredicateBuilder.cs" />
     <Compile Include="Helper\Utility.cs" />
     <Compile Include="Interface\ISimpleQueryable.cs" />

@@ -146,5 +146,61 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+
+        public static ApiResult CallGroupApi(string url, object data = null)
+        {
+            ApiResult apiResult = null;
+            Task<HttpResponseMessage> responseMessage = null;
+            using (var client = new HttpClient())
+            {
+                //Passing service base url  
+                client.BaseAddress = new Uri(Constants.ApiBaseUrl);
+
+                client.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                
+                var stringContent = new StringContent("");
+
+                stringContent = new StringContent(JsonConvert.SerializeObject(data, new JsonSerializerSettings()
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local
+                }), Encoding.UTF8, "application/json");
+
+                    responseMessage = client.PostAsync(url, stringContent);
+
+                //Sending request to find web api REST service resource using HttpClient  
+                responseMessage.Wait();
+
+                var result = responseMessage.Result;
+
+                //Storing the response details recieved from web api   
+                var Response = result.Content.ReadAsStringAsync().Result;
+
+                //Checking the response is successful or not which is sent using HttpClient  
+                if (result.IsSuccessStatusCode)
+                {
+                    //Deserializing the response recieved from web api and storing into the object
+                    apiResult = JsonConvert.DeserializeObject<ApiResult>(Response);
+                    var respData = (Newtonsoft.Json.Linq.JArray)apiResult.Data;
+                    List<TestAssignmentModel> list = new List<TestAssignmentModel>();
+                    foreach(var item in respData)
+                    {
+                        var p=((Newtonsoft.Json.Linq.JArray)apiResult.Data).ToObject<List<TestAssignmentModel>>();
+                        foreach (var item2 in p)
+                        {
+                            list.Add(item2);
+                        }
+                    }
+                    apiResult.Data = respData;
+                }
+                else
+                {
+                    apiResult = new ApiResult(false, new List<string> { Response }, null);
+                }
+            }
+            return apiResult;
+        }
     }
 }
