@@ -31,6 +31,7 @@ namespace ATS.Repository.Repo
         public virtual DbSet<UserAttemptedHistory> UserAttemptedHistory { get; set; }
         public virtual DbSet<UserCredential> UserCredential { get; set; }
         public virtual DbSet<UserTestHistory> UserTestHistory { get; set; }
+        public virtual DbSet<UserFeedback> UserFeedback { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

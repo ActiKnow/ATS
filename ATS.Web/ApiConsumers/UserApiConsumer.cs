@@ -95,5 +95,20 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+
+        public static ApiResult CountUsers()
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/User/Count";
+                apiResult = ConsumerMethods.Get<int>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }

@@ -231,14 +231,40 @@ namespace ATS.Web.Areas.Admin.Controllers
         public ActionResult GetStatus()
         {
             ApiResult result = null;
+            SelectList selectList;
             try
             {
-                result = ApiConsumers.CommonApiConsumer.GetStatus();
+                SimpleQueryModel query = new SimpleQueryModel();
+                query.ModelName = nameof(TypeDefModel);
+                query[nameof(TypeDefModel.ParentKey)] = CommonType.STATUS;
+
+                result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
+                if (result != null)
+                {
+                    if (result.Status && result.Data != null)
+                    {
+                        selectList = new SelectList((List<TypeDefModel>)result.Data, "Value", "Description", CommonType.ACTIVE);
+                    }
+                    else
+                    {
+                        selectList = new SelectList(new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, "Value", "Description");
+                    }
+                }
+                else
+                {
+                    result = new ApiResult(false, new List<string> { "No Status found" });
+                    selectList = new SelectList(new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, "Value", "Description");
+                }
+
             }
             catch (Exception ex)
             {
                 result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+                selectList = new SelectList(new List<SelectListItem>() { new SelectListItem { Text = "-Select-", Value = "" } }, "Value", "Description");
             }
+
+            result.Data = selectList;
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

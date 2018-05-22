@@ -5,6 +5,7 @@ using System.Linq;
 using ATS.Core.Model;
 using ATS.Repository.Model;
 using ATS.Core.Helper;
+using ATS.Core.Global;
 
 namespace ATS.Repository.Repo
 {
@@ -24,7 +25,7 @@ namespace ATS.Repository.Repo
                 var userInfo = _context.UserInfo.Where(x => x.UserId == userInfoModel.UserId).FirstOrDefault();
                 if (userInfo != null)
                 {
-                    userInfo.StatusId = false;
+                    userInfo.StatusId = (int)CommonType.DELETED;
                     isDisabled = true;
                 }
                 else
@@ -46,6 +47,7 @@ namespace ATS.Repository.Repo
             {
                 var query = (from x in _context.UserInfo
                              join y in _context.TypeDef on x.RoleTypeValue equals y.Value
+                             join z in _context.TypeDef on x.StatusId equals z.Value
                              where x.UserId == userId
                              select new UserInfoModel
                              {
@@ -59,11 +61,13 @@ namespace ATS.Repository.Repo
                                  Mobile = x.Mobile,
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
+                                 StatusDescription=z.Description,
                                  RoleTypeValue = x.RoleTypeValue,
                                  UserId = x.UserId
                              }).AsQueryable<UserInfoModel>();
 
-                return query;
+                var deletedStatus = (int)CommonType.DELETED;
+                return query.Where(x => x.StatusId != deletedStatus);
             }
             catch
             {
@@ -77,6 +81,7 @@ namespace ATS.Repository.Repo
             {
                 var query = (from x in _context.UserInfo
                              join y in _context.TypeDef on x.RoleTypeValue equals y.Value
+                             join p in _context.TypeDef on x.StatusId equals p.Value
                              select new UserInfoModel
                              {
                                  CreatedBy = x.CreatedBy,
@@ -89,6 +94,7 @@ namespace ATS.Repository.Repo
                                  Mobile = x.Mobile,
                                  RoleDescription = y.Description,
                                  StatusId = x.StatusId,
+                                 StatusDescription=p.Description,
                                  RoleTypeValue = x.RoleTypeValue,
                                  UserId = x.UserId,
                                  UserCredentials = (from z in _context.UserCredential.Where(z => z.UserId == x.UserId)
@@ -99,7 +105,23 @@ namespace ATS.Repository.Repo
                                                     }).FirstOrDefault(),
                              }).Where(condition).AsQueryable<UserInfoModel>();
 
-                return query;
+                var deletedStatus = (int)CommonType.DELETED;
+                return query.Where(x=>x.StatusId!= deletedStatus);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public int Count()
+        {
+            try
+            {
+                var deletedStatus = (int)CommonType.DELETED;
+                var count = _context.UserInfo.Where(x => x.StatusId != deletedStatus).Count();
+                             
+                return count;
             }
             catch
             {

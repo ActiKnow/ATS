@@ -17,9 +17,9 @@ namespace ATS.Core.Global
         public const string EMPLOYEE = "Employee";
         public const string CANDIDATE = "Candidate";
         public const string ROLE = "Role";
-        public const string STATUS = "Status";
-        public const string ACTIVE = "Active";
-        public const string INACTIVE = "Inactive";
+        //public const string STATUS = "Status";
+        //public const string ACTIVE = "Active";
+        //public const string INACTIVE = "Inactive";
         public const CommonType OPTION = CommonType.OPTION;
         public const CommonType BOOL = CommonType.BOOL;
         public const CommonType TEXT = CommonType.TEXT;
@@ -27,6 +27,9 @@ namespace ATS.Core.Global
         public const CommonType LEVEL = CommonType.LEVEL;
         public const CommonType TESTTYPE = CommonType.TESTTYPE;
         public const CommonType PARENT = CommonType.PARENT;
+        public const CommonType ACTIVE = CommonType.ACTIVE;
+        public const CommonType INACTIVE = CommonType.INACTIVE;
+        public const CommonType DELETED = CommonType.DELETED;
         public static string ApiBaseUrl
         {
             get { return System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"].ToString(); }

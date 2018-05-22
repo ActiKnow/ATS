@@ -38,5 +38,8 @@ namespace ATS.Repository.Model
         public virtual TypeDef LevelType { get; set; }
         [ForeignKey("QuesTypeValue")]
         public virtual TypeDef QuestionType { get; set; }
+
+        [ForeignKey("StatusId")]
+        public virtual TypeDef StatusType { get; set; }
     }
 }

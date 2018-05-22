@@ -12,9 +12,7 @@
     <td><span class="email">@item.Email</span></td>
     <td><span class="createdOn">@item.CreatedDate</span></td>
     <td><span class="roleType">@item.RoleDescription</span></td>
-    <td><span class="itemStatusDescription">@if (item.StatusId) {@("Active")}
-    else
-    {@("Inactive")}</span></td>
+    <td><span class="itemStatusDescription">@item.StatusDescription</span></td>
     <td>
         <span class="btn-primary btn-sm btnEditUser" id="btnAdd"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
         <span class="btn-primary btn-sm btnRemoveUser" id="btnRemove"><i class="fa fa-trash-o" aria-hidden="true"></i></span>

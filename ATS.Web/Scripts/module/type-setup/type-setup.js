@@ -4,7 +4,6 @@
         typeName: '.typeName',
         selectParent: '.ddlParents',
         typeValue: '.typeValue',
-        selectStatus: '.statusId',
         btnCreateType: '#btnCreateType',
         errorMsg: '.errorMsg',
         popupMessageContext: '#popupMessageContext',
@@ -201,6 +200,7 @@
                                 items += "<option value='" + value.Value + "'>" + value.Text + "</option>";
                             });
                             $(op.selectStatus).html(items);
+                            $(op.selectStatus).val(AppConstant.ACTIVE);
                         }
                     }
                     else {
@@ -284,7 +284,7 @@
         $modelTypeContext.on('click', op.btnClearType, function (e) {
             $(defaults.typeName).val("").removeAttr("readonly");           
             $(defaults.selectParent).val("");
-            $(defaults.selectStatus).val("True");
+            $(defaults.selectStatus).val(AppConstant.ACTIVE);
             $(defaults.typeId).html("");
             $(defaults.typeValue).html("");
             $(defaults.btnUpdateType).hide();
