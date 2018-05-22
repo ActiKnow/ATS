@@ -66,14 +66,14 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
-        [HttpPost]
-        [Route("api/Feedback/Retrieve")]
-        public IHttpActionResult Retrieve(Guid id)
+        [HttpGet]
+        [Route("api/Feedback/Retrieve/{Id}")]
+        public IHttpActionResult Retrieve(Guid Id)
         {
             ApiResult apiResult = null;
             try
             {
-                apiResult = feedbackBo.GetById(id);
+                apiResult = feedbackBo.GetById(Id);
             }
             catch (Exception ex)
             {

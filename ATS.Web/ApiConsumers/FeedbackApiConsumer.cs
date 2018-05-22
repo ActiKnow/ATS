@@ -13,8 +13,8 @@ namespace ATS.Web.ApiConsumers
             ApiResult apiResult = null;
             try
             {
-                string url = "api/Feedback/Retrieve";
-                apiResult = ConsumerMethods.Post<UserFeedbackModel>(url, id);
+                string url = "api/Feedback/Retrieve/"+id;
+                apiResult = ConsumerMethods.Get<UserFeedbackModel>(url);
             }
             catch
             {

@@ -25,6 +25,17 @@ namespace ATS.Web.Areas.Admin.Controllers
             try
             {
                 result = ApiConsumers.FeedbackApiConsumer.Retrieve(id);
+                if (result != null)
+                {
+                    if (result.Status && result.Data != null)
+                    {
+                        result.Data = RenderPartialViewToString("_feedbacksMessage", result.Data);
+                    }
+                }
+                else
+                {
+                    result = new ApiResult(false, new List<string> { "No record found." });
+                }
             }
             catch (Exception ex)
             {
@@ -49,7 +60,7 @@ namespace ATS.Web.Areas.Admin.Controllers
                 {
                     if(result.Status && result.Data != null)
                     {
-                        result.Data = RenderPartialViewToString("_feedbacks", result.Data);
+                        result.Data = RenderPartialViewToString("_feedbackList", result.Data);
                     }
                 }
                 else
@@ -75,7 +86,7 @@ namespace ATS.Web.Areas.Admin.Controllers
                 {
                     if (result.Status && result.Data != null)
                     {
-                        result.Data = RenderPartialViewToString("_feedbacks", result.Data);
+                        result.Data = RenderPartialViewToString("_feedbackList", result.Data);
                     }
                 }
                 else
@@ -91,14 +102,25 @@ namespace ATS.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult InboxCount()
+        public ActionResult Count(string countType)
         {
             ApiResult result = null;
             try
             {
                 SimpleQueryModel query = new SimpleQueryModel();
                 query.ModelName = nameof(UserFeedbackModel);
-                query[nameof(UserFeedbackModel.ReadStatus)]=false;
+                if (countType == "InboxCount")
+                {
+                    query[nameof(UserFeedbackModel.ReadStatus)] = false;
+                }
+                else if(countType == "TotalCount")
+                {
+                    query[nameof(UserFeedbackModel.StatusId), QueryType.And, QueryType.NotEqual] = CommonType.DELETED;
+                }
+                else if(countType == "DeletedCount")
+                {
+                    query[nameof(UserFeedbackModel.StatusId), QueryType.And, QueryType.Equal] = CommonType.DELETED;
+                }
 
                 result = ApiConsumers.FeedbackApiConsumer.Count(query);                
             }
@@ -107,25 +129,6 @@ namespace ATS.Web.Areas.Admin.Controllers
                 result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
             }
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult TotalCount()
-        {
-            ApiResult result = null;
-            try
-            {
-                SimpleQueryModel query = new SimpleQueryModel();
-                query.ModelName = nameof(UserFeedbackModel);
-                query[nameof(UserFeedbackModel.StatusId), QueryType.And, QueryType.NotEqual] = CommonType.DELETED;
-
-                result = ApiConsumers.FeedbackApiConsumer.Count(query);
-            }
-            catch (Exception ex)
-            {
-                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        }        
     }
 }

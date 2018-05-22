@@ -258,7 +258,8 @@
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_TestList.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbacks.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbackList.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbacksMessage.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />

@@ -12,10 +12,10 @@
                 </div>
             </td>
             <td><a href="#"><i class="fa fa-star-o"></i></a></td>
-            <td><a href="#">@item.userInfoModel.FName @item.userInfoModel.LName</a></td>
+            <td><a href="#" data-toggle="flip">@item.userInfoModel.FName @item.userInfoModel.LName</a></td>
             <td class="mail-subject">
               <b>@item.Feedback</b>
-              <span class="selectedFeedBackId"></span>
+              <span class="selectedFeedBackId" style="display:none">@item.Id</span>
             </td>
             @*<td><i class="fa fa-paperclip"></i></td>*@
             <td> @(DateTime.Parse(item.CreatedDate.ToString()).ToString(@"dd-MM-yyyy hh:mm tt"))</td>
