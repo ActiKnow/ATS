@@ -1,4 +1,5 @@
-﻿var mapTestQuestion = (function () {
+﻿
+var mapTestQuestion = (function () {
     'use strict';
     var defaults = {};
     const activeText = AppConstant.ACTIVE, inactiveText = AppConstant.INACTIVE;
@@ -53,7 +54,7 @@
                 .fail();
         },
         getTestQuestions: function () {
-         
+
             api.fireGetAjax(apiUrl.getTestQuestions, { testBankId: selectedTest.id })
                 .done((result) => {
                     if (result && result.Status) {
@@ -68,7 +69,7 @@
                     }
                 })
                 .fail()
-                .always((result) => { action.getQuestions();});
+                .always((result) => { action.getQuestions(); });
         },
         getQuestions: function () {
             api.fireGetAjax(apiUrl.getQuestions, { rawQuestion: true })
@@ -180,21 +181,35 @@
                 })
                 .fail((result) => { alertService.showAllErrors(result.responseText, op.mainMessageContext); });
         },
-        onSelectQuestion: function (e) {
+        setSelectQuestion: function ($row, isChecked) {
             var op = defaults;
-            var $selection = $(this);
-            var $row = $(e.target).closest('tr');
-
             var question = action.getEmptyQues();
             question.id = $row.find('.' + op.quesId).val();
-            question.marks = parseInt($row.find('.' + op.quesMarks).text(), 10);
-            if ($selection.is(':checked')) {
+            question.marks = parseInt($row.find('.' + op.quesMarks).val(), 10);
+            if (isChecked) {
                 action.addSelectedQuestions(question);
             }
             else {
                 action.removeSelectedQuestions(question);
             }
-            console.log(selectedQues);
+        },
+        onSelectQuestion: function (e) {
+            var op = defaults;
+            var $selection = $(this);
+            var $row = $(e.target).closest('tr');
+            var isSelected = $selection.is(':checked');
+            var $selectAllQues = $(op.selectAllQuestions);
+            var $quesMarks = $row.find('.'+op.quesMarks);
+            $quesMarks.prop('readonly', !isSelected)
+
+            action.setSelectQuestion($row, isSelected);
+            if (isSelected && dataTable.selectQuestions) {
+                var pageLen = dataTable.selectQuestions.page.len();
+                var totalLen = dataTable.selectQuestions.page.info().recordsTotal;
+                $selectAllQues.prop('checked', (selectedQues.length >= pageLen || selectedQues.length >= totalLen));
+            } else {
+                $selectAllQues.prop('checked', false);
+            }
         },
         onDeleteQuestion: function (e) {
             var op = defaults;
@@ -202,8 +217,40 @@
             var $row = $(e.target).closest('tr');
             var question = action.getEmptyQues();
             question.id = $row.find('.' + op.quesId).val();
-            action.unlinkQuestions(selectedTest.id, question.id);
-        }
+            dialogService.confirm("Confirmation", "Are you sure to unlink question ?", function () {
+                action.unlinkQuestions(selectedTest.id, question.id);
+            }, function () {
+                alertService.hide();
+            });
+
+        },
+        onSelectAllQuestions: function (e) {
+            var op = defaults;
+            var $allSelect = $(this);
+            var isSelectAll = $allSelect.is(':checked');
+            var $questionRows = $(op.tblQuesRecord + ' tbody tr');
+            selectedQues = [];
+            $.each($questionRows, (indx, row) => {
+                var $row = $(row);
+                var $selection = $row.find('.' + op.selectedQues);
+                $selection.prop('checked', isSelectAll);
+                if (isSelectAll) {
+                    action.setSelectQuestion($row, isSelectAll);
+                }
+            });
+
+        },
+        onMarksChange: function (e) {
+            var op = defaults;
+            var $marks = $(this);
+            var marks = $marks.val();
+            var $row = $(e.target).closest('tr');
+            var qId = $row.find('.' + op.quesId).val();
+            if (selectedQues && selectedQues.filter(x => x.id == qId).length > 0) {
+                var ques = selectedQues.filter(x => x.id == qId);
+                $.each(ques, (index, value) => { value.marks = marks; });
+            }
+        },
     };
     var render = {
         openSelectTest: function () {
@@ -212,7 +259,7 @@
             $testModal.modal('show');
         },
         opernSelectQues: function () {
-       
+
             var op = defaults;
             alertService.hide(op.quesMessageContext);
             var $quesModal = $(op.modalSelectQuesContext);
@@ -281,14 +328,14 @@
                                             <td><span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span> </td>
-                                            <td><span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> </td></tr>`;
+                                            <td><input type='number' readonly='readonly' class='` + op.quesMarks + `' value='` + value.DefaultMark + `'/> </td></tr>`;
                     rowContents = [];
                     rowContents.push(`<span> <input type="checkbox" class='` + op.selectedQues + `'/></span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `'/>`);
                     rowContents.push(`<span class='` + op.quesDesc + `'>` + value.Description + `</span>`);
                     rowContents.push(`<span class='` + op.quesCategory + `'>` + value.CategoryTypeDescription + `</span>`);
                     rowContents.push(`<span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> `);
                     rowContents.push(`<span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span>`);
-                    rowContents.push(`<span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> `);
+                    rowContents.push(`<input type='number' readonly='readonly' class='` + op.quesMarks + `' value='` + value.DefaultMark + `'/> `);
                     if (dataTable.selectQuestions) {
                         dataTable.selectQuestions.row.add(rowContents);
                     }
@@ -304,7 +351,8 @@
             }
             $tblQuesRecord.off('change', '.' + op.selectedQues, action.onSelectQuestion);
             $tblQuesRecord.on('change', '.' + op.selectedQues, action.onSelectQuestion);
-
+            $tblQuesRecord.off('change', '.' + op.quesMarks, action.onMarksChange);
+            $tblQuesRecord.on('change', '.' + op.quesMarks, action.onMarksChange);
         },
         fillTestQuestions: function (data) {
             var op = defaults;
@@ -326,7 +374,7 @@
                                             <td><span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span> </td>
                                             <td><span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> </td>
-                                            <td>  <button class="btn-primary btn-xs ` + op.deleteQuestion +`"><i class="fa fa-remove" aria-hidden="true"></i></button></td></tr >`;
+                                            <td>  <button class="btn-primary btn-xs ` + op.deleteQuestion + `"><i class="fa fa-remove" aria-hidden="true"></i></button></td></tr >`;
                 testQuestions.push(value.QId);
                 rowContents = [];
                 rowContents.push(`<span> ` + (indx + 1) + `</span> <input type='hidden' class='` + op.quesId + `' value='` + value.QId + `' />`);
@@ -335,7 +383,7 @@
                 rowContents.push(`<span class='` + op.quesType + `'>` + value.QuesTypeDescription + `</span> `);
                 rowContents.push(`<span class='` + op.quesLevel + `'>` + value.LevelTypeDescription + `</span>`);
                 rowContents.push(`<span class='` + op.quesMarks + `'>` + value.DefaultMark + `</span> `);
-                rowContents.push(` <button class="btn-primary btn-xs ` + op.deleteQuestion +`"><i class="fa fa-remove" aria-hidden="true"></i></button>`);
+                rowContents.push(` <button class="btn-primary btn-xs ` + op.deleteQuestion + `"><i class="fa fa-remove" aria-hidden="true"></i></button>`);
                 if (dataTable.testQuestions) {
                     dataTable.testQuestions.row.add(rowContents);
                 }
@@ -365,6 +413,7 @@
 
             $selectQuesContext.on('click', op.closeSelectQues, render.closeSelectQues);
             $selectQuesContext.on('click', op.addQuestion, action.mapQuestions);
+            $selectQuesContext.on('change', op.selectAllQuestions, action.onSelectAllQuestions);
             $selectTestContext.on('click', op.closeSelectTest, render.closeSelectTest);
 
             $testDataContext.advancedTable({

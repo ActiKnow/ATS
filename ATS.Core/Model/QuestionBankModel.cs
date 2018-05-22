@@ -22,7 +22,7 @@ namespace ATS.Core.Model
         public string QuesTypeDescription { get; set; }
         public string LevelTypeDescription { get; set; }
         public string CategoryTypeDescription { get; set; }
-        public int DefaultMark { get; set; }
+        public decimal DefaultMark { get; set; }
         public string AnsText { get; set; }
         public List<QuestionOptionModel> Options { get; set; }
         public List<QuestionOptionMapModel> MappedOptions { get; set; }

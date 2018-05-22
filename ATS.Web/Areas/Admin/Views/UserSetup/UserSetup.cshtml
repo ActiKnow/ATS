@@ -15,91 +15,89 @@
         <li class="breadcrumb-item"><a href="#">User Setup</a></li>
     </ul>
 </div>
+<div id="messageContext"></div>
 <div class="row">
     <div class="col-md-12 validate-form" id="userSetupContext">
         <div class="tile">
-            <div class="row">
-                <div id="msgContext"></div>
-            </div>
-            <div id="messageContext"></div>
-            <div class="row">
-
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">First Name</label>
-                        @Html.TextBoxFor(x => x.FName, htmlAttributes: new { @class = "form-control firstName", placeholder = "First name",@data_required="First Name is required" })
-                        @*<input class="form-control firstName" type="text" placeholder="Enter first name">*@
+            <div class="tile-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign">First Name</label>
+                            @Html.TextBoxFor(x => x.FName, htmlAttributes: new { @class = "form-control firstName", placeholder = "First name",@data_required="First Name is required" })
+                            @*<input class="form-control firstName" type="text" placeholder="Enter first name">*@
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label">Last Name</label>
-                        @Html.TextBoxFor(x => x.LName, htmlAttributes: new { @class = "form-control lastName", placeholder = "Last name" })
-                        @*<input class="form-control lastName" type="text" placeholder="Enter last name">*@
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label">Last Name</label>
+                            @Html.TextBoxFor(x => x.LName, htmlAttributes: new { @class = "form-control lastName", placeholder = "Last name" })
+                            @*<input class="form-control lastName" type="text" placeholder="Enter last name">*@
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">Mobile No</label>
-                        @*@Html.TextBoxFor(m => m.Mobile, new { @Value = (Model.Mobile > 0 ?Model.Mobile.ToString() :string.Empty), @class = "form-control", @id = "mobileNumber",autocomplete ="off" })*@
-                        @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber", autocomplete = "off", placeholder = "9999999999" , @data_required="Mobile No is required"})
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign">Mobile No</label>
+                            @*@Html.TextBoxFor(m => m.Mobile, new { @Value = (Model.Mobile > 0 ?Model.Mobile.ToString() :string.Empty), @class = "form-control", @id = "mobileNumber",autocomplete ="off" })*@
+                            @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber", autocomplete = "off", placeholder = "9999999999", data_type= "mobile", @data_required="Mobile No is required"})
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">Email address</label>
-                        @if (Model.Email != null && Model.Email != "")
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign">Email address</label>
+                            @if (Model.Email != null && Model.Email != "")
                         {
-                            @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId", autocomplete = "off", @type = "text", @data_required = "Email is required" })
+                                @Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "form-control emailId", autocomplete = "off", @type = "text", @data_type="email", @data_required = "Email is required" })
                         }
                         else
                         {
-                            <input class="form-control emailId" autocomplete="off" placeholder="sanjay@gmail.com" data-required = "Email is required">
+                                <input class="form-control emailId" autocomplete="off" placeholder="sanjay@gmail.com" data-type="email" data-required="Email is required">
                         }
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">Role Type</label>
-
-                        <select class="form-control roleType"  data-required="Role type is required" id="roleType">
-                            <option value="">-Select-</option>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">Password</label>
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <div class="input-group">
-                                @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", @autocomplete = "new-password", placeholder = "********", @data_required = "Password is required" })
+                            <label class="name-tag control-label required-sign">Role Type</label>
 
-                                @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
-                                @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
-                                @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
-                                @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
-                                @Html.HiddenFor(x => x.UserCredentials.Id, htmlAttributes: new { @id = "hiddenId" })
-                                @Html.HiddenFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @id = "prevPassword" })
-                                @Html.HiddenFor(x => x.UserCredentials.CreatedBy, htmlAttributes: new { @id = "credentialCreatedBy" })
-                                @Html.HiddenFor(x => x.UserCredentials.CreatedDate, htmlAttributes: new { @id = "credentialCreatedOn" })
-                                @Html.HiddenFor(x => x.CreatedBy, htmlAttributes: new { @id = "userInfoCreatedBy" })
-                                @Html.HiddenFor(x => x.CreatedDate, htmlAttributes: new { @id = "userInfoCreatedOn" })
+                            <select class="form-control roleType" data-required="Role type is required" id="roleType">
+                                <option value="">-Select-</option>
+                            </select>
 
-                                <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
-                                <button class="input-group-lg input-group-append" id="refresh">
-                                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                                </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign">Password</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @class = "form-control password", @id = "password-field", @name = "password", @type = "password", @autocomplete = "new-password", placeholder = "********", @data_required = "Password is required" })
+
+                                    @Html.HiddenFor(x => x.UserId, htmlAttributes: new { @id = "userId" })
+                                    @Html.HiddenFor(x => x.Email, htmlAttributes: new { @id = "hiddenEmail" })
+                                    @Html.HiddenFor(x => x.RoleTypeValue, htmlAttributes: new { @id = "hiddenRoleValue" })
+                                    @Html.HiddenFor(x => x.StatusId, htmlAttributes: new { @id = "hiddenStatusId" })
+                                    @Html.HiddenFor(x => x.UserCredentials.Id, htmlAttributes: new { @id = "hiddenId" })
+                                    @Html.HiddenFor(x => x.UserCredentials.CurrPassword, htmlAttributes: new { @id = "prevPassword" })
+                                    @Html.HiddenFor(x => x.UserCredentials.CreatedBy, htmlAttributes: new { @id = "credentialCreatedBy" })
+                                    @Html.HiddenFor(x => x.UserCredentials.CreatedDate, htmlAttributes: new { @id = "credentialCreatedOn" })
+                                    @Html.HiddenFor(x => x.CreatedBy, htmlAttributes: new { @id = "userInfoCreatedBy" })
+                                    @Html.HiddenFor(x => x.CreatedDate, htmlAttributes: new { @id = "userInfoCreatedOn" })
+
+                                    <button class="input-group-lg input-group-append"><span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span></button>
+                                    <button class="input-group-lg input-group-append" id="refresh">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="name-tag control-label required-sign">Status</label>
-                        <select class="form-control ddlStatus"  data_required="Status is required">
-                            <option value="">-Select-</option>
-                        </select>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="name-tag control-label required-sign">Status</label>
+                            <select class="form-control ddlStatus" data_required="Status is required">
+                                <option value="">-Select-</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
