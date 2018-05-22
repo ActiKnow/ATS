@@ -84,7 +84,7 @@
             </div>
             <hr />
             <div class="tile-body tableAssignTest">   
-                <table class="table table-striped table-sm table-bordered table-hover" id="tblSelectedTestsList">
+                <table class="table table-striped table-sm table-bordered table-hover" id="">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -192,11 +192,12 @@
                     modalSelectTestContext: '#modalSelectTestContext',
                     testContext: '#testContext',
                     userContext: '#userContext',
+                    assignContext:'#assignContext',
                     btnchkAllUserinfo: '#chkUserinfo',
                     btnchkAllTestinfo: '#chkTestinfo',
                     selecttblUserList: '#tblUserList',
                     selecttblTestList: '#tblTestList',
-                    selecttblTestList: '#tableAssignTest',
+                    selecttblAssignedTestList: '#tableAssignTest',
                     popupTestMessageContext: '#popupTestMessageContext',
                     popupUserMessageContext: '#popupUserMessageContext',
                     mainMessageContext: '#mainMessageContext',
@@ -204,10 +205,15 @@
                     closeSelectUser: '.cancel-select-user',
                     tableContextUser: '.tableContextUser',
                     tblSelectedUsersList: '#tblSelectedUsersList',
+                    btnSubmitUsersList: '#btnSubmitUsersList',
+                    btnSubmitTestList: '#btnSubmitTestList',
+                    tblSelectedTestsList: '#tblSelectedTestsList',
+                    btnAssignTestList:'#btnAssignTestList',
+
                 };
-                mapTestUser.init(config);
+                mapTestUser.init(config); 
                 
-            });
+            }); 
 
         }(window.jQuery, window, document));
     </script>

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ATS.Repository.Interface;
 using ATS.Repository.Model;
+using ATS.Repository.Interface;
+using System.Linq;
+using ATS.Core.Model;
 
 namespace ATS.Repository.Repo
 {
     public class TestAssignmentRepository : Repository<TestAssignment>, ITestAssignmentRepository
     {
+        private readonly ATSDBContext _context;
+
         public TestAssignmentRepository(ATSDBContext context) : base(context)
         {
+            this._context = context;
         }
 
         public TestAssignment Retrieve(TestAssignment input)
@@ -19,9 +21,55 @@ namespace ATS.Repository.Repo
             throw new NotImplementedException();
         }
 
-        public new bool Update(TestAssignment input)
+        public IQueryable<TestAssignmentModel> Select(Func<TestAssignmentModel, bool> condition)
         {
-            throw new NotImplementedException();
-        }        
+            try
+            {
+                var query = Select().Where(condition).AsQueryable<TestAssignmentModel>();
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private IQueryable<TestAssignmentModel> Select()
+        {
+            var query = (from x in _context.TestAssignment
+                        
+                         select new TestAssignmentModel
+                         {
+                             CreatedBy = x.CreatedBy,
+                             CreatedDate = x.CreatedDate,                           
+                             LastUpdatedBy = x.LastUpdatedBy,
+                             LastUpdatedDate = x.LastUpdatedDate,
+                             StatusId = x.StatusId,
+                             TestBankId = x.TestBankId,
+                             UserId = x.UserId,
+                         });
+
+            return query;
+        }
+
+        public bool Assign(List<TestAssignment> testAssignmentModel)
+        {
+            bool isCreated = false;
+            try
+            {
+                for (int indx = 0; indx < testAssignmentModel.Count; indx++)
+                {
+                    var map = testAssignmentModel[indx];
+                    map.ID = Guid.NewGuid();
+                    isCreated = Create(ref map);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return isCreated;
+        }
+
     }
 }

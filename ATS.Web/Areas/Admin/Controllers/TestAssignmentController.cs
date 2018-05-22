@@ -48,7 +48,7 @@ namespace ATS.Web.Areas.Admin.Controllers
         public ActionResult GetTests(bool? rawTests)
         {
             ApiResult result = null;
-            var liiii = TempData["ModelName"];
+
             try
             {
                 result = ApiConsumers.TestBankApiConsumer.Select();
@@ -67,5 +67,26 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult AssignTest(List<TestAssignmentModel> testAssignmentModel)
+        {
+            ApiResult result = null;
+            try
+            {
+                foreach (var index in testAssignmentModel)
+                {
+                index.StatusId = true;
+                index.CreatedBy = Convert.ToString(Session[Constants.USERID]);
+                }
+                result = ApiConsumers.TestBankApiConsumer.AssignTest(testAssignmentModel);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result);
+        }
     }
+    
 }

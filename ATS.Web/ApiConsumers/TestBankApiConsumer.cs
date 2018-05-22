@@ -121,5 +121,19 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult AssignTest(List<TestAssignmentModel> testAssignmentModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TestBank/Assign";
+                apiResult = ConsumerMethods.Post<List<TestAssignmentModel>>(url, testAssignmentModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }

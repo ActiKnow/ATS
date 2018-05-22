@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionBankBo.cs" />
     <Compile Include="ResultBo.cs" />
+    <Compile Include="TestAssignmentBo.cs" />
     <Compile Include="TestBankBo.cs" />
     <Compile Include="TestQuestionMapBo.cs" />
     <Compile Include="TypeDefBo.cs" />
