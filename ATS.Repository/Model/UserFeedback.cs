@@ -18,6 +18,8 @@ namespace ATS.Repository.Model
 
         [ForeignKey("UserId")]
         public virtual UserInfo UserInfo { get; set; }
+        
         public decimal Reating { get; set; }
+        public bool ReadStatus { get; set; } = false;
     }
 }

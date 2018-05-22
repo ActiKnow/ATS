@@ -216,6 +216,7 @@ namespace ATS.Repository.Migrations
                         Feedback = c.String(),
                         UserId = c.Guid(nullable: false),
                         Reating = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ReadStatus = c.Boolean(nullable: false),
                         StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
