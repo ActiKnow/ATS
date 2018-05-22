@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATS.Core.Global;
+using ATS.Core.Model;
 using ATS.Repository.Interface;
 using ATS.Repository.Model;
 
@@ -44,7 +45,7 @@ namespace ATS.Repository.Repo
             return isDeleted;
         }
 
-        public IQueryable<UserFeedback> Retrieve(Guid Id)
+        public IQueryable<UserFeedbackModel> Retrieve(Guid Id)
         {
             try
             {
@@ -56,13 +57,13 @@ namespace ATS.Repository.Repo
             }
         }
 
-        public IQueryable<UserFeedback> Select(Func<UserFeedback, bool> condition)
+        public IQueryable<UserFeedbackModel> Select(Func<UserFeedback, bool> condition)
         {
             try
             {
                 var query = (from x in _context.UserFeedback
                              join z in _context.TypeDef on x.StatusId equals z.Value
-                             select new UserFeedback
+                             select new UserFeedbackModel
                              {
                                  CreatedBy = x.CreatedBy,
                                  CreatedDate = x.CreatedDate,
@@ -73,8 +74,8 @@ namespace ATS.Repository.Repo
                                  Feedback = x.Feedback,
                                  Id = x.Id,
                                  Reating = x.Reating,
-                                 UserInfo = (from y in _context.UserInfo
-                                             select new UserInfo
+                                 userInfoModel = (from y in _context.UserInfo
+                                             select new UserInfoModel
                                              {
                                                  Email = y.Email,
                                                  FName = y.FName,
@@ -82,7 +83,7 @@ namespace ATS.Repository.Repo
                                                  Mobile = y.Mobile,
                                                  UserId = y.UserId,
                                              }).FirstOrDefault()
-                             }).AsQueryable<UserFeedback>();
+                             }).AsQueryable<UserFeedbackModel>();
 
                 var deletedStatus = (int)CommonType.DELETED;
                 return query.Where(x => x.StatusId != deletedStatus);
@@ -93,13 +94,14 @@ namespace ATS.Repository.Repo
             }
         }
 
-        public int Count()
+        public int Count(Func<UserFeedback, bool> condition)
         {
             try
             {
                 var deletedStatus = (int)CommonType.DELETED;
-                var count = _context.UserFeedback.Where(x => x.StatusId != deletedStatus).Count();
+                var query = _context.UserFeedback.Where(x => x.StatusId != deletedStatus).AsQueryable();
 
+                var count = query.Where(condition).Count();
                 return count;
             }
             catch

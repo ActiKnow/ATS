@@ -43,7 +43,7 @@ namespace ATS.Web.ApiConsumers
             ApiResult apiResult = null;
             try
             {
-                string url = "api/Feedback/Disable";
+                string url = "api/Feedback/Delete";
                 apiResult = ConsumerMethods.Post<List<UserFeedbackModel>>(url, Ids);
             }
             catch
@@ -53,13 +53,13 @@ namespace ATS.Web.ApiConsumers
             return apiResult;
         }       
 
-        public static ApiResult Count()
+        public static ApiResult Count(SimpleQueryModel query)
         {
             ApiResult apiResult = null;
             try
             {
                 string url = "api/Feedback/Count";
-                apiResult = ConsumerMethods.Get<int>(url);
+                apiResult = ConsumerMethods.Post<int>(url,query);
             }
             catch
             {

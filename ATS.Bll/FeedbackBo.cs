@@ -19,6 +19,7 @@ namespace ATS.Bll
             var flag = false;
 
             input.StatusId =(int) CommonType.INACTIVE;   // first it will be in inactive mode.
+            input.CreatedBy =Convert.ToString(input.UserId);
 
             using (var unitOfWork = new UnitOfWork())
             {
@@ -39,7 +40,7 @@ namespace ATS.Bll
                         unitOfWork.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     unitOfWork.Dispose();
                 }
@@ -77,12 +78,13 @@ namespace ATS.Bll
             return apiResultDelete;
         }
 
-        public ApiResult Count()
+        public ApiResult Count(SimpleQueryModel qry)
         {
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
-                var count = unitOfWork.FeedbackRepo.Count();
+                SimpleQueryBuilder<UserFeedback> simpleQry = new SimpleQueryBuilder<UserFeedback>();
+                var count = unitOfWork.FeedbackRepo.Count(simpleQry.GetQuery(qry).Compile());
 
                 apiResult.Data = count;
                 apiResult.Status = true;

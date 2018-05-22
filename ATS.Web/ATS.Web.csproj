@@ -258,6 +258,7 @@
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_TestList.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbacks.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\module\test-setup\map-test-question.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
     <Content Include="Scripts\module\test-setup\map-test-user.js" />
+    <Content Include="Scripts\module\user-feedback\feedback.js" />
     <Content Include="Scripts\plugins\bootstrap.min.js" />
     <Content Include="Scripts\common\alert-service.js" />
     <Content Include="Scripts\common\app-module.js" />

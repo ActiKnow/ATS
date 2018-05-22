@@ -50,14 +50,14 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
                 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Feedback/Count")]
-        public IHttpActionResult Count()
+        public IHttpActionResult Count(SimpleQueryModel qry)
         {
             ApiResult apiResult = null;
             try
             {
-                apiResult = feedbackBo.Count();
+                apiResult = feedbackBo.Count(qry);
             }
             catch (Exception ex)
             {
