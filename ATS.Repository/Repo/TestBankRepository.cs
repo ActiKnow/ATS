@@ -46,10 +46,10 @@ namespace ATS.Repository.Repo
         private IQueryable<TestBankModel> Select()
         {
             var query = (from x in _context.TestBank
-                         join p in _context.TypeDef on x.CategoryTypeValue equals p.Value
+                         join p in _context.TypeDef on x.CategoryTypeValue equals p.Value 
                          join q in _context.TypeDef on x.LevelTypeValue equals q.Value
                          join r in _context.TypeDef on x.TestTypeValue equals r.Value
-                         join y in _context.TypeDef on x.StatusId equals y.StatusId
+                         join y in _context.TypeDef on x.StatusId equals y.Value
                          select new TestBankModel
                          {
                              CreatedBy = x.CreatedBy,

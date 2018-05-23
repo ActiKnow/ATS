@@ -42,7 +42,7 @@ namespace ATS.Repository.Repo
             try
             {
                 var query = (from x in _context.UserCredential
-                             join y in _context.TypeDef on x.StatusId equals y.StatusId
+                             join y in _context.TypeDef on x.StatusId equals y.Value
                              where x.UserId == userId
                              select new UserCredentialModel
                              {

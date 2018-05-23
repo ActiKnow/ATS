@@ -111,7 +111,7 @@ namespace ATS.Web.Areas.Admin.Controllers
                 query.ModelName = nameof(UserFeedbackModel);
                 if (countType == "InboxCount")
                 {
-                    query[nameof(UserFeedbackModel.ReadStatus)] = false;
+                    query[nameof(UserFeedbackModel.ReadStatus)] =false;
                 }
                 else if(countType == "TotalCount")
                 {
