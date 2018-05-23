@@ -14837,6 +14837,5 @@ be a descendant of the grid when it is being dragged.
 .pre-loader .inner { color: #fff; font-size: 2em; text-align: center; margin-top: 20%; font-weight: bold; line-height: 24px; }
 
 .read-status td {
-    background-color: #e6e8e8;
-    border-color: #e6e8e8;
+    background-color: #e9eceb;
 }

@@ -141,7 +141,6 @@
                         if (res.Status) {
                             $(op.feedbackMessageContext).html(res.Data);
                             getInboxCount();
-                            selectFeedbacks();
                             $(op.mailboxContext).hide();
                             $(op.feedbackMessageContext).show();                            
                         }
@@ -210,6 +209,7 @@
 
         $feedbackMessageContext.on("click", op.btnBackToInbox, function () {
             $(op.tblMailBoxContext).find(':checkbox').removeAttr("checked");
+            selectFeedbacks();
             $mailboxContext.show();
             $feedbackMessageContext.hide();
         });

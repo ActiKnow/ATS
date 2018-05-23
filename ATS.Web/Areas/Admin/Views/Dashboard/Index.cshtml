@@ -14,22 +14,26 @@
 </div>
 <div class="row">
     <div class="col-md-6 col-lg-3">
-        <div class="widget-small primary coloured-icon">
-            <i class="icon fa fa-users fa-3x"></i>
-            <div class="info">
-                <h4>Users</h4>
-                <p><b><span id="userCounts">0</span></b></p>
+        <a href='@Url.Action("UserApproval", "UserSetup", new {area = "Admin"})'>
+            <div class="widget-small primary coloured-icon" id="users">
+                <i class="icon fa fa-users fa-3x"></i>
+                <div class="info">
+                    <h4>Users</h4>
+                    <p><b><span id="userCounts">0</span></b></p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-md-6 col-lg-3">
-        <div class="widget-small info coloured-icon">
-            <i class="icon fa fa-thumbs-o-up fa-3x"></i>
-            <div class="info">
-                <h4>Likes</h4>
-                <p><b>25</b></p>
+        <a href='@Url.Action("Index", "Feedback", new {area = "Admin"})'>
+            <div class="widget-small info coloured-icon">
+                <i class="icon fa fa-comments fa-3x"></i>
+                <div class="info">
+                    <h4>Feedback</h4>
+                    <p><b><span id="feedbackCount">0</span></b></p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-md-6 col-lg-3">
         <div class="widget-small warning coloured-icon">
@@ -100,74 +104,94 @@
 @section scripts{
     <script type="text/javascript">
         (function ($, window, document) {
-            $(function () { 
-              $.ajax({
-                  url: '/Admin/Dashboard/CountUsers',
-                  type: 'GET',
-                  success: function (result) {
-                      var count = 0;
-                      if (result != null) {
-                          if (result.Status) {
-                              count = result.Data;
-                          }
-                          else {
-                              count = 0;
-                          }
-                      }
-                      else {
-                          count = 0;
-                      }
-                      $('#userCounts').html(count);
-                  }
-               });
+            $(function () {
+                $.ajax({
+                    url: '/Admin/Dashboard/CountUsers',
+                    type: 'GET',
+                    success: function (result) {
+                        var count = 0;
+                        if (result != null) {
+                            if (result.Status) {
+                                count = result.Data;
+                            }
+                            else {
+                                count = 0;
+                            }
+                        }
+                        else {
+                            count = 0;
+                        }
+                        $('#userCounts').html(count);
+                    }
+                });
 
 
+                $.ajax({
+                    url: '/Admin/Feedback/Count',
+                    type: 'GET',
+                    data: { countType: "TotalCount" },
+                    success: function (result) {
+                        var feedbackCount = 0;
+                        if (result != null) {
+                            if (result.Status) {
+                                feedbackCount = result.Data;
+                            }
+                            else {
+                                feedbackCount = 0;
+                            }
+                        }
+                        else {
+                            feedbackCount = 0;
+                        }
+                        $('#feedbackCount').html(feedbackCount);
+                    }
+                });
 
-            var data = {
-                labels: ["January", "February", "March", "April", "May"],
-                datasets: [
+                var data = {
+                    labels: ["January", "February", "March", "April", "May"],
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: [65, 59, 80, 81, 56]
+                        },
+                        {
+                            label: "My Second dataset",
+                            fillColor: "rgba(151,187,205,0.2)",
+                            strokeColor: "rgba(151,187,205,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: [28, 48, 40, 19, 86]
+                        }
+                    ]
+                };
+                var pdata = [
                     {
-                        label: "My First dataset",
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 80, 81, 56]
+                        value: 300,
+                        color: "#46BFBD",
+                        highlight: "#5AD3D1",
+                        label: "Complete"
                     },
                     {
-                        label: "My Second dataset",
-                        fillColor: "rgba(151,187,205,0.2)",
-                        strokeColor: "rgba(151,187,205,1)",
-                        pointColor: "rgba(151,187,205,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(151,187,205,1)",
-                        data: [28, 48, 40, 19, 86]
+                        value: 50,
+                        color: "#F7464A",
+                        highlight: "#FF5A5E",
+                        label: "In-Progress"
                     }
                 ]
-            };
-            var pdata = [
-                {
-                    value: 300,
-                    color: "#46BFBD",
-                    highlight: "#5AD3D1",
-                    label: "Complete"
-                },
-                {
-                    value: 50,
-                    color: "#F7464A",
-                    highlight: "#FF5A5E",
-                    label: "In-Progress"
-                }
-            ]
 
-            var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-            var lineChart = new Chart(ctxl).Line(data);
+                var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+                var lineChart = new Chart(ctxl).Line(data);
 
-            var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-            var pieChart = new Chart(ctxp).Pie(pdata);
+                var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+                var pieChart = new Chart(ctxp).Pie(pdata);
             });
         }(window.jQuery, window, document));
     </script>
