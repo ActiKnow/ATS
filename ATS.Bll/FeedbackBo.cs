@@ -83,7 +83,7 @@ namespace ATS.Bll
             ApiResult apiResult = new ApiResult(false, new List<string>());
             using (var unitOfWork = new UnitOfWork())
             {
-                SimpleQueryBuilder<UserFeedback> simpleQry = new SimpleQueryBuilder<UserFeedback>();
+                SimpleQueryBuilder<UserFeedbackModel> simpleQry = new SimpleQueryBuilder<UserFeedbackModel>();
                 var count = unitOfWork.FeedbackRepo.Count(simpleQry.GetQuery(qry).Compile());
 
                 apiResult.Data = count;
@@ -99,12 +99,14 @@ namespace ATS.Bll
             {
                 var queryable = unitOfWork.FeedbackRepo.Retrieve(Id);
 
-                var userFeedback = queryable.FirstOrDefault();
-
-                if (userFeedback != null)
+                var userFeedbackModel = queryable.FirstOrDefault();
+               
+                if (userFeedbackModel != null)
                 {
+                    unitOfWork.Commit(); // commit is used to update the ReadStatus=ture in db.
+
                     apiResult.Status = true;
-                    apiResult.Data = userFeedback;
+                    apiResult.Data = userFeedbackModel;
                 }
                 else
                 {
@@ -122,7 +124,7 @@ namespace ATS.Bll
             using (var unitOfWork = new UnitOfWork())
             {
 
-                SimpleQueryBuilder<UserFeedback> simpleQry = new SimpleQueryBuilder<UserFeedback>();
+                SimpleQueryBuilder<UserFeedbackModel> simpleQry = new SimpleQueryBuilder<UserFeedbackModel>();
 
                 var queryableList = unitOfWork.FeedbackRepo.Select(simpleQry.GetQuery(query: qry).Compile());
 

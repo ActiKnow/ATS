@@ -11,7 +11,7 @@ namespace ATS.Core.Model
         public Guid Id { get; set; }
         public string Feedback { get; set; }
         public Guid UserId { get; set; }        
-        public decimal Reating { get; set; }
+        public decimal Rating { get; set; }
         public bool ReadStatus { get; set; } = false;
         public UserInfoModel userInfoModel { get; set; }
         public string StatusDescription { get; set; }

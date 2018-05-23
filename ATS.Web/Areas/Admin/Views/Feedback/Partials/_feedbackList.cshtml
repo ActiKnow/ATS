@@ -3,7 +3,7 @@
 {
     foreach (var item in Model)
     {
-        <tr>
+        <tr class="@if (item.ReadStatus) { <text>read-status</text>} ">
             <td>
                 <div class="animated-checkbox">
                     <label>
@@ -16,6 +16,7 @@
             <td class="mail-subject">
               <b>@item.Feedback</b>
               <span class="selectedFeedBackId" style="display:none">@item.Id</span>
+              <span class="selectedFeedbackReadStatus" style="display:none">@item.ReadStatus</span>
             </td>
             @*<td><i class="fa fa-paperclip"></i></td>*@
             <td> @(DateTime.Parse(item.CreatedDate.ToString()).ToString(@"dd-MM-yyyy hh:mm tt"))</td>
