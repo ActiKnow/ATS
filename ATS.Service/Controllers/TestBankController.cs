@@ -14,11 +14,13 @@ namespace ATS.Service.Controllers
     {       
         private TestBankBo testBankBo;
         private TestQuestionMapBo testQuestionMapBo;
+        private TestAssignmentBo testAssignmentBo;
         ApiResult apiResult;
         public TestBankController()
         {
             testBankBo = new TestBankBo();
             testQuestionMapBo = new TestQuestionMapBo();
+            testAssignmentBo = new TestAssignmentBo();
             apiResult = new ApiResult(false, new List<string>());
         }
 
@@ -150,5 +152,53 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
+
+        [HttpPost]
+        [Route("api/TestBank/Assign")]
+        public IHttpActionResult Assign(List<TestAssignmentModel> testAssignmentModel)
+        {
+            try
+            {
+                apiResult = testAssignmentBo.Create(testAssignmentModel);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+
+        [HttpGet]
+        [Route("api/TestBank/SelectMapped/{userId}")]
+        public IHttpActionResult SelectMapped(Guid userId)
+        {
+            try
+            {
+                apiResult = testBankBo.SelectMapped(userId);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+        [HttpGet]
+        [Route("api/TestBank/SelectUnmapped/{userId}")]
+        public IHttpActionResult SelectUnmapped(Guid userId)
+        {
+            try
+            {
+                apiResult = testBankBo.SelectUnmapped(userId);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+
     }
 }

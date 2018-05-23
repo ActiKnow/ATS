@@ -121,5 +121,47 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult AssignTest(List<TestAssignmentModel> testAssignmentModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TestBank/Assign";
+                apiResult = ConsumerMethods.Post<List<TestAssignmentModel>>(url, testAssignmentModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+        public static ApiResult SelectMapped(Guid userId)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = string.Format("api/TestBank/SelectMapped/{0}", userId);
+                apiResult = ConsumerMethods.Get<List<TestBankModel>>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
+        public static ApiResult SelectUnMapped(Guid userId)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = string.Format("api/TestBank/SelectUnmapped/{0}", userId);
+                apiResult = ConsumerMethods.Get<List<TestBankModel>>(url);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }
