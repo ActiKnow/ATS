@@ -47,18 +47,12 @@ namespace ATS.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult SelectMappedTest(Guid userId)
         {
+            TestBankModel test = new TestBankModel();
             ApiResult result = null;
             try
             {
                result = ApiConsumers.TestBankApiConsumer.SelectMapped(userId);
-                if (result.Status && result.Data != null)
-                {
-                    var list = (List<TestBankModel>)result.Data;
-                    if (list!=null && list.Count>0)
-                    {
-                       // result.Data = RenderPartialViewToString("_TestList", list);
-                    }
-                }
+
             }
             catch (Exception ex)
             {
@@ -97,7 +91,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 foreach (var index in testAssignmentModel)
                 {
-                index.StatusId = 1;
+                index.StatusId = (int)Constants.ACTIVE;
                 index.CreatedBy = Convert.ToString(Session[Constants.USERID]);
                 }
                 result = ApiConsumers.TestBankApiConsumer.AssignTest(testAssignmentModel);

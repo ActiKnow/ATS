@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ATS.Repository.Interface;
 using ATS.Core.Model;
 using ATS.Repository.Model;
+using ATS.Core.Global;
 
 namespace ATS.Repository.Repo
 {
@@ -76,55 +77,80 @@ namespace ATS.Repository.Repo
 
         public IQueryable<TestBankModel> SelectUnmapped(Guid userId)
         {
-            var query = (from x in _context.TestAssignment.Where(z=>z.UserId != userId )
-                         join p in _context.TestBank on x.TestBankId equals p.TestBankId
+            var test = (from e in _context.TestAssignment.Where(x => x.UserId == userId)
+                        select new { e.TestBankId });
+
+            var query = (from x in _context.TestBank
+                         join p in _context.TypeDef on x.CategoryTypeValue equals p.Value
+                         join q in _context.TypeDef on x.LevelTypeValue equals q.Value
+                         join r in _context.TypeDef on x.TestTypeValue equals r.Value
+                         join y in _context.TypeDef on x.StatusId equals y.Value
+
+                         where !test.Contains(new { x.TestBankId })
                          select new TestBankModel
                          {
-                             CreatedBy = p.CreatedBy,
-                             CreatedDate = p.CreatedDate,
-                             LastUpdatedBy = p.LastUpdatedBy,
-                             LastUpdatedDate = p.LastUpdatedDate,
-                             StatusId = p.StatusId,
-                             TestBankId =p.TestBankId,
-                             CategoryTypeDescription =p.Description,
-                             TotalMarks=p.TotalMarks,
-                             TestTypeValue =p.TestTypeValue,
-                             LevelTypeValue =p.LevelTypeValue,
-                             TestAssignments = (from l in _context.TestAssignment
-                                                select new TestAssignmentModel
-                                                {
-                                                    UserId = l.UserId                                              
-                                                }).Where(l => l.UserId == x.UserId).ToList(),
+                             CreatedBy = x.CreatedBy,
+                             CreatedDate = x.CreatedDate,
+                             Description = x.Description,
+                             LastUpdatedBy = x.LastUpdatedBy,
+                             LastUpdatedDate = x.LastUpdatedDate,
+                             StatusId = x.StatusId,
+                             CategoryTypeValue = x.CategoryTypeValue,
+                             Duration = x.Duration,
+                             Instructions = x.Instructions,
+                             LevelTypeValue = x.LevelTypeValue,
+                             TestBankId = x.TestBankId,
+                             TestTypeValue = x.TestTypeValue,
+                             TotalMarks = x.TotalMarks,
+                             CategoryTypeDescription = p.Description,
+                             LevelTypeDescription = q.Description,
+                             TestTypeDescription = r.Description,
+                             StatusDescription = y.Description
 
                          }).AsQueryable<TestBankModel>();
 
-            return query;
+
+
+            return query.Where(x=>x.StatusId== (int)CommonType.ACTIVE);
         }
         public IQueryable<TestBankModel> SelectMapped(Guid userId)
         {
             var query = (from x in _context.TestAssignment.Where(z => z.UserId == userId)
                          join p in _context.TestBank on x.TestBankId equals p.TestBankId
+                         join s in _context.TypeDef on p.CategoryTypeValue equals s.Value
+                         join q in _context.TypeDef on p.LevelTypeValue equals q.Value
+                         join r in _context.TypeDef on p.TestTypeValue equals r.Value
+                         join y in _context.TypeDef on p.StatusId equals y.Value
                          select new TestBankModel
                          {
                              CreatedBy = p.CreatedBy,
                              CreatedDate = p.CreatedDate,
+                             Description = p.Description,
                              LastUpdatedBy = p.LastUpdatedBy,
                              LastUpdatedDate = p.LastUpdatedDate,
-                             StatusId = p.StatusId,
-                             TestBankId = p.TestBankId,
-                             CategoryTypeDescription = p.Description,
-                             TotalMarks = p.TotalMarks,
-                             TestTypeValue = p.TestTypeValue,
+                             StatusId = x.StatusId,
+                             CategoryTypeValue = p.CategoryTypeValue,
+                             Duration = p.Duration,
+                             Instructions = p.Instructions,
                              LevelTypeValue = p.LevelTypeValue,
+                             TestBankId = p.TestBankId,
+                             TestTypeValue = p.TestTypeValue,
+                             TotalMarks = p.TotalMarks,
+                             CategoryTypeDescription = s.Description,
+                             LevelTypeDescription = q.Description,
+                             TestTypeDescription = r.Description,
+                             StatusDescription = y.Description,
                              TestAssignments = (from l in _context.TestAssignment
                                                 select new TestAssignmentModel
                                                 {
-                                                    UserId = l.UserId
+                                                    UserId = l.UserId,
+                                                    ID = l.ID,
+                                                    TestBankId = l.TestBankId
                                                 }).Where(l => l.UserId == x.UserId).ToList(),
 
                          }).AsQueryable<TestBankModel>();
 
-            return query;
+            return query.Where(x => x.StatusId == (int)CommonType.ACTIVE);
         }
 
     }

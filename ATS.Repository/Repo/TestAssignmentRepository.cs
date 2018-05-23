@@ -42,35 +42,19 @@ namespace ATS.Repository.Repo
             }
         }
 
-        //private IQueryable<TestAssignmentModel> Select()
-        //{
-        //    var query = (from x in _context.TestAssignment
-                        
-        //                 select new TestAssignmentModel
-        //                 {
-        //                     CreatedBy = x.CreatedBy,
-        //                     CreatedDate = x.CreatedDate,                           
-        //                     LastUpdatedBy = x.LastUpdatedBy,
-        //                     LastUpdatedDate = x.LastUpdatedDate,
-        //                     StatusId = x.StatusId,
-        //                     TestBankId = x.TestBankId,
-        //                     UserId = x.UserId,
-        //                 });
-
-        //    return query;
-        //}
-
         public bool Assign(List<TestAssignment> testAssignmentModel)
         {
             bool isCreated = false;
             try
             {
+
                 for (int indx = 0; indx < testAssignmentModel.Count; indx++)
                 {
                     var map = testAssignmentModel[indx];
                     map.ID = Guid.NewGuid();
                     isCreated = Create(ref map);
                 }
+
             }
             catch
             {

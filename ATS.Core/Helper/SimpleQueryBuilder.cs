@@ -39,7 +39,7 @@ namespace ATS.Core.Helper
                         var castedValue = Expression.Convert(Expression.Constant(valueFound), prop.Type);
                         var condition = GetCondition(prop, castedValue, qry.Value.QueryCondition);
                         var lambda = Expression.Lambda<Func<T, bool>>(condition, model);
-                        predicate = GetPredicate(lambda, qry.Value.QueryType);
+                        predicate = GetPredicate(predicate,lambda, qry.Value.QueryType);
                     }
                 }
                 return predicate;
@@ -98,9 +98,9 @@ namespace ATS.Core.Helper
             return condition;
         }
 
-        private Expression<Func<T, bool>> GetPredicate(Expression<Func<T, bool>> lambda, QueryType expression)
+        private Expression<Func<T, bool>> GetPredicate(Expression<Func<T, bool>> predicate, Expression<Func<T, bool>> lambda, QueryType expression)
         {
-            var predicate = PredicateBuilder.True<T>();
+            //var predicate = PredicateBuilder.True<T>();
             switch (expression)
             {
                 case QueryType.Or:

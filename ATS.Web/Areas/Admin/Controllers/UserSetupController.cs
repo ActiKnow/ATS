@@ -201,6 +201,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 SimpleQueryModel query = new SimpleQueryModel();
                 query.ModelName = nameof(TypeDefModel);
+
                 query[nameof(TypeDefModel.ParentKey)] = CommonType.ROLE;
 
                 result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
@@ -236,7 +237,11 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 SimpleQueryModel query = new SimpleQueryModel();
                 query.ModelName = nameof(TypeDefModel);
-                query[nameof(TypeDefModel.ParentKey)] = CommonType.STATUS;
+
+                query[nameof(TypeDefModel.Value), QueryType.And, QueryType.NotEqual] = (int)Constants.DELETED;
+
+                query[nameof(TypeDefModel.ParentKey), QueryType.And, QueryType.Equal] =(int)CommonType.STATUS;
+
 
                 result = ApiConsumers.TypeApiConsumer.SelectTypes(query);
                 if (result != null)

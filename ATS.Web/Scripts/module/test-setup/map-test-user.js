@@ -40,7 +40,7 @@
             render.closeSelectUser();
             loadMappedTestList();
         },
-         resetSelectedUser: function () {
+        resetSelectedUser: function () {
             return {
                 userId: "",
                 userName: "",
@@ -59,28 +59,67 @@
 
             $.each(data, (indx, value) => {
 
-                //if (testQuestions && (testQuestions.indexOf(value.QId) == -1)) {
-                //string.Format("{0} ( {1} / {2} mins )",
                 count++;
                 listTest += "<tr>" +
                     "<td><span >" + count + "</span></td>" +
-                    "<td><span class=''>" + (value.Description + value.TotalMarks + value.Duration) + "</span></td>" +
+                    "<td><span class=''>" + ( value.Description +","+ value.TotalMarks +","+ value.Duration) + "</span></td>" +
                     "<td><span class=''>" + value.CategoryTypeDescription + "</span></td>" +
                     "<td><span class=''>" + value.TestTypeDescription + "</span></td>" +
-                    "<td><span class=''>" + value.LevelTypeDescription + "</span><input type = 'hidden' class='userId' value = '" + value.TestBankId + "' /></td > " +
+                    "<td><span class=''>" + value.LevelTypeDescription + "</span><input type = 'hidden' class='mappedTestBankId' value = '" + value.TestBankId + "' /></td > " +
                     "<td><button class='btn-primary btn-xs deleteMappedTest'><i class='fa fa-remove' aria-hidden='true'></i></button></td>"+
-
-
                     "</tr>";
 
             });
-            $(defaults.selecttblAssignedList).find('tbody').html(listTest);
-            $(defaults.selecttblAssignedList).DataTable();
-            // $(defaults.modalSelectTestContext).modal('hide');
-        },
-         
-    };
+            $tblAssignedList.find('tbody').html(listTest);
+            $tblAssignedList.DataTable();
 
+        },
+        onDeleteMappedTest: function (e) {
+            var op = defaults;
+            var $selection = $(this);
+            var $row = $(e.target).closest('tr');
+            var test = action.getAssignedTest();
+            test.UserId = $(op.selectedUserId).val();
+            test.TestBankId = $row.find(op.mappedTestBankId).val();
+            dialogService.confirm("Confirmation", "Are you sure to unlink question ?", function () {
+                action.unmapTestBank(test.UserId,test.TestBankId);
+            }, function () {
+                alertService.hide();
+            });
+
+        }, 
+        getAssignedTest: function () {
+            return {
+                ID: "",
+                UserId: "",
+                TestBankId: '',
+            }
+        },
+        unmapTestBank: function (UserId, TestBankId) {
+            var op = defaults;
+            var testAssignmentModel =
+            {
+                UserId: UserId,
+                TestBankId: TestBankId,
+            };
+            api.firePostAjax('/Admin/TestAssignment/UnmapTest', { testAssignmentModel: testAssignmentModel })
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                            alertService.showAllSuccess(result.Message, op.mainMessageContext);
+                            $(op.mainMessageContext).focusin();
+                        }
+                        loadMappedTestList();
+                    }
+                    else {
+                        alertService.showAllErrors(result.Message, op.mainMessageContext);
+                    }
+                })
+                .fail((result) => { alertService.showAllErrors(result.responseText, op.mainMessageContext); });
+        },
+
+    };
+    
 
     var callBacks = (function () {
         var op = defaults;
@@ -131,15 +170,8 @@
             if (result !== "") {
                 var msg = " ";
                 if (result.Status) {
-                    //if (result.Message && result.Message.length > 0) {
-                        //$.each(result.Message, function (index, value) {
-                        //    msg += value;
-                        //});
-
-                        //alertService.showSuccess(msg, op.popupTestMessageContext);
-                    action.fillMappedTest(result.Data);
                     
-                    //}                   
+                    action.fillMappedTest(result.Data);                  
                 }
                 else {
                     $.each(result.Message, function (index, value) {
@@ -157,11 +189,10 @@
                         $.each(result.Message, function (index, value) {
                             msg += value;
                         });
+
+                        $(op.modalSelectTestContext).modal('hide');
                         alertService.showSuccess(msg, op.mainMessageContext);
-                    }
-                    //$(op.selecttblTestList).find('tbody').html(result.Data);
-                    //$(op.selecttblTestList).DataTable();
-                    $(op.modalSelectTestContext).hide();
+                    }                   
                 }
                 else {
                     $.each(result.Message, function (index, value) {
@@ -250,9 +281,16 @@
         openTestList: function () {
             var op = defaults;
             var $testModal = $(op.modalSelectTestContext);
-            
-            loadUnmappedTestList();
-            $testModal.modal('show');
+            var selectedemail = $(op.emailId).val();
+            var selecteduserid = $(op.selectedUserId).val();
+            if ((selectedemail != null && selecteduserid != null) && (selectedemail != "" && selecteduserid != "")) {
+                loadUnmappedTestList();
+                $testModal.modal('show');
+            }
+            else
+            {
+                alertService.showInfo("Please select user ", op.mainMessageContext);
+            }
         },
         closeSelectUser: function () {
             var op = defaults;
@@ -263,12 +301,6 @@
             var op = defaults;
             var $testModal = $(op.modalSelectTestContext);
             $testModal.modal('hide');
-        },
-        openMappedList: function () {
-            var op = defaults;
-
-            loadMappedTestList();
-         
         },
 
         fillSelectedUser: function (data) {
@@ -321,11 +353,12 @@
             $assignContext.on('click', op.openTestList, render.openTestList);
             $selectUserContext.on('click', op.closeSelectUser, render.closeSelectUser);
             $selectTestContext.on('click', op.closeSelectTest, render.closeSelectTest);
-            //$selectTestContext.on('click', op.btnSubmitTestList, render.addTestList);
-            //$assignContext.on('click', op.btnAssignTestList, render.assignTestList);
             $selectTestContext.on('click', op.btnAssignTestList, function (e) {
                 assignTestList();
             });
+
+            $(op.selecttblAssignedList).on('click', op.deleteMappedTest, action.onDeleteMappedTest);
+
             $(op.tableContextUser).advancedTable({
                 rowActiveClass: 'row-active',
                 tableRowdblClick: action.setSelectedUser,

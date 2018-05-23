@@ -21,20 +21,30 @@ namespace ATS.Bll
             {
                 try
                 {
+                    var flag = false;
                     Utility.CopyEntity(out List<TestAssignment> output, testAssignmentModel);
-
-                    var flag = unitOfWork.TestAssignmentRepo.Assign(output);
-
+                    var withoutId = output.Where(x => x.ID == Guid.Empty).ToList();
+                    foreach (var map in withoutId)
+                    {
+                        if (map.ID == Guid.Empty)
+                        {
+                            var result = unitOfWork.TestAssignmentRepo.Select(x => x.TestBankId == map.TestBankId && x.UserId == map.UserId).ToList();
+                            if (result.Count()<1)
+                            {
+                                flag = unitOfWork.TestAssignmentRepo.Assign(output);
+                            }
+                        }
+                    }
                     if (flag)
                     {
                         unitOfWork.Commit();
-                        apiResult.Message.Add(output + " mapped successfully");
-
+                        apiResult.Status = true;
+                        apiResult.Message.Add(" mapped successfully");
                     }
                     else
                     {
                         apiResult.Status = false;
-                        apiResult.Message.Add(output + " mapping failed");
+                        apiResult.Message.Add(" mapping failed");
                     }
                 }
                 catch
@@ -76,25 +86,24 @@ namespace ATS.Bll
                 try
                 {
                     var flag = false;
-                    List<TestAssignment> output = new List<TestAssignment>();
+                    TestAssignment output = new TestAssignment();
                     Utility.CopyEntity(out output, inputs);
-                    var withoutId = output.Where(x => x.ID == Guid.Empty).ToList();
-                    foreach (var map in withoutId)
-                    {
-                        if (map.ID == Guid.Empty)
-                        {
-                            var result = unitOfWork.TestAssignmentRepo.Select(x => x.TestBankId == map.TestBankId && x.UserId == map.UserId).ToList();
-                            if (result != null)
-                            {
-                                var data = (result as List<TestAssignmentModel>).FirstOrDefault();
-                                if (data != null)
-                                {
-                                    map.ID = data.ID;
-                                    flag = unitOfWork.TestAssignmentRepo.DeleteMappedTest(map);
-                                }
-                            }
-                        }
-                    }
+                    var map = output;
+
+                     if (map.ID == Guid.Empty)
+                     {
+                         var result = unitOfWork.TestAssignmentRepo.Select(x => x.TestBankId == map.TestBankId && x.UserId == map.UserId).ToList();
+                         if (result != null)
+                         {
+                             var data = (result as List<TestAssignmentModel>).FirstOrDefault();
+                             if (data != null)
+                             {
+                                 map.ID = data.ID;
+                                 flag = unitOfWork.TestAssignmentRepo.DeleteMappedTest(map);
+                             }
+                         }
+                     }
+
                     if (flag)
                     {
                         apiResult.Status = true;
