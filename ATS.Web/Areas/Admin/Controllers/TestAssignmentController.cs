@@ -97,7 +97,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             {
                 foreach (var index in testAssignmentModel)
                 {
-                index.StatusId = true;
+                index.StatusId = 1;
                 index.CreatedBy = Convert.ToString(Session[Constants.USERID]);
                 }
                 result = ApiConsumers.TestBankApiConsumer.AssignTest(testAssignmentModel);
