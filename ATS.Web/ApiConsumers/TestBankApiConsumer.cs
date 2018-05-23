@@ -163,5 +163,19 @@ namespace ATS.Web.ApiConsumers
             }
             return apiResult;
         }
+        public static ApiResult DeleteMapTest(TestAssignmentModel testAssignmentModel)
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                string url = "api/TestBank/Unmap/Test";
+                apiResult = ConsumerMethods.Post<TestAssignmentModel>(url, testAssignmentModel);
+            }
+            catch
+            {
+                throw;
+            }
+            return apiResult;
+        }
     }
 }

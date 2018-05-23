@@ -10,5 +10,6 @@ namespace ATS.Repository.Interface
     {
         IQueryable<TestAssignmentModel> Select(Func<TestAssignmentModel, bool> condition);
         bool Assign(List<TestAssignment> testAssignmentModel);
+        bool DeleteMappedTest(TestAssignment input);
     }
 }

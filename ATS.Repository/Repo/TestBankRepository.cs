@@ -76,7 +76,7 @@ namespace ATS.Repository.Repo
 
         public IQueryable<TestBankModel> SelectUnmapped(Guid userId)
         {
-            var query = (from x in _context.TestAssignment.Where(z=>z.UserId != userId)
+            var query = (from x in _context.TestAssignment.Where(z=>z.UserId != userId )
                          join p in _context.TestBank on x.TestBankId equals p.TestBankId
                          select new TestBankModel
                          {

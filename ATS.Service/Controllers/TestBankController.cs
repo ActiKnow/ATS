@@ -200,5 +200,21 @@ namespace ATS.Service.Controllers
             return Ok(apiResult);
         }
 
+        [HttpPost]
+        [Route("api/TestBank/Unmap/Test")]
+        public IHttpActionResult DeleteMapTest(TestAssignmentModel input)
+        {
+            try
+            {
+                apiResult = testAssignmentBo.Delete(input);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+
     }
 }

@@ -108,6 +108,20 @@ namespace ATS.Web.Areas.Admin.Controllers
             }
             return Json(result);
         }
+        [HttpPost]
+        public ActionResult UnmapTest(TestAssignmentModel testAssignmentModel)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TestBankApiConsumer.DeleteMapTest(testAssignmentModel);
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result);
+        }
     }
     
 }

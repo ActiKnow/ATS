@@ -68,6 +68,53 @@ namespace ATS.Bll
             }
             return apiResult;
         }
+        public ApiResult Delete(TestAssignmentModel inputs)
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
+            using (var unitOfWork = new UnitOfWork())
+            {
+                try
+                {
+                    var flag = false;
+                    List<TestAssignment> output = new List<TestAssignment>();
+                    Utility.CopyEntity(out output, inputs);
+                    var withoutId = output.Where(x => x.ID == Guid.Empty).ToList();
+                    foreach (var map in withoutId)
+                    {
+                        if (map.ID == Guid.Empty)
+                        {
+                            var result = unitOfWork.TestAssignmentRepo.Select(x => x.TestBankId == map.TestBankId && x.UserId == map.UserId).ToList();
+                            if (result != null)
+                            {
+                                var data = (result as List<TestAssignmentModel>).FirstOrDefault();
+                                if (data != null)
+                                {
+                                    map.ID = data.ID;
+                                    flag = unitOfWork.TestAssignmentRepo.DeleteMappedTest(map);
+                                }
+                            }
+                        }
+                    }
+                    if (flag)
+                    {
+                        apiResult.Status = true;
+                        apiResult.Message.Add("Deleted successfully.");
+                        unitOfWork.Commit();
+                    }
+                    else
+                    {
+                        apiResult.Message.Add("Deletion failed.");
+                        apiResult.Status = false;
+                    }
+                }
+                catch
+                {
+                    unitOfWork.Dispose();
+                    throw;
+                }
+            }
+            return apiResult;
+        }
 
     }
 }

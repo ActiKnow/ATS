@@ -68,6 +68,9 @@
                     "<td><span class=''>" + value.CategoryTypeDescription + "</span></td>" +
                     "<td><span class=''>" + value.TestTypeDescription + "</span></td>" +
                     "<td><span class=''>" + value.LevelTypeDescription + "</span><input type = 'hidden' class='userId' value = '" + value.TestBankId + "' /></td > " +
+                    "<td><button class='btn-primary btn-xs deleteMappedTest'><i class='fa fa-remove' aria-hidden='true'></i></button></td>"+
+
+
                     "</tr>";
 
             });

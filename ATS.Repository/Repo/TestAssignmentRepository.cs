@@ -25,7 +25,15 @@ namespace ATS.Repository.Repo
         {
             try
             {
-                var query = Select().Where(condition).AsQueryable<TestAssignmentModel>();
+                var query = (from x in _context.TestAssignment
+                             select new TestAssignmentModel
+                             {
+                                 ID = x.ID,
+                                 UserId = x.UserId,
+                                 TestBankId =x.TestBankId,
+                                 StatusId = x.StatusId
+                             }).Where(condition).AsQueryable<TestAssignmentModel>();
+
                 return query;
             }
             catch
@@ -34,23 +42,23 @@ namespace ATS.Repository.Repo
             }
         }
 
-        private IQueryable<TestAssignmentModel> Select()
-        {
-            var query = (from x in _context.TestAssignment
+        //private IQueryable<TestAssignmentModel> Select()
+        //{
+        //    var query = (from x in _context.TestAssignment
                         
-                         select new TestAssignmentModel
-                         {
-                             CreatedBy = x.CreatedBy,
-                             CreatedDate = x.CreatedDate,                           
-                             LastUpdatedBy = x.LastUpdatedBy,
-                             LastUpdatedDate = x.LastUpdatedDate,
-                             StatusId = x.StatusId,
-                             TestBankId = x.TestBankId,
-                             UserId = x.UserId,
-                         });
+        //                 select new TestAssignmentModel
+        //                 {
+        //                     CreatedBy = x.CreatedBy,
+        //                     CreatedDate = x.CreatedDate,                           
+        //                     LastUpdatedBy = x.LastUpdatedBy,
+        //                     LastUpdatedDate = x.LastUpdatedDate,
+        //                     StatusId = x.StatusId,
+        //                     TestBankId = x.TestBankId,
+        //                     UserId = x.UserId,
+        //                 });
 
-            return query;
-        }
+        //    return query;
+        //}
 
         public bool Assign(List<TestAssignment> testAssignmentModel)
         {
@@ -69,6 +77,20 @@ namespace ATS.Repository.Repo
                 throw;
             }
             return isCreated;
+        }
+        public bool DeleteMappedTest(TestAssignment input)
+        {
+            bool isDeleted = false;
+            try
+            {
+                Delete(input);
+                isDeleted = true;
+            }
+            catch
+            {
+                throw;
+            }
+            return isDeleted;
         }
 
     }
