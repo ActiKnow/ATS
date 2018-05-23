@@ -60,9 +60,9 @@
     <Compile Include="Interface\ITypeDefRepository.cs" />
     <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Migrations\201805220955039_InitialMigration.cs" />
-    <Compile Include="Migrations\201805220955039_InitialMigration.Designer.cs">
-      <DependentUpon>201805220955039_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201805230455599_InitialMigration.cs" />
+    <Compile Include="Migrations\201805230455599_InitialMigration.Designer.cs">
+      <DependentUpon>201805230455599_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -108,8 +108,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805220955039_InitialMigration.resx">
-      <DependentUpon>201805220955039_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805230455599_InitialMigration.resx">
+      <DependentUpon>201805230455599_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
