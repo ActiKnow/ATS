@@ -10,7 +10,7 @@ namespace ATS.Repository.Interface
     {
         bool Disable(List<Guid> listId);
         IQueryable<UserFeedbackModel> Retrieve(Guid Id);
-        IQueryable<UserFeedbackModel> Select(Func<UserFeedback, bool> condition);
-        int Count(Func<UserFeedback, bool> condition);
+        IQueryable<UserFeedbackModel> Select(Func<UserFeedbackModel, bool> condition);
+        int Count(Func<UserFeedbackModel, bool> condition);
     }
 }

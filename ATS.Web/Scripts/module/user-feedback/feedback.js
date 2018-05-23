@@ -140,8 +140,10 @@
                     if (res) {
                         if (res.Status) {
                             $(op.feedbackMessageContext).html(res.Data);
+                            getInboxCount();
+                            selectFeedbacks();
                             $(op.mailboxContext).hide();
-                            $(op.feedbackMessageContext).show();
+                            $(op.feedbackMessageContext).show();                            
                         }
                         if (res.Message && res.Message.length > 0) {
                             alertService.showAllErrors(res.Message, op.mainMessageContext);
