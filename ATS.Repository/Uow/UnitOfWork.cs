@@ -49,9 +49,10 @@ namespace ATS.Repository.Uow
             {
                 this._context.SaveChanges();
             }
-            catch(Exception ex)
+            catch
             {
                 Dispose();
+                throw;
             }
             
         }
