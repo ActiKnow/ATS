@@ -27,5 +27,6 @@ namespace ATS.Core.Model
         public UserCredentialModel UserCredentials { get; set; }
         public  List<UserTestHistoryModel> UserTestHistories { get; set; }
         public string CurrPassword { get; set; }
+        public string StatusDescription { get; set; }
     }
 }

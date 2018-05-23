@@ -115,5 +115,21 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
+
+        [HttpGet]
+        [Route("api/User/Count")]
+        public IHttpActionResult CountUsers()
+        {
+            ApiResult apiResult = null;
+            try
+            {
+                apiResult = userInfoBo.Count();
+            }
+            catch (Exception ex)
+            {
+                apiResult = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Ok(apiResult);
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace ATS.Repository.Uow
             UserRepo = new UserRepository(_context);
             TestBankRepo = new TestBankRepository(_context);
             ResultRepo = new ResultRepository(_context);
+            FeedbackRepo = new FeedbackRepository(_context);
         }
 
         public IAttemptHistoryRepository AttemptedHistoryRepo { get;private set; }
@@ -40,6 +41,7 @@ namespace ATS.Repository.Uow
         public IUserRepository UserRepo { get; private set; }
         public ITestBankRepository TestBankRepo { get; private set; }
         public IResultRepository ResultRepo { get; private set; }
+        public IFeedbackRepository FeedbackRepo { get; private set; }
 
         public void Commit()
         {

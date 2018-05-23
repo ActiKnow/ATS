@@ -90,7 +90,7 @@ namespace ATS.Bll
                 {
                     unitOfWork.Commit();
                     apiResultDelete.Status = true;
-                    apiResultDelete.Message.Add("User disabled successfully.");
+                    apiResultDelete.Message.Add("User deleted successfully.");
 
                     var result = Select(null);  // Getting all records, when we will pass null in Select method.
 
@@ -106,6 +106,19 @@ namespace ATS.Bll
                 }
             }
             return apiResultDelete;
+        }
+
+        public ApiResult Count()
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
+            using (var unitOfWork = new UnitOfWork())
+            {
+                var count = unitOfWork.UserRepo.Count();
+
+                apiResult.Data = count;
+                apiResult.Status = true;
+            }
+            return apiResult;
         }
 
         public ApiResult GetById(Guid guid)

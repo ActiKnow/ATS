@@ -20,40 +20,29 @@ namespace ATS.Repository.Repo
         public IQueryable<TestAssignmentModel> Retrieve(List<Guid> userId)
         {
 
-            var query = (from x in _context.TestAssignment
+            var query = (from y in _context.TestAssignment
+                         join x in _context.TestBank on y.TestBankId equals x.TestBankId
+                         join z in _context.TypeDef on y.StatusId equals z.Value
                          select new TestAssignmentModel
                          {
-
-                         }).AsQueryable<TestAssignmentModel>();
+                             MarksObtained = y.MarksObtained,
+                             StatusId = y.StatusId,
+                             TestBankId = y.TestBankId,
+                             UserId = y.UserId,
+                             TestBankName=x.Description,
+                             StatusDescription=z.Description,
+                             UserInfo = (from l in _context.UserInfo
+                                         select new UserInfoModel
+                                         {
+                                             UserId = l.UserId,
+                                             Email = l.Email,
+                                             FName = l.FName,
+                                             LName = l.LName,
+                                             Mobile = l.Mobile
+                                         }).Where(l => l.UserId == y.UserId).FirstOrDefault(),
+                         }).Where(p => userId.Contains(p.UserId)).AsQueryable<TestAssignmentModel>();
 
             return query;
-
-            //return query;
-
-            //var query = (from x in _context.TestBank
-            //             select new TestBankModel
-            //             {
-            //                 CreatedBy = x.CreatedBy,
-            //                 CreatedDate = x.CreatedDate,
-            //                 Description = x.Description,
-            //                 LastUpdatedBy = x.LastUpdatedBy,
-            //                 LastUpdatedDate = x.LastUpdatedDate,
-            //                 StatusId = x.StatusId,
-            //                 CategoryTypeValue = x.CategoryTypeValue,
-            //                 Duration = x.Duration,
-            //                 Instructions = x.Instructions,
-            //                 LevelTypeValue = x.LevelTypeValue,
-            //                 TestBankId = x.TestBankId,
-            //                 TestTypeValue = x.TestTypeValue,
-            //                 TotalMarks = x.TotalMarks,
-            //                 TestAssignments =(from y in _context.TestAssignment
-            //                                   select new TestAssignmentModel{
-            //                                       UserId = y.UserId,
-            //                                       TestBankId = y.TestBankId
-            //                                   }).Where(y=>y.TestBankId==x.TestBankId && userId.Contains(y.UserId)).ToList(),
-            //             }).AsQueryable<TestBankModel>();
-            //return query;
-
         }
     }
 }

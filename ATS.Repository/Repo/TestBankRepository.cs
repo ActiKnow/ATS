@@ -49,6 +49,7 @@ namespace ATS.Repository.Repo
                          join p in _context.TypeDef on x.CategoryTypeValue equals p.Value
                          join q in _context.TypeDef on x.LevelTypeValue equals q.Value
                          join r in _context.TypeDef on x.TestTypeValue equals r.Value
+                         join y in _context.TypeDef on x.StatusId equals y.StatusId
                          select new TestBankModel
                          {
                              CreatedBy = x.CreatedBy,
@@ -67,6 +68,7 @@ namespace ATS.Repository.Repo
                              CategoryTypeDescription = p.Description,
                              LevelTypeDescription = q.Description,
                              TestTypeDescription = r.Description,
+                             StatusDescription= y.Description
                          });
 
             return query;

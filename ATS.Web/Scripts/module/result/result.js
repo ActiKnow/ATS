@@ -2,17 +2,18 @@
     'use strict'
     var defaults = {
         mainMessageContext: '#mainMessageContext',
-        typeContextModel: '#typeContextModel',
-        selecttblUserList: '#tblUserList',
-        selecttblUserAnswerList: '#tblUserAnswerList',
-        btnConsolidatedResult: '#btnConsolidatedResult',
-        btnIndividualResult: "btnIndividualResult",
+        userContextModel: '#userContextModel',
+        selecttblUserList: '#tblUserList',        
         btnchkAllUserinfo: '#chkUserinfo',
-    };
+        consolidatedChartContainer: '#consolidatedChartContainer',
+        individualChartContainer: '#IndividualChartContainer',
+        individualButton: '.individualButton',
+        consolidatedButton: '.consolidatedButton',
+        chartContext: '.chartContext',
+        popupMessageContext: '#popupMessageContext'
+    }; 
 
     var allUserIdList = [];
-    var _chartContext = "", _titleText = "";
-    var _data=[];    
 
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -59,38 +60,65 @@
             }
         }
 
-        var reInitializeCartValue = function (result) {
+        var reInitializeConsolidatedChartValue = function (result) {
+            var op = defaults;
+            alertService.hide(result.mainMessageContext);
 
-            var testData = result.Data;
-            _chartContext = "chartContainer";
-            _titleText = "Consolidated Test results";
-            _data = [];
-            var _labels = [];
-            var _internalData = [];
-            var _dataSet = [];
+            if (result.Status) {
+                if (result.Message && result.Message.length > 0) {
+                    alertService.showAllErrors(result.Message, result.mainMessageContext);
+                }
+                else {
+                    var $chartContext = $(defaults.consolidatedChartContainer);
+                    $chartContext.empty();
+                    var _newChartContext = "";
+                    var _labelAngle = "0";
+                    var _data = [];
+                    var _titleText = "Consolidated result";
+                    var _yAxixTitle = "Marks"
+                    var _chartName = "chart";
 
-            type: "bar",
-                showInLegend: true,
-                    legendText: "Gold",
-                        color: "gold",
-                            dataPoints: [
-                                { y: 198, label: "Italy" },
-                                { y: 201, label: "China" },
-                                { y: 202, label: "France" },
-                                { y: 236, label: "Great Britain" },
-                                { y: 395, label: "Soviet Union" },
-                                { y: 957, label: "USA" }
-                            ]
+                    _data = result.Data;
 
-            $.each(testData, function (index1, value1) {
-                _data.push();
-            });
+                    _newChartContext = "consolidatedChartContext" + 0;
+                    $chartContext.append("<div id='" + _newChartContext + "'  style='min-height: 400px; width: 100 %;'></div><br>");
 
-            renderChart(_chartContext, _titleText, _data);
+                    renderChart(_chartName, _newChartContext, _yAxixTitle, _titleText, _labelAngle, 100, _data);
 
-            $(defaults.typeContextModel).modal("hide");
+                    $(defaults.userContextModel).modal("hide");
+                }
+            }
         }
 
+        var reInitializeIndividualChartValue = function (result) {
+            var op = defaults;
+
+            alertService.hide(result.mainMessageContext);
+            if (result.Status) {
+                if (result.Message && result.Message.length > 0) {
+                    alertService.showAllErrors(result.Message,result.mainMessageContext);
+                }
+                else {
+                    var $chartContext = $(defaults.individualChartContainer);
+                    $chartContext.empty();
+                    var _newChartContext = "";
+                    var _labelAngle = "0";
+                    var _data = {};
+                    var _titleText = "Individual result";
+                    var _yAxixTitle = "Marks"
+                    var _chartName = "";
+                    for (let i = 0; i < result.Data.length; i++) {
+                        _chartName = "chart" + i;
+                        _newChartContext = "individualChartContext" + i;
+                        $chartContext.append("<div id='" + _newChartContext + "'  style='min-height: 300px; width: 100 %;'></div><br>");
+                        _data = result.Data[i];
+                        renderChart(_chartName, _newChartContext, _yAxixTitle, _titleText, _labelAngle, 100, [_data]);
+                    }
+
+                    $(defaults.userContextModel).modal("hide");
+                }
+            }
+        }
 
         return {
             onUserListSuccess: function (result) {
@@ -101,21 +129,20 @@
             },
 
             onConsolidatedResultSuccess: function (result) {
-                reInitializeCartValue(result);
+                reInitializeConsolidatedChartValue(result);
             },
 
             onConsolidatedResultFailed: function (result) {
-
+                alertService.showAllErrors(result.responseText, op.mainMessageContext);
             },
 
             onIndividualResultSuccess: function (result) {
-
+                reInitializeIndividualChartValue(result)
             },
 
             onIndividualResultFailed: function (result) {
-
+                alertService.showAllErrors(result.responseText, op.mainMessageContext);
             }
-
         }
     })();
 
@@ -127,7 +154,6 @@
     }
 
     var addUserList = function () {
-
         allUserIdList = [];
         var $selectTable = $(defaults.selecttblUserList);
         var $tblBody = $selectTable.find('tbody');
@@ -138,16 +164,20 @@
                 allUserIdList.push(recID);
             }
         });
+
+        if (allUserIdList.length === 0) {
+            alertService.showError("Please select at least one user to proceed", defaults.mainMessageContext);
+            $(defaults.userContextModel).modal("hide");
+            $(defaults.individualChartContainer).empty();
+            $(defaults.consolidatedChartContainer).empty();
+        }
     }
 
     var GetConsolidatedTestResults = function () {
-
+        alertService.hide(defaults.mainMessageContext);
         addUserList();
 
-        if (allUserIdList.length === 0) {
-            $(defaults.errorMsg).html("Please select at least one record to proceed");
-        }
-        else {
+        if (allUserIdList.length >= 0) {
             api.firePostAjax('/Admin/ResultSetup/GetConsolidatedTestResults', { allUserIdList: allUserIdList })
                 .done(callBacks.onConsolidatedResultSuccess)
                 .fail(callBacks.onConsolidatedResultFailed)
@@ -155,53 +185,41 @@
     }
 
     var GetIndividualTestResults = function () {
-
+        alertService.hide(defaults.mainMessageContext);
         addUserList();
 
-        if (allUserIdList.length === 0) {
-            $(defaults.errorMsg).html("Please select at least one record to proceed");
-        }
-        else {
-            api.firePostAjax('/Admin/Result/GetIndividualTestResults', { allUserIdList: allUserIdList })
+        if (allUserIdList.length >= 0) {
+            api.firePostAjax('/Admin/ResultSetup/GetIndividualTestResults', { allUserIdList: allUserIdList })
                 .done(callBacks.onIndividualResultSuccess)
                 .fail(callBacks.onIndividualResultFailed)
         }
     }
 
-    var renderChart = function (_chartContext,_titleText, _data) {
-        var chart = new CanvasJS.Chart(_chartContext,
+    var renderChart = function (_chartName, _chartContext,_yAxixTitle,_title, _labelAngle,_maximum, _data) {
+        _chartName = new CanvasJS.Chart(_chartContext,
             {
                 title: {
-                    text: _titleText
-                    //"Olympic Medals of all Times (till 2012 Olympics)"
+                    text: _title
                 },
-                data: _data
-                //   [                  // sample data
-                //    {
-                //        type: "bar",    // type:"column" -> for rotate it to x -axis
-                //        dataPoints: [
-                //            { y: 198, label: "Italy" },
-                //            { y: 201, label: "China" },
-                //            { y: 202, label: "France" },
-                //            { y: 236, label: "Great Britain" },
-                //            { y: 395, label: "Soviet Union" },
-                //            { y: 957, label: "USA" }
-                //        ]
-                //    },
-                //    ....
-                //    ....
-                //    ....
-                //]
+                axisX: {
+                    labelAngle: _labelAngle
+                },
+                axisY: {
+                    title: _yAxixTitle,
+                    maximum: _maximum
+                },
+                data:_data
             });
 
-        chart.render();
+        _chartName.render();
     };
 
     var bindEvents = function () {
         var op = defaults;
-        var $tableUserContext = $(op.typeContextModel);
+        var $userContextModel = $(op.userContextModel);
+        var $chartContext = $(op.chartContext);
 
-        $tableUserContext.on('click', op.btnchkAllUserinfo, function (event) {
+        $userContextModel.on('click', op.btnchkAllUserinfo, function (event) {
             if (this.checked) {
                 $(op.selecttblUserList).find(':checkbox').each(function () {
                     this.checked = true;
@@ -213,25 +231,31 @@
                 });
             }
         });
-        $tableUserContext.on('click', op.btnConsolidatedResult, function (event) {
+
+        $userContextModel.on('click', op.consolidatedButton, function (event) {
             GetConsolidatedTestResults();
+           $(op.individualChartContainer).hide();
+           $(op.consolidatedChartContainer).show();
         });
 
-        $tableUserContext.on('click', op.btnIndividualResult, function (event) {
+        $chartContext.on('click', op.consolidatedButton, function (event) {
+            GetConsolidatedTestResults();
+            $(op.individualChartContainer).hide();
+            $(op.consolidatedChartContainer).show();
+        });
+
+        $chartContext.on('click', op.individualButton, function (event) {
             GetIndividualTestResults();
+            $(op.consolidatedChartContainer).hide();
+            $(op.individualChartContainer).show();
         });
     };
-
-    var init = function () {
-        renderChart();
-    }
-
+   
     return {
         init: function (config) {
             $.extend(true, defaults, config);
-            init();
             bindEvents();
-            loadUserList();
+            loadUserList();           
         }
     }
 })();

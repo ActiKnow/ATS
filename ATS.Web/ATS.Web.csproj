@@ -143,8 +143,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiConsumers\CommonApiConsumer.cs" />
     <Compile Include="ApiConsumers\ConsumerMethods.cs" />
+    <Compile Include="ApiConsumers\FeedbackApiConsumer.cs" />
     <Compile Include="ApiConsumers\QuestionApiConsumer.cs" />
     <Compile Include="ApiConsumers\ResultApiConsumer.cs" />
     <Compile Include="ApiConsumers\TestBankApiConsumer.cs" />
@@ -155,6 +155,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\ResultSetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\SetupController.cs" />
     <Compile Include="Areas\Admin\Controllers\TestAssignmentController.cs" />
@@ -256,7 +257,11 @@
     <Content Include="Areas\Admin\Views\TestAssignment\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\TestAssignment\Partials\_TestList.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbackList.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbacksMessage.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.min.js" />
@@ -274,6 +279,7 @@
     <Content Include="Scripts\module\test-setup\map-test-question.js" />
     <Content Include="Scripts\module\test-setup\test-setup.js" />
     <Content Include="Scripts\module\test-setup\map-test-user.js" />
+    <Content Include="Scripts\module\user-feedback\feedback.js" />
     <Content Include="Scripts\plugins\bootstrap.min.js" />
     <Content Include="Scripts\common\alert-service.js" />
     <Content Include="Scripts\common\app-module.js" />

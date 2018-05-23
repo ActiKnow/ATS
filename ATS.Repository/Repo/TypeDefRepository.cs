@@ -37,6 +37,7 @@ namespace ATS.Repository.Repo
             try
             {
                 var query = (from x in _context.TypeDef
+                             join y in _context.TypeDef on x.StatusId equals y.Value
                              select new TypeDefModel
                              {
                                  CreatedBy = x.CreatedBy,
@@ -45,7 +46,7 @@ namespace ATS.Repository.Repo
                                  LastUpdatedBy = x.LastUpdatedBy,
                                  LastUpdatedDate = x.LastUpdatedDate,
                                  ParentKey = x.ParentKey,
-                                 StatusDescription = x.StatusId == true ? Constants.ACTIVE : Constants.INACTIVE,
+                                 StatusDescription = y.Description,
                                  StatusId = x.StatusId,
                                  TypeId = x.TypeId,
                                  Value = x.Value,
@@ -67,6 +68,7 @@ namespace ATS.Repository.Repo
                 var query = (from x in _context.TypeDef
                              join y in _context.TypeDef on x.ParentKey equals y.Value into emptyType
                              from parent in emptyType.DefaultIfEmpty()
+                             join z in _context.TypeDef on x.StatusId equals z.Value
                              select new TypeDefModel
                              {
                                  CreatedBy = x.CreatedBy,
@@ -75,7 +77,7 @@ namespace ATS.Repository.Repo
                                  LastUpdatedBy = x.LastUpdatedBy,
                                  LastUpdatedDate = x.LastUpdatedDate,
                                  ParentKey = x.ParentKey,
-                                 StatusDescription = x.StatusId == true ? Constants.ACTIVE : Constants.INACTIVE,
+                                 StatusDescription = z.Description,
                                  StatusId = x.StatusId,
                                  TypeId = x.TypeId,
                                  Value = x.Value,

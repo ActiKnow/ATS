@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global\CommonType.cs" />
+    <Compile Include="Helper\LineChart.cs" />
     <Compile Include="Helper\PredicateBuilder.cs" />
     <Compile Include="Helper\Utility.cs" />
     <Compile Include="Interface\ISimpleQueryable.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Model\TypeDefModel.cs" />
     <Compile Include="Model\UserAttemptHistoryModel.cs" />
     <Compile Include="Model\UserCredentialModel.cs" />
+    <Compile Include="Model\UserFeedbackModel.cs" />
     <Compile Include="Model\UserInfoModel.cs" />
     <Compile Include="Model\UserTestHistoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

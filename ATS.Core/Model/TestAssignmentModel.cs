@@ -12,6 +12,8 @@ namespace ATS.Core.Model
         public System.Guid UserId { get; set; }
         public System.Guid TestBankId { get; set; }
         public decimal MarksObtained { get; set; } = 0;
+        public string StatusDescription { get; set; }
+        public string TestBankName { get; set; }
         public virtual TestBankModel TestBank { get; set; }
         public virtual UserInfoModel UserInfo { get; set; }
     }

@@ -392,7 +392,7 @@
         var quesTypeValue = $(defaults.selectQuesQuesTypeId).find(':selected').val();
         if (quesTypeValue == questionTypes.bool) {
             if (!ansText || ansText.trim() == "") {
-                message = "Answer Description is required";
+                message = "Please select one correct answer";
             }
         }
         else if (quesTypeValue == questionTypes.option) {
@@ -404,7 +404,7 @@
 
             }
             if (count == 0) {
-                message = "Answer Description is required";
+                message = "Please select one correct answer";
             }
         }
         if (message != "") {

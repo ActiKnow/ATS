@@ -18,5 +18,6 @@ namespace ATS.Core.Model
         public string Roles { get; set; }
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; } = false;
+        public string StatusDescription { get; set; }
     }
 }
