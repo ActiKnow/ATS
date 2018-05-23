@@ -46,7 +46,9 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                result = ApiConsumers.TestBankApiConsumer.Select();
+                SimpleQueryModel query = new SimpleQueryModel { ModelName = nameof(TestBankModel) };
+                query[nameof(TestBankModel.StatusId), QueryType.And, QueryType.NotEqual] = Constants.DELETED;
+                result = ApiConsumers.TestBankApiConsumer.Select(query);
                 if (result.Status && result.Data != null)
                 {
                     var list = (List<TestBankModel>)result.Data;
