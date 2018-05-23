@@ -9,7 +9,7 @@
     <td><span class="itemName">@string.Format("{0} ( {1} / {2} mins )", item.Description, item.TotalMarks, item.Duration)</span></td>
     <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
     <td><span>@(item.TestTypeDescription)</span></td>
-    <td><span>aacdas</span>
+    <td><span>@item.LevelTypeDescription</span>
         <span>
             <input type="hidden" class="test-id" value="@item.TestBankId" />
             <input type="hidden" class="category-value" value="@item.CategoryTypeValue" />

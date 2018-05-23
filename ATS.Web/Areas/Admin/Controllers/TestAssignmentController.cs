@@ -45,20 +45,41 @@ namespace ATS.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTests(bool? rawTests)
+        public ActionResult SelectMappedTest(Guid userId)
         {
             ApiResult result = null;
-
             try
             {
-                result = ApiConsumers.TestBankApiConsumer.Select();
+               result = ApiConsumers.TestBankApiConsumer.SelectMapped(userId);
                 if (result.Status && result.Data != null)
                 {
                     var list = (List<TestBankModel>)result.Data;
-                    //if (rawTests == null || (rawTests != null && !rawTests.Value))
-                    //{
+                    if (list!=null && list.Count>0)
+                    {
+                       // result.Data = RenderPartialViewToString("_TestList", list);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new ApiResult(false, new List<string> { ex.GetBaseException().Message });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult SelectUnmappedTest(Guid userId)
+        {
+            ApiResult result = null;
+            try
+            {
+                result = ApiConsumers.TestBankApiConsumer.SelectUnMapped(userId);
+                if (result.Status && result.Data != null)
+                {
+                    var list = (List<TestBankModel>)result.Data;
+                    if (list != null && list.Count > 0)
+                    {
                         result.Data = RenderPartialViewToString("_TestList", list);
-                    //}
+                    }
                 }
             }
             catch (Exception ex)

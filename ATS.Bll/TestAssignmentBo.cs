@@ -28,19 +28,13 @@ namespace ATS.Bll
                     if (flag)
                     {
                         unitOfWork.Commit();
-                        apiResult.Message.Add(output + " created successfully");
+                        apiResult.Message.Add(output + " mapped successfully");
 
-                        var result = Select(null);
-
-                        if (result != null)
-                        {
-                            apiResult += result;
-                        }
                     }
                     else
                     {
                         apiResult.Status = false;
-                        apiResult.Message.Add(output + " creation failed");
+                        apiResult.Message.Add(output + " mapping failed");
                     }
                 }
                 catch

@@ -168,5 +168,37 @@ namespace ATS.Service.Controllers
             }
             return Ok(apiResult);
         }
+
+        [HttpGet]
+        [Route("api/TestBank/SelectMapped/{userId}")]
+        public IHttpActionResult SelectMapped(Guid userId)
+        {
+            try
+            {
+                apiResult = testBankBo.SelectMapped(userId);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+        [HttpGet]
+        [Route("api/TestBank/SelectUnmapped/{userId}")]
+        public IHttpActionResult SelectUnmapped(Guid userId)
+        {
+            try
+            {
+                apiResult = testBankBo.SelectUnmapped(userId);
+            }
+            catch (Exception ex)
+            {
+                apiResult.Message.Add(ex.GetBaseException().Message);
+                apiResult.Status = false;
+            }
+            return Ok(apiResult);
+        }
+
     }
 }
