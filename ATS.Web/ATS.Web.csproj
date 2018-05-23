@@ -261,6 +261,7 @@
     <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbackList.cshtml" />
     <Content Include="Areas\Admin\Views\Feedback\Partials\_feedbacksMessage.cshtml" />
     <None Include="bin\ATS.Web.dll.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\backup\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.js" />
     <Content Include="Scripts\backup\jquery-1.10.2.min.js" />
