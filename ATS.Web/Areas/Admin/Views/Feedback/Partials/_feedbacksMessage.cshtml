@@ -2,17 +2,35 @@
 @if (Model != null)
 {
     <div class="tile-title-w-btn">
-        <h3 class="title">All Items</h3>
+        <h3 class="title">Feedback @(" <" + Model.userInfoModel.Email + ">")</h3>
         <div class="btn-group">
             <button class="btn btn-primary btn-sm deleteSelected" type="button"><i class="fa fa-trash-o"></i></button>
         </div>
     </div>
     <hr />
-    <div class="tile-body">
-        <b>Card with button group </b><br>
-        Hey there, I am a very simple card. I am good at containing small bits of information. I am quite convenient because I require little markup to use effectively.
+    <div class="tile-body"> 
+        <div class="tile-title-w-btn">
+            <p class="title">@Model.userInfoModel.FName &nbsp; @Model.userInfoModel.LName</p>
+            @(DateTime.Parse(Model.CreatedDate.ToString()).ToString(@"dd-MMM-yyyy hh:mm tt"))
+        </div>       
+        <div class="col-md-12">
+            <p>@Model.Feedback</p>
+            <br />
+            @{ var integralPart = Math.Truncate(Model.Rating);
+               var fractionalPart = Model.Rating - integralPart;}
+            <p>Rating :@Model.Rating &nbsp;&nbsp;
+                @for(var i= 1; i <= integralPart;i++)
+                {
+                <i class="fa fa-star" aria-hidden="true"></i>
+                }
+                @if (fractionalPart > 0)
+                {
+                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                }
+            </p>
+        </div>        
     </div>
     <div class="tile-footer">
         <button class="btn btn-primary btn-sm btnBackToInbox" type="button"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Back to inbox</button>
     </div>
-}
+                }
