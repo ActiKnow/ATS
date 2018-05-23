@@ -7,13 +7,13 @@ namespace ATS.Repository.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class added_MarksObtained_inTestAssignment : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_MarksObtained_inTestAssignment));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201805180816028_added_MarksObtained_inTestAssignment"; }
+            get { return "201805220955039_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

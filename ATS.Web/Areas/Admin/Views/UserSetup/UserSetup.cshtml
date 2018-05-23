@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label class="name-tag control-label required-sign">Mobile No</label>
                             @*@Html.TextBoxFor(m => m.Mobile, new { @Value = (Model.Mobile > 0 ?Model.Mobile.ToString() :string.Empty), @class = "form-control", @id = "mobileNumber",autocomplete ="off" })*@
-                            @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber", autocomplete = "off", placeholder = "9999999999", data_type= "mobile", @data_required="Mobile No is required"})
+                            @Html.TextBoxFor(x => x.Mobile, htmlAttributes: new { @class = "form-control", @id = "mobileNumber", autocomplete = "off", placeholder = "9999999999", data_type= "mobile", @data_required="Mobile No is required" , maxlength=10})
                         </div>
                     </div>
                     <div class="col-sm-6">

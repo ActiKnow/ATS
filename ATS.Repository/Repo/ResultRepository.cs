@@ -22,6 +22,7 @@ namespace ATS.Repository.Repo
 
             var query = (from y in _context.TestAssignment
                          join x in _context.TestBank on y.TestBankId equals x.TestBankId
+                         join z in _context.TypeDef on y.StatusId equals z.Value
                          select new TestAssignmentModel
                          {
                              MarksObtained = y.MarksObtained,
@@ -29,6 +30,7 @@ namespace ATS.Repository.Repo
                              TestBankId = y.TestBankId,
                              UserId = y.UserId,
                              TestBankName=x.Description,
+                             StatusDescription=z.Description,
                              UserInfo = (from l in _context.UserInfo
                                          select new UserInfoModel
                                          {

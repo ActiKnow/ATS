@@ -24,6 +24,7 @@ namespace ATS.Core.Model
         public string CategoryTypeDescription { get; set; }
         public decimal DefaultMark { get; set; }
         public string AnsText { get; set; }
+        public string StatusDescription { get; set; }
         public List<QuestionOptionModel> Options { get; set; }
         public List<QuestionOptionMapModel> MappedOptions { get; set; }
         public TestQuestionMapModel MappedQuestion { get; set; }

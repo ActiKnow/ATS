@@ -19,6 +19,6 @@ namespace ATS.Repository.Model
         public string Description { get; set; }
         public  QuestionBank QuestionBank { get; set; }
         [ForeignKey("History_Id")]
-        public  UserTestHistory UserTestHistory { get; set; }
+        public  virtual UserTestHistory UserTestHistory { get; set; }
     }
 }

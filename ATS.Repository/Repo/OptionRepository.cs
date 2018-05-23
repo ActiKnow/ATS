@@ -20,6 +20,7 @@ namespace ATS.Repository.Repo
             try
             {
                 var query = (from x in _context.QuestionOption
+                             join y in _context.TypeDef on x.StatusId equals y.Value
                              select new QuestionOptionModel
                              {
                                  Id = x.Id,
@@ -29,7 +30,8 @@ namespace ATS.Repository.Repo
                                  CreatedDate = x.CreatedDate,
                                  LastUpdatedBy = x.LastUpdatedBy,
                                  LastUpdatedDate = x.LastUpdatedDate,
-                                 StatusId = x.StatusId
+                                 StatusId = x.StatusId,
+                                 StatusDescription=y.Description
                              }).Where(condition).AsQueryable<QuestionOptionModel>();
                 return query;
             }

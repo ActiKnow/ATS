@@ -28,6 +28,6 @@ namespace ATS.Repository.Model
         [InverseProperty("LevelType")]
         public virtual ICollection<QuestionBank> QuestionLevels { get; set; }
         [InverseProperty("QuestionType")]
-        public virtual ICollection<QuestionBank> QuestionTypes { get; set; }
+        public virtual ICollection<QuestionBank> QuestionTypes { get; set; }        
     }
 }

@@ -48,6 +48,7 @@ namespace ATS.Repository.Repo
                          join p in _context.TypeDef on x.CategoryTypeValue equals p.Value
                          join q in _context.TypeDef on x.LevelTypeValue equals q.Value
                          join r in _context.TypeDef on x.QuesTypeValue equals r.Value
+                         join z in _context.TypeDef on x.StatusId equals z.Value
                          select new QuestionBankModel
                          {
                              CategoryTypeValue = x.CategoryTypeValue,
@@ -61,6 +62,7 @@ namespace ATS.Repository.Repo
                              QId = x.QId,
                              QuesTypeValue = x.QuesTypeValue,
                              StatusId = x.StatusId,
+                             StatusDescription=z.Description,
                              CategoryTypeDescription = p.Description,
                              LevelTypeDescription = q.Description,
                              QuesTypeDescription = r.Description

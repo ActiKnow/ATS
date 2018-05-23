@@ -60,13 +60,9 @@
     <Compile Include="Interface\ITypeDefRepository.cs" />
     <Compile Include="Interface\IUserCredentialRepository.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Migrations\201805160917438_InitialMigration.cs" />
-    <Compile Include="Migrations\201805160917438_InitialMigration.Designer.cs">
-      <DependentUpon>201805160917438_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.cs" />
-    <Compile Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.Designer.cs">
-      <DependentUpon>201805180816028_added_MarksObtained_inTestAssignment.cs</DependentUpon>
+    <Compile Include="Migrations\201805220955039_InitialMigration.cs" />
+    <Compile Include="Migrations\201805220955039_InitialMigration.Designer.cs">
+      <DependentUpon>201805220955039_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -79,11 +75,14 @@
     <Compile Include="Model\TypeDef.cs" />
     <Compile Include="Model\UserAttemptedHistory.cs" />
     <Compile Include="Model\UserCredential.cs" />
+    <Compile Include="Model\UserFeedback.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Model\UserTestHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\ATSDBContext.cs" />
     <Compile Include="Repo\AttemptHistoryRepository.cs" />
+    <Compile Include="Repo\FeedbackRepository.cs" />
+    <Compile Include="Interface\IFeedbackRepository.cs" />
     <Compile Include="Repo\MapOptionRepository.cs" />
     <Compile Include="Repo\MapQuestionRepository.cs" />
     <Compile Include="Repo\OptionRepository.cs" />
@@ -109,11 +108,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805160917438_InitialMigration.resx">
-      <DependentUpon>201805160917438_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805180816028_added_MarksObtained_inTestAssignment.resx">
-      <DependentUpon>201805180816028_added_MarksObtained_inTestAssignment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805220955039_InitialMigration.resx">
+      <DependentUpon>201805220955039_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

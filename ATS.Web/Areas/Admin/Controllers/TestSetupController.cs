@@ -68,7 +68,7 @@ namespace ATS.Web.Areas.Admin.Controllers
             ApiResult result = null;
             try
             {
-                test.StatusId = true;
+                test.StatusId =(int) CommonType.ACTIVE;
                 test.CreatedBy = Convert.ToString(Session[Constants.USERID]);
                 result = ApiConsumers.TestBankApiConsumer.CreateTest(test);
             }

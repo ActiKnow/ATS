@@ -26,9 +26,13 @@ namespace ATS.Repository.Model
         [ForeignKey("TestbankId")]
         public  TestBank TestBank { get; set; }
 
+        [InverseProperty("UserTestHistory")]
         public  List<UserAttemptedHistory> UserAttemptedHistories { get; set; }
 
         [ForeignKey("UserId")]
         public  UserInfo UserInfo { get; set; }
+
+       
+       
     }
 }

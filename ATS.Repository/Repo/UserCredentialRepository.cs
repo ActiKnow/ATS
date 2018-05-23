@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATS.Core.Global;
 using ATS.Core.Model;
 using ATS.Repository.Interface;
 using ATS.Repository.Model;
@@ -41,6 +42,7 @@ namespace ATS.Repository.Repo
             try
             {
                 var query = (from x in _context.UserCredential
+                             join y in _context.TypeDef on x.StatusId equals y.StatusId
                              where x.UserId == userId
                              select new UserCredentialModel
                              {
@@ -54,10 +56,11 @@ namespace ATS.Repository.Repo
                                  Id=x.Id,
                                  CurrPassword=x.CurrPassword,
                                  PrevPassword=x.PrevPassword,
-                                  
+                                 StatusDescription=y.Description
                              }).AsQueryable<UserCredentialModel>();
 
-                return query;
+                var deletedStatus = (int)CommonType.DELETED;
+                return query.Where(x => x.StatusId != deletedStatus);
             }
             catch
             {
@@ -77,14 +80,15 @@ namespace ATS.Repository.Repo
                                  EmailId = x.EmailId,
                                  LastUpdatedBy = x.LastUpdatedBy,
                                  LastUpdatedDate = x.LastUpdatedDate,
-                                 StatusId = x.StatusId,
+                                 StatusId = x.StatusId,                                 
                                  UserId = x.UserId,
                                  Id = x.Id,
                                  CurrPassword = x.CurrPassword,
                                  PrevPassword = x.PrevPassword,
                              }).Where(condition).AsQueryable<UserCredentialModel>();
 
-                return query;
+                var deletedStatus = (int)CommonType.DELETED;
+                return query.Where(x => x.StatusId != deletedStatus);
             }
             catch
             {
@@ -100,7 +104,7 @@ namespace ATS.Repository.Repo
                 var userCredential = _context.UserCredential.Where(x => x.UserId == Userid && x.Id == Id).FirstOrDefault();
                 if (userCredential != null)
                 {
-                    userCredential.StatusId = false;
+                    userCredential.StatusId =(int) CommonType.DELETED;
                     isDisabled = true;
                 }
                 else

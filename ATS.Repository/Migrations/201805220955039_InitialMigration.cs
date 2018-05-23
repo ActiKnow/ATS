@@ -17,7 +17,7 @@ namespace ATS.Repository.Migrations
                         LevelTypeValue = c.Int(nullable: false),
                         CategoryTypeValue = c.Int(nullable: false),
                         DefaultMark = c.Int(nullable: false),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -27,9 +27,11 @@ namespace ATS.Repository.Migrations
                 .ForeignKey("dbo.TypeDefs", t => t.CategoryTypeValue)
                 .ForeignKey("dbo.TypeDefs", t => t.LevelTypeValue)
                 .ForeignKey("dbo.TypeDefs", t => t.QuesTypeValue)
+                .ForeignKey("dbo.TypeDefs", t => t.StatusId, cascadeDelete: true)
                 .Index(t => t.QuesTypeValue)
                 .Index(t => t.LevelTypeValue)
-                .Index(t => t.CategoryTypeValue);
+                .Index(t => t.CategoryTypeValue)
+                .Index(t => t.StatusId);
             
             CreateTable(
                 "dbo.TypeDefs",
@@ -40,7 +42,7 @@ namespace ATS.Repository.Migrations
                         Description = c.String(),
                         IsEditable = c.Boolean(nullable: false),
                         ParentKey = c.Int(nullable: false),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -59,7 +61,7 @@ namespace ATS.Repository.Migrations
                         Mobile = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Email = c.String(),
                         RoleTypeValue = c.Int(nullable: false),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -76,7 +78,8 @@ namespace ATS.Repository.Migrations
                         ID = c.Guid(nullable: false),
                         UserId = c.Guid(nullable: false),
                         TestBankId = c.Guid(nullable: false),
-                        StatusId = c.Boolean(nullable: false),
+                        MarksObtained = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -100,7 +103,7 @@ namespace ATS.Repository.Migrations
                         Duration = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TestTypeValue = c.Int(nullable: false),
                         TotalMarks = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -153,8 +156,8 @@ namespace ATS.Repository.Migrations
                         Description = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.QuestionBanks", t => t.QId, cascadeDelete: true)
-                .ForeignKey("dbo.UserTestHistories", t => t.History_Id, cascadeDelete: true)
+                .ForeignKey("dbo.QuestionBanks", t => t.QId, cascadeDelete: false)
+                .ForeignKey("dbo.UserTestHistories", t => t.History_Id, cascadeDelete: false)
                 .Index(t => t.History_Id)
                 .Index(t => t.QId);
             
@@ -178,7 +181,7 @@ namespace ATS.Repository.Migrations
                         Id = c.Guid(nullable: false),
                         KeyId = c.String(),
                         Description = c.String(),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -195,7 +198,26 @@ namespace ATS.Repository.Migrations
                         PrevPassword = c.String(),
                         CurrPassword = c.String(),
                         EmailId = c.String(),
-                        StatusId = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                        CreatedBy = c.String(),
+                        LastUpdatedDate = c.DateTime(),
+                        LastUpdatedBy = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.UserInfoes", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.UserFeedbacks",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Feedback = c.String(),
+                        UserId = c.Guid(nullable: false),
+                        Reating = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ReadStatus = c.Boolean(nullable: false),
+                        StatusId = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         CreatedBy = c.String(),
                         LastUpdatedDate = c.DateTime(),
@@ -209,7 +231,9 @@ namespace ATS.Repository.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.UserFeedbacks", "UserId", "dbo.UserInfoes");
             DropForeignKey("dbo.UserCredentials", "UserId", "dbo.UserInfoes");
+            DropForeignKey("dbo.QuestionBanks", "StatusId", "dbo.TypeDefs");
             DropForeignKey("dbo.QuestionBanks", "QuesTypeValue", "dbo.TypeDefs");
             DropForeignKey("dbo.QuestionOptionMappings", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.QuestionBanks", "LevelTypeValue", "dbo.TypeDefs");
@@ -223,6 +247,7 @@ namespace ATS.Repository.Migrations
             DropForeignKey("dbo.TestQuestionMappings", "TestBankId", "dbo.TestBanks");
             DropForeignKey("dbo.TestQuestionMappings", "QId", "dbo.QuestionBanks");
             DropForeignKey("dbo.TestAssignments", "TestBankId", "dbo.TestBanks");
+            DropIndex("dbo.UserFeedbacks", new[] { "UserId" });
             DropIndex("dbo.UserCredentials", new[] { "UserId" });
             DropIndex("dbo.QuestionOptionMappings", new[] { "QId" });
             DropIndex("dbo.UserAttemptedHistories", new[] { "QId" });
@@ -235,9 +260,11 @@ namespace ATS.Repository.Migrations
             DropIndex("dbo.TestAssignments", new[] { "UserId" });
             DropIndex("dbo.UserInfoes", new[] { "RoleTypeValue" });
             DropIndex("dbo.TypeDefs", new[] { "TypeId" });
+            DropIndex("dbo.QuestionBanks", new[] { "StatusId" });
             DropIndex("dbo.QuestionBanks", new[] { "CategoryTypeValue" });
             DropIndex("dbo.QuestionBanks", new[] { "LevelTypeValue" });
             DropIndex("dbo.QuestionBanks", new[] { "QuesTypeValue" });
+            DropTable("dbo.UserFeedbacks");
             DropTable("dbo.UserCredentials");
             DropTable("dbo.QuestionOptions");
             DropTable("dbo.QuestionOptionMappings");

@@ -24,5 +24,6 @@ namespace ATS.Core.Model
         public  TestBankModel TestBank { get; set; }
         public  List<UserAttemptHistoryModel> UserAttemptedHistories { get; set; }
         public  UserInfoModel UserInfo { get; set; }
+        public string StatusDescription { get; set; }
     }
 }

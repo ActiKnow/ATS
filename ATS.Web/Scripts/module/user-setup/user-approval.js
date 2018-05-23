@@ -99,9 +99,7 @@
         $(op.tableContext).on('click', op.btnRemoveUser, function (e) {
 
             var $row = $(this).closest("tr");
-
-           // var UserCredentials = [];
-
+            
             var userID =  $row.find($(op.userId)).val();
             var RoleID =  $row.find($(op.roleTypeId)).val();
             var email =   $row.find($(op.email)).html();
@@ -110,16 +108,13 @@
             var UserCredentials = {
                 UserId: userID.trim(),
                 Id: id.trim(),
-                StatusId: false,
+                StatusId: AppConstant.DELETED,
             };
 
             var userInfoModel = {
                 UserId: userID.trim(),
-                StatusId: false,
+                StatusId: AppConstant.DELETED,
                 UserCredentials: UserCredentials,
-                //RoleTypeId: RoleID.trim(),
-                //Email: email.trim(),
-                
             };
 
             api.firePostAjax('/Admin/UserSetup/DisableUser', { userInfoModel: userInfoModel })

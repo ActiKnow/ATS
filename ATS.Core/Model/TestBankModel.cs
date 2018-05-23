@@ -25,6 +25,7 @@ namespace ATS.Core.Model
         public string TestTypeDescription { get; set; }
         public int TestTypeValue { get; set; }
         public decimal TotalMarks { get; set; }
+        public string StatusDescription { get; set; }
         public virtual List<TestAssignmentModel> TestAssignments { get; set; }
         public virtual List<TestQuestionMapModel> TestQuestionMappings { get; set; }
         public virtual List<UserTestHistoryModel> UserTestHistories { get; set; }

@@ -12,6 +12,7 @@ namespace ATS.Core.Model
         public System.Guid QId { get; set; }
         public string OptionSelected_Id { get; set; }
         public string Description { get; set; }
+        public string StatusDescription { get; set; }
         public  QuestionBankModel QuestionBank { get; set; }
         public  UserTestHistoryModel UserTestHistory { get; set; }
     }

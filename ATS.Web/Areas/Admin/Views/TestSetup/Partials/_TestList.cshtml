@@ -24,10 +24,9 @@
             <td><span class="itemValue">@item.CategoryTypeDescription</span></td>
             <td><span>@(item.TestTypeDescription )</span></td>
             <td><span>@item.LevelTypeDescription</span></td>
-            <td><span>@(item.StatusId? ATS.Core.Global.Constants.ACTIVE: ATS.Core.Global.Constants.INACTIVE)</span></td>
+            <td><span>@(item.StatusDescription)</span></td>
             <td>
                 <span class="btn-primary btn-sm test-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                
                 <span>
                     <input type="hidden" class="test-id" value="@item.TestBankId" />
                     <input type="hidden" class="category-value" value="@item.CategoryTypeValue" />

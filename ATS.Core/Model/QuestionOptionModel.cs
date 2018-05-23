@@ -11,5 +11,6 @@ namespace ATS.Core.Model
         public string KeyId { get; set; }
         public string Description { get; set; }
         public bool IsAnswer { get; set; }
+        public string StatusDescription { get; set; }
     }
 }
