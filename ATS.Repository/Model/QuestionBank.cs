@@ -23,7 +23,7 @@ namespace ATS.Repository.Model
         public int QuesTypeValue { get; set; }
         public int LevelTypeValue { get; set; }
         public int CategoryTypeValue { get; set; }
-        public int DefaultMark { get; set; }
+        public decimal DefaultMark { get; set; }
     
         public List<QuestionOptionMapping> MappedOptions { get; set; }
 

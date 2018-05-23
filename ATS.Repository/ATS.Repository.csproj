@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201805230528279_FEEDBACK_CHANGES.Designer.cs">
       <DependentUpon>201805230528279_FEEDBACK_CHANGES.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805230644027_DefaultMarkChanged.cs" />
+    <Compile Include="Migrations\201805230644027_DefaultMarkChanged.Designer.cs">
+      <DependentUpon>201805230644027_DefaultMarkChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ATSDBInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\QuestionBank.cs" />
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805230528279_FEEDBACK_CHANGES.resx">
       <DependentUpon>201805230528279_FEEDBACK_CHANGES.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805230644027_DefaultMarkChanged.resx">
+      <DependentUpon>201805230644027_DefaultMarkChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

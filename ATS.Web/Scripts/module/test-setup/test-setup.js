@@ -3,7 +3,7 @@
     var defaults = {};
     const update = "Update", create = "Create";
     var testData = {} ;
-    const testType = AppConstant.TESTTYPE, levelType = AppConstant.LEVEL, categoryType = AppConstant.CATEGORY;
+    const testType = AppConstant.TESTTYPE, levelType = AppConstant.LEVEL, categoryType = AppConstant.CATEGORY,activeStatus = AppConstant.ACTIVE;
     var apiUrl = {
         getTestType: "/Admin/Setup/GetAllSubTypes/",
         getLevelType: "/Admin/Setup/GetAllSubTypes/",
@@ -162,7 +162,7 @@
                 description: '',
                 instruction: '',
                 duration: '',
-                status: 'true',
+                status: activeStatus,
             };
         },
     };
