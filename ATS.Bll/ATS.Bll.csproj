@@ -54,6 +54,7 @@
     <Compile Include="QuestionBankBo.cs" />
     <Compile Include="ResultBo.cs" />
     <Compile Include="TestBankBo.cs" />
+    <Compile Include="TestHistoryBo.cs" />
     <Compile Include="TestQuestionMapBo.cs" />
     <Compile Include="TypeDefBo.cs" />
     <Compile Include="UserInfoBo.cs" />

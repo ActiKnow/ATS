@@ -27,7 +27,7 @@ namespace ATS.Core.Helper
             try
             {
                 var predicate = PredicateBuilder.True<T>();
-                if (query != null)
+                if (query != null && query.Properties != null)
                 {
                     foreach (var qry in query.Properties)
                     {

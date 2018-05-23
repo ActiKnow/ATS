@@ -188,6 +188,7 @@
     <Compile Include="Controllers\TestBankController.cs" />
     <Compile Include="Controllers\TypeDefController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserTestHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
