@@ -1,12 +1,14 @@
 ﻿@model List<ATS.Core.Model.UserInfoModel>
 
+@{
+    var count = 1;
+}
 @foreach (var item in Model)
 {
-    <tr>
-        <td>
-            <input type="checkbox" class=checkbox name='userCheckbox' value="@item.UserId">
-        </td>
 
+    <tr>
+        <td>@(count++)</td>
+            @*<input type="checkbox" class=checkbox name='userCheckbox'>*@
         <td>
             <span class="FirstLastName">@item.FName @item.LName</span>
         </td>

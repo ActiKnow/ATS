@@ -65,9 +65,10 @@ namespace ATS.Bll
                         apiResult.Status = false;
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
                     unitOfWork.Dispose();
+                    throw;
                 }
             }
             return apiResult;

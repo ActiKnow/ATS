@@ -10,5 +10,7 @@ namespace ATS.Repository.Interface
     {
         IQueryable<TestBankModel> Retrieve(Guid testBankId);
         IQueryable<TestBankModel> Select(Func<TestBankModel,bool> condition);
+        IQueryable<TestBankModel> SelectUnmapped(Guid userId);
+        IQueryable<TestBankModel> SelectMapped(Guid userId);
     }
 }

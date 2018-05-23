@@ -176,5 +176,51 @@ namespace ATS.Bll
             }
             return apiResult;
         }
+
+        public ApiResult SelectUnmapped(Guid userId)
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
+            using (var unitOfWork = new UnitOfWork())
+            {
+                var queryable = unitOfWork.TestBankRepo.SelectUnmapped(userId);
+
+                var typeInfo = queryable.ToList();
+
+                if (typeInfo != null)
+                {
+                    apiResult.Status = true;
+                    apiResult.Data = typeInfo;
+                }
+                else
+                {
+                    apiResult.Status = false;
+                    apiResult.Message.Add("No record found for this TestBank");
+                }
+            }
+            return apiResult;
+        }
+
+        public ApiResult SelectMapped(Guid userId)
+        {
+            ApiResult apiResult = new ApiResult(false, new List<string>());
+            using (var unitOfWork = new UnitOfWork())
+            {
+                var queryable = unitOfWork.TestBankRepo.SelectMapped(userId);
+
+                var typeInfo = queryable.ToList();
+
+                if (typeInfo != null)
+                {
+                    apiResult.Status = true;
+                    apiResult.Data = typeInfo;
+                }
+                else
+                {
+                    apiResult.Status = false;
+                    apiResult.Message.Add("No record found for this TestBank");
+                }
+            }
+            return apiResult;
+        }
     }
 }

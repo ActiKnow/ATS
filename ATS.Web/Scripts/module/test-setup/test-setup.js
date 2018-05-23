@@ -10,7 +10,8 @@
         getCategoryType: "/Admin/Setup/GetAllSubTypes/",
         createTest: '/Admin/TestSetup/CreateTest/',
         updateTest: '/Admin/TestSetup/UpdateTest/',
-        getTests: '/Admin/TestSetup/GetTests/'
+        getTests: '/Admin/TestSetup/GetTests/',
+        getStatus:'/Admin/Setup/GetStatus/'
     };
     var api = (function () {
         var fireAjax = function (url, data, type) {
@@ -38,48 +39,51 @@
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
+                            alertService.showAllErrors(result.Message);
                         }
                         else {
                             render.fillSelector($(defaults.selectTestType), result.Data, "--select--", 'Value', 'Description');
                         }
                     }
                     else {
-
+                        alertService.showAllErrors(result.Message);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showError(result.responseText);});
         },
         getLevelType: function () {
             api.fireGetAjax(apiUrl.getLevelType, { parentTypeValue: levelType })
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
+                            alertService.showAllErrors(result.Message);
                         }
                         else {
                             render.fillSelector($(defaults.selectLevel), result.Data, "--select--", 'Value', 'Description');
                         }
                     }
                     else {
-
+                        alertService.showAllErrors(result.Message);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showError(result.responseText); });
         },
         getCategoryType: function () {
             api.fireGetAjax(apiUrl.getCategoryType, { parentTypeValue: categoryType })
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
+                            alertService.showAllErrors(result.Message);
                         }
                         else {
                             render.fillSelector($(defaults.selectCategory), result.Data, "--select--", 'Value', 'Description');
                         }
                     }
                     else {
-
+                        alertService.showAllErrors(result.Message);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showError(result.responseText); });
         },
         createOrUpdateTest: function (e) {
             if (!validationService.validateForm({ messageContext: defaults.popupMessageContext })) {
@@ -112,23 +116,41 @@
                         alertService.showAllErrors(result.Message, defaults.popupMessageContext);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showError(result.responseText); });
         },
         getTests: function () {
             api.fireGetAjax(apiUrl.getTests, {})
                 .done((result) => {
                     if (result && result.Status) {
                         if (result.Message && result.Message.length > 0) {
+                            alertService.showAllErrors(result.Message);
                         }
                         else {
                             render.fillTests(result.Data);
                         }
                     }
                     else {
-
+                        alertService.showAllErrors(result.Message);
                     }
                 })
-                .fail();
+                .fail((result) => { alertService.showError(result.responseText); });
+        },
+        getStatus: function () {
+            api.fireGetAjax(apiUrl.getStatus, {})
+                .done((result) => {
+                    if (result && result.Status) {
+                        if (result.Message && result.Message.length > 0) {
+                            alertService.showAllErrors(result.Message);
+                        }
+                        else {
+                            render.fillSelector($(defaults.testStatusInput), result.Data);
+                        }
+                    }
+                    else {
+                        alertService.showAllErrors(result.Message);
+                    }
+                })
+                .fail((result) => { alertService.showError(result.responseText); });
         },
         resetTestData: function () {
             return {
@@ -145,7 +167,7 @@
         },
     };
     var render = {
-        fillSelector: function ($selector, data, defaultOption, value = 'Value', text = 'Text') {
+        fillSelector: function ($selector, data, defaultOption=null, value = 'Value', text = 'Text') {
             let options = "";
             if (defaultOption) {
                 options = '<option value>' + defaultOption + '</option>';
@@ -219,6 +241,7 @@
             action.getTestType();
             action.getLevelType();
             action.getCategoryType();
+            action.getStatus();
         },
         loadTest: function () { action.getTests(); },
     };
@@ -263,6 +286,7 @@
 
         $.extend(true, defaults, settings);
         setup();
+        alertService.configure({ messageContext: defaults.mainMessageContext });
     };
 
     return { init: init };
