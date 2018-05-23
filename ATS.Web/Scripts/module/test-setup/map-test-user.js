@@ -38,6 +38,7 @@
             selectedUser.mobile = $row.find(op.selectedMobile).text();
             render.fillSelectedUser(selectedUser);
             render.closeSelectUser();
+            loadMappedTestList();
         },
          resetSelectedUser: function () {
             return {
@@ -134,8 +135,7 @@
 
                         //alertService.showSuccess(msg, op.popupTestMessageContext);
                     action.fillMappedTest(result.Data);
-
-
+                    
                     //}                   
                 }
                 else {
@@ -158,7 +158,7 @@
                     }
                     //$(op.selecttblTestList).find('tbody').html(result.Data);
                     //$(op.selecttblTestList).DataTable();
-                    // $(op.modalSelectTestContext).show();
+                    $(op.modalSelectTestContext).hide();
                 }
                 else {
                     $.each(result.Message, function (index, value) {
@@ -267,39 +267,6 @@
             loadMappedTestList();
          
         },
-
-        //addTestList: function () {
-
-        //    var allTestBankIdList = [];
-        //    var count = 0;
-        //    var listTest = "";
-        //    var $selectTable = $(defaults.selecttblTestList);
-        //    var $tblBody = $selectTable.find('tbody');
-        //    $tblBody.find(':checkbox:checked').each(function () {
-        //        var data = $(this).parents('tr:eq(0)');
-        //        var TestDescription = $(data).find('td:eq(1)').text();
-        //        var Category = $(data).find('td:eq(2)').text();
-        //        var Type = $(data).find('td:eq(3)').text();
-        //        var Level = $(data).find('td:eq(4)').text();
-        //        var TestId = $(data).find('td:eq(4)').find($('.test-id')).val();
-               
-        //        var recID = $(this).val();
-        //        if (recID) {
-        //            allTestBankIdList.push(recID);
-        //        }
-        //        count++;
-        //        listTest += "<tr>" +
-        //            "<td><span >" + count + "</span></td>" +
-        //            "<td><span class='FirstLastName'>" + TestDescription + "</span></td>" +
-        //            "<td><span class='Email'>" + Category + "</span></td>" +
-        //            "<td><span class='RoleType'>" + Type + "</span></td>" +
-        //            "<td><span class='Mobile'>" + Level + "</span><input type = 'hidden' class='userId' value = '" + TestId + "' /></td > " +
-        //            "</tr>";
-        //    });
-        //    $(defaults.tblSelectedTestsList).find('tbody').html(listTest);
-        //    $(defaults.tblSelectedTestsList).DataTable();
-        //    $(defaults.modalSelectTestContext).modal('hide');
-        //},
 
         fillSelectedUser: function (data) {
             data = data || action.resetSelectedUser();
