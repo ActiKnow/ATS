@@ -32,13 +32,13 @@ namespace ATS.Bll
 
                     if (flag)
                     {
-                        Utility.CopyEntity(out List<UserAttemptedHistory> attemptedQuestions, input.UserAttemptedHistories);
+                        //Utility.CopyEntity(out List<UserAttemptedHistory> attemptedQuestions, input.UserAttemptedHistories);
 
                         //User Test Attempt history
-                        int count = attemptedQuestions.Count;
+                        int count = userTestHistory.UserAttemptedHistories.Count;
                         for (int indx = 0; indx < count; indx++)
                         {
-                            var attempt = attemptedQuestions[indx];
+                            var attempt = userTestHistory.UserAttemptedHistories[indx];
                             attempt.Id = Guid.NewGuid();
                             attempt.History_Id = userTestHistory.HistoryId;
                             flag = unitOfWork.AttemptedHistoryRepo.Create(ref attempt);
@@ -48,6 +48,7 @@ namespace ATS.Bll
 
                         if (flag)
                         {
+                            //userTestHistory.UserAttemptedHistories = attemptedQuestions;
                             unitOfWork.Commit();
 
                             apiResult.Status = true;
@@ -91,7 +92,7 @@ namespace ATS.Bll
                         historyFound.IsFinished = input.IsFinished;
                         historyFound.LastUsedDate = DateTime.Now;
                         historyFound.TotalDuration = input.TotalDuration;
-                        
+
                         Utility.CopyEntity(out UserTestHistory userTestHistory, historyFound);
                         //User test history Updation
                         flag = unitOfWork.TestHistoryRepo.Update(ref userTestHistory);
